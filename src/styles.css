@@ -149,7 +149,11 @@
   }
 
   body {
-    background: var(--gradient-hero);
+    background-color: var(--background);
+    background-image:
+      radial-gradient(circle at 0% 0%, oklch(0.795 0.19 152 / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 100% 0%, oklch(0.87 0.175 96 / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 100%, oklch(0.795 0.19 152 / 0.03) 0%, transparent 50%);
     background-attachment: fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
