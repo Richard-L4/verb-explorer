@@ -107,7 +107,7 @@
   --sidebar-ring: oklch(0.795 0.19 152);
 
   --gradient-hero: linear-gradient(120deg, oklch(0.795 0.19 152) 0%, oklch(0.845 0.185 122) 55%, oklch(0.87 0.175 96) 100%);
-  --gradient-soft: linear-gradient(150deg, oklch(0.293 0.045 250) 0%, oklch(0.229 0.038 249) 62%, oklch(0.243 0.05 262) 100%);
+  --gradient-soft: linear-gradient(150deg, oklch(0.482 0.082 250) 0%, oklch(0.426 0.078 249) 62%, oklch(0.438 0.080 262) 100%);
   --shadow-card: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 10px 28px -18px oklch(0.05 0.03 250 / 0.9);
   --shadow-lift: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 24px 48px -24px oklch(0.03 0.03 250 / 0.95);
   --shadow-glow: 0 0 0 1px oklch(0.795 0.19 152 / 0.22), 0 18px 44px -22px oklch(0.795 0.19 152 / 0.55);
