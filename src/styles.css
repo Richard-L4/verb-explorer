@@ -70,18 +70,18 @@
   --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Deep navy foundation (#071A2B family) with vibrant green + bright yellow accents */
-  --background: oklch(0.198 0.038 248);
+  /* Lighter "bright slate" navy foundation (#234A6E family) with vibrant green + bright yellow accents */
+  --background: oklch(0.399 0.076 249);
   --foreground: oklch(0.965 0.008 240);
-  --card: oklch(0.253 0.038 249);
+  --card: oklch(0.447 0.082 250);
   --card-foreground: oklch(0.965 0.008 240);
-  --popover: oklch(0.253 0.038 249);
+  --popover: oklch(0.447 0.082 250);
   --popover-foreground: oklch(0.965 0.008 240);
   --primary: oklch(0.795 0.19 152);
   --primary-foreground: oklch(0.185 0.04 250);
-  --secondary: oklch(0.305 0.038 249);
+  --secondary: oklch(0.492 0.082 249);
   --secondary-foreground: oklch(0.93 0.012 240);
-  --muted: oklch(0.29 0.036 249);
+  --muted: oklch(0.479 0.080 249);
   --muted-foreground: oklch(0.735 0.028 244);
   --accent: oklch(0.87 0.175 96);
   --accent-foreground: oklch(0.185 0.04 250);
@@ -89,21 +89,21 @@
   --success-foreground: oklch(0.185 0.04 250);
   --destructive: oklch(0.66 0.185 22);
   --destructive-foreground: oklch(0.98 0.008 240);
-  --border: oklch(0.35 0.036 249);
-  --input: oklch(0.35 0.036 249);
+  --border: oklch(0.531 0.080 249);
+  --input: oklch(0.531 0.080 249);
   --ring: oklch(0.795 0.19 152);
   --chart-1: oklch(0.795 0.19 152);
   --chart-2: oklch(0.87 0.175 96);
   --chart-3: oklch(0.72 0.175 154);
   --chart-4: oklch(0.87 0.175 96);
   --chart-5: oklch(0.78 0.14 130);
-  --sidebar: oklch(0.223 0.038 249);
+  --sidebar: oklch(0.420 0.078 249);
   --sidebar-foreground: oklch(0.965 0.008 240);
   --sidebar-primary: oklch(0.795 0.19 152);
   --sidebar-primary-foreground: oklch(0.185 0.04 250);
-  --sidebar-accent: oklch(0.305 0.038 249);
+  --sidebar-accent: oklch(0.492 0.082 249);
   --sidebar-accent-foreground: oklch(0.93 0.012 240);
-  --sidebar-border: oklch(0.35 0.036 249);
+  --sidebar-border: oklch(0.531 0.080 249);
   --sidebar-ring: oklch(0.795 0.19 152);
 
   --gradient-hero: linear-gradient(120deg, oklch(0.795 0.19 152) 0%, oklch(0.845 0.185 122) 55%, oklch(0.87 0.175 96) 100%);
