@@ -225,3 +225,6 @@
     pointer-events: none;
   }
 }
+#lovable-badge-cta {
+  display: none !important;
+}
