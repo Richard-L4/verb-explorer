@@ -12,13 +12,15 @@ export function StatCard({
   hint?: string;
 }) {
   return (
-    <div className="surface-card p-5">
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <Icon className="size-4" aria-hidden="true" />
-        <span className="text-sm font-medium">{label}</span>
+    <div className="surface-card hairline-top group relative overflow-hidden p-5 transition-[border-color,box-shadow] duration-300 hover:border-primary/35 hover:shadow-[var(--shadow-lift)]">
+      <div className="flex items-center gap-2.5 text-muted-foreground">
+        <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-border/70 bg-secondary/60 text-primary transition-colors duration-300 group-hover:border-primary/40">
+          <Icon className="size-4" aria-hidden="true" />
+        </span>
+        <span className="min-w-0 truncate text-xs font-semibold uppercase tracking-[0.12em]">{label}</span>
       </div>
-      <p className="mt-3 font-display text-3xl font-semibold">{value}</p>
-      {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+      <p className="mt-4 font-display text-4xl font-bold tabular-nums leading-none">{value}</p>
+      {hint ? <p className="mt-2 text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }

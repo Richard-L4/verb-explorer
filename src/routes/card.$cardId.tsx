@@ -44,21 +44,30 @@ function CardDetail() {
 
   return (
     <PageTransition>
-      <Link to="/browse" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="size-4" aria-hidden="true" /> Back to browse
+      <Link
+        to="/browse"
+        className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" /> Back to browse
       </Link>
 
-      <header className="surface-card gradient-soft mt-4 p-6 sm:p-8">
-        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+      <header className="surface-card gradient-soft hairline-top relative mt-4 overflow-hidden p-6 sm:p-9">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-primary/12 blur-3xl"
+        />
+        <div className="relative flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
           {card.category ? <span className="text-primary">{card.category}</span> : null}
-          <span>
+          <span className="tabular-nums">
             Card {position} of {cardCount}
           </span>
         </div>
-        <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">{card.title}</h1>
-        {card.tagline ? <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">{card.tagline}</p> : null}
+        <h1 className="relative mt-4 text-balance text-4xl font-bold leading-[1.02] sm:text-5xl">{card.title}</h1>
+        {card.tagline ? (
+          <p className="relative mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">{card.tagline}</p>
+        ) : null}
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="relative mt-7 flex flex-wrap gap-3">
           <FavouriteButton withText active={isFavourite(card.id)} label={card.title} onToggle={() => toggleFavourite(card.id)} />
           <LearnedButton active={isLearned(card.id)} label={card.title} onToggle={() => toggleLearned(card.id)} />
         </div>
@@ -71,21 +80,24 @@ function CardDetail() {
               key={side.word}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.06 }}
-              className="surface-card p-6"
+              transition={{ duration: 0.36, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              className="surface-card hairline-top relative overflow-hidden p-6 sm:p-7"
             >
-              <h2 className="font-display text-2xl font-semibold text-primary">{side.word}</h2>
+              <h2 className="font-display text-2xl font-bold tracking-tight text-primary">{side.word}</h2>
               {side.core ? <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{side.core}</p> : null}
 
               {side.examples?.length ? (
                 <ul className="mt-5 space-y-4">
                   {side.examples.map((ex, j) => (
-                    <li key={`${ex.es}-${j}`} className="rounded-xl border border-border/80 bg-background/60 p-4">
-                      <p className="flex items-start gap-2 font-display text-lg font-semibold">
+                    <li
+                      key={`${ex.es}-${j}`}
+                      className="rounded-xl border border-border/70 bg-background/45 p-4 transition-colors duration-300 hover:border-primary/35"
+                    >
+                      <p className="flex items-start gap-2 font-display text-lg font-bold leading-snug">
                         <Quote className="mt-1.5 size-3.5 shrink-0 text-accent" aria-hidden="true" />
                         <span lang="es">{ex.es}</span>
                       </p>
-                      {ex.en ? <p className="mt-1 pl-5 text-sm text-foreground/80">{ex.en}</p> : null}
+                      {ex.en ? <p className="mt-1.5 pl-5 text-sm italic text-foreground/80">{ex.en}</p> : null}
                       {ex.note ? <p className="mt-2 pl-5 text-sm leading-relaxed text-muted-foreground">{ex.note}</p> : null}
                     </li>
                   ))}
@@ -97,11 +109,14 @@ function CardDetail() {
       ) : null}
 
       {card.tricky ? (
-        <section className="surface-card mt-6 border-accent/40 bg-accent/10 p-6">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <AlertTriangle className="size-5 text-primary" aria-hidden="true" /> Tricky bit
+        <section className="surface-card mt-6 border-accent/35 bg-accent/8 p-6 sm:p-7">
+          <h2 className="flex items-center gap-2.5 text-lg font-bold">
+            <span className="grid size-9 place-items-center rounded-xl border border-accent/35 bg-accent/12 text-accent">
+              <AlertTriangle className="size-4.5" aria-hidden="true" />
+            </span>
+            Tricky bit
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-foreground/85">{card.tricky}</p>
+          <p className="mt-3 text-sm leading-relaxed text-foreground/85">{card.tricky}</p>
         </section>
       ) : null}
 
@@ -110,12 +125,12 @@ function CardDetail() {
           <Link
             to="/card/$cardId"
             params={{ cardId: prev.id }}
-            className="surface-card flex min-h-16 items-center gap-3 p-4 transition-shadow hover:shadow-[var(--shadow-lift)]"
+            className="surface-card group flex min-h-16 items-center gap-3 p-4 transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)]"
           >
-            <ArrowLeft className="size-4 text-primary" aria-hidden="true" />
-            <span>
-              <span className="block text-xs uppercase tracking-wide text-muted-foreground">Previous</span>
-              <span className="font-medium">{prev.title}</span>
+            <ArrowLeft className="size-4 shrink-0 text-primary transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" />
+            <span className="min-w-0">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Previous</span>
+              <span className="truncate font-display font-bold">{prev.title}</span>
             </span>
           </Link>
         ) : (
@@ -125,13 +140,13 @@ function CardDetail() {
           <Link
             to="/card/$cardId"
             params={{ cardId: next.id }}
-            className="surface-card flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-shadow hover:shadow-[var(--shadow-lift)]"
+            className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)]"
           >
-            <span>
-              <span className="block text-xs uppercase tracking-wide text-muted-foreground">Next</span>
-              <span className="font-medium">{next.title}</span>
+            <span className="min-w-0">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Next</span>
+              <span className="truncate font-display font-bold">{next.title}</span>
             </span>
-            <ArrowRight className="size-4 text-primary" aria-hidden="true" />
+            <ArrowRight className="size-4 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         ) : null}
       </nav>

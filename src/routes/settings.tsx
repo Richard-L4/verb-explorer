@@ -28,8 +28,8 @@ function Settings() {
     <PageTransition>
       <PageHeader eyebrow="Settings" title="Settings" description="Everything is stored in this browser only — no account, no server." />
 
-      <section className="surface-card p-6">
-        <h2 className="flex items-center gap-2 text-xl font-semibold">
+      <section className="surface-card p-6 sm:p-7">
+        <h2 className="flex items-center gap-2.5 text-xl font-bold">
           <Database className="size-5 text-primary" aria-hidden="true" /> Stored data
         </h2>
         <dl className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -38,9 +38,9 @@ function Settings() {
             ["Cards studied", studiedCount],
             ["Cards learned", learnedCount],
           ].map(([label, value]) => (
-            <div key={label as string} className="rounded-xl border border-border p-4">
+            <div key={label as string} className="rounded-xl border border-border/80 bg-background/30 p-4 transition-colors duration-300 hover:border-primary/30">
               <dt className="text-sm text-muted-foreground">{label}</dt>
-              <dd className="mt-1 font-display text-2xl font-semibold">{value}</dd>
+              <dd className="mt-1 font-display text-2xl font-bold tabular-nums">{value}</dd>
             </div>
           ))}
         </dl>
@@ -49,8 +49,8 @@ function Settings() {
         </p>
       </section>
 
-      <section className="surface-card mt-6 border-destructive/30 p-6">
-        <h2 className="flex items-center gap-2 text-xl font-semibold">
+      <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">
+        <h2 className="flex items-center gap-2.5 text-xl font-bold">
           <AlertTriangle className="size-5 text-destructive" aria-hidden="true" /> Reset progress
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
@@ -114,8 +114,8 @@ function Settings() {
         ) : null}
       </section>
 
-      <section className="surface-card mt-6 p-6">
-        <h2 className="text-xl font-semibold">About</h2>
+      <section className="surface-card mt-6 p-6 sm:p-7">
+        <h2 className="text-xl font-bold">About</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Verbo runs entirely in your browser from a single JSON dataset of {cardCount} verb cards. More cards can be added
           to the dataset without changing the app.

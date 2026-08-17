@@ -33,7 +33,7 @@ function SearchPage() {
       />
 
       <div className="relative mb-8">
-        <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+        <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary" aria-hidden="true" />
         <input
           type="search"
           value={query}
@@ -41,7 +41,7 @@ function SearchPage() {
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search verb cards"
           placeholder="Try 'estar', 'to be', 'deadline'…"
-          className="h-14 w-full rounded-2xl border border-border bg-card pl-12 pr-4 text-base shadow-[var(--shadow-card)] outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/30"
+          className="h-15 w-full rounded-2xl border border-border bg-card/80 pl-12 pr-4 text-base shadow-[var(--shadow-card)] outline-none backdrop-blur transition-all duration-200 placeholder:text-muted-foreground hover:border-primary/35 focus:border-primary focus:shadow-[var(--shadow-glow)]"
         />
       </div>
 

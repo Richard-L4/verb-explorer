@@ -50,7 +50,7 @@ function Browse() {
         description={`${cards.length} verb contrast cards. Tap any card to study it in detail.`}
       />
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="surface-panel mb-7 flex flex-wrap items-center gap-2 p-2.5">
         {filters.map((f) => (
           <button
             key={f.key}
@@ -58,10 +58,10 @@ function Browse() {
             aria-pressed={filter === f.key}
             onClick={() => setFilter(f.key)}
             className={cn(
-              "min-h-11 rounded-full border px-4 text-sm font-medium transition-colors",
+              "min-h-10 rounded-full border px-4 text-sm font-semibold transition-all duration-200",
               filter === f.key
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-card text-muted-foreground hover:text-foreground",
+                ? "border-primary/50 bg-primary text-primary-foreground shadow-[var(--shadow-glow)]"
+                : "border-border/70 bg-card/60 text-muted-foreground hover:border-primary/30 hover:text-foreground",
             )}
           >
             {f.label}
@@ -75,8 +75,10 @@ function Browse() {
                 aria-pressed={category === c.key}
                 onClick={() => setCategory(c.key)}
                 className={cn(
-                  "min-h-11 rounded-full border px-4 text-sm font-medium capitalize transition-colors",
-                  category === c.key ? "border-primary text-primary" : "border-border text-muted-foreground",
+                  "min-h-10 rounded-full border px-4 text-sm font-semibold capitalize transition-colors duration-200",
+                  category === c.key
+                    ? "border-accent/50 bg-accent/12 text-accent"
+                    : "border-border/70 text-muted-foreground hover:text-foreground",
                 )}
               >
                 {c.label}
@@ -88,7 +90,7 @@ function Browse() {
       {visible.length ? (
         <CardGrid cards={visible} />
       ) : (
-        <p className="surface-card p-10 text-center text-sm text-muted-foreground">
+        <p className="surface-card p-12 text-center text-sm text-muted-foreground">
           No cards match this filter yet.
         </p>
       )}
