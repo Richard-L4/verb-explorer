@@ -84,7 +84,7 @@ function CardDetail() {
               className="surface-card hairline-top relative overflow-hidden p-6 sm:p-7"
             >
               <h2 className="font-display text-2xl font-bold tracking-tight text-primary">{side.word}</h2>
-              {side.core ? <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{side.core}</p> : null}
+              {side.core ? <p className="mt-3 text-sm leading-relaxed text-foreground">{side.core}</p> : null}
 
               {side.examples?.length ? (
                 <ul className="mt-5 space-y-4">
