@@ -98,7 +98,7 @@ function CardDetail() {
                         <span lang="es">{ex.es}</span>
                       </p>
                       {ex.en ? <p className="mt-1.5 pl-5 text-sm italic text-foreground/80">{ex.en}</p> : null}
-                      {ex.note ? <p className="mt-2 pl-5 text-sm leading-relaxed text-muted-foreground">{ex.note}</p> : null}
+                      {ex.note ? <p className="mt-2 pl-5 text-sm leading-relaxed text-foreground">{ex.note}</p> : null}
                     </li>
                   ))}
                 </ul>
