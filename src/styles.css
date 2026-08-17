@@ -225,6 +225,7 @@
     pointer-events: none;
   }
 }
-#lovable-badge-cta {
+#lovable-badge-cta,
+#lovable-badge-close {
   display: none !important;
 }
