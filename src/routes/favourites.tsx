@@ -10,9 +10,9 @@ export const Route = createFileRoute("/favourites")({
   component: Favourites,
   head: () => ({
     meta: [
-      { title: "Your favourite verb cards | Verbo" },
+      { title: "Your favourite verb cards | Verbs" },
       { name: "description", content: "The Spanish verb cards you've saved, kept safe in your browser between visits." },
-      { property: "og:title", content: "Your favourite verb cards | Verbo" },
+      { property: "og:title", content: "Your favourite verb cards | Verbs" },
       { property: "og:description", content: "Saved verb cards, stored locally and restored when you return." },
     ],
   }),

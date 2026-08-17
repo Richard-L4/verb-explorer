@@ -10,9 +10,9 @@ export const Route = createFileRoute("/statistics")({
   component: Statistics,
   head: () => ({
     meta: [
-      { title: "Your learning statistics | Verbo" },
+      { title: "Your learning statistics | Verbs" },
       { name: "description", content: "See how many Spanish verb cards you've studied, learned and favourited, plus progress across the deck." },
-      { property: "og:title", content: "Your learning statistics | Verbo" },
+      { property: "og:title", content: "Your learning statistics | Verbs" },
       { property: "og:description", content: "Cards studied, cards learned, favourites and deck progress at a glance." },
     ],
   }),

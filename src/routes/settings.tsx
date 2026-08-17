@@ -11,9 +11,9 @@ export const Route = createFileRoute("/settings")({
   component: Settings,
   head: () => ({
     meta: [
-      { title: "Settings | Verbo" },
-      { name: "description", content: "Manage your Verbo learning data, including resetting saved progress and favourites." },
-      { property: "og:title", content: "Settings | Verbo" },
+      { title: "Settings | Verbs" },
+      { name: "description", content: "Manage your Verbs learning data, including resetting saved progress and favourites." },
+      { property: "og:title", content: "Settings | Verbs" },
       { property: "og:description", content: "Manage saved progress, favourites and stored learning data." },
     ],
   }),
@@ -117,7 +117,7 @@ function Settings() {
       <section className="surface-card mt-6 p-6 sm:p-7">
         <h2 className="text-xl font-bold">About</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Verbo runs entirely in your browser from a single JSON dataset of {cardCount} verb cards. More cards can be added
+          Verbs runs entirely in your browser from a single JSON dataset of {cardCount} verb cards. More cards can be added
           to the dataset without changing the app.
         </p>
       </section>

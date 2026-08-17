@@ -16,15 +16,15 @@ export const Route = createFileRoute("/saying/$sayingId")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Saying not found | Verbo" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Saying not found | Verbs" }, { name: "robots", content: "noindex" }] };
     }
     const { saying } = loaderData;
     const description = saying.vibe ?? `How to say "${saying.title}" naturally in Spanish.`;
     return {
       meta: [
-        { title: `${saying.title} — in natural Spanish | Verbo` },
+        { title: `${saying.title} — in natural Spanish | Verbs` },
         { name: "description", content: description.slice(0, 155) },
-        { property: "og:title", content: `${saying.title} — in natural Spanish | Verbo` },
+        { property: "og:title", content: `${saying.title} — in natural Spanish | Verbs` },
         { property: "og:description", content: description.slice(0, 155) },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },

@@ -78,12 +78,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Verbo — Spanish verb cards" },
+      { title: "Verbs — Spanish verb cards" },
       {
         name: "description",
         content: "Learn tricky Spanish verb contrasts with interactive cards, examples and saved progress.",
       },
-      { property: "og:title", content: "Verbo — Spanish verb cards" },
+      { property: "og:title", content: "Verbs — Spanish verb cards" },
       {
         property: "og:description",
         content: "Learn tricky Spanish verb contrasts with interactive cards, examples and saved progress.",
