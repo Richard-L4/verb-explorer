@@ -36,7 +36,7 @@ export function getCardIndex(id: string): number {
   return cards.findIndex((c) => c.id === id);
 }
 
-export function getNeighbours(id: string): { prev?: VerbCard; next?: VerbCard } {
+export function getNeighbours(id: string): { prev?: VerbCard | undefined; next?: VerbCard | undefined } {
   const i = getCardIndex(id);
   if (i < 0) return {};
   return { prev: cards[i - 1], next: cards[i + 1] };
