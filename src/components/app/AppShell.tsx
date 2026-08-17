@@ -46,7 +46,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="gradient-hero flex size-9 shrink-0 items-center justify-center rounded-xl font-display text-lg font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-300 group-hover:-rotate-6">
               V
             </span>
-            <span className="truncate font-display text-lg font-bold tracking-tight">Verbs</span>
+            <span className="truncate font-display text-lg font-bold tracking-tight">Verb Wise</span>
           </Link>
 
           <nav
@@ -88,7 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">{children}</main>
 
       <footer className="border-t border-border/60 py-8 text-center text-xs tracking-wide text-muted-foreground">
-        Verbs — Spanish verb contrasts, one card at a time.
+        Verb Wise — Spanish verb contrasts, one card at a time.
       </footer>
     </div>
   );
