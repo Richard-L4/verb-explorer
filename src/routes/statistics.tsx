@@ -29,29 +29,29 @@ function Statistics() {
         description="Live figures come from the progress saved in your browser. Deeper analytics arrive with quiz mode."
       />
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
         <StatCard icon={BookOpen} label="Cards studied" value={studiedCount} hint={`of ${totalCards} cards`} />
         <StatCard icon={GraduationCap} label="Cards learned" value={learnedCount} hint={`of ${totalCards} cards`} />
         <StatCard icon={Heart} label="Favourites" value={state.favourites.length} />
         <StatCard icon={Brain} label="Quiz accuracy" value="—" hint="Available with quiz mode" />
       </div>
 
-      <section className="surface-card mt-6 space-y-6 p-6">
-        <h2 className="text-xl font-semibold">Progress</h2>
+      <section className="surface-card hairline-top relative mt-6 space-y-6 overflow-hidden p-6 sm:p-7">
+        <h2 className="text-xl font-bold">Progress</h2>
         <ProgressBar value={studiedPercent} label="Cards opened" />
         <ProgressBar value={progressPercent} label="Cards marked as learned" />
       </section>
 
-      <section className="surface-card mt-6 p-6">
-        <h2 className="text-xl font-semibold">Quiz performance</h2>
+      <section className="surface-card mt-6 p-6 sm:p-7">
+        <h2 className="text-xl font-bold">Quiz performance</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Once quiz mode ships, this space will show attempts, accuracy per card and your weakest verb pairs.
         </p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {["Attempts", "Correct answers", "Weakest card"].map((label) => (
-            <div key={label} className="rounded-xl border border-dashed border-border p-4">
+            <div key={label} className="rounded-xl border border-dashed border-border/80 bg-background/30 p-4">
               <p className="text-sm text-muted-foreground">{label}</p>
-              <p className="mt-1 font-display text-2xl font-semibold text-muted-foreground">—</p>
+              <p className="mt-1 font-display text-2xl font-bold text-muted-foreground">—</p>
             </div>
           ))}
         </div>
