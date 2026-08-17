@@ -38,7 +38,7 @@ function Favourites() {
           action={
             <Link
               to="/browse"
-              className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="inline-flex min-h-12 items-center rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5"
             >
               Browse cards
             </Link>
