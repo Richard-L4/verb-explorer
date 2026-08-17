@@ -16,15 +16,15 @@ export const Route = createFileRoute("/card/$cardId")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Card not found | Verbo" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Card not found | Verbs" }, { name: "robots", content: "noindex" }] };
     }
     const { card } = loaderData;
     const description = card.tagline ?? `Study the Spanish verb contrast ${card.title}.`;
     return {
       meta: [
-        { title: `${card.title} — Spanish verb card | Verbo` },
+        { title: `${card.title} — Spanish verb card | Verbs` },
         { name: "description", content: description.slice(0, 155) },
-        { property: "og:title", content: `${card.title} — Spanish verb card | Verbo` },
+        { property: "og:title", content: `${card.title} — Spanish verb card | Verbs` },
         { property: "og:description", content: description.slice(0, 155) },
       ],
     };

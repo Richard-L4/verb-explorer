@@ -8,9 +8,9 @@ export const Route = createFileRoute("/quiz")({
   component: Quiz,
   head: () => ({
     meta: [
-      { title: "Quiz mode (coming soon) | Verbo" },
+      { title: "Quiz mode (coming soon) | Verbs" },
       { name: "description", content: "Quiz mode for Spanish verb contrasts is on the way — test yourself on every card in the deck." },
-      { property: "og:title", content: "Quiz mode (coming soon) | Verbo" },
+      { property: "og:title", content: "Quiz mode (coming soon) | Verbs" },
       { property: "og:description", content: "Test yourself on Spanish verb contrasts — quiz mode is coming soon." },
     ],
   }),

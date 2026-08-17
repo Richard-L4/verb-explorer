@@ -11,9 +11,9 @@ export const Route = createFileRoute("/browse")({
   component: Browse,
   head: () => ({
     meta: [
-      { title: "Browse Spanish verb cards | Verbo" },
+      { title: "Browse Spanish verb cards | Verbs" },
       { name: "description", content: "Browse every Spanish verb contrast card, filter by learning state and save favourites." },
-      { property: "og:title", content: "Browse Spanish verb cards | Verbo" },
+      { property: "og:title", content: "Browse Spanish verb cards | Verbs" },
       { property: "og:description", content: "Every verb contrast card in the deck, with progress and favourites." },
     ],
   }),

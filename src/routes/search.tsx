@@ -11,9 +11,9 @@ export const Route = createFileRoute("/search")({
   component: SearchPage,
   head: () => ({
     meta: [
-      { title: "Search Spanish verbs | Verbo" },
+      { title: "Search Spanish verbs | Verbs" },
       { name: "description", content: "Search Spanish verbs, English meanings, examples and usage notes as you type." },
-      { property: "og:title", content: "Search Spanish verbs | Verbo" },
+      { property: "og:title", content: "Search Spanish verbs | Verbs" },
       { property: "og:description", content: "Instant search across every verb card, example and note." },
     ],
   }),

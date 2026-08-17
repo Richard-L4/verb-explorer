@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
   component: Home,
   head: () => ({
     meta: [
-      { title: "Verbo — Learn Spanish verb contrasts with cards" },
+      { title: "Verbs — Learn Spanish verb contrasts with cards" },
       {
         name: "description",
         content:
           "Study tricky Spanish verb pairs like ser vs estar and por vs para with interactive cards, favourites and progress tracking.",
       },
-      { property: "og:title", content: "Verbo — Learn Spanish verb contrasts with cards" },
+      { property: "og:title", content: "Verbs — Learn Spanish verb contrasts with cards" },
       {
         property: "og:description",
         content: "Interactive Spanish verb cards with real examples, favourites and saved progress.",
@@ -52,7 +52,7 @@ function Home() {
           <Sparkles className="size-3.5" aria-hidden="true" /> Spanish verbs
         </span>
         <h1 className="relative mt-6 max-w-2xl text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl">
-          <span className="gradient-text">Verbo</span>
+          <span className="gradient-text">Verbs</span>
         </h1>
         <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           Confusing verb pairs, explained side by side with real examples and the notes that actually make the

@@ -12,13 +12,13 @@ export const Route = createFileRoute("/sayings")({
   component: Sayings,
   head: () => ({
     meta: [
-      { title: "Sayings — British phrases in natural Spanish | Verbo" },
+      { title: "Sayings — British phrases in natural Spanish | Verbs" },
       {
         name: "description",
         content:
           "British sayings and idioms rendered in natural Spanish, with the tone, context and literal traps behind each phrase.",
       },
-      { property: "og:title", content: "Sayings — British phrases in natural Spanish | Verbo" },
+      { property: "og:title", content: "Sayings — British phrases in natural Spanish | Verbs" },
       {
         property: "og:description",
         content: "Idiomatic Spanish for British sayings, with context, tone and the literal translations to avoid.",
