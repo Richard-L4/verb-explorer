@@ -6,7 +6,7 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
       {label ? (
         <div className="mb-2.5 flex items-center justify-between gap-3 text-sm text-muted-foreground">
           <span className="min-w-0 truncate font-medium">{label}</span>
-          <span className="shrink-0 font-display text-base font-bold tabular-nums text-foreground">{value}%</span>
+          <span className="shrink-0 font-display text-base font-bold tabular-nums text-accent">{value}%</span>
         </div>
       ) : null}
       <div
