@@ -13,10 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as SayingsRouteImport } from './routes/sayings'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as StatisticsRouteImport } from './routes/statistics'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
+import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,6 +38,11 @@ const FavouritesRoute = FavouritesRouteImport.update({
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SayingsRoute = SayingsRouteImport.update({
+  id: '/sayings',
+  path: '/sayings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -58,26 +65,35 @@ const CardCardIdRoute = CardCardIdRouteImport.update({
   path: '/card/$cardId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SayingSayingIdRoute = SayingSayingIdRouteImport.update({
+  id: '/saying/$sayingId',
+  path: '/saying/$sayingId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
   '/quiz': typeof QuizRoute
+  '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/saying/$sayingId': typeof SayingSayingIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
   '/quiz': typeof QuizRoute
+  '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/saying/$sayingId': typeof SayingSayingIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,10 +101,12 @@ export interface FileRoutesById {
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
   '/quiz': typeof QuizRoute
+  '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/saying/$sayingId': typeof SayingSayingIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,30 +115,36 @@ export interface FileRouteTypes {
     | '/browse'
     | '/favourites'
     | '/quiz'
+    | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
     | '/card/$cardId'
+    | '/saying/$sayingId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/browse'
     | '/favourites'
     | '/quiz'
+    | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
     | '/card/$cardId'
+    | '/saying/$sayingId'
   id:
     | '__root__'
     | '/'
     | '/browse'
     | '/favourites'
     | '/quiz'
+    | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
     | '/card/$cardId'
+    | '/saying/$sayingId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,10 +152,12 @@ export interface RootRouteChildren {
   BrowseRoute: typeof BrowseRoute
   FavouritesRoute: typeof FavouritesRoute
   QuizRoute: typeof QuizRoute
+  SayingsRoute: typeof SayingsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   StatisticsRoute: typeof StatisticsRoute
   CardCardIdRoute: typeof CardCardIdRoute
+  SayingSayingIdRoute: typeof SayingSayingIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -164,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sayings': {
+      id: '/sayings'
+      path: '/sayings'
+      fullPath: '/sayings'
+      preLoaderRoute: typeof SayingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search': {
       id: '/search'
       path: '/search'
@@ -192,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CardCardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/saying/$sayingId': {
+      id: '/saying/$sayingId'
+      path: '/saying/$sayingId'
+      fullPath: '/saying/$sayingId'
+      preLoaderRoute: typeof SayingSayingIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -200,10 +240,12 @@ const rootRouteChildren: RootRouteChildren = {
   BrowseRoute: BrowseRoute,
   FavouritesRoute: FavouritesRoute,
   QuizRoute: QuizRoute,
+  SayingsRoute: SayingsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   StatisticsRoute: StatisticsRoute,
   CardCardIdRoute: CardCardIdRoute,
+  SayingSayingIdRoute: SayingSayingIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
