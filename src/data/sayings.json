@@ -1,0 +1,350 @@
+[{
+"id": "saying-0",
+"category": "sayings",
+"title": "dialled in",
+"vibe": "Said with admiration when someone is in peak focus — totally locked in and performing at their best.",
+"literal_fail": "'Marcado en' sounds like you called someone. Doesn't exist as a phrase in Spanish.",
+"examples": [
+{"context": "Your mate is playing pool and sinking every shot.","es": "Está en su salsa.","note": "'In their sauce' — fully in their element, completely switched on."},
+{"context": "A footballer who can't put a foot wrong tonight.","es": "Está enchufado.","note": "Enchufado literally means plugged in — the Spanish metaphor for being switched on and firing."},
+{"context": "A colleague nailing every presentation this week.","es": "Está en racha.","note": "On a roll — might be the closest for sustained peak performance."},
+{"context": "A gamer in the zone, not missing a beat.","es": "Está concentradísimo / está en modo bestia.","note": "'Beast mode' has made it into Spanish slang among younger speakers."},
+{"context": "A musician who played a flawless set.","es": "Estuvo inspiradísimo.","note": "When the performance was inspired rather than just focused — elevated."}
+]
+},
+{
+"id": "saying-1",
+"category": "sayings",
+"title": "and for your next trick",
+"vibe": "Dry, sardonic — said after someone has done something impressively stupid or unbelievably clumsy.",
+"literal_fail": "'Y para tu próximo truco' is technically understandable but reads as a literal magic show announcement.",
+"examples": [
+{"context": "Someone spills their drink then immediately knocks something else over.","es": "¿Y ahora qué vas a hacer, mago?","note": "'And what are you going to do now, wizard?' — the sarcasm lands perfectly in Spanish."},
+{"context": "Your mate breaks two things in a row doing DIY.","es": "Sigue así, campeón.","note": "'Keep it up, champion' — affectionate sarcasm that Spanish speakers use constantly."},
+{"context": "A colleague makes a mess of one thing and immediately starts another.","es": "¿Qué más puedes hacer?","note": "Rhetorical exhaustion — what else could you possibly manage to do?"},
+{"context": "Someone trips, recovers, then immediately trips again.","es": "Menudo show estás dando.","note": "You're quite the spectacle — show has a slightly theatrical, sarcastic edge here."},
+{"context": "After a spectacular blunder at work.","es": "Premio al mérito.","note": "Award for merit — delivered completely deadpan, it lands like a punch."}
+]
+},
+{
+"id": "saying-2",
+"category": "sayings",
+"title": "what part of you could possibly have thought that was a good idea",
+"vibe": "Exasperated disbelief — usually affectionate, said when someone has done something spectacularly ill-conceived.",
+"literal_fail": "A direct translation exists but at 20 words it's too long to feel natural. Spanish condenses disbelief.",
+"examples": [
+{"context": "Your friend tried to fix the boiler themselves and flooded the kitchen.","es": "¿En qué estabas pensando?","note": "'What were you thinking?' — the classic. Short, sharp, universal."},
+{"context": "Someone booked a non-refundable flight before checking if they had work.","es": "¿Cómo se te ocurrió eso?","note": "'How did that occur to you?' — genuinely baffled, not angry. Very Spanish."},
+{"context": "A teenager dyed their hair green before a job interview.","es": "¿Qué cabeza tienes?","note": "'What kind of head do you have?' — questioning the very brain involved in the decision."},
+{"context": "Someone tried to carry twenty bags in one trip and dropped everything.","es": "Pero bueno, ¿qué haces?","note": "Soft, slightly amused exasperation. Literally 'well good, what are you doing?'"},
+{"context": "A mate sent a voice note to the wrong person.","es": "Eso no se hace, ¿eh?","note": "'You don't do that' — the understated Spanish version of total incredulity."}
+]
+},
+{
+"id": "saying-3",
+"category": "sayings",
+"title": "that's just poetry",
+"vibe": "Said when something is so perfectly done, so elegantly constructed, or so beautifully executed that it transcends ordinary praise.",
+"literal_fail": "'Eso es poesía pura' works but sounds like you're reviewing a book. Needs to feel spontaneous.",
+"examples": [
+{"context": "A footballer bends a free kick into the top corner.","es": "Eso no tiene nombre. Es un golazo de antología.","note": "A goal for the history books — antología is the Spanish way of saying something is all-time."},
+{"context": "A chef produces a dish that's visually and tastefully perfect.","es": "Eso es una obra de arte.","note": "A work of art — the most natural Spanish expression for something aesthetically perfect."},
+{"context": "A writer produces a perfectly constructed sentence.","es": "Eso es pura literatura.","note": "Pure literature — close to 'that's just poetry' in register and tone."},
+{"context": "A friend delivers the perfect comeback at the perfect moment.","es": "Eso ha sido de oro.","note": "'That was gold' — the Spanish equivalent for something perfectly timed and beautiful."},
+{"context": "A musician improvises something breathtaking.","es": "Eso se lo lleva el viento.","note": "Gone with the wind — something so fleeting and perfect it can't be replicated."}
+]
+},
+{
+"id": "saying-4",
+"category": "sayings",
+"title": "elementary my dear",
+"vibe": "Playfully smug — said when pointing out something that should have been obvious, with mock Sherlock energy.",
+"literal_fail": "'Elemental, querido mío' actually exists in Spanish — it's the direct translation and everyone knows it from Sherlock Holmes. It works.",
+"examples": [
+{"context": "You solve a puzzle your friend has been stuck on for ten minutes.","es": "Elemental, querido.","note": "This one actually translates — it entered Spanish directly from Holmes. Use it freely."},
+{"context": "Explaining why of course the restaurant was closed on Monday.","es": "Era de cajón.","note": "'It was in the drawer' — obvious, should have been clear. Stronger than elemental."},
+{"context": "Pointing out the obvious flaw in a plan someone spent hours on.","es": "Está clarísimo.","note": "Completely obvious. The -ísimo makes it gently withering."},
+{"context": "After deducing where your friend left their phone.","es": "Dos más dos.","note": "'Two plus two' — the Spanish way of saying it's simple maths, completely obvious."},
+{"context": "Working out why the plan failed from the start.","es": "Saltaba a la vista.","note": "It was staring you in the face — 'jumped to the eyes.' Vivid and very Spanish."}
+]
+},
+{
+"id": "saying-5",
+"category": "sayings",
+"title": "I'm not being funny but",
+"vibe": "British preamble to something that is slightly rude, contentious, or brutally honest — softens the blow just enough to say it anyway.",
+"literal_fail": "'No estoy siendo gracioso pero' sounds like you're worried people think you're joking. Doesn't land.",
+"examples": [
+{"context": "Telling a friend their new haircut doesn't suit them.","es": "Mira, te lo digo con todo el cariño del mundo, pero...","note": "'I say this with all the love in the world, but...' — the standard Spanish setup for uncomfortable honesty."},
+{"context": "Pointing out that a colleague's plan won't work.","es": "Oye, sin ánimo de ofender, pero...","note": "'No offence intended, but...' — more formal but widely used."},
+{"context": "Saying something slightly controversial at a family dinner.","es": "A ver, y esto que no salga de aquí, pero...","note": "This stays between us, but... — adds conspiratorial flavour to the delivery."},
+{"context": "Telling a mate his girlfriend is trouble.","es": "Te lo digo como amigo, ¿eh?","note": "'I'm telling you as a friend' — the classic Spanish preamble before saying something they might not want to hear."},
+{"context": "Complaining about a situation at work.","es": "No me malinterpretes, pero esto ya es demasiado.","note": "Don't get me wrong, but this is too much — closer in structure to the English original."}
+]
+},
+{
+"id": "saying-6",
+"category": "sayings",
+"title": "it does what it says on the tin",
+"vibe": "Approving understatement — exactly what it promised, no more, no less. Unpretentious and reliable.",
+"literal_fail": "'Hace lo que pone en el bote' technically works as a reference but Spanish doesn't have the same advertising origin.",
+"examples": [
+{"context": "A cheap, basic hotel that was clean and comfortable.","es": "Cumplió con su cometido.","note": "It fulfilled its purpose — functional, no frills, did its job."},
+{"context": "A tool that works exactly as described.","es": "Es lo que es, sin más.","note": "'It is what it is, nothing more' — same energy of unpretentious reliability."},
+{"context": "A film that delivered exactly the action it promised.","es": "Ni más ni menos, lo que te esperabas.","note": "Exactly what you expected, nothing more or less — the Spanish equivalent of the sentiment."},
+{"context": "A restaurant that serves straightforward, honest food.","es": "Cocina honesta, sin artificios.","note": "Honest cooking, no tricks — a phrase used by food writers that captures the same ethos."},
+{"context": "Software that just works, no fuss.","es": "Funciona y punto.","note": "'It works, full stop' — the most concise Spanish way to say something does exactly what it should."}
+]
+},
+{
+"id": "saying-7",
+"category": "sayings",
+"title": "taking the mickey",
+"vibe": "British for teasing, mocking, or taking the piss — can be affectionate or genuinely accusatory.",
+"literal_fail": "There is no Mickey in Spanish. 'Tomar el pelo' (pull someone's hair) is the near-perfect equivalent.",
+"examples": [
+{"context": "A mate winds you up about your terrible parking.","es": "Me está tomando el pelo.","note": "'He's pulling my leg/hair' — tomar el pelo is the exact Spanish equivalent. Learn it."},
+{"context": "A shop charges an outrageous price for something basic.","es": "Esto es una tomadura de pelo.","note": "The noun form — a mickey-take, a rip-off. Very common in consumer complaints."},
+{"context": "Someone makes fun of how long you spent getting ready.","es": "¿Te estás quedando conmigo?","note": "Are you having me on? — also means 'are you taking the mickey?' Extremely common."},
+{"context": "A comedian roasts someone affectionately.","es": "Le está vacilando.","note": "Vacilar = to tease, wind up, take the mickey. Very common in Spain."},
+{"context": "A colleague questions if the timeline on a project is serious.","es": "¿Esto va en serio o qué?","note": "'Is this serious or what?' — disbelief that bleeds into feeling mocked."}
+]
+},
+{
+"id": "saying-8",
+"category": "sayings",
+"title": "goes without saying",
+"vibe": "Said before stating something obvious — paradoxically said even though it apparently goes without saying.",
+"literal_fail": "'Va sin decir' doesn't exist in Spanish. The equivalent is a completely different phrase.",
+"examples": [
+{"context": "Reminding someone that of course they're invited.","es": "Huelga decir que estás invitado.","note": "'It goes without saying' — huelga decir is the formal equivalent. Huelga = it strikes (as unnecessary)."},
+{"context": "Pointing out that of course quality costs more.","es": "Ni que decir tiene que la calidad tiene un precio.","note": "'It goes without saying that quality has a price' — ni que decir tiene is the most natural version."},
+{"context": "Before stating an obvious consequence.","es": "Está claro que...","note": "It's clear that... — simpler but widely used when something is assumed."},
+{"context": "Adding a caveat that's obviously understood.","es": "Por supuesto, sin que haga falta decirlo...","note": "Of course, without needing to say it... — verbose but correct."},
+{"context": "Reaffirming a given.","es": "Es de cajón.","note": "'It's in the drawer' — completely obvious, doesn't need to be said."}
+]
+},
+{
+"id": "saying-9",
+"category": "sayings",
+"title": "as it happens",
+"vibe": "Conversational pivot — used to introduce a convenient coincidence or a relevant fact, often with mild surprise.",
+"literal_fail": "'Como sucede' is too literal and sounds like a documentary. The Spanish has a completely different feel.",
+"examples": [
+{"context": "You mention you need a plumber and your friend happens to be one.","es": "Pues resulta que...","note": "'Well it turns out that...' — resultar is the go-to verb for convenient coincidences in Spanish."},
+{"context": "Someone asks if you've met the new boss and you have.","es": "Pues mira, da la casualidad de que sí.","note": "As it happens, yes — da la casualidad is the closest direct equivalent to 'as it happens.'"},
+{"context": "Revealing you already knew the answer all along.","es": "Casualmente, ya lo sabía.","note": "Casualmente = coincidentally, as it happens — slightly formal but very natural."},
+{"context": "Bringing up a relevant fact at exactly the right moment.","es": "Qué curioso que lo menciones.","note": "'How curious that you mention it' — cues the relevant information with mild surprise."},
+{"context": "A serendipitous connection at a party.","es": "Mira tú qué casualidad.","note": "Well what a coincidence — warm, slightly amused. Very natural spoken Spanish."}
+]
+},
+{
+"id": "saying-10",
+"category": "sayings",
+"title": "the penny's dropped",
+"vibe": "That moment when someone finally understands something they've been struggling with — the light comes on.",
+"literal_fail": "Coins and pennies don't carry the same metaphor in Spanish. You need a completely different image.",
+"examples": [
+{"context": "Someone finally understands the punchline of a joke.","es": "¡Ya cayó!","note": "He fell/dropped — caer is used for understanding clicking. '¡Ya caí!' = I finally got it."},
+{"context": "After five minutes of explanation, they finally get it.","es": "Por fin le ha entrado.","note": "'It finally went in' — the information finally penetrated. Very colloquial."},
+{"context": "A student suddenly grasps a concept after weeks of confusion.","es": "Ahora sí que lo pillo.","note": "Now I get it — pillar = to catch/get. Extremely common in Spain."},
+{"context": "Someone realises mid-conversation why you've been hinting.","es": "Se le encendió la bombilla.","note": "The lightbulb went on — same metaphor as English but different image. Used across Spain and Latin America."},
+{"context": "Finally understanding a complex instruction after a demo.","es": "¡Ahora lo veo clarísimo!","note": "Now I see it crystal clear — the moment of clarity expressed through vision."}
+]
+},
+{
+"id": "saying-11",
+"category": "sayings",
+"title": "not my circus not my monkeys",
+"vibe": "Cheerful detachment — not my problem, not my responsibility, I'm staying well out of it.",
+"literal_fail": "Interestingly, this phrase actually comes from Polish ('Nie mój cyrk, nie moje małpy'). Spaniards have their own equivalents.",
+"examples": [
+{"context": "Colleagues arguing about something that doesn't involve you.","es": "Eso no es asunto mío.","note": "That's not my business — clean, simple, the standard way to disengage."},
+{"context": "Drama in a friend group you're not part of.","es": "Yo no me meto en eso.","note": "I'm not getting involved in that — active choice to stay out, not just observation."},
+{"context": "Work chaos that belongs to another department.","es": "Eso lo tienen que resolver ellos.","note": "They need to sort that out themselves — assigns responsibility while removing yourself."},
+{"context": "Family drama you've wisely decided to avoid.","es": "Allá ellos.","note": "'Up to them' — short, final, beautifully detached. One of the most useful phrases in Spanish."},
+{"context": "Watching two friends argue while you sip your drink.","es": "Que se las apañen ellos.","note": "Let them manage it themselves — apañarse is that Spanish verb for muddling through on your own."}
+]
+},
+{
+"id": "saying-12",
+"category": "sayings",
+"title": "you're having a laugh",
+"vibe": "British disbelief — you can't be serious, this is absurd, surely this is a joke.",
+"literal_fail": "'Estás teniendo una risa' means nothing. Spanish expresses this with completely different constructions.",
+"examples": [
+{"context": "A shop wants €50 for a sandwich.","es": "¿Estás de broma?","note": "Are you joking? — the most direct Spanish equivalent. Deadpan delivery is key."},
+{"context": "The deadline has been moved to tomorrow.","es": "¿Me estás tomando el pelo?","note": "Are you pulling my leg? — slightly more personal, implies you think they're winding you up."},
+{"context": "Someone suggests a four-hour meeting.","es": "Esto no puede ser en serio.","note": "This can't be serious — calm, controlled disbelief."},
+{"context": "A parking fine for a spot that wasn't clearly marked.","es": "¡Vaya cara!","note": "What a nerve/cheek — cara (face) used for audacity. Very Spanish expression of indignation."},
+{"context": "They've cancelled the event at the last minute again.","es": "¡Menuda broma!","note": "What a joke — menudo/a + noun is the Spanish construction for 'what a [thing].' Sarcastic."}
+]
+},
+{
+"id": "saying-13",
+"category": "sayings",
+"title": "as luck would have it",
+"vibe": "Wry acknowledgement of coincidence — usually ironic, whether the luck was good or bad.",
+"literal_fail": "'Como la suerte quiso' is too poetic and formal. Natural Spanish uses shorter, more spoken constructions.",
+"examples": [
+{"context": "The one day you forget your umbrella, it pours.","es": "Como no podía ser de otra manera...","note": "'As it couldn't have been otherwise' — resigned, slightly ironic. Perfect for bad luck."},
+{"context": "You bump into exactly the person you needed to see.","es": "Qué oportuno / da la casualidad de que...","note": "How timely — or the coincidence construction. Depends on tone: lucky vs ironic."},
+{"context": "The train is late on the one important day.","es": "Pues claro, el día que más prisa tenía.","note": "Of course, the day I was in most of a hurry — resigned Spanish black humour."},
+{"context": "Finding €20 in an old jacket when you're broke.","es": "Mira tú la suerte.","note": "Look at that luck — genuine or ironic depending on tone. Versatile."},
+{"context": "The one colleague who could help is on holiday.","es": "Faltaría más.","note": "Of course, naturally — used ironically when something inconvenient is depressingly predictable."}
+]
+},
+{
+"id": "saying-14",
+"category": "sayings",
+"title": "hit the ground running",
+"vibe": "Starting something at full pace from the very first moment — no warming up, no easing in.",
+"literal_fail": "'Golpear el suelo corriendo' sounds like you fell over. Spanish uses different metaphors for fast starts.",
+"examples": [
+{"context": "A new employee who's already producing results in week one.","es": "Entró con todo desde el primer día.","note": "He came in with everything from day one — full commitment, no settling-in period."},
+{"context": "Launching a project at full speed immediately.","es": "Arrancamos a toda máquina.","note": "We started at full throttle — machine/engine metaphors are common in Spanish for speed."},
+{"context": "Starting the new year with immediate action.","es": "Empezar el año con el pie derecho.","note": "Starting on the right foot — slightly different (doing it right vs doing it fast) but the closest idiom."},
+{"context": "A team that needs no warm-up period.","es": "Se pusieron las pilas desde el primer momento.","note": "'They put their batteries in from the first moment' — got energised immediately."},
+{"context": "Diving straight into a new role after joining.","es": "Salió disparado desde el principio.","note": "He shot out from the start — disparado (fired like a bullet) captures the speed perfectly."}
+]
+},
+{
+"id": "saying-15",
+"category": "sayings",
+"title": "over the moon",
+"vibe": "Thrilled beyond words — used for genuine, exuberant joy about something that's gone brilliantly.",
+"literal_fail": "'Sobre la luna' doesn't work. Spanish happiness uses completely different imagery — not moons.",
+"examples": [
+{"context": "Your team just won the championship.","es": "Estamos contentísimos / estamos que no cabemos en nosotros mismos.","note": "'We don't fit inside ourselves' — bursting with joy. More vivid than any moon."},
+{"context": "Getting the job you really wanted.","es": "Estoy en el séptimo cielo.","note": "Seventh heaven — the closest spatial metaphor to 'over the moon' in Spanish."},
+{"context": "A new parent hearing their baby's first word.","es": "Estaba loco de alegría.","note": "Crazy with happiness — the intensity Spanish reaches for in moments of pure joy."},
+{"context": "Hearing your favourite band is touring again.","es": "Me hizo una ilusión enorme.","note": "It gave me enormous ilusión — ilusión means excited anticipation in Spanish, not illusion."},
+{"context": "Passing an exam you thought you'd failed.","es": "Me llevé una alegría enorme.","note": "I got an enormous piece of joy — the Spanish construction for receiving great news."}
+]
+},
+{
+"id": "saying-16",
+"category": "sayings",
+"title": "it's gone pear-shaped",
+"vibe": "Something has gone wrong — plans have collapsed, things have deteriorated, it's all off the rails.",
+"literal_fail": "'Se ha vuelto con forma de pera' is absurd. Spanish uses entirely different images for things falling apart.",
+"examples": [
+{"context": "A project that was going well suddenly implodes.","es": "Se fue todo al traste.","note": "'It all went to the draining board' — a mess, completely ruined. Very common."},
+{"context": "Holiday plans that collapse at the last minute.","es": "Todo se torció.","note": "Everything twisted/went wrong — torcerse is the verb for plans going sideways."},
+{"context": "A relationship that started well and ended badly.","es": "La cosa se complicó bastante.","note": "Things got complicated — the understated Spanish version of a deteriorating situation."},
+{"context": "The event that was supposed to be perfect descends into chaos.","es": "Se montó un lío de mucho cuidado.","note": "A right mess kicked off — lío is the Spanish word for chaos, tangle, trouble."},
+{"context": "A business deal that fell through spectacularly.","es": "Se fue a pique.","note": "It went down (like a sinking ship) — pique = to sink. Perfect for total collapse."}
+]
+},
+{
+"id": "saying-17",
+"category": "sayings",
+"title": "by the skin of your teeth",
+"vibe": "Barely made it — survival or success achieved with the absolute minimum margin possible.",
+"literal_fail": "Teeth have skin in English (Job 19:20, King James Bible). Spanish doesn't use this image.",
+"examples": [
+{"context": "Catching a train with literally ten seconds to spare.","es": "Lo pillamos por los pelos.","note": "'We caught it by the hairs' — por los pelos is the Spanish equivalent and it's perfect."},
+{"context": "Passing an exam with the minimum mark.","es": "Aprobé raspando.","note": "Raspar = to scrape — passed by scraping through. Vivid and very common."},
+{"context": "Arriving at a meeting just as it starts.","es": "Llegué justo.","note": "I arrived just in time — simple but effective. Add 'por los pelos' for drama."},
+{"context": "Finishing a project at the last possible second.","es": "Lo entregué in extremis.","note": "The Latin phrase 'in extremis' is used in Spanish too — at the last possible moment."},
+{"context": "Getting the last seat on a sold-out flight.","es": "Me quedé con la última plaza por casualidad.","note": "I got the last place by luck — coincidence and barely-there margins together."}
+]
+},
+{
+"id": "saying-18",
+"category": "sayings",
+"title": "couldn't make it up",
+"vibe": "Said when reality is so strange or unfortunate that it sounds fictional — you'd never believe it if it weren't true.",
+"literal_fail": "'No podrías inventarlo' is close but too passive. Spanish has more energetic ways of expressing this.",
+"examples": [
+{"context": "Something absurdly improbable happening on the worst day.","es": "Parece de broma pero es verdad.","note": "It sounds like a joke but it's true — the most direct Spanish equivalent of this feeling."},
+{"context": "A series of coincidences too unlikely to be believable.","es": "Esto no me lo invento yo.","note": "'I'm not making this up' — direct, indignant, very natural in storytelling."},
+{"context": "Describing a bizarre situation that actually happened.","es": "Si te lo cuento no te lo crees.","note": "If I told you you wouldn't believe it — classic storytelling opener in Spanish."},
+{"context": "Something going wrong in the most unlikely way.","es": "Solo a mí me pasa esto.","note": "'Only to me does this happen' — Spanish for being spectacularly unlucky. Everyone relates."},
+{"context": "An unbelievably bad day described to friends.","es": "Hay que verlo para creerlo.","note": "You have to see it to believe it — when the truth is stranger than fiction."}
+]
+},
+{
+"id": "saying-19",
+"category": "sayings",
+"title": "face like a smacked bottom",
+"vibe": "British for someone wearing a sour, miserable, or deeply unamused expression.",
+"literal_fail": "Translating this literally would be both wrong and alarming. Spanish has its own vivid face-based expressions.",
+"examples": [
+{"context": "Someone sitting at a party looking thoroughly miserable.","es": "Tiene cara de pocos amigos.","note": "'Face of few friends' — looking unfriendly, unapproachable, or deeply grumpy. Perfect."},
+{"context": "A colleague who looks furious after a meeting.","es": "Tiene una cara de vinagre.","note": "'Vinegar face' — sour, bitter expression. The Spanish equivalent hits just as hard."},
+{"context": "Someone tutting and sighing at everything.","es": "Está con una cara que no hay quien se le acerque.","note": "His face is such that no one can approach him — paints the picture vividly."},
+{"context": "A teenager who clearly doesn't want to be at the family dinner.","es": "Tiene mala cara.","note": "Has a bad face — simple but effective. Can mean ill or just grumpy, context decides."},
+{"context": "Someone looking put-out after being told no.","es": "Se le cayó la cara al suelo.","note": "His face fell to the floor — different emotion (more disappointment) but equally vivid imagery."}
+]
+},
+{
+"id": "saying-20",
+"category": "sayings",
+"title": "bit much isn't it",
+"vibe": "Mild British understatement for something excessive, inappropriate, or over the top — delivered with quiet exasperation.",
+"literal_fail": "'Un poco demasiado, ¿no?' works but sounds like a translation. Spanish understatement lands differently.",
+"examples": [
+{"context": "Someone shows up two hours late without apologising.","es": "Eso ya es pasarse.","note": "That's going too far — pasarse is the verb for overstepping a mark. Useful and very Spanish."},
+{"context": "A waiter who is borderline rude.","es": "Un poco de respeto, ¿no?","note": "A bit of respect, no? — quiet but pointed. The Spanish version of understated objection."},
+{"context": "Someone dominating every conversation at a dinner.","es": "Ya está bien, ¿no?","note": "That's enough, don't you think? — gentle but firm pushback on excess."},
+{"context": "A charge that seems excessive for a simple service.","es": "Me parece un abuso.","note": "I think it's an abuse — stronger than 'bit much' but lands in the same territory."},
+{"context": "Someone going over the top with drama about a minor thing.","es": "Tampoco es para tanto.","note": "It's not that big a deal — dismissing the excess with calm Spanish detachment."}
+]
+},
+{
+"id": "saying-21",
+"category": "sayings",
+"title": "blinding",
+"vibe": "British slang for something excellent — outstanding, brilliant, absolutely top-notch.",
+"literal_fail": "'Cegador' means blinding literally and sounds alarming. Spanish cool/excellence has its own vocabulary.",
+"examples": [
+{"context": "A goal scored from 30 yards that bends into the corner.","es": "¡Bestial!","note": "Beastly — the Spanish equivalent of blinding for something jaw-droppingly good."},
+{"context": "A meal that's just phenomenally good.","es": "Está de muerte.","note": "It's to die for — one of the strongest Spanish compliments for food. Delicious to the point of drama."},
+{"context": "A night out that goes better than expected.","es": "Fue brutal.","note": "Brutal — used positively in Spanish slang, like blinding. Completely excellent."},
+{"context": "Someone who plays football at an extraordinary level.","es": "Es una pasada.","note": "It's something else / it blows you away — pasada covers excellence that exceeds expectations."},
+{"context": "A piece of music that genuinely moves you.","es": "Flipante.","note": "Mind-blowing — flipar is to be amazed, wowed, blown away. Very current Spanish slang."}
+]
+},
+{
+"id": "saying-22",
+"category": "sayings",
+"title": "she'll be right",
+"vibe": "Breezy, optimistic dismissal of worry — it'll be fine, don't stress, things have a way of working out.",
+"literal_fail": "'Ella estará bien' sounds like you're worried about a specific woman. This is about situations, not people.",
+"examples": [
+{"context": "Worrying about whether the plan will work out.","es": "Ya se arreglará.","note": "'It'll sort itself out' — the Spanish disposition toward things working out. Very natural."},
+{"context": "Friends fretting about being slightly late.","es": "Tranquilos, que no pasa nada.","note": "Relax, nothing's going to happen — the great Spanish reassurance. Used constantly."},
+{"context": "Someone anxious about a minor problem.","es": "No te preocupes, eso tiene fácil arreglo.","note": "Don't worry, that's easily fixed — solving the problem by refusing to be bothered by it."},
+{"context": "Reassurance before a big presentation.","es": "Venga, que va a salir genial.","note": "Come on, it's going to go great — venga as an encourager, the Spanish 'come on.'"},
+{"context": "Someone worried whether guests will enjoy the food.","es": "Que sí, que sí, no te agobies.","note": "Yes, yes, don't stress — agobiarse is to get overwhelmed by worry. Dismissing the anxiety."}
+]
+},
+{
+"id": "saying-23",
+"category": "sayings",
+"title": "dead cert",
+"vibe": "Absolute certainty — there's no doubt, this is guaranteed, bank on it.",
+"literal_fail": "'Cierto muerto' means 'dead truth' which is nonsense. Spanish certainty uses different vocabulary.",
+"examples": [
+{"context": "Predicting a result before a match.","es": "Es seguro como la muerte y los impuestos.","note": "As certain as death and taxes — the Spanish equivalent idiom. Dramatic but widely known."},
+{"context": "Knowing you'll get the job before the interview.","es": "Eso está cantado.","note": "'It's sung' — already decided, a foregone conclusion. One of the most useful Spanish idioms."},
+{"context": "Knowing a horse will win before the race.","es": "Es un pleno seguro.","note": "A sure thing — pleno can mean a full win, a certainty. Betting language."},
+{"context": "Predicting a colleague will be chosen for the promotion.","es": "Eso está hecho.","note": "It's done — already decided, inevitable. Quiet confidence in the outcome."},
+{"context": "Someone is going to get in trouble — it's only a matter of when.","es": "Le va a caer una buena, seguro.","note": "He's going to get a good one, for sure — a punishment is certainly coming."}
+]
+},
+{
+"id": "saying-24",
+"category": "sayings",
+"title": "I'll give you that",
+"vibe": "Grudging concession — you disagree overall but acknowledge one specific point is fair. Debate culture staple.",
+"literal_fail": "'Te lo daré' sounds like you're about to hand someone something. Spanish concession works differently.",
+"examples": [
+{"context": "Admitting a rival team played well in defeat.","es": "Eso sí, en eso tienes razón.","note": "'That yes, in that you're right' — eso sí is the Spanish verbal move for a targeted concession."},
+{"context": "Agreeing with one point in an argument you're losing.","es": "Ahí te doy la razón.","note": "'There I give you reason' — dar la razón is the Spanish phrase for conceding a point."},
+{"context": "Acknowledging a flaw in your own argument.","es": "En eso, de acuerdo.","note": "On that, agreed — clipped, grudging, exactly the right tone."},
+{"context": "Admitting a competitor's product has one good feature.","es": "Hay que reconocer que en eso sí aciertan.","note": "You have to recognise that they get that right — reconocer (acknowledge) is the verb for grudging credit."},
+{"context": "Conceding a point to a sibling in a family argument.","es": "Vale, en eso puede que tengas razón.","note": "OK, on that you might be right — puede que softens it to a reluctant maybe."}
+]
+}]
