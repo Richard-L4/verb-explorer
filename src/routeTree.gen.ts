@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as FavouritesRouteImport } from './routes/favourites'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as StatisticsRouteImport } from './routes/statistics'
+import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrowseRoute = BrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavouritesRoute = FavouritesRouteImport.update({
+  id: '/favourites',
+  path: '/favourites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatisticsRoute = StatisticsRouteImport.update({
+  id: '/statistics',
+  path: '/statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CardCardIdRoute = CardCardIdRouteImport.update({
+  id: '/card/$cardId',
+  path: '/card/$cardId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/favourites': typeof FavouritesRoute
+  '/quiz': typeof QuizRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/statistics': typeof StatisticsRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/favourites': typeof FavouritesRoute
+  '/quiz': typeof QuizRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/statistics': typeof StatisticsRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/favourites': typeof FavouritesRoute
+  '/quiz': typeof QuizRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/statistics': typeof StatisticsRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/browse'
+    | '/favourites'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/statistics'
+    | '/card/$cardId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/browse'
+    | '/favourites'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/statistics'
+    | '/card/$cardId'
+  id:
+    | '__root__'
+    | '/'
+    | '/browse'
+    | '/favourites'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/statistics'
+    | '/card/$cardId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BrowseRoute: typeof BrowseRoute
+  FavouritesRoute: typeof FavouritesRoute
+  QuizRoute: typeof QuizRoute
+  SearchRoute: typeof SearchRoute
+  SettingsRoute: typeof SettingsRoute
+  StatisticsRoute: typeof StatisticsRoute
+  CardCardIdRoute: typeof CardCardIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/browse': {
+      id: '/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof BrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favourites': {
+      id: '/favourites'
+      path: '/favourites'
+      fullPath: '/favourites'
+      preLoaderRoute: typeof FavouritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/statistics': {
+      id: '/statistics'
+      path: '/statistics'
+      fullPath: '/statistics'
+      preLoaderRoute: typeof StatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/card/$cardId': {
+      id: '/card/$cardId'
+      path: '/card/$cardId'
+      fullPath: '/card/$cardId'
+      preLoaderRoute: typeof CardCardIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BrowseRoute: BrowseRoute,
+  FavouritesRoute: FavouritesRoute,
+  QuizRoute: QuizRoute,
+  SearchRoute: SearchRoute,
+  SettingsRoute: SettingsRoute,
+  StatisticsRoute: StatisticsRoute,
+  CardCardIdRoute: CardCardIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
