@@ -189,7 +189,7 @@
 }
 
 @utility surface-panel {
-  background-color: oklch(0.253 0.038 249 / 0.6);
+  background-color: oklch(0.447 0.082 250 / 0.6);
   border: 1px solid oklch(1 0 0 / 0.07);
   border-radius: var(--radius-xl);
   backdrop-filter: blur(10px);
