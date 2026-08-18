@@ -5,11 +5,84 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  vite: {
+    plugins: [
+      VitePWA({
+        strategies: "generateSW",
+        registerType: "autoUpdate",
+        injectRegister: null,
+        filename: "sw.js",
+        devOptions: { enabled: false },
+        includeAssets: ["favicon.png", "apple-touch-icon.png"],
+        manifest: {
+          name: "Verb Wise — Spanish verb cards",
+          short_name: "Verb Wise",
+          description:
+            "Interactive Spanish verb and saying cards for intermediate learners.",
+          id: "/",
+          start_url: "/",
+          scope: "/",
+          display: "standalone",
+          orientation: "portrait-primary",
+          background_color: "#234A6E",
+          theme_color: "#234A6E",
+          icons: [
+            { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+            { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+            {
+              src: "/pwa-maskable-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
+            },
+          ],
+        },
+        workbox: {
+          globPatterns: ["**/*.{js,css,png,svg,ico,woff,woff2}"],
+          navigateFallback: undefined,
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
+          skipWaiting: true,
+          navigationPreload: true,
+          runtimeCaching: [
+            {
+              // HTML navigations: always try the network first.
+              urlPattern: ({ request }: { request: Request }) => request.mode === "navigate",
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "verbwise-pages",
+                networkTimeoutSeconds: 5,
+                expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              },
+            },
+            {
+              urlPattern: ({ url, sameOrigin }: { url: URL; sameOrigin: boolean }) =>
+                sameOrigin && url.pathname.startsWith("/~oauth") === false && /\.(?:js|css|png|svg|woff2?)$/.test(url.pathname),
+              handler: "CacheFirst",
+              options: {
+                cacheName: "verbwise-assets",
+                expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              },
+            },
+            {
+              urlPattern: ({ url }: { url: URL }) => url.origin === "https://fonts.gstatic.com",
+              handler: "CacheFirst",
+              options: {
+                cacheName: "verbwise-fonts",
+                expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              },
+            },
+          ],
+        },
+      }),
+    ],
   },
 });
