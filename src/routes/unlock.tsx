@@ -27,7 +27,7 @@ export const Route = createFileRoute("/unlock")({
 });
 
 function UnlockRoute() {
-  const { unlocked, creator, fullAccess, price } = useAccess();
+  const { unlocked, creator, inTrial, trialDaysLeft } = useAccess();
 
   return (
     <PageTransition>
@@ -37,7 +37,7 @@ function UnlockRoute() {
         description="One-off payment. Yours permanently. No subscription."
       />
 
-      {unlocked || creator || fullAccess ? (
+      {unlocked || creator ? (
         <section className="surface-card gradient-soft relative overflow-hidden p-6 sm:p-9">
           <div className="relative flex flex-col items-start gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
@@ -58,7 +58,16 @@ function UnlockRoute() {
           </div>
         </section>
       ) : (
-        <Paywall />
+        <>
+          {inTrial ? (
+            <p className="mb-4 text-sm text-muted-foreground">
+              Your free trial is still running — {trialDaysLeft}{" "}
+              {trialDaysLeft === 1 ? "day" : "days"} left. Buy now to keep access permanently
+              once it ends.
+            </p>
+          ) : null}
+          <Paywall />
+        </>
       )}
     </PageTransition>
   );
