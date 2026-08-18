@@ -19,18 +19,21 @@ export function useAccess() {
   const daysLeft = store.trialDaysLeft(state);
   const creator = state.creator;
   const bannerPreview = creator ? rawPreview : null;
-  const inTrial = !creator && !state.unlocked && daysLeft > 0;
-  const fullAccess = creator || state.unlocked || daysLeft > 0;
+  /** Creator-only simulation: "expired" behaves exactly like a finished trial. */
+  const simulatedExpiry = bannerPreview === "expired";
+  const inTrial = simulatedExpiry ? false : !creator && !state.unlocked && daysLeft > 0;
+  const fullAccess = simulatedExpiry ? false : creator || state.unlocked || daysLeft > 0;
 
   /** True when this card id requires the unlock right now. */
   const isLocked = useCallback(
     (id: string) => {
+      if (simulatedExpiry) return !freeCardIds.has(id);
       if (state.creator) return false;
       if (state.unlocked) return false;
       if (store.trialDaysLeft(state) > 0) return false;
       return !freeCardIds.has(id);
     },
-    [state],
+    [state, simulatedExpiry],
   );
 
   return {
@@ -38,10 +41,10 @@ export function useAccess() {
     creator,
     bannerPreview,
     setBannerPreview: store.setBannerPreview,
-    unlocked: state.unlocked,
+    unlocked: simulatedExpiry ? false : state.unlocked,
     inTrial,
     fullAccess,
-    trialDaysLeft: daysLeft,
+    trialDaysLeft: simulatedExpiry ? 0 : daysLeft,
     isLocked,
     unlock: store.unlock,
     resetAccess: store.resetAccess,

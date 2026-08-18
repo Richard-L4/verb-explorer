@@ -37,7 +37,7 @@ export function TrialBanner() {
   if (!message) return null;
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6">
+    <div className="mx-auto mb-8 w-full max-w-6xl sm:mb-12">
       <div className="surface-card flex flex-col items-start justify-between gap-3 border border-primary/25 bg-primary/5 p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5">
         <p className="text-sm font-semibold text-foreground sm:text-base">
           {isPreview ? (

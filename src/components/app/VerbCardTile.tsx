@@ -62,7 +62,15 @@ export function VerbCardTile({
         </div>
 
         <div>
-          <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">{card.title}</h3>
+          <h3 className="flex items-center gap-2 font-display text-[1.6rem] font-bold leading-tight tracking-tight">
+            {locked ? (
+              <span className="grid size-8 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/10 text-primary">
+                <Lock className="size-4" aria-hidden="true" />
+                <span className="sr-only">Locked card</span>
+              </span>
+            ) : null}
+            {card.title}
+          </h3>
           {words.length ? (
             <div className="mt-3 flex flex-wrap gap-2">
               {words.map((w) => (

@@ -195,6 +195,7 @@ export function unlock() {
 
 /** Testing helper: clears the simulated purchase and restarts the trial clock. */
 export function resetAccess() {
+  setBannerPreview(null);
   write({ trialStart: new Date().toISOString(), unlocked: false, creator: cache.creator });
 }
 
