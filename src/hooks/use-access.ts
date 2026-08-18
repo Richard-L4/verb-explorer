@@ -12,12 +12,14 @@ export function useAccess() {
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
 
   const daysLeft = store.trialDaysLeft(state);
-  const inTrial = !state.unlocked && daysLeft > 0;
-  const fullAccess = state.unlocked || daysLeft > 0;
+  const creator = state.creator;
+  const inTrial = !creator && !state.unlocked && daysLeft > 0;
+  const fullAccess = creator || state.unlocked || daysLeft > 0;
 
   /** True when this card id requires the unlock right now. */
   const isLocked = useCallback(
     (id: string) => {
+      if (state.creator) return false;
       if (state.unlocked) return false;
       if (store.trialDaysLeft(state) > 0) return false;
       return !freeCardIds.has(id);
@@ -27,6 +29,7 @@ export function useAccess() {
 
   return {
     state,
+    creator,
     unlocked: state.unlocked,
     inTrial,
     fullAccess,

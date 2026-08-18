@@ -24,7 +24,7 @@ function Settings() {
   const { reset, studiedCount, learnedCount, state } = useLearner();
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const { unlocked, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price } = useAccess();
+  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price } = useAccess();
 
   return (
     <PageTransition>
@@ -53,7 +53,7 @@ function Settings() {
 
       <section className="surface-card mt-6 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
-          {unlocked ? (
+          {unlocked || creator ? (
             <Unlock className="size-5 text-primary" aria-hidden="true" />
           ) : (
             <Lock className="size-5 text-primary" aria-hidden="true" />
@@ -61,14 +61,16 @@ function Settings() {
           Access
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-foreground">
-          {unlocked
+          {creator
+            ? "Creator mode active. This browser has permanent full access to every card."
+            : unlocked
             ? `Unlocked. You paid the one-off ${price} and have permanent access to every card.`
             : inTrial
               ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After that the first ${freeCardCount} cards stay free and the rest need the one-off ${price} unlock.`
               : `Trial finished. The first ${freeCardCount} cards are free; the rest need the one-off ${price} unlock.`}
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
-          {!unlocked && inTrial ? (
+          {!creator && !unlocked && inTrial ? (
             <button
               type="button"
               onClick={endTrial}
