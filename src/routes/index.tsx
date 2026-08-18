@@ -16,12 +16,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Study tricky Spanish verb pairs like ser vs estar and por vs para with interactive cards, favourites and progress tracking.",
+          "Intermediate Spanish learners: stop freezing on the verbs your textbook glossed over. Real examples, side-by-side contrasts, the notes that make it stick.",
       },
       { property: "og:title", content: "Verbs — Learn Spanish verb contrasts with cards" },
       {
         property: "og:description",
-        content: "Interactive Spanish verb cards with real examples, favourites and saved progress.",
+        content:
+          "Intermediate Spanish learners: stop freezing on the verbs your textbook glossed over. Real examples, side-by-side contrasts, the notes that make it stick.",
       },
     ],
   }),
