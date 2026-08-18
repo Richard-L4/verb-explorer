@@ -12,11 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as FavouritesRouteImport } from './routes/favourites'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SayingsRouteImport } from './routes/sayings'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as StatisticsRouteImport } from './routes/statistics'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 
@@ -35,9 +38,19 @@ const FavouritesRoute = FavouritesRouteImport.update({
   path: '/favourites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SayingsRoute = SayingsRouteImport.update({
@@ -60,6 +73,11 @@ const StatisticsRoute = StatisticsRouteImport.update({
   path: '/statistics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CardCardIdRoute = CardCardIdRouteImport.update({
   id: '/card/$cardId',
   path: '/card/$cardId',
@@ -75,11 +93,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
+  '/terms': typeof TermsRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -87,11 +108,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
+  '/terms': typeof TermsRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -100,11 +124,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/favourites': typeof FavouritesRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
+  '/terms': typeof TermsRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -114,11 +141,14 @@ export interface FileRouteTypes {
     | '/'
     | '/browse'
     | '/favourites'
+    | '/privacy'
     | '/quiz'
+    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
+    | '/terms'
     | '/card/$cardId'
     | '/saying/$sayingId'
   fileRoutesByTo: FileRoutesByTo
@@ -126,11 +156,14 @@ export interface FileRouteTypes {
     | '/'
     | '/browse'
     | '/favourites'
+    | '/privacy'
     | '/quiz'
+    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
+    | '/terms'
     | '/card/$cardId'
     | '/saying/$sayingId'
   id:
@@ -138,11 +171,14 @@ export interface FileRouteTypes {
     | '/'
     | '/browse'
     | '/favourites'
+    | '/privacy'
     | '/quiz'
+    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
     | '/statistics'
+    | '/terms'
     | '/card/$cardId'
     | '/saying/$sayingId'
   fileRoutesById: FileRoutesById
@@ -151,11 +187,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
   FavouritesRoute: typeof FavouritesRoute
+  PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
+  RefundsRoute: typeof RefundsRoute
   SayingsRoute: typeof SayingsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   StatisticsRoute: typeof StatisticsRoute
+  TermsRoute: typeof TermsRoute
   CardCardIdRoute: typeof CardCardIdRoute
   SayingSayingIdRoute: typeof SayingSayingIdRoute
 }
@@ -183,11 +222,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavouritesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sayings': {
@@ -218,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StatisticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/card/$cardId': {
       id: '/card/$cardId'
       path: '/card/$cardId'
@@ -239,11 +299,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
   FavouritesRoute: FavouritesRoute,
+  PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
+  RefundsRoute: RefundsRoute,
   SayingsRoute: SayingsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   StatisticsRoute: StatisticsRoute,
+  TermsRoute: TermsRoute,
   CardCardIdRoute: CardCardIdRoute,
   SayingSayingIdRoute: SayingSayingIdRoute,
 }

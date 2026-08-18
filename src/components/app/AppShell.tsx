@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import { Menu, X } from "lucide-react";
 import { navItems } from "./nav-items";
+import { SiteFooter } from "./SiteFooter";
 import { cn } from "@/lib/utils";
 
 const linkBase =
@@ -87,9 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">{children}</main>
 
-      <footer className="border-t border-border/60 py-8 text-center text-xs tracking-wide text-muted-foreground">
-        Verb Wise — Spanish verb contrasts, one card at a time.
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
