@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, AlertTriangle, Quote } from "lucide-react";
 import { getCard, getNeighbours, getCardIndex, cardCount } from "@/data/cards";
 import { useLearner } from "@/hooks/use-learner";
+import { useAccess } from "@/hooks/use-access";
+import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
 import { FavouriteButton } from "@/components/app/FavouriteButton";
 import { LearnedButton } from "@/components/app/LearnedButton";
@@ -35,12 +37,15 @@ export const Route = createFileRoute("/card/$cardId")({
 function CardDetail() {
   const { card } = Route.useLoaderData();
   const { isFavourite, isLearned, toggleFavourite, toggleLearned, markViewed } = useLearner();
+  const { isLocked } = useAccess();
+  const locked = isLocked(card.id);
   const { prev, next } = getNeighbours(card.id);
   const position = getCardIndex(card.id) + 1;
 
   useEffect(() => {
+    if (locked) return;
     markViewed(card.id);
-  }, [card.id, markViewed]);
+  }, [card.id, locked, markViewed]);
 
   return (
     <PageTransition>
@@ -51,6 +56,19 @@ function CardDetail() {
         <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" /> Back to browse
       </Link>
 
+      {locked ? (
+        <div className="mt-4">
+          <Paywall title={card.title} />
+        </div>
+      ) : (
+        <CardBody />
+      )}
+    </PageTransition>
+  );
+
+  function CardBody() {
+    return (
+      <>
       <header className="surface-card gradient-soft hairline-top relative mt-4 overflow-hidden p-6 sm:p-9">
         <span
           aria-hidden="true"
@@ -150,6 +168,7 @@ function CardDetail() {
           </Link>
         ) : null}
       </nav>
-    </PageTransition>
-  );
+      </>
+    );
+  }
 }

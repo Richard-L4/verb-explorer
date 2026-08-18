@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, Database } from "lucide-react";
+import { AlertTriangle, Database, Lock, Unlock } from "lucide-react";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { cardCount } from "@/data/cards";
+import { useAccess } from "@/hooks/use-access";
 
 export const Route = createFileRoute("/settings")({
   component: Settings,
@@ -23,6 +24,7 @@ function Settings() {
   const { reset, studiedCount, learnedCount, state } = useLearner();
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
+  const { unlocked, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price } = useAccess();
 
   return (
     <PageTransition>
@@ -47,6 +49,42 @@ function Settings() {
         <p className="mt-4 text-sm text-muted-foreground">
           {state.favourites.length} favourite{state.favourites.length === 1 ? "" : "s"} saved.
         </p>
+      </section>
+
+      <section className="surface-card mt-6 p-6 sm:p-7">
+        <h2 className="flex items-center gap-2.5 text-xl font-bold">
+          {unlocked ? (
+            <Unlock className="size-5 text-primary" aria-hidden="true" />
+          ) : (
+            <Lock className="size-5 text-primary" aria-hidden="true" />
+          )}{" "}
+          Access
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm text-foreground">
+          {unlocked
+            ? `Unlocked. You paid the one-off ${price} and have permanent access to every card.`
+            : inTrial
+              ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After that the first ${freeCardCount} cards stay free and the rest need the one-off ${price} unlock.`
+              : `Trial finished. The first ${freeCardCount} cards are free; the rest need the one-off ${price} unlock.`}
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          {!unlocked && inTrial ? (
+            <button
+              type="button"
+              onClick={endTrial}
+              className="min-h-11 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:bg-secondary"
+            >
+              End trial now (testing)
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={resetAccess}
+            className="min-h-11 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            Reset purchase and trial (testing)
+          </button>
+        </div>
       </section>
 
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">

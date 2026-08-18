@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, AlertTriangle, Quote } from "lucide-react";
 import { getSaying, getSayingNeighbours, getSayingIndex, sayingCount } from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
+import { useAccess } from "@/hooks/use-access";
+import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
 import { FavouriteButton } from "@/components/app/FavouriteButton";
 import { LearnedButton } from "@/components/app/LearnedButton";
@@ -37,12 +39,15 @@ export const Route = createFileRoute("/saying/$sayingId")({
 function SayingDetail() {
   const { saying } = Route.useLoaderData();
   const { isFavourite, isLearned, toggleFavourite, toggleLearned, markViewed } = useLearner();
+  const { isLocked } = useAccess();
+  const locked = isLocked(saying.id);
   const { prev, next } = getSayingNeighbours(saying.id);
   const position = getSayingIndex(saying.id) + 1;
 
   useEffect(() => {
+    if (locked) return;
     markViewed(saying.id);
-  }, [saying.id, markViewed]);
+  }, [saying.id, locked, markViewed]);
 
   return (
     <PageTransition>
@@ -54,6 +59,19 @@ function SayingDetail() {
         to sayings
       </Link>
 
+      {locked ? (
+        <div className="mt-4">
+          <Paywall title={saying.title} />
+        </div>
+      ) : (
+        <SayingBody />
+      )}
+    </PageTransition>
+  );
+
+  function SayingBody() {
+    return (
+      <>
       <header className="surface-card gradient-soft hairline-top relative mt-4 overflow-hidden p-6 sm:p-9">
         <span
           aria-hidden="true"
@@ -156,6 +174,7 @@ function SayingDetail() {
           </Link>
         ) : null}
       </nav>
-    </PageTransition>
-  );
+      </>
+    );
+  }
 }
