@@ -81,16 +81,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Verbs — Spanish verb cards" },
       {
         name: "description",
-        content: "Learn tricky Spanish verb contrasts with interactive cards, examples and saved progress.",
+        content:
+          "Intermediate Spanish learners: stop freezing on the verbs your textbook glossed over. Real examples, side-by-side contrasts, the notes that make it stick.",
       },
       { property: "og:title", content: "Verbs — Spanish verb cards" },
       {
         property: "og:description",
-        content: "Learn tricky Spanish verb contrasts with interactive cards, examples and saved progress.",
+        content:
+          "Intermediate Spanish learners: stop freezing on the verbs your textbook glossed over. Real examples, side-by-side contrasts, the notes that make it stick.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@Richard_Wells79" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
