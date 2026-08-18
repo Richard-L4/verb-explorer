@@ -20,6 +20,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as StatisticsRouteImport } from './routes/statistics'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 
@@ -78,6 +79,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnlockRoute = UnlockRouteImport.update({
+  id: '/unlock',
+  path: '/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CardCardIdRoute = CardCardIdRouteImport.update({
   id: '/card/$cardId',
   path: '/card/$cardId',
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/terms': typeof TermsRoute
+  '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/terms': typeof TermsRoute
+  '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/statistics': typeof StatisticsRoute
   '/terms': typeof TermsRoute
+  '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/statistics'
     | '/terms'
+    | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/statistics'
     | '/terms'
+    | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/statistics'
     | '/terms'
+    | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   StatisticsRoute: typeof StatisticsRoute
   TermsRoute: typeof TermsRoute
+  UnlockRoute: typeof UnlockRoute
   CardCardIdRoute: typeof CardCardIdRoute
   SayingSayingIdRoute: typeof SayingSayingIdRoute
 }
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unlock': {
+      id: '/unlock'
+      path: '/unlock'
+      fullPath: '/unlock'
+      preLoaderRoute: typeof UnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/card/$cardId': {
       id: '/card/$cardId'
       path: '/card/$cardId'
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   StatisticsRoute: StatisticsRoute,
   TermsRoute: TermsRoute,
+  UnlockRoute: UnlockRoute,
   CardCardIdRoute: CardCardIdRoute,
   SayingSayingIdRoute: SayingSayingIdRoute,
 }

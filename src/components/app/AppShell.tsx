@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
+import { TrialBanner } from "./TrialBanner";
 import { cn } from "@/lib/utils";
 
 const linkBase =
