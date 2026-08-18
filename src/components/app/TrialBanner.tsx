@@ -24,13 +24,16 @@ export function TrialBanner() {
   let message: string | null = null;
   const isPreview = bannerPreview !== null;
 
+  // A real purchase always hides the countdown, even while a creator preview is active.
+  if (unlocked) return null;
+
   if (isPreview) {
     message =
       bannerPreview === "expired"
         ? reminderFor(0, false)
         : reminderFor(bannerPreview as number, true);
   } else {
-    if (creator || unlocked) return null;
+    if (creator) return null;
     if (inTrial && ![7, 3, 2, 1].includes(trialDaysLeft)) return null;
     message = reminderFor(trialDaysLeft, inTrial);
   }
