@@ -160,6 +160,9 @@ function Settings() {
           Verbs runs entirely in your browser from a single JSON dataset of {cardCount} verb cards. More cards can be added
           to the dataset without changing the app.
         </p>
+         <p className="mt-3 text-sm text-muted-foreground">
+         Card content generated with AI assistance and reviewed for accuracy.
+        </p>
       </section>
     </PageTransition>
   );
