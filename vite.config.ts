@@ -48,6 +48,7 @@ export default defineConfig({
         },
         workbox: {
           globPatterns: ["**/*.{js,css,png,svg,ico,woff,woff2}"],
+          globIgnores: ["**/sw.js", "**/workbox-*.js", "**/_headers"],
           navigateFallback: null,
           cleanupOutdatedCaches: true,
           clientsClaim: true,
