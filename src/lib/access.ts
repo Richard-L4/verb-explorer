@@ -15,6 +15,7 @@ export interface AccessState {
 }
 
 export const ACCESS_STORAGE_KEY = "verbo.access.v1";
+export const BANNER_PREVIEW_KEY = "verbo.banner-preview.v1";
 export const CREATOR_STORAGE_KEY = "creator_access";
 export const CREATOR_QUERY_KEY = "creator";
 export const CREATOR_QUERY_VALUE = "hilary53";
@@ -120,6 +121,45 @@ export function getSnapshot(): AccessState {
 
 export function getServerSnapshot(): AccessState {
   return emptyAccess;
+}
+
+/** Creator-only, display-only override for the trial banner. Never affects entitlement. */
+export type BannerPreview = 7 | 3 | 2 | 1 | "expired" | null;
+
+let previewCache: BannerPreview = null;
+
+function readPreview(): BannerPreview {
+  if (!isBrowser()) return null;
+  try {
+    const raw = window.localStorage.getItem(BANNER_PREVIEW_KEY);
+    if (!raw) return null;
+    if (raw === "expired") return "expired";
+    const n = Number(raw);
+    return n === 7 || n === 3 || n === 2 || n === 1 ? (n as BannerPreview) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function getBannerPreview(): BannerPreview {
+  return previewCache;
+}
+
+export function getBannerPreviewServer(): BannerPreview {
+  return null;
+}
+
+export function setBannerPreview(value: BannerPreview) {
+  previewCache = value;
+  if (isBrowser()) {
+    try {
+      if (value === null) window.localStorage.removeItem(BANNER_PREVIEW_KEY);
+      else window.localStorage.setItem(BANNER_PREVIEW_KEY, String(value));
+    } catch {
+      /* storage unavailable — keep in-memory state */
+    }
+  }
+  listeners.forEach((l) => l());
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
