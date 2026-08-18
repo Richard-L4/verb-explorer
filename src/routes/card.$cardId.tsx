@@ -168,6 +168,7 @@ function CardDetail() {
           </Link>
         ) : null}
       </nav>
-    </PageTransition>
-  );
+      </>
+    );
+  }
 }
