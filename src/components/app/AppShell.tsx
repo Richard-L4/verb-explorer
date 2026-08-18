@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
 import { cn } from "@/lib/utils";
@@ -86,7 +86,26 @@ export function AppShell({ children }: { children: ReactNode }) {
         </AnimatePresence>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">
+        {children}
+        <div className="mx-auto mt-24 flex w-full max-w-[16rem] justify-center">
+          <a
+            href="https://richard-wells.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="For more products visit richard-wells.com (opens in a new tab)"
+            className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border/70 bg-card/50 px-5 py-3 text-sm font-medium backdrop-blur transition-all duration-200 hover:border-primary/40 hover:bg-secondary"
+          >
+            <span className="text-center leading-tight">
+              For more products visit richard-wells.com
+            </span>
+            <ArrowRight
+              className="size-4 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+      </main>
 
       <SiteFooter />
     </div>
