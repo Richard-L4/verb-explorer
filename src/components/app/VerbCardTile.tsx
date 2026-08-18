@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import type { VerbCard } from "@/data/cards";
 import { cardWords, exampleCount } from "@/data/cards";
 import { FavouriteButton } from "./FavouriteButton";
@@ -12,6 +12,7 @@ export function VerbCardTile({
   learned,
   studied,
   onToggleFavourite,
+  locked = false,
   index = 0,
 }: {
   card: VerbCard;
@@ -19,6 +20,7 @@ export function VerbCardTile({
   learned: boolean;
   studied: boolean;
   onToggleFavourite: (id: string) => void;
+  locked?: boolean;
   index?: number;
 }) {
   const words = cardWords(card);
@@ -43,7 +45,13 @@ export function VerbCardTile({
         />
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <StatusPill tone={learned ? "learned" : studied ? "studied" : "new"} />
+            {locked ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
+                <Lock className="size-3" aria-hidden="true" /> Locked
+              </span>
+            ) : (
+              <StatusPill tone={learned ? "learned" : studied ? "studied" : "new"} />
+            )}
             {card.category ? (
               <span className="rounded-full border border-border/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 {card.category}
@@ -76,7 +84,7 @@ export function VerbCardTile({
         <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
           <span className="tabular-nums">{examples} example{examples === 1 ? "" : "s"}</span>
           <span className="inline-flex items-center gap-1.5 font-semibold text-primary">
-            Study
+            {locked ? "Unlock" : "Study"}
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </span>
         </div>
