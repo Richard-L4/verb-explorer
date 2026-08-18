@@ -19,17 +19,32 @@ function reminderFor(daysLeft: number, trialActive: boolean): string | null {
 }
 
 export function TrialBanner() {
-  const { creator, unlocked, inTrial, trialDaysLeft, price } = useAccess();
-  if (creator || unlocked) return null;
-  if (inTrial && ![7, 3, 2, 1].includes(trialDaysLeft)) return null;
+  const { creator, unlocked, inTrial, trialDaysLeft, price, bannerPreview } = useAccess();
 
-  const message = reminderFor(trialDaysLeft, inTrial);
+  let message: string | null = null;
+  const isPreview = bannerPreview !== null;
+
+  if (isPreview) {
+    message =
+      bannerPreview === "expired"
+        ? reminderFor(0, false)
+        : reminderFor(bannerPreview as number, true);
+  } else {
+    if (creator || unlocked) return null;
+    if (inTrial && ![7, 3, 2, 1].includes(trialDaysLeft)) return null;
+    message = reminderFor(trialDaysLeft, inTrial);
+  }
   if (!message) return null;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6">
       <div className="surface-card flex flex-col items-start justify-between gap-3 border border-primary/25 bg-primary/5 p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5">
         <p className="text-sm font-semibold text-foreground sm:text-base">
+          {isPreview ? (
+            <span className="mr-2 rounded-full border border-border bg-background/40 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              Preview
+            </span>
+          ) : null}
           {message}
         </p>
         <Link
