@@ -62,7 +62,13 @@ export function SayingCardTile({
         </div>
 
         <div>
-          <h3 className="text-balance font-display text-[1.45rem] font-bold leading-tight tracking-tight">
+          <h3 className="flex items-center gap-2 text-balance font-display text-[1.45rem] font-bold leading-tight tracking-tight">
+            {locked ? (
+              <span className="grid size-8 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/10 text-primary">
+                <Lock className="size-4" aria-hidden="true" />
+                <span className="sr-only">Locked card</span>
+              </span>
+            ) : null}
             {saying.title}
           </h3>
           {preview.length ? (
