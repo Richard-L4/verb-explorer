@@ -40,7 +40,7 @@ Because the message is derived from the current days-remaining value, it renders
 
 ## 5. Trial expiry
 
-Unchanged: first 10 cards free, everything else paywalled by the existing `Paywall`. When the trial has ended and nothing is purchased, the same banner slot shows "Your full-access trial has ended." with the same "Buy now — £4.99" CTA.
+Unchanged: first 10 cards free, everything else paywalled by the existing `Paywall`. The expired/unpurchased banner ("Your full-access trial has ended." with the "Buy now — £4.99" CTA) is covered by the visibility rule in section 4.
 
 ## Technical detail
 
