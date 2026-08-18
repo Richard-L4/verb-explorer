@@ -10,9 +10,15 @@ export function useAccess() {
   }, []);
 
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
+  const rawPreview = useSyncExternalStore(
+    store.subscribe,
+    store.getBannerPreview,
+    store.getBannerPreviewServer,
+  );
 
   const daysLeft = store.trialDaysLeft(state);
   const creator = state.creator;
+  const bannerPreview = creator ? rawPreview : null;
   const inTrial = !creator && !state.unlocked && daysLeft > 0;
   const fullAccess = creator || state.unlocked || daysLeft > 0;
 
@@ -30,6 +36,8 @@ export function useAccess() {
   return {
     state,
     creator,
+    bannerPreview,
+    setBannerPreview: store.setBannerPreview,
     unlocked: state.unlocked,
     inTrial,
     fullAccess,
