@@ -91,6 +91,7 @@ export function hydrate() {
   if (hydrated || !isBrowser()) return;
   hydrated = true;
   if (creatorParamPresent()) enableCreatorAccess();
+  previewCache = readPreview();
   const current = read();
   if (!current.trialStart) {
     write({ ...current, trialStart: new Date().toISOString() });
@@ -110,7 +111,14 @@ export function subscribe(listener: () => void) {
 }
 
 function onStorage(event: StorageEvent) {
-  if (event.key && event.key !== ACCESS_STORAGE_KEY && event.key !== CREATOR_STORAGE_KEY) return;
+  if (
+    event.key &&
+    event.key !== ACCESS_STORAGE_KEY &&
+    event.key !== CREATOR_STORAGE_KEY &&
+    event.key !== BANNER_PREVIEW_KEY
+  )
+    return;
+  previewCache = readPreview();
   cache = read();
   listeners.forEach((l) => l());
 }
