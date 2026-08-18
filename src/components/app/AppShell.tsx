@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="For more products visit richard-wells.com (opens in a new tab)"
-            className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary px-5 py-3 text-sm font-semibold text-black transition-all duration-200 hover:brightness-95"
+            className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary px-5 py-3 text-sm font-semibold text-black transition-all duration-200 hover:bg-white"
           >
             <span className="text-center leading-tight">
               For more products visit richard-wells.com
