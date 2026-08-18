@@ -24,7 +24,8 @@ function Settings() {
   const { reset, studiedCount, learnedCount, state } = useLearner();
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price } = useAccess();
+  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price, bannerPreview, setBannerPreview } =
+    useAccess();
 
   return (
     <PageTransition>
@@ -106,6 +107,42 @@ function Settings() {
             >
               Reset test state
             </button>
+          </div>
+
+          <div className="mt-6 border-t border-border/70 pt-5">
+            <h3 className="text-sm font-bold">Preview trial banner</h3>
+            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+              Display-only. Overrides what the trial banner shows without changing the real trial date, purchase state or
+              access to cards.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {([7, 3, 2, 1, "expired"] as const).map((value) => {
+                const active = bannerPreview === value;
+                return (
+                  <button
+                    key={String(value)}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setBannerPreview(active ? null : value)}
+                    className={`min-h-10 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                      active
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card hover:bg-secondary"
+                    }`}
+                  >
+                    {value === "expired" ? "Expired" : `${value} day${value === 1 ? "" : "s"}`}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() => setBannerPreview(null)}
+                disabled={bannerPreview === null}
+                className="min-h-10 rounded-full border border-border bg-card px-4 text-sm font-semibold transition-colors hover:bg-secondary disabled:opacity-50"
+              >
+                Clear preview
+              </button>
+            </div>
           </div>
         </section>
       ) : null}
