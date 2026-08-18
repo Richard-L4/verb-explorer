@@ -26,12 +26,13 @@ The Settings Access panel gains a "Buy now — £4.99" link to `/unlock` while t
 
 A new `TrialBanner` component renders inside the app shell, directly under the header and above page content, so it never covers cards, navigation or learning content.
 
-It appears only when the trial is active, the user has not purchased, creator mode is off, and days remaining is 7, 3, 2 or 1:
+Visibility rule: render the banner when creator mode is off and the user has not purchased, and either (a) the trial is active with days remaining at 7, 3, 2 or 1, or (b) the trial has expired. In all other cases return `null`. Messages:
 
 - 7 days left in your full-access trial.
 - 3 days left in your full-access trial.
 - 2 days left in your full-access trial.
 - Your full-access trial ends tomorrow.
+- Your full-access trial has ended.  (expired/unpurchased state)
 
 Each banner includes a single, obvious "Buy now — £4.99" button linking into the existing purchase flow at `/unlock`. Styling reuses the existing card/pill language (soft surface, hairline border, green primary CTA) so it reads as part of the app rather than an ad.
 
