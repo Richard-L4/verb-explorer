@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Database, Lock, Unlock } from "lucide-react";
@@ -69,25 +69,46 @@ function Settings() {
               ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After that the first ${freeCardCount} cards stay free and the rest need the one-off ${price} unlock.`
               : `Trial finished. The first ${freeCardCount} cards are free; the rest need the one-off ${price} unlock.`}
         </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          {!creator && !unlocked && inTrial ? (
+        {!creator && !unlocked ? (
+          <div className="mt-5">
+            <Link
+              to="/unlock"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              Buy now — {price}
+            </Link>
+          </div>
+        ) : null}
+      </section>
+
+      {creator ? (
+        <section className="surface-card mt-6 p-6 sm:p-7">
+          <h2 className="flex items-center gap-2.5 text-xl font-bold">
+            <Lock className="size-5 text-primary" aria-hidden="true" /> Developer / Testing
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+            Local testing shortcuts for the trial and access state. These never create a genuine paid entitlement or affect a real payment record.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {inTrial ? (
+              <button
+                type="button"
+                onClick={endTrial}
+                className="min-h-11 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:bg-secondary"
+              >
+                End trial now
+              </button>
+            ) : null}
             <button
               type="button"
-              onClick={endTrial}
+              onClick={resetAccess}
               className="min-h-11 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:bg-secondary"
             >
-              End trial now (testing)
+              Reset test state
             </button>
-          ) : null}
-          <button
-            type="button"
-            onClick={resetAccess}
-            className="min-h-11 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
-            Reset purchase and trial (testing)
-          </button>
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
 
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
