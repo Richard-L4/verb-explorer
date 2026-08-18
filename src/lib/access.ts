@@ -10,14 +10,19 @@ export interface AccessState {
   trialStart: string | null;
   /** True once the one-off unlock has been purchased. */
   unlocked: boolean;
+  /** Creator override — permanent full access, set via ?creator=<key>. */
+  creator: boolean;
 }
 
 export const ACCESS_STORAGE_KEY = "verbo.access.v1";
+export const CREATOR_STORAGE_KEY = "creator_access";
+export const CREATOR_QUERY_KEY = "creator";
+export const CREATOR_QUERY_VALUE = "hilary53";
 export const TRIAL_DAYS = 14;
 export const FREE_CARD_COUNT = 10;
 export const UNLOCK_PRICE = "£4.99";
 
-export const emptyAccess: AccessState = { trialStart: null, unlocked: false };
+export const emptyAccess: AccessState = { trialStart: null, unlocked: false, creator: false };
 
 const listeners = new Set<() => void>();
 let cache: AccessState = emptyAccess;
@@ -29,16 +34,23 @@ function isBrowser() {
 
 function read(): AccessState {
   if (!isBrowser()) return emptyAccess;
+  let creatorFlag = false;
+  try {
+    creatorFlag = window.localStorage.getItem(CREATOR_STORAGE_KEY) === "true";
+  } catch {
+    creatorFlag = false;
+  }
   try {
     const raw = window.localStorage.getItem(ACCESS_STORAGE_KEY);
-    if (!raw) return emptyAccess;
+    if (!raw) return { ...emptyAccess, creator: creatorFlag };
     const parsed = JSON.parse(raw) as Partial<AccessState>;
     return {
       trialStart: typeof parsed.trialStart === "string" ? parsed.trialStart : null,
       unlocked: parsed.unlocked === true,
+      creator: creatorFlag || parsed.creator === true,
     };
   } catch {
-    return emptyAccess;
+    return { ...emptyAccess, creator: creatorFlag };
   }
 }
 
@@ -47,6 +59,7 @@ function write(next: AccessState) {
   if (isBrowser()) {
     try {
       window.localStorage.setItem(ACCESS_STORAGE_KEY, JSON.stringify(next));
+      if (next.creator) window.localStorage.setItem(CREATOR_STORAGE_KEY, "true");
     } catch {
       /* storage unavailable — keep in-memory state */
     }
@@ -54,9 +67,29 @@ function write(next: AccessState) {
   listeners.forEach((l) => l());
 }
 
+/** Permanently marks this browser as the creator's. No-op if already set. */
+export function enableCreatorAccess() {
+  const current = read();
+  if (current.creator) {
+    cache = current;
+    return;
+  }
+  write({ ...current, creator: true });
+}
+
+function creatorParamPresent() {
+  if (!isBrowser()) return false;
+  try {
+    return new URLSearchParams(window.location.search).get(CREATOR_QUERY_KEY) === CREATOR_QUERY_VALUE;
+  } catch {
+    return false;
+  }
+}
+
 export function hydrate() {
   if (hydrated || !isBrowser()) return;
   hydrated = true;
+  if (creatorParamPresent()) enableCreatorAccess();
   const current = read();
   if (!current.trialStart) {
     write({ ...current, trialStart: new Date().toISOString() });
@@ -76,7 +109,7 @@ export function subscribe(listener: () => void) {
 }
 
 function onStorage(event: StorageEvent) {
-  if (event.key && event.key !== ACCESS_STORAGE_KEY) return;
+  if (event.key && event.key !== ACCESS_STORAGE_KEY && event.key !== CREATOR_STORAGE_KEY) return;
   cache = read();
   listeners.forEach((l) => l());
 }
@@ -114,7 +147,7 @@ export function unlock() {
 
 /** Testing helper: clears the simulated purchase and restarts the trial clock. */
 export function resetAccess() {
-  write({ trialStart: new Date().toISOString(), unlocked: false });
+  write({ trialStart: new Date().toISOString(), unlocked: false, creator: cache.creator });
 }
 
 /** Testing helper: ends the trial immediately so the paywall can be seen. */
