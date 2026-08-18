@@ -22,7 +22,6 @@ export function TrialBanner() {
   const { creator, unlocked, inTrial, trialDaysLeft, price } = useAccess();
   if (creator || unlocked) return null;
   if (inTrial && ![7, 3, 2, 1].includes(trialDaysLeft)) return null;
-  if (!inTrial && unlocked) return null;
 
   const message = reminderFor(trialDaysLeft, inTrial);
   if (!message) return null;
