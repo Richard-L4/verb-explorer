@@ -9,13 +9,13 @@ Two secure forms (values never appear in chat):
 - Supabase: project URL, publishable/anon key, service role key
 - Stripe: secret key (`sk_...`) and, after the webhook is created, the webhook signing secret (`whsec_...`)
 
-Once the Supabase keys are in, step 1 is to read your existing `customers`, `products`, `prices`, `purchases` schema and report exactly what (if anything) needs changing. I will not run any migration before showing you that report and getting your go-ahead. Expected gap for guest checkout: a way to look up a purchase by Stripe checkout session id — if `purchases` has no such column, I'll propose adding one nullable column rather than a new table.
+Once the Supabase keys are in, step 1 is to read your existing `customers`, `products`, `prices`, `purchases` schema and report exactly what (if anything) needs changing. I will not run any migration before showing you that report and getting your go-ahead. Expected gaps: a way to look up a purchase by Stripe checkout session id, and a nullable boolean `marketing_consent` column on `purchases`. If those columns are missing I'll propose adding them to the existing table rather than creating new tables.
 
 ## Purchase flow
 
-1. On the unlock page the consent checkbox stays exactly as it is; "Pay £4.99 and Unlock" now calls the server.
-2. The server creates a Stripe Checkout Session in payment mode for price `price_1U66oMJ7wpJmIRgYHaLwO2VH`, with success and cancel URLs back to the app, and redirects the browser to Stripe.
-3. Stripe sends `checkout.session.completed` to a webhook endpoint. The webhook verifies the signature, upserts the buyer into `customers`, and writes the purchase row (amount, currency, Stripe ids, paid status) into `purchases`.
+1. On the unlock page the consent checkbox stays exactly as it is (required). Beneath it sits a second, optional, pre-unticked checkbox: "Yes, I'd like to hear about future products and updates from Richard Wells." It never blocks the purchase. "Pay £4.99 and Unlock" now calls the server.
+2. The server creates a Stripe Checkout Session in payment mode for price `price_1U66oMJ7wpJmIRgYHaLwO2VH`, with success and cancel URLs back to the app, and redirects the browser to Stripe. The marketing choice travels as session metadata (`marketing_consent: "true" | "false"`) so it is visible against each payment in the Stripe dashboard.
+3. Stripe sends `checkout.session.completed` to a webhook endpoint. The webhook verifies the signature, upserts the buyer into `customers`, and writes the purchase row (amount, currency, Stripe ids, paid status, and `marketing_consent` read back from the session metadata) into `purchases`.
 4. Stripe returns the user to `/unlock/success?session_id=...`. The app asks the server to confirm that session is paid, then records the unlock locally so access persists in that browser.
 5. If the webhook hasn't landed yet, the success page retries briefly, then falls back to Stripe's own session status so the user is never left stuck.
 
