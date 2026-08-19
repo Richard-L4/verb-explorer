@@ -36,7 +36,10 @@ function Privacy() {
             Verb Wise is built and operated by Richard Wells, based in the United Kingdom. That makes Richard Wells the
             data controller for any personal data the app handles.
           </p>
-          <p>You can reach us at [contact email].</p>
+          <p>
+            You can reach us via the enquiry form at{" "}
+            <ContactLink />
+          </p>
         </LegalSection>
 
         <LegalSection title="What we collect">
@@ -72,7 +75,8 @@ function Privacy() {
         <LegalSection title="Your rights">
           <p>
             You have the right to ask for a copy of your personal data, to have it corrected, and to have it erased.
-            Email [contact email] and we will respond as quickly as we reasonably can.
+            You can reach us via the enquiry form at <ContactLink /> and we will respond as quickly as we reasonably
+            can.
           </p>
           <p>
             You can also clear everything stored on your device yourself at any time from the Settings page.
@@ -88,8 +92,8 @@ function Privacy() {
 
         <LegalSection title="Complaints">
           <p>
-            If you are unhappy with how we have handled your data, contact us first at [contact email]. You also have
-            the right to complain to the UK Information Commissioner's Office.
+            If you are unhappy with how we have handled your data, contact us first — you can reach us via the enquiry
+            form at <ContactLink />. You also have the right to complain to the UK Information Commissioner's Office.
           </p>
         </LegalSection>
       </div>
