@@ -1,22 +1,36 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Lock } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Lock, Loader2 } from "lucide-react";
 import { useAccess } from "@/hooks/use-access";
+import { createCheckoutSession } from "@/lib/checkout.functions";
 
 const CONSENT =
   "I agree that access to the digital content begins immediately and acknowledge that I lose my 14-day right to cancel once access begins.";
 
-export function Paywall({ title }: { title?: string }) {
-  const { unlock, price, freeCardCount } = useAccess();
-  const [agreed, setAgreed] = useState(false);
-  const [paying, setPaying] = useState(false);
+const MARKETING =
+  "Yes, I'd like to hear about future products and updates from Richard Wells.";
 
-  function handlePay() {
+export function Paywall({ title }: { title?: string }) {
+  const { price, freeCardCount } = useAccess();
+  const startCheckout = useServerFn(createCheckoutSession);
+  const [agreed, setAgreed] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [paying, setPaying] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handlePay() {
     if (!agreed || paying) return;
     setPaying(true);
-    // Payments are UI-only for now. A real provider call goes here; the unlock
-    // is only recorded after a confirmed successful payment.
-    unlock();
+    setError(null);
+    try {
+      // Access is only granted after Stripe confirms the payment.
+      const { url } = await startCheckout({ data: { marketingConsent: marketing } });
+      window.location.href = url;
+    } catch {
+      setError("We couldn't start the payment. Please try again in a moment.");
+      setPaying(false);
+    }
   }
 
   return (
@@ -52,17 +66,36 @@ export function Paywall({ title }: { title?: string }) {
           <span className="text-sm leading-relaxed text-foreground">{CONSENT}</span>
         </label>
 
+        <label className="mt-3 flex max-w-2xl cursor-pointer items-start gap-3 rounded-xl border border-border/60 bg-background/20 p-4">
+          <input
+            type="checkbox"
+            checked={marketing}
+            onChange={(e) => setMarketing(e.target.checked)}
+            className="mt-0.5 size-5 shrink-0 accent-[var(--color-primary,currentColor)]"
+          />
+          <span className="text-sm leading-relaxed text-foreground">
+            {MARKETING}
+            <span className="mt-1 block text-xs text-muted-foreground">Optional — leave unticked if you'd rather not.</span>
+          </span>
+        </label>
+
         <button
           type="button"
           onClick={handlePay}
           disabled={!agreed || paying}
           className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-45 disabled:shadow-none disabled:hover:translate-y-0"
         >
-          <Check className="size-4" aria-hidden="true" /> Pay {price} and Unlock
+          {paying ? (
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+          ) : (
+            <Check className="size-4" aria-hidden="true" />
+          )}{" "}
+          {paying ? "Redirecting to checkout…" : `Pay ${price} and Unlock`}
         </button>
         {!agreed ? (
           <p className="mt-2.5 text-xs text-muted-foreground">Tick the box above to continue.</p>
         ) : null}
+        {error ? <p className="mt-2.5 text-sm font-semibold text-destructive">{error}</p> : null}
 
         <p className="mt-6 text-sm text-muted-foreground">
           Read the{" "}
