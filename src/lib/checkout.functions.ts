@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 
 /** Starts a Stripe Checkout Session for the one-off Verb Wise unlock. */
@@ -7,22 +6,31 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({ marketingConsent: z.boolean() }).parse(input))
   .handler(async ({ data }) => {
     const { getStripe, VERB_WISE_PRICE_ID } = await import("./payments.server");
-    const origin = new URL(getRequest().url).origin;
-    const stripe = getStripe();
+    const { getRequest } = await import("@tanstack/react-start/server");
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      line_items: [{ price: VERB_WISE_PRICE_ID, quantity: 1 }],
-      success_url: `${origin}/unlock/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/unlock?cancelled=1`,
-      metadata: { marketing_consent: data.marketingConsent ? "true" : "false" },
-      payment_intent_data: {
+    try {
+      const origin = new URL(getRequest().url).origin;
+      const stripe = getStripe();
+
+      const session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        line_items: [{ price: VERB_WISE_PRICE_ID, quantity: 1 }],
+        success_url: `${origin}/unlock/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/unlock?cancelled=1`,
         metadata: { marketing_consent: data.marketingConsent ? "true" : "false" },
-      },
-    });
+        payment_intent_data: {
+          metadata: { marketing_consent: data.marketingConsent ? "true" : "false" },
+        },
+      });
 
-    if (!session.url) throw new Error("Stripe did not return a checkout URL");
-    return { url: session.url };
+      if (!session.url) throw new Error("Stripe returned a session without a URL");
+      console.log("[checkout] session created", session.id, origin);
+      return { url: session.url };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error("[checkout] failed to create session:", message, error);
+      throw new Error(`[checkout] ${message}`);
+    }
   });
 
 /**

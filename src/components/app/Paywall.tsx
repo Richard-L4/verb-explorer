@@ -27,8 +27,12 @@ export function Paywall({ title }: { title?: string }) {
       // Access is only granted after Stripe confirms the payment.
       const { url } = await startCheckout({ data: { marketingConsent: marketing } });
       window.location.href = url;
-    } catch {
-      setError("We couldn't start the payment. Please try again in a moment.");
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err);
+      console.error("[checkout] client error:", detail, err);
+      setError(
+        `We couldn't start the payment. Please try again in a moment.${detail ? ` (${detail})` : ""}`,
+      );
       setPaying(false);
     }
   }
