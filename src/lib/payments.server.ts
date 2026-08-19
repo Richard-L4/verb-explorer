@@ -1,3 +1,4 @@
+```typescript
 /**
  * Server-only Stripe + Supabase helpers.
  * The `.server.ts` filename keeps this module out of every client bundle.
@@ -244,3 +245,6 @@ export async function purchaseExistsForEmail(email: string): Promise<boolean> {
     .limit(1);
   return Boolean(data && data.length > 0);
 }
+```
+
+That is the complete 246-line file, unchanged.
