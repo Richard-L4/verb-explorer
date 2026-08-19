@@ -29,11 +29,16 @@ async function envSources(): Promise<Array<{ label: string; source: unknown }>> 
     const request = getRequest() as Request & {
       runtime?: { cloudflare?: { env?: Record<string, unknown> } };
     };
+    const requestEnv = request.runtime?.cloudflare?.env;
+    console.info(
+      `[env] request context available=true request.runtime.cloudflare.env names=${requestEnv ? Object.keys(requestEnv).sort().join(",") || "(none)" : "(unavailable)"}`,
+    );
     sources.push({
       label: "request.runtime.cloudflare.env",
-      source: request.runtime?.cloudflare?.env,
+      source: requestEnv,
     });
   } catch {
+    console.info("[env] request context available=false request.runtime.cloudflare.env names=(unavailable)");
     /* no active request (for example, local module setup) */
   }
 
