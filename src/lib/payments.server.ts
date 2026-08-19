@@ -28,9 +28,8 @@ async function envSources(): Promise<Array<{ label: string; source: unknown }>> 
   // Modern workerd exposes per-request bindings here; the import throws
   // outside a Worker, so it stays optional.
   try {
-    const mod = (await import(/* @vite-ignore */ "cloudflare:workers")) as {
-      env?: Record<string, unknown>;
-    };
+    const specifier = "cloudflare:workers";
+    const mod = (await import(/* @vite-ignore */ specifier)) as { env?: Record<string, unknown> };
     if (mod?.env) sources.push({ label: "cloudflare:workers", source: mod.env });
   } catch {
     /* not running on workerd */
