@@ -47,6 +47,12 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      // Cloudflare injects per-request bindings (secrets, vars) as `env`.
+      // Stash them so server functions can read them anywhere in the call stack.
+      if (env && typeof env === "object") {
+        const g = globalThis as typeof globalThis & { __env__?: Record<string, unknown> };
+        g.__env__ = { ...(g.__env__ ?? {}), ...(env as Record<string, unknown>) };
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
