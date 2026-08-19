@@ -10,21 +10,19 @@ export const VERB_WISE_PRICE_ID = "price_1U66oMJ7wpJmIRgYHaLwO2VH";
 /**
  * Reads a server environment variable.
  *
- * In dev (Node) values live on `process.env`. In the deployed Worker runtime
- * env is injected per-request and only exposed through `cloudflare:workers`,
- * so `process.env` can be empty there. Check both.
+ * In dev (Node) values live on `process.env`. The Nitro Cloudflare adapter
+ * assigns the request's environment bindings to `globalThis.__env__` before
+ * dispatching to TanStack Start, so published deployments read from there.
  */
-export async function readEnv(name: string): Promise<string | undefined> {
+export function readEnv(name: string): string | undefined {
+  const runtimeEnv = (globalThis as typeof globalThis & {
+    __env__?: Record<string, unknown>;
+  }).__env__;
+  const fromRuntime = runtimeEnv?.[name];
+  if (typeof fromRuntime === "string" && fromRuntime.length > 0) return fromRuntime;
+
   const fromProcess = globalThis.process?.env?.[name];
-  if (fromProcess) return fromProcess;
-  try {
-    const mod = (await import(/* @vite-ignore */ ("cloudflare" + ":workers"))) as {
-      env?: Record<string, string | undefined>;
-    };
-    return mod.env?.[name];
-  } catch {
-    return undefined;
-  }
+  return typeof fromProcess === "string" && fromProcess.length > 0 ? fromProcess : undefined;
 }
 
 export async function getStripe(): Promise<Stripe> {
