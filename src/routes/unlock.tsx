@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Paywall } from "@/components/app/Paywall";
+import { RestorePurchase } from "@/components/app/RestorePurchase";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { useAccess } from "@/hooks/use-access";
@@ -67,6 +68,7 @@ function UnlockRoute() {
             </p>
           ) : null}
           <Paywall />
+          <RestorePurchase />
         </>
       )}
     </PageTransition>

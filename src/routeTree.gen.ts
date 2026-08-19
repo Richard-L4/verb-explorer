@@ -23,6 +23,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
+import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -95,6 +96,11 @@ const SayingSayingIdRoute = SayingSayingIdRouteImport.update({
   path: '/saying/$sayingId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnlockSuccessRoute = UnlockSuccessRouteImport.update({
+  id: '/unlock_/success',
+  path: '/unlock/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/unlock_/success': typeof UnlockSuccessRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/unlock/success'
     | '/api/public/stripe-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/unlock/success'
     | '/api/public/stripe-webhook'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/unlock_/success'
     | '/api/public/stripe-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   UnlockRoute: typeof UnlockRoute
   CardCardIdRoute: typeof CardCardIdRoute
   SayingSayingIdRoute: typeof SayingSayingIdRoute
+  UnlockSuccessRoute: typeof UnlockSuccessRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SayingSayingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unlock_/success': {
+      id: '/unlock_/success'
+      path: '/unlock/success'
+      fullPath: '/unlock/success'
+      preLoaderRoute: typeof UnlockSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/stripe-webhook': {
       id: '/api/public/stripe-webhook'
       path: '/api/public/stripe-webhook'
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   UnlockRoute: UnlockRoute,
   CardCardIdRoute: CardCardIdRoute,
   SayingSayingIdRoute: SayingSayingIdRoute,
+  UnlockSuccessRoute: UnlockSuccessRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
