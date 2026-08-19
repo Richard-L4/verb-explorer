@@ -7,22 +7,54 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 export const VERB_WISE_PRICE_ID = "price_1U66oMJ7wpJmIRgYHaLwO2VH";
 
-/**
- * Reads a server environment variable.
- *
- * In dev (Node) values live on `process.env`. The Nitro Cloudflare adapter
- * assigns the request's environment bindings to `globalThis.__env__` before
- * dispatching to TanStack Start, so published deployments read from there.
- */
-export function readEnv(name: string): string | undefined {
-  const runtimeEnv = (globalThis as typeof globalThis & {
-    __env__?: Record<string, unknown>;
-  }).__env__;
-  const fromRuntime = runtimeEnv?.[name];
-  if (typeof fromRuntime === "string" && fromRuntime.length > 0) return fromRuntime;
+function pick(source: unknown, name: string): string | undefined {
+  if (!source || typeof source !== "object") return undefined;
+  const value = (source as Record<string, unknown>)[name];
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
 
-  const fromProcess = globalThis.process?.env?.[name];
-  return typeof fromProcess === "string" && fromProcess.length > 0 ? fromProcess : undefined;
+/** Every place a Cloudflare Worker / Node dev server can hold env values. */
+async function envSources(): Promise<Array<{ label: string; source: unknown }>> {
+  const g = globalThis as typeof globalThis & {
+    __env__?: Record<string, unknown>;
+    process?: { env?: Record<string, unknown> };
+  };
+
+  const sources: Array<{ label: string; source: unknown }> = [
+    { label: "globalThis.__env__", source: g.__env__ },
+    { label: "process.env", source: g.process?.env },
+  ];
+
+  // Modern workerd exposes per-request bindings here; the import throws
+  // outside a Worker, so it stays optional.
+  try {
+    const specifier = "cloudflare:workers";
+    const mod = (await import(/* @vite-ignore */ specifier)) as { env?: Record<string, unknown> };
+    if (mod?.env) sources.push({ label: "cloudflare:workers", source: mod.env });
+  } catch {
+    /* not running on workerd */
+  }
+
+  return sources;
+}
+
+/**
+ * Reads a server environment variable, whichever way the current runtime
+ * exposes it (Cloudflare request bindings, workerd module env, or Node).
+ */
+export async function readEnv(name: string): Promise<string | undefined> {
+  for (const { source } of await envSources()) {
+    const value = pick(source, name);
+    if (value) return value;
+  }
+
+  const seen = (await envSources())
+    .map(({ label, source }) =>
+      `${label}:${source && typeof source === "object" ? Object.keys(source).length : "none"}`,
+    )
+    .join(" ");
+  console.error(`[env] ${name} not found. Sources → ${seen}`);
+  return undefined;
 }
 
 export async function getStripe(): Promise<Stripe> {
