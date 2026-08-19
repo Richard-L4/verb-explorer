@@ -247,4 +247,4 @@ export async function purchaseExistsForEmail(email: string): Promise<boolean> {
 }
 ```
 
-That is the complete 246-line file, unchanged.
+
