@@ -1,43 +1,35 @@
-# Buy Now confirmation step: why mobile behaves differently
+# Connect your Supabase database and real Stripe checkout
 
-## What the investigation found
+Replaces the simulated £4.99 unlock with a real Stripe Checkout payment, recorded in your existing Supabase tables. No accounts — guest checkout.
 
-The difference is not mobile-specific. Nothing in the Buy Now path is viewport-conditional:
+## What I need from you first
 
-- The "Buy now" control in the trial banner is a plain router `Link` to `/unlock` — no tap/click handler, no touch-specific code path.
-- `Paywall` (the confirmation screen with the 14-day consent checkbox) has no responsive conditions, no `useIsMobile`, and no CSS that hides it on small screens.
-- The only place `unlock()` is called is the Paywall's own Pay button, which is disabled until the checkbox is ticked.
+Two secure forms (values never appear in chat):
 
-The real cause is a **state condition** in `src/routes/unlock.tsx`. That route renders:
+- Supabase: project URL, publishable/anon key, service role key
+- Stripe: secret key (`sk_...`) and, after the webhook is created, the webhook signing secret (`whsec_...`)
 
-```text
-unlocked || creator || fullAccess  ->  "You have full access" screen
-otherwise                          ->  <Paywall /> (checkbox + Pay)
-```
+Once the Supabase keys are in, step 1 is to read your existing `customers`, `products`, `prices`, `purchases` schema and report exactly what (if anything) needs changing. I will not run any migration before showing you that report and getting your go-ahead. Expected gap for guest checkout: a way to look up a purchase by Stripe checkout session id — if `purchases` has no such column, I'll propose adding one nullable column rather than a new table.
 
-`fullAccess` is true whenever the trial is still running. So:
+## Purchase flow
 
-- Desktop (creator device, expired-state preview active): `fullAccess` is false, so the Paywall with the checkbox appears — the flow looks correct.
-- Physical mobile (no creator mode, trial still active): `fullAccess` is true, so `/unlock` skips the Paywall and shows the "You have full access / Browse all cards" screen. Cards 11+ already read as open because the trial itself is open, which is what looks like "Buy Now instantly unlocked everything".
+1. On the unlock page the consent checkbox stays exactly as it is; "Pay £4.99 and Unlock" now calls the server.
+2. The server creates a Stripe Checkout Session in payment mode for price `price_1U66oMJ7wpJmIRgYHaLwO2VH`, with success and cancel URLs back to the app, and redirects the browser to Stripe.
+3. Stripe sends `checkout.session.completed` to a webhook endpoint. The webhook verifies the signature, upserts the buyer into `customers`, and writes the purchase row (amount, currency, Stripe ids, paid status) into `purchases`.
+4. Stripe returns the user to `/unlock/success?session_id=...`. The app asks the server to confirm that session is paid, then records the unlock locally so access persists in that browser.
+5. If the webhook hasn't landed yet, the success page retries briefly, then falls back to Stripe's own session status so the user is never left stuck.
 
-So on mobile the purchase never actually happened: no confirmation screen was rendered and dismissed, and `unlocked` was never set to true. The route just decided the confirmation screen was unnecessary.
+Because there are no accounts, the unlock lives in the browser (as today) but is now backed by a real, verifiable purchase row. A "Restore purchase" box on the unlock page lets someone re-enter their checkout email or session link to unlock on another device.
 
-## The fix
+## Access rules (unchanged otherwise)
 
-One change, in `src/routes/unlock.tsx`:
+Trial, free 10 cards, creator mode, banner logic and card locking all keep working exactly as now. The only change is that `unlocked` is set from a verified Stripe payment instead of a simulated button.
 
-- Show the "You have full access" panel only when the user genuinely owns access outside the trial: `unlocked || creator`.
-- In every other case — including an active trial — render `<Paywall />`, so the confirmation screen and the 14-day checkbox always appear when the user chooses to buy.
-- When the trial is still running, add a short line above the Paywall noting that the trial is active and days remain, so buying during the trial is a deliberate choice rather than a confusing prompt.
+## Technical notes
 
-No changes to payment architecture, `unlock()`, trial expiry, creator preview, Reset Test State, padlocks, or the banner logic.
-
-## Verification
-
-Reproduce and confirm at both a 390px mobile viewport (touch emulation) and desktop:
-
-1. Trial active, non-creator: tap Buy now -> Paywall with checkbox appears; cards unchanged.
-2. Pay button stays disabled until the checkbox is ticked.
-3. Completing the step sets `unlocked`, cards 11+ open, trial banner disappears.
-4. Reload keeps the purchased state, and `/unlock` then shows the "You have full access" panel.
-5. Trial-expired state and creator mode behave exactly as before.
+- This app runs on TanStack Start, which has its own server runtime, so Stripe work goes in server functions (`src/lib/checkout.functions.ts`) and a public server route for the webhook (`src/routes/api/public/stripe-webhook.ts`) — not Supabase Edge Functions. Same security properties: the Stripe secret key and service role key are read only inside server handlers and never reach the browser.
+- Webhook verification uses Stripe's async signature check (`constructEventAsync`), required in this edge runtime.
+- Supabase writes from the webhook use the service role client, loaded inside the handler so it never enters the client bundle. Reads for confirming a session use a narrow server-side client.
+- New files: `src/integrations/supabase/client.ts` + `types.ts` (generated from your schema), `client.server.ts`, `src/lib/checkout.functions.ts`, `src/routes/api/public/stripe-webhook.ts`, `src/routes/unlock.success.tsx`.
+- Edited: `src/components/app/Paywall.tsx` (button starts real checkout), `src/lib/access.ts` / `use-access.ts` (unlock recorded only after verification).
+- After deploy I'll give you the exact webhook URL to paste into Stripe, then you add the signing secret.
