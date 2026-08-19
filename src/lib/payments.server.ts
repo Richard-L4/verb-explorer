@@ -91,11 +91,18 @@ export async function readEnv(
  * Create the server-side Stripe client.
  */
 export async function getStripe(): Promise<Stripe> {
-  const key = await readEnv("STRIPE_SECRET_KEY");
+  const mode = await readEnv("STRIPE_MODE");
+
+  const key =
+    mode === "test"
+      ? await readEnv("STRIPE_TEST_SECRET_KEY")
+      : await readEnv("STRIPE_SECRET_KEY");
 
   if (!key) {
     throw new Error(
-      "STRIPE_SECRET_KEY is not configured",
+      mode === "test"
+        ? "STRIPE_TEST_SECRET_KEY is not configured"
+        : "STRIPE_SECRET_KEY is not configured",
     );
   }
 
