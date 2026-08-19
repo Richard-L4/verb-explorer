@@ -20,10 +20,27 @@ async function envSources(): Promise<Array<{ label: string; source: unknown }>> 
     process?: { env?: Record<string, unknown> };
   };
 
-  const sources: Array<{ label: string; source: unknown }> = [
+  const sources: Array<{ label: string; source: unknown }> = [];
+
+  // Nitro's Cloudflare entry augments the current Request with the exact
+  // per-request binding object before handing it to TanStack Start.
+  try {
+    const { getRequest } = await import("@tanstack/react-start/server");
+    const request = getRequest() as Request & {
+      runtime?: { cloudflare?: { env?: Record<string, unknown> } };
+    };
+    sources.push({
+      label: "request.runtime.cloudflare.env",
+      source: request.runtime?.cloudflare?.env,
+    });
+  } catch {
+    /* no active request (for example, local module setup) */
+  }
+
+  sources.push(
     { label: "globalThis.__env__", source: g.__env__ },
     { label: "process.env", source: g.process?.env },
-  ];
+  );
 
   // Modern workerd exposes per-request bindings here; the import throws
   // outside a Worker, so it stays optional.
@@ -43,12 +60,18 @@ async function envSources(): Promise<Array<{ label: string; source: unknown }>> 
  * exposes it (Cloudflare request bindings, workerd module env, or Node).
  */
 export async function readEnv(name: string): Promise<string | undefined> {
-  for (const { source } of await envSources()) {
+  const sources = await envSources();
+  for (const { label, source } of sources) {
     const value = pick(source, name);
-    if (value) return value;
+    if (value) {
+      if (name === "STRIPE_SECRET_KEY") {
+        console.info(`[env] STRIPE_SECRET_KEY present=true source=${label}`);
+      }
+      return value;
+    }
   }
 
-  const seen = (await envSources())
+  const seen = sources
     .map(({ label, source }) =>
       `${label}:${source && typeof source === "object" ? Object.keys(source).length : "none"}`,
     )
