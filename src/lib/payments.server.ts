@@ -10,7 +10,20 @@ import {
   type SupabaseClient,
 } from "@supabase/supabase-js";
 
-export const VERB_WISE_PRICE_ID = "price_1U66oMJ7wpJmIRgYHaLwO2VH";
+/**
+ * Stripe Price IDs
+ *
+ * LIVE:
+ * price_1U66oMJ7wpJmIRgYHaLwO2VH
+ *
+ * TEST / SANDBOX:
+ * price_1U6FgVQsnncBlv2AE3WrorZp
+ */
+export const VERB_WISE_LIVE_PRICE_ID =
+  "price_1U66oMJ7wpJmIRgYHaLwO2VH";
+
+export const VERB_WISE_TEST_PRICE_ID =
+  "price_1U6FgVQsnncBlv2AE3WrorZp";
 
 /**
  * Read an environment variable from the current runtime.
@@ -37,7 +50,8 @@ export async function readEnv(
       };
     };
 
-    const cloudflareEnv = request.runtime?.cloudflare?.env;
+    const cloudflareEnv =
+      request.runtime?.cloudflare?.env;
 
     if (cloudflareEnv) {
       const value = cloudflareEnv[name];
@@ -46,12 +60,6 @@ export async function readEnv(
         typeof value === "string" &&
         value.length > 0
       ) {
-        if (name === "STRIPE_SECRET_KEY") {
-          console.info(
-            "[env] STRIPE_SECRET_KEY present=true source=cloudflare",
-          );
-        }
-
         return value;
       }
     }
@@ -71,12 +79,6 @@ export async function readEnv(
     typeof value === "string" &&
     value.length > 0
   ) {
-    if (name === "STRIPE_SECRET_KEY") {
-      console.info(
-        "[env] STRIPE_SECRET_KEY present=true source=process.env",
-      );
-    }
-
     return value;
   }
 
@@ -88,21 +90,58 @@ export async function readEnv(
 }
 
 /**
- * Create the server-side Stripe client.
+ * Return the current Stripe mode.
+ *
+ * STRIPE_MODE=test  -> Sandbox
+ * STRIPE_MODE=live  -> Live
+ *
+ * Any value other than "test" is treated as live.
  */
-export async function getStripe(): Promise<Stripe> {
+export async function getStripeMode(): Promise<
+  "test" | "live"
+> {
   const mode = await readEnv("STRIPE_MODE");
 
-  const key =
+  return mode === "test" ? "test" : "live";
+}
+
+/**
+ * Return the correct Stripe Price ID for the
+ * current environment.
+ */
+export async function getVerbWisePriceId(): Promise<string> {
+  const mode = await getStripeMode();
+
+  return mode === "test"
+    ? VERB_WISE_TEST_PRICE_ID
+    : VERB_WISE_LIVE_PRICE_ID;
+}
+
+/**
+ * Create the server-side Stripe client.
+ *
+ * The key is selected automatically:
+ *
+ * test -> STRIPE_TEST_SECRET_KEY
+ * live -> STRIPE_SECRET_KEY
+ */
+export async function getStripe(): Promise<Stripe> {
+  const mode = await getStripeMode();
+
+  const keyName =
     mode === "test"
-      ? await readEnv("STRIPE_TEST_SECRET_KEY")
-      : await readEnv("STRIPE_SECRET_KEY");
+      ? "STRIPE_TEST_SECRET_KEY"
+      : "STRIPE_SECRET_KEY";
+
+  const key = await readEnv(keyName);
+
+  console.info(
+    `[stripe] mode=${mode} key_source=${keyName} present=${Boolean(key)}`,
+  );
 
   if (!key) {
     throw new Error(
-      mode === "test"
-        ? "STRIPE_TEST_SECRET_KEY is not configured"
-        : "STRIPE_SECRET_KEY is not configured",
+      `${keyName} is not configured`,
     );
   }
 
@@ -141,16 +180,22 @@ export async function getSupabaseAdmin(): Promise<SupabaseClient> {
 }
 
 /**
- * Find the Supabase price row corresponding to the
- * Stripe price used by Verb Wise.
+ * Find the Supabase price row corresponding to
+ * the Stripe price used by the current environment.
  */
 async function findPriceRowId(
   db: SupabaseClient,
 ): Promise<string | null> {
+  const stripePriceId =
+    await getVerbWisePriceId();
+
   const { data, error } = await db
     .from("prices")
     .select("id")
-    .eq("stripe_price_id", VERB_WISE_PRICE_ID)
+    .eq(
+      "stripe_price_id",
+      stripePriceId,
+    )
     .maybeSingle();
 
   if (error) {
@@ -183,7 +228,9 @@ async function upsertCustomer(
   if (email) {
     const result = await db
       .from("customers")
-      .select("id, email, stripe_customer_id")
+      .select(
+        "id, email, stripe_customer_id",
+      )
       .eq("email", email)
       .maybeSingle();
 
@@ -191,7 +238,9 @@ async function upsertCustomer(
   } else if (stripeCustomerId) {
     const result = await db
       .from("customers")
-      .select("id, email, stripe_customer_id")
+      .select(
+        "id, email, stripe_customer_id",
+      )
       .eq(
         "stripe_customer_id",
         stripeCustomerId,
@@ -204,12 +253,14 @@ async function upsertCustomer(
   if (existing?.id) {
     if (
       stripeCustomerId &&
-      existing.stripe_customer_id !== stripeCustomerId
+      existing.stripe_customer_id !==
+        stripeCustomerId
     ) {
       await db
         .from("customers")
         .update({
-          stripe_customer_id: stripeCustomerId,
+          stripe_customer_id:
+            stripeCustomerId,
         })
         .eq("id", existing.id);
     }
@@ -222,7 +273,8 @@ async function upsertCustomer(
     .insert({
       email,
       name,
-      stripe_customer_id: stripeCustomerId,
+      stripe_customer_id:
+        stripeCustomerId,
     })
     .select("id")
     .maybeSingle();
@@ -242,8 +294,9 @@ async function upsertCustomer(
 /**
  * Record a completed Stripe Checkout Session.
  *
- * The checkout session ID makes this operation idempotent,
- * so Stripe/webhook retries do not create duplicate purchases.
+ * The checkout session ID makes this operation
+ * idempotent, so Stripe/webhook retries do not
+ * create duplicate purchases.
  */
 export async function recordPurchase(
   session: Stripe.Checkout.Session,
@@ -252,23 +305,26 @@ export async function recordPurchase(
     return;
   }
 
-  const db = await getSupabaseAdmin();
+  const db =
+    await getSupabaseAdmin();
 
-  const { data: existing } = await db
-    .from("purchases")
-    .select("id")
-    .eq(
-      "stripe_checkout_session_id",
-      session.id,
-    )
-    .maybeSingle();
+  const { data: existing } =
+    await db
+      .from("purchases")
+      .select("id")
+      .eq(
+        "stripe_checkout_session_id",
+        session.id,
+      )
+      .maybeSingle();
 
   if (existing) {
     return;
   }
 
   const marketingConsent =
-    session.metadata?.marketing_consent === "true";
+    session.metadata?.marketing_consent ===
+    "true";
 
   const email =
     session.customer_details?.email ??
@@ -284,22 +340,27 @@ export async function recordPurchase(
       ? session.customer
       : session.customer?.id ?? null;
 
-  const customerId = await upsertCustomer(
-    db,
-    email,
-    name,
-    stripeCustomerId,
-  );
+  const customerId =
+    await upsertCustomer(
+      db,
+      email,
+      name,
+      stripeCustomerId,
+    );
 
   const priceId =
     await findPriceRowId(db);
 
   const paymentIntent =
-    typeof session.payment_intent === "string"
+    typeof session.payment_intent ===
+    "string"
       ? session.payment_intent
-      : session.payment_intent?.id ?? null;
+      : session.payment_intent?.id ??
+        null;
 
-  const { error: purchaseError } = await db
+  const {
+    error: purchaseError,
+  } = await db
     .from("purchases")
     .insert({
       customer_id: customerId,
@@ -309,10 +370,14 @@ export async function recordPurchase(
       start_date: new Date()
         .toISOString()
         .slice(0, 10),
-      stripe_payment_intent: paymentIntent,
-      stripe_payment_id: paymentIntent,
-      stripe_checkout_session_id: session.id,
-      marketing_consent: marketingConsent,
+      stripe_payment_intent:
+        paymentIntent,
+      stripe_payment_id:
+        paymentIntent,
+      stripe_checkout_session_id:
+        session.id,
+      marketing_consent:
+        marketingConsent,
     });
 
   if (purchaseError) {
@@ -325,20 +390,27 @@ export async function recordPurchase(
   }
 
   if (customerId) {
-    const { error: preferenceError } =
-      await db
-        .from("communication_preferences")
-        .upsert(
-          {
-            customer_id: customerId,
-            product_updates: marketingConsent,
-            newsletter: marketingConsent,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            onConflict: "customer_id",
-          },
-        );
+    const {
+      error: preferenceError,
+    } = await db
+      .from(
+        "communication_preferences",
+      )
+      .upsert(
+        {
+          customer_id: customerId,
+          product_updates:
+            marketingConsent,
+          newsletter:
+            marketingConsent,
+          updated_at:
+            new Date().toISOString(),
+        },
+        {
+          onConflict:
+            "customer_id",
+        },
+      );
 
     if (preferenceError) {
       console.error(
@@ -356,7 +428,8 @@ export async function recordPurchase(
 export async function purchaseExists(
   sessionId: string,
 ): Promise<boolean> {
-  const db = await getSupabaseAdmin();
+  const db =
+    await getSupabaseAdmin();
 
   const { data } = await db
     .from("purchases")
@@ -377,27 +450,36 @@ export async function purchaseExists(
 export async function purchaseExistsForEmail(
   email: string,
 ): Promise<boolean> {
-  const db = await getSupabaseAdmin();
+  const db =
+    await getSupabaseAdmin();
 
   const normalisedEmail =
     email.trim().toLowerCase();
 
-  const { data: customer } = await db
-    .from("customers")
-    .select("id")
-    .eq("email", normalisedEmail)
-    .maybeSingle();
+  const { data: customer } =
+    await db
+      .from("customers")
+      .select("id")
+      .eq(
+        "email",
+        normalisedEmail,
+      )
+      .maybeSingle();
 
   if (!customer?.id) {
     return false;
   }
 
-  const { data: purchases } = await db
-    .from("purchases")
-    .select("id")
-    .eq("customer_id", customer.id)
-    .eq("status", "paid")
-    .limit(1);
+  const { data: purchases } =
+    await db
+      .from("purchases")
+      .select("id")
+      .eq(
+        "customer_id",
+        customer.id,
+      )
+      .eq("status", "paid")
+      .limit(1);
 
   return Boolean(
     purchases &&
