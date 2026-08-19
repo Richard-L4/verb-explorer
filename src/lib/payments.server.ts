@@ -7,8 +7,28 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 export const VERB_WISE_PRICE_ID = "price_1U66oMJ7wpJmIRgYHaLwO2VH";
 
-export function getStripe(): Stripe {
-  const key = process.env["STRIPE_SECRET_KEY"];
+/**
+ * Reads a server environment variable.
+ *
+ * In dev (Node) values live on `process.env`. In the deployed Worker runtime
+ * env is injected per-request and only exposed through `cloudflare:workers`,
+ * so `process.env` can be empty there. Check both.
+ */
+export async function readEnv(name: string): Promise<string | undefined> {
+  const fromProcess = globalThis.process?.env?.[name];
+  if (fromProcess) return fromProcess;
+  try {
+    const mod = (await import(/* @vite-ignore */ ("cloudflare" + ":workers"))) as {
+      env?: Record<string, string | undefined>;
+    };
+    return mod.env?.[name];
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getStripe(): Promise<Stripe> {
+  const key = await readEnv("STRIPE_SECRET_KEY");
   if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
   return new Stripe(key, {
     // Workers runtime: fetch-based transport, no Node http.
@@ -17,9 +37,9 @@ export function getStripe(): Stripe {
 }
 
 /** Service-role client. Bypasses RLS — server handlers only. */
-export function getSupabaseAdmin(): SupabaseClient {
-  const url = process.env["VERBWISE_SUPABASE_URL"];
-  const key = process.env["VERBWISE_SUPABASE_SERVICE_ROLE_KEY"];
+export async function getSupabaseAdmin(): Promise<SupabaseClient> {
+  const url = await readEnv("VERBWISE_SUPABASE_URL");
+  const key = await readEnv("VERBWISE_SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !key) throw new Error("Supabase server credentials are not configured");
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -81,7 +101,7 @@ async function upsertCustomer(
  */
 export async function recordPurchase(session: Stripe.Checkout.Session): Promise<void> {
   if (session.payment_status !== "paid") return;
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
 
   const { data: already } = await db
     .from("purchases")
@@ -139,7 +159,7 @@ export async function recordPurchase(session: Stripe.Checkout.Session): Promise<
 
 /** True when a paid purchase row exists for this checkout session. */
 export async function purchaseExists(sessionId: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
   const { data } = await db
     .from("purchases")
     .select("id")
@@ -150,7 +170,7 @@ export async function purchaseExists(sessionId: string): Promise<boolean> {
 
 /** True when any paid purchase exists for this email address. */
 export async function purchaseExistsForEmail(email: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
   const { data: customer } = await db
     .from("customers")
     .select("id")

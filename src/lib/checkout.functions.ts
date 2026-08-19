@@ -10,7 +10,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
     try {
       const origin = new URL(getRequest().url).origin;
-      const stripe = getStripe();
+      const stripe = await getStripe();
 
       const session = await stripe.checkout.sessions.create({
         mode: "payment",
@@ -45,7 +45,7 @@ export const confirmCheckout = createServerFn({ method: "POST" })
 
     if (await purchaseExists(data.sessionId)) return { paid: true, recorded: true };
 
-    const session = await getStripe().checkout.sessions.retrieve(data.sessionId);
+    const session = await (await getStripe()).checkout.sessions.retrieve(data.sessionId);
     if (session.payment_status !== "paid") return { paid: false, recorded: false };
 
     await recordPurchase(session);
