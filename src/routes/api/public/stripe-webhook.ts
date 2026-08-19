@@ -15,7 +15,7 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
 
         const body = await request.text();
         const { getStripe, recordPurchase } = await import("@/lib/payments.server");
-        const stripe = getStripe();
+        const stripe = await getStripe();
 
         let event;
         try {

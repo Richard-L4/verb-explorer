@@ -18,7 +18,7 @@ export async function readEnv(name: string): Promise<string | undefined> {
   const fromProcess = globalThis.process?.env?.[name];
   if (fromProcess) return fromProcess;
   try {
-    const mod = (await import(/* @vite-ignore */ "cloudflare:workers")) as {
+    const mod = (await import(/* @vite-ignore */ ("cloudflare" + ":workers"))) as {
       env?: Record<string, string | undefined>;
     };
     return mod.env?.[name];
@@ -101,7 +101,7 @@ async function upsertCustomer(
  */
 export async function recordPurchase(session: Stripe.Checkout.Session): Promise<void> {
   if (session.payment_status !== "paid") return;
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
 
   const { data: already } = await db
     .from("purchases")
@@ -159,7 +159,7 @@ export async function recordPurchase(session: Stripe.Checkout.Session): Promise<
 
 /** True when a paid purchase row exists for this checkout session. */
 export async function purchaseExists(sessionId: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
   const { data } = await db
     .from("purchases")
     .select("id")
@@ -170,7 +170,7 @@ export async function purchaseExists(sessionId: string): Promise<boolean> {
 
 /** True when any paid purchase exists for this email address. */
 export async function purchaseExistsForEmail(email: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
+  const db = await getSupabaseAdmin();
   const { data: customer } = await db
     .from("customers")
     .select("id")
