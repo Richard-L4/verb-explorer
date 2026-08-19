@@ -21,6 +21,19 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
+function ContactLink() {
+  return (
+    <a
+      href="https://richard-wells.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
+    >
+      richard-wells.com
+    </a>
+  );
+}
+
 function Privacy() {
   return (
     <PageTransition>
