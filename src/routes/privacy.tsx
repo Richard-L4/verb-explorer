@@ -21,19 +21,6 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
-function ContactLink() {
-  return (
-    <a
-      href="https://richard-wells.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
-    >
-      richard-wells.com
-    </a>
-  );
-}
-
 function Privacy() {
   return (
     <PageTransition>
@@ -51,7 +38,7 @@ function Privacy() {
           </p>
           <p>
             You can reach us via the enquiry form at{" "}
-            <ContactLink />
+            <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>
           </p>
         </LegalSection>
 
@@ -88,7 +75,7 @@ function Privacy() {
         <LegalSection title="Your rights">
           <p>
             You have the right to ask for a copy of your personal data, to have it corrected, and to have it erased.
-            You can reach us via the enquiry form at <ContactLink /> and we will respond as quickly as we reasonably
+            You can reach us via the enquiry form at <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a> and we will respond as quickly as we reasonably
             can.
           </p>
           <p>
@@ -106,7 +93,7 @@ function Privacy() {
         <LegalSection title="Complaints">
           <p>
             If you are unhappy with how we have handled your data, contact us first — you can reach us via the enquiry
-            form at <ContactLink />. You also have the right to complain to the UK Information Commissioner's Office.
+            form at <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>. You also have the right to complain to the UK Information Commissioner's Office.
           </p>
         </LegalSection>
       </div>
