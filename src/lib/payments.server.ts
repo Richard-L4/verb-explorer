@@ -2,6 +2,7 @@
  * Server-only Stripe + Supabase helpers.
  *
  * This file must only be imported by server-side code.
+ * Every helper receives the resolved Cloudflare Worker env explicitly.
  */
 
 import Stripe from "stripe";
@@ -9,6 +10,7 @@ import {
   createClient,
   type SupabaseClient,
 } from "@supabase/supabase-js";
+import type { WorkerEnv } from "./worker-env";
 
 /**
  * Stripe Price IDs
@@ -26,70 +28,6 @@ export const VERB_WISE_TEST_PRICE_ID =
   "price_1U6FgVQsnncBlv2AE3WrorZp";
 
 /**
- * Read an environment variable from the current runtime.
- *
- * Cloudflare/TanStack Start exposes Worker bindings through:
- * request.runtime.cloudflare.env
- *
- * Local development can use process.env.
- */
-export async function readEnv(
-  name: string,
-): Promise<string | undefined> {
-  // Cloudflare / TanStack Start
-  try {
-    const { getRequest } = await import(
-      "@tanstack/react-start/server"
-    );
-
-    const request = getRequest() as Request & {
-      runtime?: {
-        cloudflare?: {
-          env?: Record<string, unknown>;
-        };
-      };
-    };
-
-    const cloudflareEnv =
-      request.runtime?.cloudflare?.env;
-
-    if (cloudflareEnv) {
-      const value = cloudflareEnv[name];
-
-      if (
-        typeof value === "string" &&
-        value.length > 0
-      ) {
-        return value;
-      }
-    }
-  } catch {
-    // No active request context.
-  }
-
-  // Local Node development
-  const processEnv =
-    typeof process !== "undefined"
-      ? process.env
-      : undefined;
-
-  const value = processEnv?.[name];
-
-  if (
-    typeof value === "string" &&
-    value.length > 0
-  ) {
-    return value;
-  }
-
-  console.error(
-    `[env] ${name} not found`,
-  );
-
-  return undefined;
-}
-
-/**
  * Return the current Stripe mode.
  *
  * STRIPE_MODE=test  -> Sandbox
@@ -97,22 +35,22 @@ export async function readEnv(
  *
  * Any value other than "test" is treated as live.
  */
-export async function getStripeMode(): Promise<
-  "test" | "live"
-> {
-  const mode = await readEnv("STRIPE_MODE");
-
-  return mode === "test" ? "test" : "live";
+export function getStripeMode(
+  env: WorkerEnv,
+): "test" | "live" {
+  return env.STRIPE_MODE === "test"
+    ? "test"
+    : "live";
 }
 
 /**
  * Return the correct Stripe Price ID for the
  * current environment.
  */
-export async function getVerbWisePriceId(): Promise<string> {
-  const mode = await getStripeMode();
-
-  return mode === "test"
+export function getVerbWisePriceId(
+  env: WorkerEnv,
+): string {
+  return getStripeMode(env) === "test"
     ? VERB_WISE_TEST_PRICE_ID
     : VERB_WISE_LIVE_PRICE_ID;
 }
@@ -125,15 +63,20 @@ export async function getVerbWisePriceId(): Promise<string> {
  * test -> STRIPE_TEST_SECRET_KEY
  * live -> STRIPE_SECRET_KEY
  */
-export async function getStripe(): Promise<Stripe> {
-  const mode = await getStripeMode();
+export function getStripe(
+  env: WorkerEnv,
+): Stripe {
+  const mode = getStripeMode(env);
 
   const keyName =
     mode === "test"
       ? "STRIPE_TEST_SECRET_KEY"
       : "STRIPE_SECRET_KEY";
 
-  const key = await readEnv(keyName);
+  const key =
+    mode === "test"
+      ? env.STRIPE_TEST_SECRET_KEY
+      : env.STRIPE_SECRET_KEY;
 
   console.info(
     `[stripe] mode=${mode} key_source=${keyName} present=${Boolean(key)}`,
@@ -156,14 +99,13 @@ export async function getStripe(): Promise<Stripe> {
  * The service-role key bypasses Row Level Security.
  * This function must NEVER be called from client-side code.
  */
-export async function getSupabaseAdmin(): Promise<SupabaseClient> {
-  const url = await readEnv(
-    "VERBWISE_SUPABASE_URL",
-  );
+export function getSupabaseAdmin(
+  env: WorkerEnv,
+): SupabaseClient {
+  const url = env.VERBWISE_SUPABASE_URL;
 
-  const key = await readEnv(
-    "VERBWISE_SUPABASE_SERVICE_ROLE_KEY",
-  );
+  const key =
+    env.VERBWISE_SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !key) {
     throw new Error(
@@ -185,9 +127,10 @@ export async function getSupabaseAdmin(): Promise<SupabaseClient> {
  */
 async function findPriceRowId(
   db: SupabaseClient,
+  env: WorkerEnv,
 ): Promise<string | null> {
   const stripePriceId =
-    await getVerbWisePriceId();
+    getVerbWisePriceId(env);
 
   const { data, error } = await db
     .from("prices")
@@ -299,14 +242,14 @@ async function upsertCustomer(
  * create duplicate purchases.
  */
 export async function recordPurchase(
+  env: WorkerEnv,
   session: Stripe.Checkout.Session,
 ): Promise<void> {
   if (session.payment_status !== "paid") {
     return;
   }
 
-  const db =
-    await getSupabaseAdmin();
+  const db = getSupabaseAdmin(env);
 
   const { data: existing } =
     await db
@@ -323,7 +266,7 @@ export async function recordPurchase(
   }
 
   const marketingConsent =
-    session.metadata?.marketing_consent ===
+    session.metadata?.['marketing_consent'] ===
     "true";
 
   const email =
@@ -349,7 +292,7 @@ export async function recordPurchase(
     );
 
   const priceId =
-    await findPriceRowId(db);
+    await findPriceRowId(db, env);
 
   const paymentIntent =
     typeof session.payment_intent ===
@@ -426,10 +369,10 @@ export async function recordPurchase(
  * been recorded as a purchase.
  */
 export async function purchaseExists(
+  env: WorkerEnv,
   sessionId: string,
 ): Promise<boolean> {
-  const db =
-    await getSupabaseAdmin();
+  const db = getSupabaseAdmin(env);
 
   const { data } = await db
     .from("purchases")
@@ -448,10 +391,10 @@ export async function purchaseExists(
  * paid purchase.
  */
 export async function purchaseExistsForEmail(
+  env: WorkerEnv,
   email: string,
 ): Promise<boolean> {
-  const db =
-    await getSupabaseAdmin();
+  const db = getSupabaseAdmin(env);
 
   const normalisedEmail =
     email.trim().toLowerCase();

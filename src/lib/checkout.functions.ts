@@ -14,6 +14,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       getVerbWisePriceId,
     } = await import("./payments.server");
 
+    const { resolveWorkerEnv } = await import(
+      "./worker-env"
+    );
+
     const { getRequest } =
       await import(
         "@tanstack/react-start/server"
@@ -23,10 +27,12 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       const origin =
         new URL(getRequest().url).origin;
 
-      const stripe = await getStripe();
+      const env = await resolveWorkerEnv();
+
+      const stripe = getStripe(env);
 
       const priceId =
-        await getVerbWisePriceId();
+        getVerbWisePriceId(env);
 
       const session =
         await stripe.checkout.sessions.create({
@@ -112,8 +118,17 @@ export const confirmCheckout = createServerFn({
       purchaseExists,
     } = await import("./payments.server");
 
+    const { resolveWorkerEnv } = await import(
+      "./worker-env"
+    );
+
+    const env = await resolveWorkerEnv();
+
     if (
-      await purchaseExists(data.sessionId)
+      await purchaseExists(
+        env,
+        data.sessionId,
+      )
     ) {
       return {
         paid: true,
@@ -121,12 +136,11 @@ export const confirmCheckout = createServerFn({
       };
     }
 
-    const session =
-      await (
-        await getStripe()
-      ).checkout.sessions.retrieve(
-        data.sessionId,
-      );
+    const session = await getStripe(
+      env,
+    ).checkout.sessions.retrieve(
+      data.sessionId,
+    );
 
     if (
       session.payment_status !== "paid"
@@ -137,7 +151,7 @@ export const confirmCheckout = createServerFn({
       };
     }
 
-    await recordPurchase(session);
+    await recordPurchase(env, session);
 
     return {
       paid: true,
@@ -164,9 +178,16 @@ export const restorePurchase = createServerFn({
       purchaseExistsForEmail,
     } = await import("./payments.server");
 
+    const { resolveWorkerEnv } = await import(
+      "./worker-env"
+    );
+
+    const env = await resolveWorkerEnv();
+
     return {
       found:
         await purchaseExistsForEmail(
+          env,
           data.email,
         ),
     };
