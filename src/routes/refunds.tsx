@@ -57,7 +57,8 @@ function Refunds() {
         <LegalSection title="Your statutory rights">
           <p>
             Your rights under the Consumer Rights Act 2015 are not affected. If the digital content is faulty, or does
-            not match how it was described, contact [contact email] and we will look at a repair, replacement or
+            not match how it was described, contact  <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>
+          </p> and we will look at a repair, replacement or
             refund as appropriate.
           </p>
         </LegalSection>
@@ -65,7 +66,8 @@ function Refunds() {
         <LegalSection title="Customers in the EU and EEA">
           <p>
             Similar rules apply to customers in the EU and EEA. If you have any questions about your rights, contact
-            us at <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer">richard-wells.com</a> and we will help.
+            us at  <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>
+          </p> and we will help.
           </p>
         </LegalSection>
       </div>
