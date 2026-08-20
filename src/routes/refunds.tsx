@@ -65,7 +65,7 @@ function Refunds() {
         <LegalSection title="Customers in the EU and EEA">
           <p>
             Similar rules apply to customers in the EU and EEA. If you have any questions about your rights, contact
-            us at [contact email] and we will help.
+            us at <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer">richard-wells.com</a> and we will help.
           </p>
         </LegalSection>
       </div>
