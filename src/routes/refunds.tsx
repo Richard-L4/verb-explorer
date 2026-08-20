@@ -1,4 +1,3 @@
-```jsx
 import { createFileRoute } from "@tanstack/react-router";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -65,4 +64,3 @@ function Refunds() {
     </PageTransition>
   );
 }
-```
