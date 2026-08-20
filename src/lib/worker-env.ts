@@ -30,21 +30,6 @@ const BINDING_NAMES = [
 
 type Bag = Record<string, unknown>;
 
-function fromRequest(): Bag | undefined {
-  try {
-    // Imported lazily: only valid inside an active request context.
-    const req = (
-      globalThis as typeof globalThis & {
-        __tanstackRequest__?: unknown;
-      }
-    ).__tanstackRequest__;
-    void req;
-  } catch {
-    /* ignore */
-  }
-  return undefined;
-}
-
 function readBag(bag: Bag | undefined, name: string): string | undefined {
   const value = bag?.[name];
   return typeof value === "string" && value.length > 0 ? value : undefined;
@@ -70,7 +55,6 @@ export async function resolveWorkerEnv(): Promise<WorkerEnv> {
   } catch {
     // No active request context (or not running on Cloudflare).
   }
-  void fromRequest;
 
   // 2. Global stash set by Nitro's cloudflare-module handler.
   const globalEnv = (globalThis as typeof globalThis & { __env__?: Bag }).__env__;
