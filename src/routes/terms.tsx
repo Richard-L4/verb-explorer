@@ -32,8 +32,8 @@ function Terms() {
 
       <div className="grid gap-5">
         <LegalSection title="Who provides this service">
-          <p>Verb Wise is provided by Richard Wells, based in the United Kingdom. Contact:  <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>
-          </p>.</p>
+          <p>Verb Wise is provided by Richard Wells, based in the United Kingdom. Contact:  <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>.
+          </p>
         </LegalSection>
 
         <LegalSection title="What the app is">
