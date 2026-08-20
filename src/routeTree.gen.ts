@@ -14,7 +14,6 @@ import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
-import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SayingsRouteImport } from './routes/sayings'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -49,11 +48,6 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RefundsRoute = RefundsRouteImport.update({
-  id: '/refunds',
-  path: '/refunds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SayingsRoute = SayingsRouteImport.update({
@@ -113,7 +107,6 @@ export interface FileRoutesByFullPath {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
-  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
@@ -131,7 +124,6 @@ export interface FileRoutesByTo {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
-  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
@@ -150,7 +142,6 @@ export interface FileRoutesById {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
-  '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
@@ -170,7 +161,6 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
-    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
@@ -188,7 +178,6 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
-    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
@@ -206,7 +195,6 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
-    | '/refunds'
     | '/sayings'
     | '/search'
     | '/settings'
@@ -225,7 +213,6 @@ export interface RootRouteChildren {
   FavouritesRoute: typeof FavouritesRoute
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
-  RefundsRoute: typeof RefundsRoute
   SayingsRoute: typeof SayingsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
@@ -273,13 +260,6 @@ declare module '@tanstack/react-router' {
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/refunds': {
-      id: '/refunds'
-      path: '/refunds'
-      fullPath: '/refunds'
-      preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sayings': {
@@ -361,7 +341,6 @@ const rootRouteChildren: RootRouteChildren = {
   FavouritesRoute: FavouritesRoute,
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
-  RefundsRoute: RefundsRoute,
   SayingsRoute: SayingsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
