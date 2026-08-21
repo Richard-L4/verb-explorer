@@ -42,10 +42,16 @@ function getStripeSecretKey(): string {
  * Return the correct Stripe Price ID for the configured key.
  *
  * A test key can only use the test price, and a live key the live price,
- * so the mode is derived from the key itself.
+ * so the mode is derived from the key itself. This covers standard secret
+ * keys (`sk_test_…`) as well as restricted keys (`rk_test_…`).
  */
+export function isTestMode(): boolean {
+  const key = getStripeSecretKey();
+  return key.startsWith("sk_test_") || key.startsWith("rk_test_");
+}
+
 export function getVerbWisePriceId(): string {
-  return getStripeSecretKey().startsWith("sk_test_")
+  return isTestMode()
     ? VERB_WISE_TEST_PRICE_ID
     : VERB_WISE_LIVE_PRICE_ID;
 }
