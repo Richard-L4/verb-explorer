@@ -93,10 +93,9 @@ export function getSupabaseAdmin(): SupabaseClient {
  */
 async function findPriceRowId(
   db: SupabaseClient,
-  env: WorkerEnv,
 ): Promise<string | null> {
   const stripePriceId =
-    getVerbWisePriceId(env);
+    getVerbWisePriceId();
 
   const { data, error } = await db
     .from("prices")
@@ -208,14 +207,13 @@ async function upsertCustomer(
  * create duplicate purchases.
  */
 export async function recordPurchase(
-  env: WorkerEnv,
   session: Stripe.Checkout.Session,
 ): Promise<void> {
   if (session.payment_status !== "paid") {
     return;
   }
 
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const { data: existing } =
     await db
@@ -258,7 +256,7 @@ export async function recordPurchase(
     );
 
   const priceId =
-    await findPriceRowId(db, env);
+    await findPriceRowId(db);
 
   const paymentIntent =
     typeof session.payment_intent ===
@@ -335,10 +333,9 @@ export async function recordPurchase(
  * been recorded as a purchase.
  */
 export async function purchaseExists(
-  env: WorkerEnv,
   sessionId: string,
 ): Promise<boolean> {
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const { data } = await db
     .from("purchases")
@@ -357,10 +354,9 @@ export async function purchaseExists(
  * paid purchase.
  */
 export async function purchaseExistsForEmail(
-  env: WorkerEnv,
   email: string,
 ): Promise<boolean> {
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const normalisedEmail =
     email.trim().toLowerCase();
