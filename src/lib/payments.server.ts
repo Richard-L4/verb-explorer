@@ -2,7 +2,7 @@
  * Server-only Stripe + Supabase helpers.
  *
  * This file must only be imported by server-side code.
- * Every helper receives the resolved Cloudflare Worker env explicitly.
+ * Secrets are read from process.env inside each helper.
  */
 
 import Stripe from "stripe";
@@ -10,7 +10,6 @@ import {
   createClient,
   type SupabaseClient,
 } from "@supabase/supabase-js";
-import type { WorkerEnv } from "./worker-env";
 
 /**
  * Stripe Price IDs
@@ -27,68 +26,33 @@ export const VERB_WISE_LIVE_PRICE_ID =
 export const VERB_WISE_TEST_PRICE_ID =
   "price_1U6FgVQsnncBlv2AE3WrorZp";
 
-/**
- * Return the current Stripe mode.
- *
- * STRIPE_MODE=test  -> Sandbox
- * STRIPE_MODE=live  -> Live
- *
- * Any value other than "test" is treated as live.
- */
-export function getStripeMode(
-  env: WorkerEnv,
-): "test" | "live" {
-  return env.STRIPE_MODE === "test"
-    ? "test"
-    : "live";
+function getStripeSecretKey(): string {
+  const key = process.env['STRIPE_SECRET_KEY'];
+
+  if (!key) {
+    throw new Error(
+      "STRIPE_SECRET_KEY is not configured",
+    );
+  }
+
+  return key;
 }
 
 /**
- * Return the correct Stripe Price ID for the
- * current environment.
+ * Return the correct Stripe Price ID for the configured key.
+ *
+ * A test key can only use the test price, and a live key the live price,
+ * so the mode is derived from the key itself.
  */
-export function getVerbWisePriceId(
-  env: WorkerEnv,
-): string {
-  return getStripeMode(env) === "test"
+export function getVerbWisePriceId(): string {
+  return getStripeSecretKey().startsWith("sk_test_")
     ? VERB_WISE_TEST_PRICE_ID
     : VERB_WISE_LIVE_PRICE_ID;
 }
 
-/**
- * Create the server-side Stripe client.
- *
- * The key is selected automatically:
- *
- * test -> STRIPE_TEST_SECRET_KEY
- * live -> STRIPE_SECRET_KEY
- */
-export function getStripe(
-  env: WorkerEnv,
-): Stripe {
-  const mode = getStripeMode(env);
-
-  const keyName =
-    mode === "test"
-      ? "STRIPE_TEST_SECRET_KEY"
-      : "STRIPE_SECRET_KEY";
-
-  const key =
-    mode === "test"
-      ? env.STRIPE_TEST_SECRET_KEY
-      : env.STRIPE_SECRET_KEY;
-
-  console.info(
-    `[stripe] mode=${mode} key_source=${keyName} present=${Boolean(key)}`,
-  );
-
-  if (!key) {
-    throw new Error(
-      `${keyName} is not configured`,
-    );
-  }
-
-  return new Stripe(key, {
+/** Create the server-side Stripe client. */
+export function getStripe(): Stripe {
+  return new Stripe(getStripeSecretKey(), {
     httpClient: Stripe.createFetchHttpClient(),
   });
 }
@@ -99,13 +63,14 @@ export function getStripe(
  * The service-role key bypasses Row Level Security.
  * This function must NEVER be called from client-side code.
  */
-export function getSupabaseAdmin(
-  env: WorkerEnv,
-): SupabaseClient {
-  const url = env.VERBWISE_SUPABASE_URL;
+export function getSupabaseAdmin(): SupabaseClient {
+  const url =
+    process.env['VERBWISE_SUPABASE_URL'] ??
+    process.env['SUPABASE_URL'];
 
   const key =
-    env.VERBWISE_SUPABASE_SERVICE_ROLE_KEY;
+    process.env['VERBWISE_SUPABASE_SERVICE_ROLE_KEY'] ??
+    process.env['SUPABASE_SERVICE_ROLE_KEY'];
 
   if (!url || !key) {
     throw new Error(
@@ -121,16 +86,16 @@ export function getSupabaseAdmin(
   });
 }
 
+
 /**
  * Find the Supabase price row corresponding to
  * the Stripe price used by the current environment.
  */
 async function findPriceRowId(
   db: SupabaseClient,
-  env: WorkerEnv,
 ): Promise<string | null> {
   const stripePriceId =
-    getVerbWisePriceId(env);
+    getVerbWisePriceId();
 
   const { data, error } = await db
     .from("prices")
@@ -242,14 +207,13 @@ async function upsertCustomer(
  * create duplicate purchases.
  */
 export async function recordPurchase(
-  env: WorkerEnv,
   session: Stripe.Checkout.Session,
 ): Promise<void> {
   if (session.payment_status !== "paid") {
     return;
   }
 
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const { data: existing } =
     await db
@@ -292,7 +256,7 @@ export async function recordPurchase(
     );
 
   const priceId =
-    await findPriceRowId(db, env);
+    await findPriceRowId(db);
 
   const paymentIntent =
     typeof session.payment_intent ===
@@ -369,10 +333,9 @@ export async function recordPurchase(
  * been recorded as a purchase.
  */
 export async function purchaseExists(
-  env: WorkerEnv,
   sessionId: string,
 ): Promise<boolean> {
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const { data } = await db
     .from("purchases")
@@ -391,10 +354,9 @@ export async function purchaseExists(
  * paid purchase.
  */
 export async function purchaseExistsForEmail(
-  env: WorkerEnv,
   email: string,
 ): Promise<boolean> {
-  const db = getSupabaseAdmin(env);
+  const db = getSupabaseAdmin();
 
   const normalisedEmail =
     email.trim().toLowerCase();

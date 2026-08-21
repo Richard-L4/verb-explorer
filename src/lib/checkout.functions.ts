@@ -9,78 +9,49 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       .parse(input),
   )
   .handler(async ({ data }) => {
-    const {
-      getStripe,
-      getVerbWisePriceId,
-    } = await import("./payments.server");
-
-    const { resolveWorkerEnv } = await import(
-      "./worker-env"
+    const { getStripe, getVerbWisePriceId } = await import(
+      "./payments.server"
     );
 
-    const { getRequest } =
-      await import(
-        "@tanstack/react-start/server"
-      );
+    const { getRequest } = await import("@tanstack/react-start/server");
 
     try {
-      const origin =
-        new URL(getRequest().url).origin;
+      const origin = new URL(getRequest().url).origin;
 
-      const env = await resolveWorkerEnv();
+      const stripe = getStripe();
 
-      const stripe = getStripe(env);
+      const priceId = getVerbWisePriceId();
 
-      const priceId =
-        getVerbWisePriceId(env);
-
-      const session =
-        await stripe.checkout.sessions.create({
-          mode: "payment",
-          line_items: [
-            {
-              price: priceId,
-              quantity: 1,
-            },
-          ],
-          success_url:
-            `${origin}/unlock/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url:
-            `${origin}/unlock?cancelled=1`,
+      const session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        success_url: `${origin}/unlock/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/unlock?cancelled=1`,
+        metadata: {
+          marketing_consent: data.marketingConsent ? "true" : "false",
+        },
+        payment_intent_data: {
           metadata: {
-            marketing_consent:
-              data.marketingConsent
-                ? "true"
-                : "false",
+            marketing_consent: data.marketingConsent ? "true" : "false",
           },
-          payment_intent_data: {
-            metadata: {
-              marketing_consent:
-                data.marketingConsent
-                  ? "true"
-                  : "false",
-            },
-          },
-        });
+        },
+      });
 
       if (!session.url) {
-        throw new Error(
-          "Stripe returned a session without a URL",
-        );
+        throw new Error("Stripe returned a session without a URL");
       }
 
-      console.log(
-        "[checkout] session created",
-        session.id,
-        origin,
-      );
+      console.log("[checkout] session created", session.id, origin);
 
       return { url: session.url };
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : String(error);
+        error instanceof Error ? error.message : String(error);
 
       console.error(
         "[checkout] failed to create session:",
@@ -88,9 +59,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         error,
       );
 
-      throw new Error(
-        `[checkout] ${message}`,
-      );
+      throw new Error(`[checkout] ${message}`);
     }
   });
 
@@ -112,46 +81,29 @@ export const confirmCheckout = createServerFn({
       .parse(input),
   )
   .handler(async ({ data }) => {
-    const {
-      getStripe,
-      recordPurchase,
-      purchaseExists,
-    } = await import("./payments.server");
-
-    const { resolveWorkerEnv } = await import(
-      "./worker-env"
+    const { getStripe, recordPurchase, purchaseExists } = await import(
+      "./payments.server"
     );
 
-    const env = await resolveWorkerEnv();
-
-    if (
-      await purchaseExists(
-        env,
-        data.sessionId,
-      )
-    ) {
+    if (await purchaseExists(data.sessionId)) {
       return {
         paid: true,
         recorded: true,
       };
     }
 
-    const session = await getStripe(
-      env,
-    ).checkout.sessions.retrieve(
+    const session = await getStripe().checkout.sessions.retrieve(
       data.sessionId,
     );
 
-    if (
-      session.payment_status !== "paid"
-    ) {
+    if (session.payment_status !== "paid") {
       return {
         paid: false,
         recorded: false,
       };
     }
 
-    await recordPurchase(env, session);
+    await recordPurchase(session);
 
     return {
       paid: true,
@@ -174,21 +126,9 @@ export const restorePurchase = createServerFn({
       .parse(input),
   )
   .handler(async ({ data }) => {
-    const {
-      purchaseExistsForEmail,
-    } = await import("./payments.server");
-
-    const { resolveWorkerEnv } = await import(
-      "./worker-env"
-    );
-
-    const env = await resolveWorkerEnv();
+    const { purchaseExistsForEmail } = await import("./payments.server");
 
     return {
-      found:
-        await purchaseExistsForEmail(
-          env,
-          data.email,
-        ),
+      found: await purchaseExistsForEmail(data.email),
     };
   });
