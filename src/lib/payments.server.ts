@@ -64,6 +64,49 @@ export function getStripe(): Stripe {
 }
 
 /**
+ * Send a purchase confirmation email via Resend.
+ */
+async function sendConfirmationEmail(
+  email: string,
+  name: string | null,
+): Promise<void> {
+  const apiKey = process.env['RESEND_API_KEY'];
+
+  if (!apiKey) {
+    console.error("[email] RESEND_API_KEY is not configured");
+    return;
+  }
+
+  const firstName = name?.split(" ")[0] ?? "there";
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "noreply@richard-wells.com",
+      to: email,
+      subject: "Thanks for purchasing Verb Wise!",
+      html: `
+        <p>Hi ${firstName},</p>
+        <p>Thanks for purchasing Verb Wise! You now have full access.</p>
+        <p>If you have any questions, just reply to this email.</p>
+        <p>Enjoy!</p>
+      `,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error("[email] Failed to send confirmation email:", error);
+  } else {
+    console.log("[email] Confirmation email sent to", email);
+  }
+}
+
+/**
  * Create the server-side Supabase admin client.
  *
  * The service-role key bypasses Row Level Security.
@@ -300,6 +343,11 @@ export async function recordPurchase(
     );
 
     throw purchaseError;
+  }
+
+  // Send confirmation email to customer
+  if (email) {
+    await sendConfirmationEmail(email, name);
   }
 
   if (customerId) {
