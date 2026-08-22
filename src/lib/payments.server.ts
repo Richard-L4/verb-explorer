@@ -335,6 +335,35 @@ export async function recordPurchase(
 }
 
 /**
+ * Mark the purchase attached to a Stripe PaymentIntent as paid.
+ *
+ * Handles `payment_intent.succeeded`, which can arrive before or
+ * after `checkout.session.completed`.
+ */
+export async function markPaymentIntentPaid(
+  paymentIntentId: string,
+): Promise<void> {
+  const db = getSupabaseAdmin();
+
+  const { error } = await db
+    .from("purchases")
+    .update({ status: "paid" })
+    .eq(
+      "stripe_payment_intent",
+      paymentIntentId,
+    );
+
+  if (error) {
+    console.error(
+      "[stripe] Failed to mark payment intent paid:",
+      error.message,
+    );
+
+    throw error;
+  }
+}
+
+/**
  * Check whether a Checkout Session has already
  * been recorded as a purchase.
  */

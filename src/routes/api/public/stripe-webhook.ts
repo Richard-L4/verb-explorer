@@ -13,8 +13,11 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           return new Response("Webhook secret not configured", { status: 503 });
         }
 
+        // Raw string body — required for signature verification.
         const body = await request.text();
-        const { getStripe, recordPurchase } = await import("@/lib/payments.server");
+        const { getStripe, recordPurchase, markPaymentIntentPaid } = await import(
+          "@/lib/payments.server"
+        );
         const stripe = getStripe();
 
         let event;
@@ -24,13 +27,15 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           return new Response("Invalid signature", { status: 401 });
         }
 
-        if (event.type === "checkout.session.completed") {
-          try {
+        try {
+          if (event.type === "checkout.session.completed") {
             await recordPurchase(event.data.object);
-          } catch (error) {
-            console.error("Failed to record purchase", error);
-            return new Response("Failed to record purchase", { status: 500 });
+          } else if (event.type === "payment_intent.succeeded") {
+            await markPaymentIntentPaid(event.data.object.id);
           }
+        } catch (error) {
+          console.error("Failed to record purchase", error);
+          return new Response("Failed to record purchase", { status: 500 });
         }
 
         return new Response("ok");

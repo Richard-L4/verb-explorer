@@ -20,8 +20,12 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 // Start installs this automatically when src/start.ts is absent; defining the
 // file opts out, so re-add it explicitly to keep server functions protected
 // from cross-site requests.
+// Public API routes (Stripe webhooks etc.) must never be session- or
+// CSRF-checked: Stripe posts unauthenticated, cross-origin requests.
 const csrfMiddleware = createCsrfMiddleware({
-  filter: (ctx) => ctx.handlerType === "serverFn",
+  filter: (ctx) =>
+    ctx.handlerType === "serverFn" &&
+    !new URL(ctx.request.url).pathname.startsWith("/api/public/"),
 });
 
 export const startInstance = createStart(() => ({
