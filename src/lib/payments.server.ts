@@ -27,7 +27,7 @@ export const VERB_WISE_TEST_PRICE_ID =
   "price_1U6FgVQsnncBlv2AE3WrorZp";
 
 function getStripeSecretKey(): string {
-  const key = process.env['STRIPE_SECRET_KEY'];
+  const key = process.env['STRIPE_SECRET_KEY_TEST'] ?? process.env['STRIPE_SECRET_KEY'];
 
   if (!key) {
     throw new Error(
