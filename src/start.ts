@@ -23,9 +23,11 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 // Public API routes (Stripe webhooks etc.) must never be session- or
 // CSRF-checked: Stripe posts unauthenticated, cross-origin requests.
 const csrfMiddleware = createCsrfMiddleware({
-  filter: (ctx) =>
-    ctx.handlerType === "serverFn" &&
-    !new URL(ctx.request.url).pathname.startsWith("/api/public/"),
+  filter: (ctx) => {
+    const pathname = new URL(ctx.request.url).pathname;
+    if (pathname === "/api/public/stripe-webhook") return false;
+    return ctx.handlerType === "serverFn";
+  },
 });
 
 export const startInstance = createStart(() => ({
