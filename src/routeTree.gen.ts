@@ -24,6 +24,7 @@ import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
+import { Route as ApiPublicEnvCheckRouteImport } from './routes/api/public/env-check'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -101,6 +102,11 @@ const UnlockSuccessRoute = UnlockSuccessRouteImport.update({
   path: '/unlock/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEnvCheckRoute = ApiPublicEnvCheckRouteImport.update({
+  id: '/api/public/env-check',
+  path: '/api/public/env-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
+  '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
+  '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesById {
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock_/success': typeof UnlockSuccessRoute
+  '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRouteTypes {
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/card/$cardId'
     | '/saying/$sayingId'
     | '/unlock/success'
+    | '/api/public/env-check'
     | '/api/public/stripe-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/card/$cardId'
     | '/saying/$sayingId'
     | '/unlock/success'
+    | '/api/public/env-check'
     | '/api/public/stripe-webhook'
   id:
     | '__root__'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/card/$cardId'
     | '/saying/$sayingId'
     | '/unlock_/success'
+    | '/api/public/env-check'
     | '/api/public/stripe-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -235,6 +247,7 @@ export interface RootRouteChildren {
   CardCardIdRoute: typeof CardCardIdRoute
   SayingSayingIdRoute: typeof SayingSayingIdRoute
   UnlockSuccessRoute: typeof UnlockSuccessRoute
+  ApiPublicEnvCheckRoute: typeof ApiPublicEnvCheckRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnlockSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/env-check': {
+      id: '/api/public/env-check'
+      path: '/api/public/env-check'
+      fullPath: '/api/public/env-check'
+      preLoaderRoute: typeof ApiPublicEnvCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/stripe-webhook': {
       id: '/api/public/stripe-webhook'
       path: '/api/public/stripe-webhook'
@@ -371,6 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   CardCardIdRoute: CardCardIdRoute,
   SayingSayingIdRoute: SayingSayingIdRoute,
   UnlockSuccessRoute: UnlockSuccessRoute,
+  ApiPublicEnvCheckRoute: ApiPublicEnvCheckRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
