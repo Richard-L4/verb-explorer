@@ -2,7 +2,7 @@
  * Server-only Stripe + Supabase helpers.
  *
  * This file must only be imported by server-side code.
- * Secrets are read from process.env inside each helper.
+ * Secrets are read via readEnv() (process.env + Worker bindings).
  */
 
 import Stripe from "stripe";
@@ -10,6 +10,7 @@ import {
   createClient,
   type SupabaseClient,
 } from "@supabase/supabase-js";
+import { readEnv } from "./env.server";
 
 /**
  * Stripe Price IDs
@@ -27,7 +28,7 @@ export const VERB_WISE_TEST_PRICE_ID =
   "price_1U6FgVQsnncBlv2AE3WrorZp";
 
 function getStripeSecretKey(): string {
-  const key = process.env['STRIPE_SECRET_KEY_TEST'] ?? process.env['STRIPE_SECRET_KEY'];
+  const key = readEnv("STRIPE_SECRET_KEY_TEST") ?? readEnv("STRIPE_SECRET_KEY");
 
   if (!key) {
     throw new Error(
@@ -70,7 +71,7 @@ async function sendConfirmationEmail(
   email: string,
   name: string | null,
 ): Promise<void> {
-  const apiKey = process.env['RESEND_API_KEY'];
+  const apiKey = readEnv("RESEND_API_KEY");
 
   if (!apiKey) {
     console.error("[email] RESEND_API_KEY is not configured");
@@ -114,12 +115,11 @@ async function sendConfirmationEmail(
  */
 export function getSupabaseAdmin(): SupabaseClient {
   const url =
-    process.env['VERBWISE_SUPABASE_URL'] ??
-    process.env['SUPABASE_URL'];
+    readEnv("VERBWISE_SUPABASE_URL") ?? readEnv("SUPABASE_URL");
 
   const key =
-    process.env['VERBWISE_SUPABASE_SERVICE_ROLE_KEY'] ??
-    process.env['SUPABASE_SERVICE_ROLE_KEY'];
+    readEnv("VERBWISE_SUPABASE_SERVICE_ROLE_KEY") ??
+    readEnv("SUPABASE_SERVICE_ROLE_KEY");
 
   if (!url || !key) {
     throw new Error(
