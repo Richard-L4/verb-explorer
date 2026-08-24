@@ -2,7 +2,7 @@
  * Server-only Stripe + Supabase helpers.
  *
  * This file must only be imported by server-side code.
- * Secrets are read from process.env inside each helper.
+ * Secrets are read via readEnv() (process.env + Worker bindings).
  */
 
 import Stripe from "stripe";
