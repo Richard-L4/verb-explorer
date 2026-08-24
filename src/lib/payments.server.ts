@@ -93,7 +93,7 @@ async function sendConfirmationEmail(
       html: `
         <p>Hi ${firstName},</p>
         <p>Thanks for purchasing Verb Wise! You now have full access.</p>
-        <p>If you have any questions, just reply to this email.</p>
+        <p>If you have any questions, please contact me via the Connect & Collaborate form at https://richard-wells.com/.</p>
         <p>Enjoy!</p>
       `,
     }),
