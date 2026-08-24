@@ -1,40 +1,58 @@
-# Fix: payment success page on verb-wise.richard-wells.com
+# Fix: completed Checkout Session shows "Stripe hasn't confirmed this payment yet"
 
-## What I measured just now (live, both domains)
+## Root cause — confirmed in the live server logs, not inferred
 
-| Check | verb-wise-flashcards.lovable.app | verb-wise.richard-wells.com |
-|---|---|---|
-| `/api/public/env-check` build stamp | `env-check-v1` | `env-check-v1` |
-| Stripe secret resolved | **true** (test-mode key) | **false** |
-| Webhook secret resolved | **true** | **false** |
-| Supabase server keys resolved | **true** | **false** |
+Production logs for `verb-wise.richard-wells.com` at 10:18–10:20 today show the exact sequence:
 
-Domain check on this project: **no custom domains are connected**. The project is published.
+```text
+10:18:54 [log]   [checkout] session created cs_test_a1afh8kw6yjMpVBTpik5baeBkEuotyMEpGyrJh7ZNZYxbEOZAFL9iPrTwG
+10:20:06 [req]   GET /unlock/success?session_id=...
+10:20:08 [error] [stripe] Failed to record purchase: Could not find the 'marketing_consent' column of 'purchases' in the schema cache
+10:20:09 [error] (same)
+10:20:13 [error] (same)
+10:20:18 [error] (same)
+```
 
-## Root cause
+Four errors = the four retry attempts in `/unlock/success`, then the UI falls through to the "pending" message.
 
-`verb-wise.richard-wells.com` is not served by this Lovable project. It is a separate Cloudflare Worker/Pages deployment of the same code with none of the secrets bound. On that host every server function that touches Stripe fails:
+Environment is not the problem: `/api/public/env-check` on the custom domain now returns `true` for `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and both Supabase server keys, with `stripeKeyMode: "test"` — matching the `cs_test_` session.
 
-- Checkout can't create a session.
-- `/unlock/success` calls `confirmCheckout`, which throws on every retry, so it silently falls through to the "Stripe hasn't confirmed this payment yet" state — that's the "no success page" you're seeing.
-- The Stripe webhook returns 503, so nothing is recorded in the database either.
+The actual chain:
 
-Publishing again will never change this, because publishing only updates the Lovable-hosted deployment.
+1. `confirmCheckout` calls `purchaseExists(sessionId)` — false, because the webhook insert failed for the same reason.
+2. It retrieves the session from Stripe — `payment_status` is `paid`, correctly.
+3. It calls `recordPurchase(session)`, whose insert into `purchases` includes `marketing_consent`. That column does not exist in the live `purchases` table, so PostgREST rejects the insert and `recordPurchase` rethrows.
+4. The thrown error propagates out of `confirmCheckout`, so the success page's `catch { /* keep retrying */ }` swallows it and `result.paid` is never read. After four attempts it shows "pending".
 
-## The fix (no code change needed)
+So a genuinely paid customer is denied access because of a database bookkeeping failure on an optional field.
 
-1. Connect `verb-wise.richard-wells.com` to this project: Project Settings → Domains → Add custom domain, then update the DNS record at your registrar to the value Lovable shows. This retires the separate Worker as the origin and the domain starts serving the same deployment that already has all secrets bound.
-2. After the domain shows Connected, re-check `https://verb-wise.richard-wells.com/api/public/env-check` — all six values should read `true` and `stripeKeyMode` should match the Lovable host.
-3. Point the Stripe webhook endpoint at the domain you want to keep as canonical (`.../api/public/stripe-webhook`) and confirm a test event returns 200.
-4. Run one end-to-end test purchase and confirm `/unlock/success` reaches the "You're unlocked" state.
+## The fix
 
-Alternative, if you want to keep your own Cloudflare Worker as the origin: bind `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `VERBWISE_SUPABASE_URL` and `VERBWISE_SUPABASE_SERVICE_ROLE_KEY` as secrets on that Worker and redeploy it from current code. This keeps two deployments to maintain, so option 1 is the one I recommend.
+**1. Add the missing column to the live database.** The `purchases` table needs `marketing_consent boolean` (nullable). This database is your own external Supabase project (`VERBWISE_SUPABASE_*`), which I cannot migrate from here, so you'll run this once in its SQL editor:
 
-## Small code improvements I'd make alongside
+```sql
+alter table public.purchases
+  add column if not exists marketing_consent boolean;
+```
 
-- `src/routes/unlock_.success.tsx`: surface the real failure instead of masking it. If every `confirmCheckout` attempt throws (as opposed to returning `paid: false`), show an explicit error state with a retry button rather than the "not confirmed yet" wording, so a misconfigured host is obvious immediately.
-- Keep `/api/public/env-check` until the domain is verified working, then remove it in a follow-up so the diagnostic surface isn't permanent.
+I'll confirm afterwards by re-running the confirm flow for the session above.
+
+**2. Never let bookkeeping block entitlement** (`src/lib/checkout.functions.ts`). Restructure `confirmCheckout` so that once Stripe reports `payment_status === "paid"`, the function returns `{ paid: true }` regardless of whether `recordPurchase` succeeds. The recording call gets wrapped so a database failure is logged as `recorded: false` and reported, not thrown. Payment truth comes from Stripe; the database row is a record of it.
+
+**3. Make the purchase insert tolerant of an absent optional column** (`src/lib/payments.server.ts`). If the insert fails with a "could not find the '<name>' column" error, retry once without the optional fields (`marketing_consent`) and log a clear warning naming the missing column. Consent is still captured in `communication_preferences` and in Stripe metadata, so nothing is lost. This also protects the webhook path, which is failing identically today.
+
+**4. Stop hiding the real error on the success page** (`src/routes/unlock_.success.tsx`). Keep the retry loop, but capture the last error message and, when every attempt fails, show an explicit error state (with the reason and a retry button) instead of the misleading "Stripe hasn't confirmed this payment yet". Retain the current "pending" wording only for the genuine case where Stripe returns `paid: false`.
+
+**5. Diagnostics.** Add a `[confirm]` log line recording session id, `payment_status`, and whether recording succeeded, so this flow is traceable in future without guesswork. No secret or card data is logged.
+
+## Verification
+
+1. Apply the SQL above.
+2. Reload `https://verb-wise.richard-wells.com/unlock/success?session_id=cs_test_a1afh8kw6yjMpVBTpik5baeBkEuotyMEpGyrJh7ZNZYxbEOZAFL9iPrTwG` — it should reach "You're unlocked".
+3. Check the logs show `[confirm] ... recorded=true` and no `Failed to record purchase`.
+4. Confirm a row exists in `purchases` for that session id.
 
 ## Notes
 
-- The currently bound Stripe key is a **test-mode** key (`stripeKeyMode: "test"`), so real card payments will not go through on the Lovable host either until you swap in the live key. Worth deciding before the end-to-end test.
+- The live Stripe key currently bound is a **test** key, so this is a sandbox purchase. Swapping to the live key is a separate decision.
+- The `/api/public/env-check` endpoint stays until this is verified, then I'll remove it in a follow-up.
