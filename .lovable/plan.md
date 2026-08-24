@@ -1,57 +1,69 @@
-# Fix: completed Checkout Session shows "Stripe hasn't confirmed this payment yet"
+# Status: what is currently unpublished
 
-## What the logs show now (after you added `marketing_consent`)
+This is a read-only status report, not a build plan. No code or publish actions were taken.
 
-The column fix worked — that error stopped. A second, different error took its place at 10:38:
+## Headline
 
-```text
-10:38:43 [error] [stripe] Failed to record purchase: Could not find the 'stripe_checkout_session_id' column of 'purchases' in the schema cache
-10:38:45 (same)
-10:38:48 (same)
-10:38:54 (same)
-```
+There are **no unpublished source-code changes**. Every committed change to
+`src/` is already live on both `verb-wise-flashcards.lovable.app` and
+`verb-wise.richard-wells.com` (the two now share one deployment — the
+`.lovable.app` host 302-redirects to the custom domain).
 
-Four errors again = the four retry attempts on `/unlock/success`, then the misleading "pending" message. Earlier `marketing_consent` errors at 10:20 and 10:31 no longer appear after 10:31.
+The only committed-but-unpublished items are edits to `.lovable/plan.md`
+(5 commits after the last code change). `.lovable/plan.md` is a planning
+document and is **not** part of the deployed bundle, so it has zero runtime
+effect.
 
-The live `purchases` table is missing **two** columns the code writes, and they are being discovered one at a time because PostgREST reports only the first unknown column per insert.
+## Evidence
 
-`stripe_checkout_session_id` is worse than a bookkeeping field: it is the idempotency key. `purchaseExists()` filters on it, so that lookup is also failing today, which is why the webhook and the confirm path both fall over.
+- `git status` is clean — nothing uncommitted in the working tree.
+- Last commit touching any file under `src/`: `3de2f49` (2026-08-24 00:17:41),
+  integrated by merge `d44c84d` (00:18:01). After that, every commit
+  (`5477d89`, `e980251`, `c45516f`, `6dd9261`, `8019274`, `b85703b`,
+  `ca1a69c`) touches only `.lovable/plan.md`.
+- Live `/api/public/env-check` on the custom domain returns the **current**
+  response shape (`host`, `buildStamp: env-check-v1`, `hasProcessEnv`,
+  `hasGlobalEnvStash`, `resolved`, `processEnv`, `globalEnv`,
+  `stripeKeyMode: test`) — which matches `HEAD`'s `env-check.ts` exactly.
+  The old shape (nested `runtime.{...}` and no top-level `resolved`) is gone,
+  proving the `readEnv` refactor is deployed.
+- `hasGlobalEnvStash: true` and `globalEnv.* = true` confirm `src/server.ts`
+  (the `globalThis.__env__` stash) is live, so the unified secret-reading
+  path is fully deployed.
 
-## The fix
+## Which files changed since the last meaningful publish (all now LIVE)
 
-**1. Add the second missing column.** Run this once in your Supabase SQL editor:
+| File | Change | Affects |
+|---|---|---|
+| `src/lib/env.server.ts` | NEW — unified `readEnv()` / `envPresence()` | Secret reading (all paths) |
+| `src/lib/payments.server.ts` | `process.env` → `readEnv()` for Stripe key, Resend, Supabase admin | Stripe key resolution, Supabase admin client |
+| `src/routes/api/public/env-check.ts` | Refactored to `envPresence` | Diagnostic only |
+| `src/routes/api/public/stripe-webhook.ts` | `process.env` → `readEnv()` for webhook secrets | Webhook signature verification |
 
-```sql
-alter table public.purchases
-  add column if not exists stripe_checkout_session_id text;
+## Impact on the four areas you asked about
 
-create unique index if not exists purchases_stripe_checkout_session_id_key
-  on public.purchases (stripe_checkout_session_id);
-```
+- **Stripe Checkout** (`src/lib/checkout.functions.ts`): **no changes** —
+  not modified since well before the last publish. Nothing pending.
+- **Payment confirmation** (`confirmCheckout` in `checkout.functions.ts`):
+  **no changes**. The proposed refactor (return `paid: true` on Stripe's
+  `paid` status regardless of the DB write) has **not been implemented** —
+  it exists only as plan text.
+- **Supabase purchases** (`recordPurchase` / `purchaseExists` in
+  `payments.server.ts`): only the `readEnv` refactor is live. The proposed
+  hardening (retry without optional columns on schema-mismatch) has
+  **not been implemented**.
+- **Unlock flow** (`src/routes/unlock.tsx`, `src/routes/unlock_.success.tsx`):
+  **no changes**. The proposed error-surfacing in the success page has
+  **not been implemented**.
 
-The unique index makes retries genuinely idempotent rather than relying on a read-then-insert race.
+## What this means for the open "pending payment" bug
 
-**2. Verify the whole shape up front, not one column per attempt.** Before making further changes I'll have the code log the full PostgREST error object (message, details, hint) rather than just `error.message`, so any remaining schema mismatch in `purchases`, `customers`, `prices` or `communication_preferences` surfaces in one pass instead of four more round trips.
+The live code still calls `confirmCheckout`, which still requires the
+Supabase `purchases` insert to succeed before it reports `paid: true`.
+Because `stripe_checkout_session_id` is still missing from the live
+`purchases` table (per the 10:38 log), a genuinely-paid Checkout Session
+will still be reported as "Stripe hasn't confirmed this payment yet".
 
-
-
-**3. Never let bookkeeping block entitlement** (`src/lib/checkout.functions.ts`). Once Stripe reports `payment_status === "paid"`, `confirmCheckout` returns `{ paid: true }` regardless of whether `recordPurchase` succeeds. Recording is wrapped so a database failure is logged and returned as `recorded: false`, never thrown. Payment truth comes from Stripe; the row is only a record of it. This alone unblocks the existing session even if a further column is missing.
-
-**4. Make the insert tolerant of absent optional columns** (`src/lib/payments.server.ts`). On a "could not find the '<name>' column" error, strip that column from the payload and retry once, logging a warning that names it. `stripe_checkout_session_id` is treated as required (it is the idempotency key) and its absence is reported loudly rather than skipped. Also protects the webhook, which fails identically today.
-
-**5. Stop hiding the real error on the success page** (`src/routes/unlock_.success.tsx`). Keep the retry loop, but capture the last error and, when every attempt fails, show an explicit error state with the reason and a retry button instead of "Stripe hasn't confirmed this payment yet". Keep the pending wording only for the genuine case where Stripe returns `paid: false`.
-
-**6. Diagnostics.** Add a `[confirm]` log line with session id, `payment_status`, and whether recording succeeded, so this flow stays traceable. No secret or card data logged.
-
-
-## Verification
-
-1. Apply the SQL above.
-2. Reload `https://verb-wise.richard-wells.com/unlock/success?session_id=cs_test_a1afh8kw6yjMpVBTpik5baeBkEuotyMEpGyrJh7ZNZYxbEOZAFL9iPrTwG` — it should reach "You're unlocked".
-3. Check the logs show `[confirm] ... recorded=true` and no `Failed to record purchase`.
-4. Confirm a row exists in `purchases` for that session id.
-
-## Notes
-
-- The live Stripe key currently bound is a **test** key, so this is a sandbox purchase. Swapping to the live key is a separate decision.
-- The `/api/public/env-check` endpoint stays until this is verified, then I'll remove it in a follow-up.
+That is an **unimplemented fix**, not an **unpublished change**. Closing it
+needs either (a) the schema column added, or (b) the `confirmCheckout`
+refactor built and then published — your call.
