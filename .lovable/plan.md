@@ -1,41 +1,39 @@
 # Fix: completed Checkout Session shows "Stripe hasn't confirmed this payment yet"
 
-## Root cause — confirmed in the live server logs, not inferred
+## What the logs show now (after you added `marketing_consent`)
 
-Production logs for `verb-wise.richard-wells.com` at 10:18–10:20 today show the exact sequence:
+The column fix worked — that error stopped. A second, different error took its place at 10:38:
 
 ```text
-10:18:54 [log]   [checkout] session created cs_test_a1afh8kw6yjMpVBTpik5baeBkEuotyMEpGyrJh7ZNZYxbEOZAFL9iPrTwG
-10:20:06 [req]   GET /unlock/success?session_id=...
-10:20:08 [error] [stripe] Failed to record purchase: Could not find the 'marketing_consent' column of 'purchases' in the schema cache
-10:20:09 [error] (same)
-10:20:13 [error] (same)
-10:20:18 [error] (same)
+10:38:43 [error] [stripe] Failed to record purchase: Could not find the 'stripe_checkout_session_id' column of 'purchases' in the schema cache
+10:38:45 (same)
+10:38:48 (same)
+10:38:54 (same)
 ```
 
-Four errors = the four retry attempts in `/unlock/success`, then the UI falls through to the "pending" message.
+Four errors again = the four retry attempts on `/unlock/success`, then the misleading "pending" message. Earlier `marketing_consent` errors at 10:20 and 10:31 no longer appear after 10:31.
 
-Environment is not the problem: `/api/public/env-check` on the custom domain now returns `true` for `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and both Supabase server keys, with `stripeKeyMode: "test"` — matching the `cs_test_` session.
+The live `purchases` table is missing **two** columns the code writes, and they are being discovered one at a time because PostgREST reports only the first unknown column per insert.
 
-The actual chain:
-
-1. `confirmCheckout` calls `purchaseExists(sessionId)` — false, because the webhook insert failed for the same reason.
-2. It retrieves the session from Stripe — `payment_status` is `paid`, correctly.
-3. It calls `recordPurchase(session)`, whose insert into `purchases` includes `marketing_consent`. That column does not exist in the live `purchases` table, so PostgREST rejects the insert and `recordPurchase` rethrows.
-4. The thrown error propagates out of `confirmCheckout`, so the success page's `catch { /* keep retrying */ }` swallows it and `result.paid` is never read. After four attempts it shows "pending".
-
-So a genuinely paid customer is denied access because of a database bookkeeping failure on an optional field.
+`stripe_checkout_session_id` is worse than a bookkeeping field: it is the idempotency key. `purchaseExists()` filters on it, so that lookup is also failing today, which is why the webhook and the confirm path both fall over.
 
 ## The fix
 
-**1. Add the missing column to the live database.** The `purchases` table needs `marketing_consent boolean` (nullable). This database is your own external Supabase project (`VERBWISE_SUPABASE_*`), which I cannot migrate from here, so you'll run this once in its SQL editor:
+**1. Add the second missing column.** Run this once in your Supabase SQL editor:
 
 ```sql
 alter table public.purchases
-  add column if not exists marketing_consent boolean;
+  add column if not exists stripe_checkout_session_id text;
+
+create unique index if not exists purchases_stripe_checkout_session_id_key
+  on public.purchases (stripe_checkout_session_id);
 ```
 
-I'll confirm afterwards by re-running the confirm flow for the session above.
+The unique index makes retries genuinely idempotent rather than relying on a read-then-insert race.
+
+**2. Verify the whole shape up front, not one column per attempt.** Before making further changes I'll have the code log the full PostgREST error object (message, details, hint) rather than just `error.message`, so any remaining schema mismatch in `purchases`, `customers`, `prices` or `communication_preferences` surfaces in one pass instead of four more round trips.
+
+
 
 **2. Never let bookkeeping block entitlement** (`src/lib/checkout.functions.ts`). Restructure `confirmCheckout` so that once Stripe reports `payment_status === "paid"`, the function returns `{ paid: true }` regardless of whether `recordPurchase` succeeds. The recording call gets wrapped so a database failure is logged as `recorded: false` and reported, not thrown. Payment truth comes from Stripe; the database row is a record of it.
 
