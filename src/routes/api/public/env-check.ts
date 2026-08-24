@@ -1,36 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+const NAMES = [
+  "STRIPE_SECRET_KEY",
+  "STRIPE_SECRET_KEY_TEST",
+  "STRIPE_WEBHOOK_SECRET",
+  "STRIPE_TEST_WEBHOOK_SECRET",
+  "VERBWISE_SUPABASE_URL",
+  "VERBWISE_SUPABASE_SERVICE_ROLE_KEY",
+] as const;
+
 /**
  * Temporary, names-only runtime diagnostic.
  *
- * Reports WHICH env sources the running worker exposes and WHETHER each
- * binding is present. It never returns or logs a secret value.
+ * Reports which env sources the running worker exposes and whether each
+ * binding resolves. It never returns or logs a secret value.
  */
 export const Route = createFileRoute("/api/public/env-check")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const names = [
-          "STRIPE_SECRET_KEY",
-          "STRIPE_SECRET_KEY_TEST",
-          "STRIPE_WEBHOOK_SECRET",
-          "STRIPE_TEST_WEBHOOK_SECRET",
-          "VERBWISE_SUPABASE_URL",
-          "VERBWISE_SUPABASE_SERVICE_ROLE_KEY",
-        ] as const;
+        const { readEnv, envPresence } = await import("@/lib/env.server");
 
-        const globalEnv = (
-          globalThis as typeof globalThis & { __env__?: Record<string, unknown> }
-        ).__env__;
-
-        const presence = (source: Record<string, unknown> | undefined) =>
-          Object.fromEntries(
-            names.map((n) => [n, Boolean(source && typeof source[n] === "string" && (source[n] as string).length > 0)]),
-          );
-
-        // Key *shape* only (test vs live), never the value.
-        const rawKey = process.env["STRIPE_SECRET_KEY_TEST"] ?? process.env["STRIPE_SECRET_KEY"];
-        const keyMode = rawKey
+        const rawKey = readEnv("STRIPE_SECRET_KEY_TEST") ?? readEnv("STRIPE_SECRET_KEY");
+        const stripeKeyMode = rawKey
           ? rawKey.startsWith("sk_test_") || rawKey.startsWith("rk_test_")
             ? "test"
             : "live"
@@ -40,15 +32,9 @@ export const Route = createFileRoute("/api/public/env-check")({
           JSON.stringify(
             {
               host: new URL(request.url).host,
-              runtime: {
-                hasProcessEnv: typeof process !== "undefined" && !!process.env,
-                hasGlobalEnvStash: !!globalEnv,
-                userAgent: typeof navigator !== "undefined" ? navigator.userAgent : null,
-              },
-              processEnv: presence(process.env as unknown as Record<string, unknown>),
-              globalEnv: presence(globalEnv),
-              stripeKeyMode: keyMode,
-              buildStamp: __ENV_CHECK_STAMP__,
+              buildStamp: "env-check-v1",
+              ...envPresence(NAMES),
+              stripeKeyMode,
             },
             null,
             2,
@@ -59,6 +45,3 @@ export const Route = createFileRoute("/api/public/env-check")({
     },
   },
 });
-
-// Cheap build identity marker so we can tell which bundle a domain is serving.
-const __ENV_CHECK_STAMP__ = "env-check-v1";
