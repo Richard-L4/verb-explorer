@@ -35,13 +35,14 @@ The unique index makes retries genuinely idempotent rather than relying on a rea
 
 
 
-**2. Never let bookkeeping block entitlement** (`src/lib/checkout.functions.ts`). Restructure `confirmCheckout` so that once Stripe reports `payment_status === "paid"`, the function returns `{ paid: true }` regardless of whether `recordPurchase` succeeds. The recording call gets wrapped so a database failure is logged as `recorded: false` and reported, not thrown. Payment truth comes from Stripe; the database row is a record of it.
+**3. Never let bookkeeping block entitlement** (`src/lib/checkout.functions.ts`). Once Stripe reports `payment_status === "paid"`, `confirmCheckout` returns `{ paid: true }` regardless of whether `recordPurchase` succeeds. Recording is wrapped so a database failure is logged and returned as `recorded: false`, never thrown. Payment truth comes from Stripe; the row is only a record of it. This alone unblocks the existing session even if a further column is missing.
 
-**3. Make the purchase insert tolerant of an absent optional column** (`src/lib/payments.server.ts`). If the insert fails with a "could not find the '<name>' column" error, retry once without the optional fields (`marketing_consent`) and log a clear warning naming the missing column. Consent is still captured in `communication_preferences` and in Stripe metadata, so nothing is lost. This also protects the webhook path, which is failing identically today.
+**4. Make the insert tolerant of absent optional columns** (`src/lib/payments.server.ts`). On a "could not find the '<name>' column" error, strip that column from the payload and retry once, logging a warning that names it. `stripe_checkout_session_id` is treated as required (it is the idempotency key) and its absence is reported loudly rather than skipped. Also protects the webhook, which fails identically today.
 
-**4. Stop hiding the real error on the success page** (`src/routes/unlock_.success.tsx`). Keep the retry loop, but capture the last error message and, when every attempt fails, show an explicit error state (with the reason and a retry button) instead of the misleading "Stripe hasn't confirmed this payment yet". Retain the current "pending" wording only for the genuine case where Stripe returns `paid: false`.
+**5. Stop hiding the real error on the success page** (`src/routes/unlock_.success.tsx`). Keep the retry loop, but capture the last error and, when every attempt fails, show an explicit error state with the reason and a retry button instead of "Stripe hasn't confirmed this payment yet". Keep the pending wording only for the genuine case where Stripe returns `paid: false`.
 
-**5. Diagnostics.** Add a `[confirm]` log line recording session id, `payment_status`, and whether recording succeeded, so this flow is traceable in future without guesswork. No secret or card data is logged.
+**6. Diagnostics.** Add a `[confirm]` log line with session id, `payment_status`, and whether recording succeeded, so this flow stays traceable. No secret or card data logged.
+
 
 ## Verification
 
