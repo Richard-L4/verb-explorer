@@ -16,9 +16,10 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
 
         // A Stripe account has separate signing secrets for test-mode and
         // live-mode endpoints; accept either so both dashboards work.
+        const { readEnv } = await import("@/lib/env.server");
         const secrets = [
-          process.env["STRIPE_WEBHOOK_SECRET"],
-          process.env["STRIPE_TEST_WEBHOOK_SECRET"],
+          readEnv("STRIPE_WEBHOOK_SECRET"),
+          readEnv("STRIPE_TEST_WEBHOOK_SECRET"),
         ].filter((value): value is string => Boolean(value));
 
         if (secrets.length === 0) {
