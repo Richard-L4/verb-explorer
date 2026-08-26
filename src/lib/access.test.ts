@@ -14,6 +14,11 @@ beforeEach(() => {
 async function freshAccess() {
   // Fresh module instance so the internal `hydrated` flag resets.
   vi.resetModules();
+  // The reset gives us a fresh analytics module too, so re-install the sink.
+  const analytics = await import("./analytics");
+  analytics.setAnalyticsTransport(async (payload) => {
+    sent.push(payload);
+  });
   return import("./access");
 }
 
