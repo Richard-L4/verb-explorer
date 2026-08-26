@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useAccess } from "@/hooks/use-access";
+import { logEvent } from "@/lib/analytics";
 
 /**
  * Subtle, single-line trial countdown banner shown under the header.
@@ -25,19 +27,36 @@ export function TrialBanner() {
   const isPreview = bannerPreview !== null;
 
   // A real purchase always hides the countdown, even while a creator preview is active.
-  if (unlocked) return null;
+  const hidden = unlocked;
 
-  if (isPreview) {
-    message =
-      bannerPreview === "expired"
-        ? reminderFor(0, false)
-        : reminderFor(bannerPreview as number, true);
-  } else {
-    if (creator) return null;
-    if (inTrial && ![7, 3, 2, 1].includes(trialDaysLeft)) return null;
-    message = reminderFor(trialDaysLeft, inTrial);
+  if (!hidden) {
+    if (isPreview) {
+      message =
+        bannerPreview === "expired"
+          ? reminderFor(0, false)
+          : reminderFor(bannerPreview as number, true);
+    } else if (!creator) {
+      if (!inTrial || [7, 3, 2, 1].includes(trialDaysLeft)) {
+        message = reminderFor(trialDaysLeft, inTrial);
+      }
+    }
   }
-  if (!message) return null;
+
+  // Analytics: fires only for a genuinely rendered banner on a non-creator,
+  // non-preview device. Never affects what is displayed.
+  const rendered = !hidden && !isPreview && !creator && message !== null;
+  useEffect(() => {
+    if (!rendered) return;
+    if (!inTrial) {
+      void logEvent("trial_expired", { trialDay: 0 });
+      return;
+    }
+    if ([7, 3, 2, 1].includes(trialDaysLeft)) {
+      void logEvent(`reminder_${trialDaysLeft}` as "reminder_7", { trialDay: trialDaysLeft });
+    }
+  }, [rendered, inTrial, trialDaysLeft]);
+
+  if (hidden || !message) return null;
 
   return (
     <div className="mx-auto mb-8 w-full max-w-6xl sm:mb-12">

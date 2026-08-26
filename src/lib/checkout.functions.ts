@@ -5,7 +5,11 @@ import { z } from "zod";
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .inputValidator((input) =>
     z
-      .object({ marketingConsent: z.boolean() })
+      .object({
+        marketingConsent: z.boolean(),
+        // Anonymous analytics device id (optional; never identifies a person).
+        deviceId: z.string().min(8).max(128).optional(),
+      })
       .parse(input),
   )
   .handler(async ({ data }) => {
@@ -34,10 +38,12 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         cancel_url: `${origin}/unlock?cancelled=1`,
         metadata: {
           marketing_consent: data.marketingConsent ? "true" : "false",
+          ...(data.deviceId ? { device_id: data.deviceId } : {}),
         },
         payment_intent_data: {
           metadata: {
             marketing_consent: data.marketingConsent ? "true" : "false",
+            ...(data.deviceId ? { device_id: data.deviceId } : {}),
           },
         },
       });
@@ -47,6 +53,12 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       }
 
       console.log("[checkout] session created", session.id, origin);
+
+      // Analytics only: after the session was successfully created.
+      if (data.deviceId) {
+        const { recordTrialEvent } = await import("./analytics.server");
+        await recordTrialEvent({ deviceId: data.deviceId, event: "checkout_started" });
+      }
 
       return { url: session.url };
     } catch (error) {
@@ -62,6 +74,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       throw new Error(`[checkout] ${message}`);
     }
   });
+
 
 /**
  * Confirms a returning checkout session.

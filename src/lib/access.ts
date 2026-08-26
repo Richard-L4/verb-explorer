@@ -95,11 +95,16 @@ export function hydrate() {
   const current = read();
   if (!current.trialStart) {
     write({ ...current, trialStart: new Date().toISOString() });
+    // Analytics only — the trial clock above is unchanged.
+    void import("./analytics").then(({ logEvent }) =>
+      logEvent("trial_started", { trialDay: TRIAL_DAYS }),
+    );
     return;
   }
   cache = current;
   listeners.forEach((l) => l());
 }
+
 
 export function subscribe(listener: () => void) {
   listeners.add(listener);

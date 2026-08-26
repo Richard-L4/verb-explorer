@@ -7,6 +7,8 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
+import { FunnelPanel } from "@/components/app/FunnelPanel";
+
 
 export const Route = createFileRoute("/settings")({
   component: Settings,
@@ -146,6 +148,9 @@ function Settings() {
           </div>
         </section>
       ) : null}
+
+      {creator ? <FunnelPanel /> : null}
+
 
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
