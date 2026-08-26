@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Search, Sparkles, GraduationCap, BookOpen } from "lucide-react";
+import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Quote, Search, Sparkles, GraduationCap, BookOpen } from "lucide-react";
 import { cards, cardCount } from "@/data/cards";
+import { sayingCount } from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { CardGrid } from "@/components/app/CardGrid";
@@ -72,6 +73,42 @@ function Home() {
             className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card/70 px-6 text-sm font-semibold backdrop-blur transition-colors hover:border-primary/40 hover:bg-secondary"
           >
             <Search className="size-4" aria-hidden="true" /> Search the deck
+          </Link>
+        </div>
+      </section>
+
+      <section className="surface-card gradient-soft hairline-top relative mt-6 overflow-hidden p-7 sm:mt-8 sm:p-12">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 -top-28 size-80 rounded-full bg-accent/15 blur-3xl"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-32 left-1/3 size-72 rounded-full bg-primary/10 blur-3xl"
+        />
+        <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+          <Quote className="size-3.5" aria-hidden="true" /> How you'd actually say it
+        </span>
+        <h2 className="relative mt-6 max-w-2xl text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl">
+          <span className="gradient-text">Sayings</span>
+        </h2>
+        <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          {sayingCount} British sayings with the natural Spanish that carries the same tone — plus the literal
+          translations that don't work.
+        </p>
+        <div className="relative mt-8 flex flex-wrap gap-3">
+          <Link
+            to="/sayings"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            Explore sayings
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/sayings"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card/70 px-6 text-sm font-semibold backdrop-blur transition-colors hover:border-primary/40 hover:bg-secondary"
+          >
+            <Search className="size-4" aria-hidden="true" /> Browse the deck
           </Link>
         </div>
       </section>
