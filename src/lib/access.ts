@@ -134,6 +134,9 @@ export function hydrate() {
   if (creatorParamPresent()) enableCreatorAccess();
   previewCache = readPreview();
   const current = read();
+  // An existing creator browser (or an active banner preview) is a test device.
+  if (current.creator || previewCache !== null) latchTestDevice();
+
   if (!current.trialStart) {
     write({ ...current, trialStart: new Date().toISOString() });
     // Analytics only — the trial clock above is unchanged.
