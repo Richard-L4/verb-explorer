@@ -246,11 +246,14 @@ export function unlock() {
 
 /** Testing helper: clears the simulated purchase and restarts the trial clock. */
 export function resetAccess() {
+  latchTestDevice();
   setBannerPreview(null);
   write({ trialStart: new Date().toISOString(), unlocked: false, creator: cache.creator });
 }
 
 /** Testing helper: ends the trial immediately so the paywall can be seen. */
 export function endTrial() {
+  latchTestDevice();
   write({ ...cache, trialStart: new Date(Date.now() - (TRIAL_DAYS + 1) * DAY_MS).toISOString() });
 }
+
