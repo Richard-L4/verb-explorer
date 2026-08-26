@@ -345,6 +345,19 @@ export async function recordPurchase(
     throw purchaseError;
   }
 
+  // Analytics only: reached only after the idempotency check above, so Stripe
+  // retries cannot double-count. Failures are swallowed inside recordTrialEvent.
+  const analyticsDeviceId = session.metadata?.['device_id'];
+  if (analyticsDeviceId) {
+    const { recordTrialEvent } = await import("./analytics.server");
+    await recordTrialEvent({
+      deviceId: analyticsDeviceId,
+      event: "purchase_completed",
+    });
+  }
+
+
+
   // Send confirmation email to customer
   if (email) {
     await sendConfirmationEmail(email, name);
