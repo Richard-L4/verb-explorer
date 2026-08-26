@@ -238,7 +238,9 @@ export async function logEvent(
       event,
       trialDay: options.trialDay ?? null,
       occurredOn,
+      testDevice,
     });
+
     return true;
   } catch {
     return false;
