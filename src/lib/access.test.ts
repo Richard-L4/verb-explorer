@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { setAnalyticsTransport, type EventPayload } from "./analytics";
 
 const sent: EventPayload[] = [];
@@ -13,7 +13,8 @@ beforeEach(() => {
 
 async function freshAccess() {
   // Fresh module instance so the internal `hydrated` flag resets.
-  return import(`./access?t=${Math.random()}`) as Promise<typeof import("./access")>;
+  vi.resetModules();
+  return import("./access");
 }
 
 async function flush() {
