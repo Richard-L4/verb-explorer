@@ -207,8 +207,10 @@ export function getBannerPreviewServer(): BannerPreview {
 }
 
 export function setBannerPreview(value: BannerPreview) {
+  if (value !== null) latchTestDevice();
   previewCache = value;
   if (isBrowser()) {
+
     try {
       if (value === null) window.localStorage.removeItem(BANNER_PREVIEW_KEY);
       else window.localStorage.setItem(BANNER_PREVIEW_KEY, String(value));
