@@ -69,13 +69,43 @@ function write(next: AccessState) {
 }
 
 /**
- * Latches the sticky analytics test marker. One-way and never cleared by any
- * in-app control, so testing activity can never reach production analytics.
+ * Latches the sticky analytics test marker. Written synchronously (and
+ * duplicated here rather than imported, to avoid an import cycle) so it is in
+ * place before any analytics call can run. One-way: never cleared in-app.
  */
+export const TEST_DEVICE_KEY = "verbo.test-device.v1";
+const TEST_DEVICE_COOKIE = "vw_test";
+const TEST_COOKIE_MAX_AGE = 60 * 60 * 24 * 3650;
+
 function latchTestDevice() {
   if (!isBrowser()) return;
-  void import("./analytics").then(({ markTestDevice }) => markTestDevice());
+  try {
+    window.localStorage.setItem(TEST_DEVICE_KEY, "true");
+  } catch {
+    /* storage unavailable — the cookie below still applies */
+  }
+  try {
+    document.cookie = `${TEST_DEVICE_COOKIE}=1; path=/; max-age=${TEST_COOKIE_MAX_AGE}; SameSite=Lax`;
+  } catch {
+    /* cookies unavailable */
+  }
 }
+
+/** True when this browser has been latched as a test device. */
+export function isTestDeviceLatched(): boolean {
+  if (!isBrowser()) return false;
+  try {
+    if (window.localStorage.getItem(TEST_DEVICE_KEY) === "true") return true;
+  } catch {
+    /* fall through to the cookie */
+  }
+  try {
+    return document.cookie.split(";").some((p) => p.trim() === `${TEST_DEVICE_COOKIE}=1`);
+  } catch {
+    return false;
+  }
+}
+
 
 /** Permanently marks this browser as the creator's. No-op if already set. */
 export function enableCreatorAccess() {
