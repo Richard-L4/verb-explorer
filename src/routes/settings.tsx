@@ -7,6 +7,8 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
+import { FunnelPanel } from "@/components/app/FunnelPanel";
+
 
 export const Route = createFileRoute("/settings")({
   component: Settings,

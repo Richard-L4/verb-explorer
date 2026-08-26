@@ -54,6 +54,25 @@ function Privacy() {
           <p>There is no third-party advertising in Verb Wise, and no advertising or tracking profiles are built.</p>
         </LegalSection>
 
+        <LegalSection title="Anonymous usage counts">
+          <p>
+            To understand how the free trial is working, Verb Wise records a small set of anonymous, aggregate usage
+            events: an app visit (at most once a day), the start of your 14-day trial, the trial countdown reminders you
+            actually see at 7, 3, 2 and 1 days, the trial ending, starting a checkout, and a completed purchase.
+          </p>
+          <p>
+            These events are stored against a random identifier generated in your browser. It is not linked to your
+            name, your email address, your IP address or any advertising identifier, and it is never used for
+            advertising, profiling or targeting. We only ever look at totals — for example how many devices saw the
+            3-day reminder.
+          </p>
+          <p>
+            Because the identifier lives in your browser storage, clearing your browser data removes it and a new
+            random identifier is created the next time you visit. That means these counts are approximate by design.
+          </p>
+        </LegalSection>
+
+
         <LegalSection title="What we never do">
           <p>We do not sell your personal data to third parties. We do not share it for marketing purposes.</p>
         </LegalSection>
