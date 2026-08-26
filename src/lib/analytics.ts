@@ -183,7 +183,10 @@ export interface EventPayload {
   event: AnalyticsEvent;
   trialDay: number | null;
   occurredOn: string;
+  /** Belt and braces: set when this browser is a latched test device. */
+  testDevice?: boolean;
 }
+
 
 type Transport = (payload: EventPayload) => Promise<unknown>;
 
