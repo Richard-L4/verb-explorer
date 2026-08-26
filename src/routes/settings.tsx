@@ -149,6 +149,9 @@ function Settings() {
         </section>
       ) : null}
 
+      {creator ? <FunnelPanel /> : null}
+
+
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
           <AlertTriangle className="size-5 text-destructive" aria-hidden="true" /> Reset progress
