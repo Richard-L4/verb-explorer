@@ -216,7 +216,10 @@ export async function logEvent(
   options: { trialDay?: number | null; dedupeKey?: string } = {},
 ): Promise<boolean> {
   if (!isBrowser()) return false;
-  if (isCreatorDevice()) return false;
+  // Browser-side guard #1: latched test devices never emit anything.
+  const testDevice = isTestDevice();
+  if (testDevice) return false;
+
 
   const occurredOn = todayStamp();
   const dedupeKey = options.dedupeKey ?? event;
