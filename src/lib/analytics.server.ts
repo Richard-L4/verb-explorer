@@ -14,6 +14,13 @@ export interface TrialEventInput {
   event: AnalyticsEvent;
   trialDay?: number | null;
   occurredOn?: string | null;
+  /** Creator/developer test traffic — never written. */
+  testDevice?: boolean;
+}
+
+/** Authoritative test-traffic guard. Every write path funnels through here. */
+export function isTestEvent(input: Pick<TrialEventInput, "deviceId" | "testDevice">): boolean {
+  return input.testDevice === true || input.deviceId.startsWith("test-");
 }
 
 /**
@@ -22,9 +29,14 @@ export interface TrialEventInput {
  * yet, the app must carry on as normal.
  */
 export async function recordTrialEvent(input: TrialEventInput): Promise<boolean> {
+  // Server-side guard: creator/developer/testing traffic is dropped before
+  // it can reach production analytics. Existing rows are never touched.
+  if (isTestEvent(input)) return false;
+
   try {
     const db = getSupabaseAdmin();
     const occurredOn = input.occurredOn ?? new Date().toISOString().slice(0, 10);
+
 
     const { error } = await db
       .from("trial_events")
