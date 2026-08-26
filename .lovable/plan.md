@@ -1,62 +1,30 @@
-# Anonymous trial-funnel tracking
+# Read-only investigation: premature `trial_expired` events
 
-Goal: make the whole funnel countable — app visit, trial started, each reminder seen, trial expired, checkout started, purchase completed — without identifying anyone and without changing existing pricing, trial or paywall behaviour.
+## Scope
 
-## What gets recorded
+No code, database, configuration, or browser state changes.
 
-Nine events, each written once per device (except app visit, which is once per day per device):
+## Verified paths to cover
 
-| Event | Fired when |
-| --- | --- |
-| `app_visit` | first page load of the day |
-| `trial_started` | the 14-day trial clock is created on first ever visit |
-| `reminder_7` / `reminder_3` / `reminder_2` / `reminder_1` | the countdown banner is actually rendered at that day count |
-| `trial_expired` | days remaining first reaches 0 without a purchase |
-| `checkout_started` | the Stripe Checkout session is created |
-| `purchase_completed` | the Stripe webhook records a paid purchase |
+1. Trace the sole in-app UI call to `logEvent("trial_expired", { trialDay: 0 })` from `TrialBanner`, through browser-side creator suppression and deduplication, the server function, and the `trial_events` upsert.
+2. Document the second write surface: the public `logTrialEvent` server function accepts any schema-valid analytics event, including `trial_expired` with `trialDay: 0`, independently of the trial clock. Distinguish this API capability from calls made by the normal UI.
+3. Evaluate each requested state transition against both paths:
+   - normal 14-day expiry and page load
+   - creator mode
+   - Developer / Testing controls
+   - End trial now
+   - Reset test state
+   - expired-banner preview
+   - manually altered or stale localStorage
+   - automatic trial-day calculation
+4. Report every path in a table with file/function, exact trigger, normal-user eligibility, creator/test eligibility, and written `trial_day`.
+5. Explain the two supplied rows (`dfea6dca…` at 13:31:01 UTC and `486a9101…` at 13:38:35 UTC) using only evidence the rows and source support. Clearly separate confirmed facts from attribution that cannot be proven without each device's surrounding event rows/browser history.
 
-Reminder events fire on render, so they measure people who genuinely saw the banner — not just people whose clock passed that day. Each reminder is de-duplicated locally, so a person who opens the app five times on day 3 counts once.
+## Key evidence already established
 
-## Anonymous device ID
-
-On first visit the app generates a random UUID (`crypto.randomUUID()`) stored in localStorage. It is not linked to a name, email or IP, and creator-mode devices are excluded from tracking so your own testing does not pollute the numbers. Clearing browser data produces a new ID — the usual limitation of cookie-free analytics, and worth stating in the Privacy Policy.
-
-## Privacy Policy
-
-The Privacy Policy currently says there is no tracking. It gets one honest paragraph: anonymous, aggregate usage events with a random device identifier, no advertising, no profiles, no third parties.
-
-## New database table
-
-One new table in your existing Supabase project, alongside `customers` / `purchases` (no changes to those):
-
-```text
-trial_events
-  id            uuid primary key
-  device_id     text not null
-  event         text not null      -- app_visit | trial_started | reminder_7 | ...
-  trial_day     int null           -- days remaining at the time, when relevant
-  occurred_at   timestamptz default now()
-  unique (device_id, event, occurred_on)   -- occurred_on = date, for daily visits
-```
-
-Row Level Security on, no `anon` access: writes go only through a server function using the service-role key, so nobody can spam or read the table from the browser. Because I cannot run migrations against this external project, I will give you the exact SQL (table + grants + RLS + unique index) to paste into your Supabase SQL editor. Nothing is written until you run it.
-
-## Reading the numbers
-
-A `/settings` creator-only "Funnel" panel showing one line per event with its distinct-device count, so you can answer "how many people reached the 3-day reminder" directly in the app. It reads through a creator-gated server function; normal visitors never see it.
-
-## Technical detail
-
-- `src/lib/analytics.ts` (new): device ID, localStorage de-dupe set (`verbo.events.v1`), `logEvent(name, day?)` that fires the server function once and never throws into the UI.
-- `src/lib/analytics.functions.ts` (new): `logTrialEvent` server fn (zod-validated event name enum) and `getFunnelCounts` creator-gated aggregate read; both use the existing `getSupabaseAdmin()` from `payments.server.ts` loaded inside the handler.
-- `src/lib/access.ts`: emit `trial_started` where `trialStart` is first written, and `trial_expired` when days-left first hits 0. Entitlement logic untouched.
-- `src/components/app/TrialBanner.tsx`: `useEffect` firing `reminder_<n>` on the message it actually renders; skipped for creator preview mode.
-- `src/components/app/AppShell.tsx`: fire `app_visit` once per mount/day.
-- `src/lib/checkout.functions.ts`: log `checkout_started` after the session is created.
-- `src/lib/payments.server.ts`: log `purchase_completed` inside `recordPurchase`, after the idempotency check so retries don't double-count.
-- `src/routes/settings.tsx`: creator-only funnel panel.
-- `src/routes/privacy.tsx`: updated tracking wording.
-
-## Verification
-
-Playwright run seeding trial start dates for 7/3/2/1 days and expiry, confirming one row per event per device, that repeat page loads do not duplicate, that creator mode records nothing, and that the funnel panel counts match the table.
+- `TrialBanner` logs expiry only when its real, non-preview, non-creator banner is rendered, the user is not unlocked, and `inTrial` is false; it explicitly passes `trialDay: 0`.
+- Creator flags and any banner-preview key suppress browser analytics in `analytics.ts`; the banner also excludes creator and preview states from its analytics `rendered` condition.
+- `End trial now` and `Reset test state` are rendered only for creator mode. They mutate local access state but do not call analytics directly; creator suppression prevents their resulting banner state from being sent by the intended UI flow.
+- A normal device with an expired `trialStart` in localStorage will log on page render. The clock does not schedule a timer; expiry is detected when React renders/re-renders and computes zero days remaining.
+- The server writer does not verify the submitted event against the stored trial start (which remains browser-local), so the database row alone cannot prove that 14 days elapsed.
+- Both supplied records definitely contain `trial_day = 0` and were inserted on 26 August 2026. Their excerpts do not include the corresponding `trial_started` rows or any browser-state/action evidence, so they do not by themselves prove which eligible trigger produced them.
