@@ -1,11 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
 import { TrialBanner } from "./TrialBanner";
+import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+
 
 const linkBase =
   "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0";
@@ -39,6 +41,12 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+
+  // Anonymous, once-per-day visit event. Analytics only.
+  useEffect(() => {
+    void logAppVisit();
+  }, []);
+
 
   return (
     <div className="min-h-screen">
