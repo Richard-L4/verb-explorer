@@ -115,7 +115,6 @@ describe("failure handling", () => {
 
 describe("server-side writer", () => {
   it("swallows database failures", async () => {
-    vi.mock;
     const mod = await import("./payments.server");
     const spy = vi.spyOn(mod, "getSupabaseAdmin").mockImplementation(() => {
       throw new Error("no credentials");
