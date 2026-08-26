@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Database, Lock, Unlock } from "lucide-react";
 import { useLearner } from "@/hooks/use-learner";
@@ -7,7 +7,9 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
+import { isTestDeviceLatched } from "@/lib/access";
 import { FunnelPanel } from "@/components/app/FunnelPanel";
+
 
 
 export const Route = createFileRoute("/settings")({
