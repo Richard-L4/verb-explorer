@@ -24,13 +24,25 @@ export const ANALYTICS_EVENTS = [
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];
 
 export const DEVICE_ID_KEY = "verbo.device.v1";
+export const TEST_DEVICE_ID_KEY = "verbo.device.test.v1";
 export const EVENT_LOG_KEY = "verbo.events.v1";
+
+/**
+ * Sticky "this browser is used for testing" marker. Once latched it is never
+ * removed by any in-app control — not "Reset test state", not "Reset all
+ * progress". It is mirrored into a long-lived first-party cookie so it also
+ * survives a localStorage-only clear.
+ */
+export const TEST_DEVICE_KEY = "verbo.test-device.v1";
+export const TEST_DEVICE_COOKIE = "vw_test";
+const TEST_COOKIE_MAX_AGE = 60 * 60 * 24 * 3650; // ~10 years
 
 // Duplicated deliberately: importing src/lib/access.ts here would create an
 // import cycle (access.ts logs events through this module).
 const CREATOR_FLAG_KEY = "creator_access";
 const ACCESS_KEY = "verbo.access.v1";
 const BANNER_PREVIEW_KEY = "verbo.banner-preview.v1";
+
 
 function isBrowser() {
   return typeof window !== "undefined";
