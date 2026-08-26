@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Search, Sparkles, GraduationCap, BookOpen } from "lucide-react";
+import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Quote, Search, Sparkles, GraduationCap, BookOpen } from "lucide-react";
 import { cards, cardCount } from "@/data/cards";
+import { sayingCount } from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { CardGrid } from "@/components/app/CardGrid";
