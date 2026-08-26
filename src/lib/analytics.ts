@@ -77,22 +77,44 @@ function randomId(): string {
   return `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}`;
 }
 
-/**
- * The anonymous device id for this browser, created on first use.
- * Clearing browser storage produces a new id — documented in the Privacy Policy.
- */
-export function getDeviceId(): string | null {
-  if (!isBrowser()) return null;
-  const existing = readLocal(DEVICE_ID_KEY);
-  if (existing && existing.length > 0) return existing;
-  const created = randomId();
-  writeLocal(DEVICE_ID_KEY, created);
-  return created;
+function readTestCookie(): boolean {
+  if (!isBrowser() || typeof document === "undefined") return false;
+  try {
+    return document.cookie
+      .split(";")
+      .some((part) => part.trim() === `${TEST_DEVICE_COOKIE}=1`);
+  } catch {
+    return false;
+  }
 }
 
-/** Creator-mode browsers (including preview/testing) are excluded entirely. */
-export function isCreatorDevice(): boolean {
+function writeTestCookie() {
+  if (!isBrowser() || typeof document === "undefined") return;
+  try {
+    document.cookie = `${TEST_DEVICE_COOKIE}=1; path=/; max-age=${TEST_COOKIE_MAX_AGE}; SameSite=Lax`;
+  } catch {
+    /* cookies unavailable — the localStorage marker still applies */
+  }
+}
+
+/**
+ * Latches this browser as a test device. Idempotent, and deliberately one-way:
+ * nothing in the app ever clears it.
+ */
+export function markTestDevice() {
+  if (!isBrowser()) return;
+  writeLocal(TEST_DEVICE_KEY, "true");
+  writeTestCookie();
+}
+
+/**
+ * True when this browser must never produce production analytics: creator
+ * mode, banner preview, or the sticky test marker (localStorage or cookie).
+ */
+export function isTestDevice(): boolean {
   if (!isBrowser()) return false;
+  if (readLocal(TEST_DEVICE_KEY) === "true") return true;
+  if (readTestCookie()) return true;
   if (readLocal(CREATOR_FLAG_KEY) === "true") return true;
   if (readLocal(BANNER_PREVIEW_KEY) !== null) return true;
   try {
@@ -103,6 +125,33 @@ export function isCreatorDevice(): boolean {
     return false;
   }
 }
+
+/** Back-compat alias for existing call sites. */
+export const isCreatorDevice = isTestDevice;
+
+/**
+ * The anonymous device id for this browser, created on first use.
+ * Clearing browser storage produces a new id — documented in the Privacy Policy.
+ *
+ * Test devices get a separate, `test-` prefixed id so the server can reject
+ * them on the identifier alone.
+ */
+export function getDeviceId(): string | null {
+  if (!isBrowser()) return null;
+  if (isTestDevice()) {
+    const existingTest = readLocal(TEST_DEVICE_ID_KEY);
+    if (existingTest && existingTest.length > 0) return existingTest;
+    const createdTest = `test-${randomId()}`;
+    writeLocal(TEST_DEVICE_ID_KEY, createdTest);
+    return createdTest;
+  }
+  const existing = readLocal(DEVICE_ID_KEY);
+  if (existing && existing.length > 0) return existing;
+  const created = randomId();
+  writeLocal(DEVICE_ID_KEY, created);
+  return created;
+}
+
 
 function sentKeys(): Record<string, true> {
   try {
