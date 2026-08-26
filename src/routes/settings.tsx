@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Database, Lock, Unlock } from "lucide-react";
 import { useLearner } from "@/hooks/use-learner";
@@ -7,7 +7,9 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
+import { isTestDeviceLatched } from "@/lib/access";
 import { FunnelPanel } from "@/components/app/FunnelPanel";
+
 
 
 export const Route = createFileRoute("/settings")({
@@ -28,6 +30,12 @@ function Settings() {
   const [done, setDone] = useState(false);
   const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price, bannerPreview, setBannerPreview } =
     useAccess();
+  // Informational only — read after hydration, no in-app control removes it.
+  const [testDevice, setTestDevice] = useState(false);
+  useEffect(() => {
+    setTestDevice(isTestDeviceLatched());
+  }, [creator, bannerPreview, inTrial, trialDaysLeft]);
+
 
   return (
     <PageTransition>
@@ -89,9 +97,16 @@ function Settings() {
           <h2 className="flex items-center gap-2.5 text-xl font-bold">
             <Lock className="size-5 text-primary" aria-hidden="true" /> Developer / Testing
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+          {testDevice ? (
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-bold text-foreground">
+              <span className="size-2 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+              Test device — production analytics disabled
+            </p>
+          ) : null}
+          <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
             Local testing shortcuts for the trial and access state. These never create a genuine paid entitlement or affect a real payment record.
           </p>
+
           <div className="mt-5 flex flex-wrap gap-3">
             {inTrial ? (
               <button

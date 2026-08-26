@@ -68,8 +68,48 @@ function write(next: AccessState) {
   listeners.forEach((l) => l());
 }
 
+/**
+ * Latches the sticky analytics test marker. Written synchronously (and
+ * duplicated here rather than imported, to avoid an import cycle) so it is in
+ * place before any analytics call can run. One-way: never cleared in-app.
+ */
+export const TEST_DEVICE_KEY = "verbo.test-device.v1";
+const TEST_DEVICE_COOKIE = "vw_test";
+const TEST_COOKIE_MAX_AGE = 60 * 60 * 24 * 3650;
+
+function latchTestDevice() {
+  if (!isBrowser()) return;
+  try {
+    window.localStorage.setItem(TEST_DEVICE_KEY, "true");
+  } catch {
+    /* storage unavailable — the cookie below still applies */
+  }
+  try {
+    document.cookie = `${TEST_DEVICE_COOKIE}=1; path=/; max-age=${TEST_COOKIE_MAX_AGE}; SameSite=Lax`;
+  } catch {
+    /* cookies unavailable */
+  }
+}
+
+/** True when this browser has been latched as a test device. */
+export function isTestDeviceLatched(): boolean {
+  if (!isBrowser()) return false;
+  try {
+    if (window.localStorage.getItem(TEST_DEVICE_KEY) === "true") return true;
+  } catch {
+    /* fall through to the cookie */
+  }
+  try {
+    return document.cookie.split(";").some((p) => p.trim() === `${TEST_DEVICE_COOKIE}=1`);
+  } catch {
+    return false;
+  }
+}
+
+
 /** Permanently marks this browser as the creator's. No-op if already set. */
 export function enableCreatorAccess() {
+  latchTestDevice();
   const current = read();
   if (current.creator) {
     cache = current;
@@ -77,6 +117,7 @@ export function enableCreatorAccess() {
   }
   write({ ...current, creator: true });
 }
+
 
 function creatorParamPresent() {
   if (!isBrowser()) return false;
@@ -93,6 +134,9 @@ export function hydrate() {
   if (creatorParamPresent()) enableCreatorAccess();
   previewCache = readPreview();
   const current = read();
+  // An existing creator browser (or an active banner preview) is a test device.
+  if (current.creator || previewCache !== null) latchTestDevice();
+
   if (!current.trialStart) {
     write({ ...current, trialStart: new Date().toISOString() });
     // Analytics only — the trial clock above is unchanged.
@@ -163,8 +207,10 @@ export function getBannerPreviewServer(): BannerPreview {
 }
 
 export function setBannerPreview(value: BannerPreview) {
+  if (value !== null) latchTestDevice();
   previewCache = value;
   if (isBrowser()) {
+
     try {
       if (value === null) window.localStorage.removeItem(BANNER_PREVIEW_KEY);
       else window.localStorage.setItem(BANNER_PREVIEW_KEY, String(value));
@@ -200,11 +246,14 @@ export function unlock() {
 
 /** Testing helper: clears the simulated purchase and restarts the trial clock. */
 export function resetAccess() {
+  latchTestDevice();
   setBannerPreview(null);
   write({ trialStart: new Date().toISOString(), unlocked: false, creator: cache.creator });
 }
 
 /** Testing helper: ends the trial immediately so the paywall can be seen. */
 export function endTrial() {
+  latchTestDevice();
   write({ ...cache, trialStart: new Date(Date.now() - (TRIAL_DAYS + 1) * DAY_MS).toISOString() });
 }
+
