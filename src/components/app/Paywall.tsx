@@ -4,6 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { Check, Lock, Loader2 } from "lucide-react";
 import { useAccess } from "@/hooks/use-access";
 import { createCheckoutSession } from "@/lib/checkout.functions";
+import { getDeviceId, isCreatorDevice } from "@/lib/analytics";
+
 
 const CONSENT =
   "I agree that access to the digital content begins immediately and acknowledge that I lose my 14-day right to cancel once access begins.";
@@ -24,9 +26,14 @@ export function Paywall({ title }: { title?: string }) {
     setPaying(true);
     setError(null);
     try {
+      // Analytics only: anonymous device id, omitted for creator devices.
+      const deviceId = isCreatorDevice() ? undefined : (getDeviceId() ?? undefined);
       // Access is only granted after Stripe confirms the payment.
-      const { url } = await startCheckout({ data: { marketingConsent: marketing } });
+      const { url } = await startCheckout({
+        data: { marketingConsent: marketing, ...(deviceId ? { deviceId } : {}) },
+      });
       window.location.href = url;
+
     } catch (err) {
       const detail = err instanceof Error ? err.message : String(err);
       console.error("[checkout] client error:", detail, err);
