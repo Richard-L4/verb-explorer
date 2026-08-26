@@ -28,6 +28,12 @@ function Settings() {
   const [done, setDone] = useState(false);
   const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price, bannerPreview, setBannerPreview } =
     useAccess();
+  // Informational only — read after hydration, no in-app control removes it.
+  const [testDevice, setTestDevice] = useState(false);
+  useEffect(() => {
+    setTestDevice(isTestDeviceLatched());
+  }, [creator, bannerPreview, inTrial, trialDaysLeft]);
+
 
   return (
     <PageTransition>
