@@ -11,6 +11,8 @@ const eventSchema = z.object({
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .optional(),
+  /** Creator/developer test traffic — rejected server-side. */
+  testDevice: z.boolean().optional(),
 });
 
 /** Records one anonymous funnel event. Always resolves, never throws. */
@@ -23,9 +25,11 @@ export const logTrialEvent = createServerFn({ method: "POST" })
       event: data.event,
       trialDay: data.trialDay ?? null,
       occurredOn: data.occurredOn ?? null,
+      testDevice: data.testDevice === true,
     });
     return { recorded };
   });
+
 
 /**
  * Creator-only aggregate read. Gated by the existing creator key, so the
