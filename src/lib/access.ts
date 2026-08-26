@@ -68,8 +68,18 @@ function write(next: AccessState) {
   listeners.forEach((l) => l());
 }
 
+/**
+ * Latches the sticky analytics test marker. One-way and never cleared by any
+ * in-app control, so testing activity can never reach production analytics.
+ */
+function latchTestDevice() {
+  if (!isBrowser()) return;
+  void import("./analytics").then(({ markTestDevice }) => markTestDevice());
+}
+
 /** Permanently marks this browser as the creator's. No-op if already set. */
 export function enableCreatorAccess() {
+  latchTestDevice();
   const current = read();
   if (current.creator) {
     cache = current;
@@ -77,6 +87,7 @@ export function enableCreatorAccess() {
   }
   write({ ...current, creator: true });
 }
+
 
 function creatorParamPresent() {
   if (!isBrowser()) return false;
