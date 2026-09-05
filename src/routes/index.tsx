@@ -65,7 +65,7 @@ function Home() {
           Keep forgetting the rule?
         </p>
         <p className="relative mt-1 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Faster than Googling it or asking ChatGPT. Just open the app.
+          <span className="gradient-text">Faster than Googling it or asking ChatGPT. Just open the app.</span>
         </p>
         <HomeScreenHint className="relative mt-3 max-w-xl text-xs text-muted-foreground/80" />
         <div className="relative mt-8 flex flex-wrap gap-3">
