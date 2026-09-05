@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/pwa";
+import { initInstallPromptCapture } from "../lib/install-prompt";
 import { AppShell } from "../components/app/AppShell";
 
 function NotFoundComponent() {
@@ -139,6 +140,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
+    initInstallPromptCapture();
     registerServiceWorker();
   }, []);
 

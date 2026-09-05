@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
+import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -93,6 +94,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             </motion.nav>
           )}
         </AnimatePresence>
+
+        <InstallBanner />
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">
