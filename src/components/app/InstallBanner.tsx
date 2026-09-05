@@ -26,7 +26,12 @@ export function InstallBanner() {
   const [variant, setVariant] = useState<Variant>("desktop");
   const [promptTick, setPromptTick] = useState(0);
 
-  useEffect(() => subscribeInstallPrompt(() => setPromptTick((t) => t + 1)), []);
+  useEffect(() => {
+    const unsubscribe = subscribeInstallPrompt(() => setPromptTick((t) => t + 1));
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     if (!eligible || visible) return;
