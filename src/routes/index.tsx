@@ -8,6 +8,7 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { CardGrid } from "@/components/app/CardGrid";
 import { StatCard } from "@/components/app/StatCard";
 import { ProgressBar } from "@/components/app/ProgressBar";
+import { HomeScreenHint } from "@/components/app/HomeScreenHint";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -60,6 +61,13 @@ function Home() {
           Confusing verb pairs, explained side by side with real examples and the notes that actually make the
           difference stick.
         </p>
+        <p className="relative mt-4 max-w-xl text-base font-bold leading-snug text-foreground">
+          Keep forgetting the rule?
+        </p>
+        <p className="relative mt-1 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          Faster than Googling it or asking ChatGPT. Just open the app.
+        </p>
+        <HomeScreenHint className="relative mt-3 max-w-xl text-xs text-muted-foreground/80" />
         <div className="relative mt-8 flex flex-wrap gap-3">
           <Link
             to="/browse"
