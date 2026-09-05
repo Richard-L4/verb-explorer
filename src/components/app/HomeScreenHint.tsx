@@ -15,5 +15,9 @@ export function HomeScreenHint({ className }: { className?: string }) {
   }, []);
 
   if (!text) return null;
-  return <p className={className}>{text}</p>;
+  return (
+    <p className={className}>
+      <span className="gradient-text">{text}</span>
+    </p>
+  );
 }
