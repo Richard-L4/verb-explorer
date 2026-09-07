@@ -51,6 +51,6 @@ export function collectDeviceSignal(): DeviceSignal | null {
     platform: safe(() => nav.userAgentData?.platform ?? navigator.platform),
     cores: safe(() => navigator.hardwareConcurrency),
     memory: safe(() => nav.deviceMemory),
-    touch: safe(() => (navigator.maxTouchPoints ?? 0) > 0),
+    touch: safe(() => ((navigator.maxTouchPoints ?? 0) > 0 ? "touch" : "no-touch")),
   };
 }
