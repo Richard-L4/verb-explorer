@@ -104,7 +104,7 @@ export const Route = createFileRoute("/api/public/trial-check")({
           }
           report.matchingGrantsForNetwork = networkHash ? matching : null;
 
-          const repeat = networkHash !== null && matching >= NETWORK_GRANT_ALLOWANCE;
+          const repeat = networkHash !== null && matching >= NETWORK_VELOCITY_LIMIT;
           // A new grant row would be written either way; the difference is
           // whether it inherits an existing clock (repeat) or starts a fresh one.
           report.wouldGrantNewTrial = !repeat;
