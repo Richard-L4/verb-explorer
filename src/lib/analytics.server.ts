@@ -106,7 +106,8 @@ export async function getFunnelCountsFromDb(): Promise<{
 
     const counts = emptyCounts();
     for (const event of ANALYTICS_EVENTS) {
-      counts[event] = seen.get(event)?.size ?? 0;
+      const raw = seen.get(event)?.size ?? 0;
+      counts[event] = Math.max(0, raw - (BASELINE_ADJUSTMENT[event] ?? 0));
     }
     return { counts, available: true };
   } catch (error) {
