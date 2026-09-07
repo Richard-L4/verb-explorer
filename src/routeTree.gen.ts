@@ -26,6 +26,7 @@ import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
 import { Route as ApiPublicEnvCheckRouteImport } from './routes/api/public/env-check'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
+import { Route as ApiPublicTrialCheckRouteImport } from './routes/api/public/trial-check'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -112,6 +113,11 @@ const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   path: '/api/public/stripe-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTrialCheckRoute = ApiPublicTrialCheckRouteImport.update({
+  id: '/api/public/trial-check',
+  path: '/api/public/trial-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/unlock_/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/unlock/success'
     | '/api/public/env-check'
     | '/api/public/stripe-webhook'
+    | '/api/public/trial-check'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/unlock/success'
     | '/api/public/env-check'
     | '/api/public/stripe-webhook'
+    | '/api/public/trial-check'
   id:
     | '__root__'
     | '/'
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/unlock_/success'
     | '/api/public/env-check'
     | '/api/public/stripe-webhook'
+    | '/api/public/trial-check'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   UnlockSuccessRoute: typeof UnlockSuccessRoute
   ApiPublicEnvCheckRoute: typeof ApiPublicEnvCheckRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
+  ApiPublicTrialCheckRoute: typeof ApiPublicTrialCheckRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/trial-check': {
+      id: '/api/public/trial-check'
+      path: '/api/public/trial-check'
+      fullPath: '/api/public/trial-check'
+      preLoaderRoute: typeof ApiPublicTrialCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -393,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   UnlockSuccessRoute: UnlockSuccessRoute,
   ApiPublicEnvCheckRoute: ApiPublicEnvCheckRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
+  ApiPublicTrialCheckRoute: ApiPublicTrialCheckRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
