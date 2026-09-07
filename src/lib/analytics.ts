@@ -9,6 +9,8 @@
  * - All failures are swallowed: analytics must never affect the app.
  */
 
+import { isLovablePreviewHost } from "./preview";
+
 export const ANALYTICS_EVENTS = [
   "app_visit",
   "trial_started",
@@ -113,6 +115,7 @@ export function markTestDevice() {
  */
 export function isTestDevice(): boolean {
   if (!isBrowser()) return false;
+  if (isLovablePreviewHost()) return true;
   if (readLocal(TEST_DEVICE_KEY) === "true") return true;
   if (readTestCookie()) return true;
   if (readLocal(CREATOR_FLAG_KEY) === "true") return true;
