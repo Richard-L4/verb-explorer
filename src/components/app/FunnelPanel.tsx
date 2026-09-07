@@ -17,10 +17,73 @@ const ROWS: { event: AnalyticsEvent; label: string }[] = [
   { event: "purchase_completed", label: "Purchases completed" },
 ];
 
+interface RepeatVisitor {
+  label: string;
+  visits: number;
+  country: string | null;
+  firstVisit: string;
+  lastVisit: string;
+  trialStart: string | null;
+}
+
+interface RepeatSummary {
+  available: boolean;
+  total: number;
+  totalVisits: number;
+  heavy: number;
+  light: number;
+  visitors: RepeatVisitor[];
+  countries: { country: string; count: number }[];
+}
+
 type State =
   | { status: "loading" }
-  | { status: "ready"; counts: Record<string, number>; available: boolean }
+  | {
+      status: "ready";
+      counts: Record<string, number>;
+      available: boolean;
+      repeat: RepeatSummary;
+    }
   | { status: "error" };
+
+function shortDate(value: string | null): string {
+  if (!value) return "—";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+
+function RepeatVisitorTable({ rows }: { rows: RepeatVisitor[] }) {
+  return (
+    <div className="mt-4 overflow-x-auto">
+      <table className="w-full min-w-[34rem] text-left text-sm">
+        <thead className="text-xs uppercase tracking-wide text-muted-foreground">
+          <tr>
+            <th className="py-2 pr-3 font-semibold">Visitor</th>
+            <th className="py-2 pr-3 font-semibold">Visits</th>
+            <th className="py-2 pr-3 font-semibold">Country</th>
+            <th className="py-2 pr-3 font-semibold">First visit</th>
+            <th className="py-2 pr-3 font-semibold">Last visit</th>
+            <th className="py-2 font-semibold">Trial start</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((v) => (
+            <tr key={v.label} className="border-t border-border/70">
+              <td className="py-2 pr-3 font-semibold">{v.label}</td>
+              <td className="py-2 pr-3 tabular-nums">{v.visits}</td>
+              <td className="py-2 pr-3">{v.country ?? "—"}</td>
+              <td className="py-2 pr-3 tabular-nums">{shortDate(v.firstVisit)}</td>
+              <td className="py-2 pr-3 tabular-nums">{shortDate(v.lastVisit)}</td>
+              <td className="py-2 tabular-nums">{shortDate(v.trialStart)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 
 /** Creator-only funnel summary. Shows distinct anonymous device counts only. */
 export function FunnelPanel() {
