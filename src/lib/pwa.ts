@@ -2,6 +2,8 @@
  * Guarded service-worker registration.
  * Never registers in dev, inside an iframe, or in Lovable preview hosts.
  */
+import { isLovablePreviewHost } from "./preview";
+
 const SW_URL = "/sw.js";
 
 function isRefusedContext(): boolean {
@@ -12,11 +14,7 @@ function isRefusedContext(): boolean {
   } catch {
     return true;
   }
-  const host = window.location.hostname;
-  if (host.startsWith("id-preview--") || host.startsWith("preview--")) return true;
-  if (host === "lovableproject.com" || host.endsWith(".lovableproject.com")) return true;
-  if (host === "lovableproject-dev.com" || host.endsWith(".lovableproject-dev.com")) return true;
-  if (host === "beta.lovable.dev" || host.endsWith(".beta.lovable.dev")) return true;
+  if (isLovablePreviewHost()) return true;
   if (new URLSearchParams(window.location.search).has("sw") &&
       new URLSearchParams(window.location.search).get("sw") === "off") return true;
   return false;
