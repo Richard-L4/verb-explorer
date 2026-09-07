@@ -5,11 +5,19 @@
  * trial". The server issues an opaque, random, HttpOnly cookie and keeps the
  * entitlement in `public.trial_grants`.
  *
+ * Identity layers, strongest first:
+ *  1. the server-issued cookie,
+ *  2. a salted one-way hash of a small device signal (so Incognito, cleared
+ *     storage or another browser on the SAME device inherits the existing
+ *     clock instead of restarting it, while a different device in the same
+ *     household still gets its own full trial),
+ *  3. a rolling 24-hour per-network velocity guard against scripted abuse.
+ *
  * Privacy:
  *  - the cookie value is random and meaningless; nothing personal is in it,
  *  - only a SHA-256 of the cookie value is stored,
- *  - the network address is never stored: only a salted one-way SHA-256, used
- *    as a weak secondary signal and never sent to the browser.
+ *  - the network address is never stored: only a salted one-way SHA-256,
+ *  - the device signal is never stored: only a salted one-way SHA-256.
  */
 
 import { createHash, randomBytes } from "node:crypto";
@@ -20,11 +28,12 @@ export const TRIAL_COOKIE = "vw_vid";
 export const TRIAL_COOKIE_MAX_AGE = 60 * 60 * 24 * 3650; // ~10 years
 
 /**
- * How many separate trials one network hash may start before further "new"
- * visitors inherit the existing trial clock instead of getting a fresh one.
- * Deliberately > 1 so households and small offices are not blocked.
+ * Rolling velocity guard. More than this many NEW trials from one network
+ * within the window is treated as scripted abuse: further visitors inherit the
+ * oldest clock instead of restarting it. A real household never reaches this.
  */
-export const NETWORK_GRANT_ALLOWANCE = 2;
+export const NETWORK_VELOCITY_LIMIT = 8;
+export const NETWORK_VELOCITY_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 function salt(): string {
   return readEnv("TRIAL_HASH_SALT") ?? "verb-wise-fallback-salt";
@@ -43,6 +52,24 @@ export function hashNetwork(address: string | null | undefined): string | null {
   const trimmed = (address ?? "").trim();
   if (!trimmed) return null;
   return sha256(`net:${salt()}:${trimmed}`);
+}
+
+export type DeviceSignalInput = Record<string, string> | null | undefined;
+
+/**
+ * One-way, salted hash of the device signal combined with the network value.
+ * Combining with the network keeps the hash from being a stable cross-network
+ * identifier for the same device.
+ */
+export function hashDevice(signal: DeviceSignalInput, address: string | null | undefined): string | null {
+  if (!signal) return null;
+  const keys = Object.keys(signal).sort();
+  const parts = keys.map((key) => `${key}=${signal[key] ?? ""}`);
+  const meaningful = parts.filter((p) => !p.endsWith("="));
+  // Too little information to be a useful signal — do not risk collisions.
+  if (meaningful.length < 4) return null;
+  const network = hashNetwork(address) ?? "no-net";
+  return sha256(`dev:${salt()}:${network}:${parts.join("|")}`);
 }
 
 export function newToken(): string {
@@ -84,6 +111,7 @@ interface GrantRow {
 export async function claimTrial(input: {
   token: string | null;
   address: string | null;
+  device?: DeviceSignalInput;
 }): Promise<ClaimResult> {
   try {
     const db = getSupabaseAdmin();
@@ -111,21 +139,41 @@ export async function claimTrial(input: {
 
     // 2. No known cookie — this is a candidate first trial.
     const networkHash = hashNetwork(input.address);
+    const deviceHash = hashDevice(input.device, input.address);
     let trialStartedAt = new Date().toISOString();
     let repeat = false;
 
-    if (networkHash) {
+    // 2a. Same device as an existing grant? Incognito, cleared storage or a
+    // second browser on one machine all land here. Access is never blocked:
+    // the visitor simply inherits the oldest clock for this device.
+    if (deviceHash) {
+      const { data, error } = await db
+        .from("trial_grants")
+        .select("trial_started_at")
+        .eq("device_hash", deviceHash)
+        .order("trial_started_at", { ascending: true })
+        .limit(1);
+      if (error) return UNAVAILABLE;
+      const rows = (data ?? []) as { trial_started_at: string }[];
+      if (rows.length > 0) {
+        trialStartedAt = rows[0]!.trial_started_at;
+        repeat = true;
+      }
+    }
+
+    // 2b. Velocity guard: many brand-new trials from one network in a short
+    // window looks scripted, so further grants inherit rather than restart.
+    if (!repeat && networkHash) {
+      const since = new Date(Date.now() - NETWORK_VELOCITY_WINDOW_MS).toISOString();
       const { data, error } = await db
         .from("trial_grants")
         .select("trial_started_at")
         .eq("network_hash", networkHash)
+        .gte("created_at", since)
         .order("trial_started_at", { ascending: true });
       if (error) return UNAVAILABLE;
       const rows = (data ?? []) as { trial_started_at: string }[];
-      if (rows.length >= NETWORK_GRANT_ALLOWANCE) {
-        // Secondary signal only: access is NOT blocked. The visitor simply
-        // inherits the oldest trial clock on this network rather than
-        // restarting it, so deleting the cookie buys no extra days.
+      if (rows.length >= NETWORK_VELOCITY_LIMIT) {
         trialStartedAt = rows[0]!.trial_started_at;
         repeat = true;
       }
@@ -135,6 +183,7 @@ export async function claimTrial(input: {
     const { error: insertError } = await db.from("trial_grants").insert({
       token_hash: hashToken(token),
       network_hash: networkHash,
+      device_hash: deviceHash,
       trial_started_at: trialStartedAt,
       repeat_suspected: repeat,
     });

@@ -8,6 +8,7 @@
  */
 import { isTestDevice, logEvent } from "./analytics";
 import { applyServerTrialStart, TRIAL_DAYS } from "./access";
+import { collectDeviceSignal } from "./device-signal";
 
 export async function syncServerTrial(firstVisit: boolean): Promise<void> {
   if (typeof window === "undefined") return;
@@ -16,7 +17,8 @@ export async function syncServerTrial(firstVisit: boolean): Promise<void> {
 
   try {
     const { claimTrialSession } = await import("./trial.functions");
-    const claim = await claimTrialSession({ data: {} });
+    const device = collectDeviceSignal();
+    const claim = await claimTrialSession({ data: { device } });
 
     if (!claim.available) {
       // Server or table unavailable — preserve the previous local behaviour.

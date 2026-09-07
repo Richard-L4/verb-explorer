@@ -15,7 +15,7 @@ export const Route = createFileRoute("/api/public/trial-check")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const { TRIAL_COOKIE, NETWORK_GRANT_ALLOWANCE, hashToken, hashNetwork } = await import(
+        const { TRIAL_COOKIE, NETWORK_VELOCITY_LIMIT, hashToken, hashNetwork } = await import(
           "@/lib/trial.server"
         );
 
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/api/public/trial-check")({
         const networkResolvable = networkHash !== null;
 
         const report = {
-          buildStamp: "trial-check-v1",
+          buildStamp: "trial-check-v2-device",
           host: new URL(request.url).host,
           cookiePresent,
           networkResolvable,
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/api/public/trial-check")({
             cfConnectingIp: request.headers.get("cf-connecting-ip") !== null,
             xRealIp: request.headers.get("x-real-ip") !== null,
           },
-          networkGrantAllowance: NETWORK_GRANT_ALLOWANCE,
+          networkVelocityLimit: NETWORK_VELOCITY_LIMIT,
           grantsTableReachable: false,
           totalGrants: null as number | null,
           knownVisitor: false,
@@ -51,7 +51,9 @@ export const Route = createFileRoute("/api/public/trial-check")({
           wouldGrantNewTrial: null as boolean | null,
           wouldReportIsNew: null as boolean | null,
           pathTaken: "fallback" as "server" | "fallback",
+          note: "Device signal is supplied by the app, not by this endpoint, so the device check is not exercised here.",
         };
+
 
         try {
           const { getSupabaseAdmin } = await import("@/lib/payments.server");
@@ -102,7 +104,7 @@ export const Route = createFileRoute("/api/public/trial-check")({
           }
           report.matchingGrantsForNetwork = networkHash ? matching : null;
 
-          const repeat = networkHash !== null && matching >= NETWORK_GRANT_ALLOWANCE;
+          const repeat = networkHash !== null && matching >= NETWORK_VELOCITY_LIMIT;
           // A new grant row would be written either way; the difference is
           // whether it inherits an existing clock (repeat) or starts a fresh one.
           report.wouldGrantNewTrial = !repeat;
