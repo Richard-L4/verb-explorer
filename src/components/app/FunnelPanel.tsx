@@ -89,6 +89,7 @@ function RepeatVisitorTable({ rows }: { rows: RepeatVisitor[] }) {
 export function FunnelPanel() {
   const fetchCounts = useServerFn(getFunnelCounts);
   const [state, setState] = useState<State>({ status: "loading" });
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -96,7 +97,12 @@ export function FunnelPanel() {
       try {
         const result = await fetchCounts({ data: { key: CREATOR_QUERY_VALUE } });
         if (!cancelled) {
-          setState({ status: "ready", counts: result.counts, available: result.available });
+          setState({
+            status: "ready",
+            counts: result.counts,
+            available: result.available,
+            repeat: result.repeatVisitors as RepeatSummary,
+          });
         }
       } catch {
         if (!cancelled) setState({ status: "error" });
@@ -142,6 +148,69 @@ export function FunnelPanel() {
               </div>
             ))}
           </dl>
+
+          {state.repeat.available && state.repeat.total > 0 ? (
+            <div className="mt-7 border-t border-border/70 pt-5">
+              <h3 className="text-base font-bold">
+                {state.repeat.total > 5
+                  ? `Repeat visitors: ${state.repeat.total}`
+                  : "Repeat visitors"}
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Anonymous devices with more than one visit. Labels are anonymous — no device
+                identifiers are shown. Country is only shown when the hosting infrastructure can
+                reliably provide it.
+              </p>
+
+              {state.repeat.total > 5 ? (
+                <>
+                  <dl className="mt-4 grid gap-2 sm:grid-cols-2">
+                    {[
+                      ["Total repeat visitors", state.repeat.total],
+                      ["Visits by repeat visitors", state.repeat.totalVisits],
+                      ["Visited 5+ times", state.repeat.heavy],
+                      ["Visited 2–4 times", state.repeat.light],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label as string}
+                        className="flex items-center justify-between rounded-xl border border-border/80 bg-background/30 px-4 py-3"
+                      >
+                        <dt className="text-sm text-muted-foreground">{label}</dt>
+                        <dd className="font-display text-lg font-bold tabular-nums">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  {state.repeat.countries.length > 0 ? (
+                    <div className="mt-4">
+                      <h4 className="text-sm font-bold">Repeat visitor countries</h4>
+                      <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                        {state.repeat.countries.map((c) => (
+                          <li key={c.country}>
+                            {c.country} — {c.count}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+
+              <RepeatVisitorTable
+                rows={showAll ? state.repeat.visitors : state.repeat.visitors.slice(0, 5)}
+              />
+
+              {state.repeat.total > 5 ? (
+                <button
+                  type="button"
+                  onClick={() => setShowAll((v) => !v)}
+                  className="mt-3 min-h-10 rounded-full border border-border bg-card px-4 text-sm font-semibold transition-colors hover:bg-secondary"
+                >
+                  {showAll ? "Show top 5" : `Show all ${state.repeat.total}`}
+                </button>
+              ) : null}
+            </div>
+          ) : null}
         </>
       )}
     </section>
