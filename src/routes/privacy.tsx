@@ -89,6 +89,12 @@ function Privacy() {
             We only use functional, essential storage: the browser storage that remembers your progress and whether
             you have unlocked the full deck. There are no tracking cookies and no advertising cookies.
           </p>
+          <p>
+            We also set one essential cookie containing a random, meaningless code. It exists solely to remember that
+            this browser has already had a free trial, so the trial cannot simply be restarted. Alongside it we keep a
+            one-way scrambled fingerprint of the network the request came from — your IP address itself is never
+            stored and can never be recovered from it, and it is never shared with anyone.
+          </p>
         </LegalSection>
 
         <LegalSection title="Your rights">
