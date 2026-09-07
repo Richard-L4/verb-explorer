@@ -1,76 +1,90 @@
-# Read-only assessment of the four trial grants
+# Revised anti-abuse design: per-device, not per-network
 
-## What I can answer now, without any change
+## Why the current rule cannot work
 
-**What the live diagnostic already proves**
+The current rule counts trials per network address. A network address cannot tell
+"the same person in Incognito" apart from "a fourth person in the same house" — both look
+identical to the server. So any network cap either blocks housemates (cap 1-2) or lets the
+same person restart at will (cap 4+). The dial has no good setting. It must be replaced.
 
-- The server saw a network address, could read the grants table, and found exactly
-  **1** existing grant on your current network.
-- The allowance is **2**, so the rule said "this network may start 2 separate trials".
-  One existing grant is below the limit, therefore the Incognito visit was granted a
-  fresh trial *by design*. Nothing failed.
+## What actually distinguishes the two cases
 
-**What I cannot answer without a small read-only addition**
+| Case | Same device? | Same network? |
+|---|---|---|
+| Same person, Incognito | yes | yes |
+| Same person, cleared storage | yes | yes |
+| Same person, different browser | yes | yes |
+| Four housemates | **no** | yes |
 
-The exact `created_at` / `trial_started_at` timestamps of the four rows, and how they
-group by network, are not visible from anything currently deployed. This environment has
-no direct database access, and the existing diagnostic reports only counts for the
-*current* request. So the following three questions need one more read-only report:
+The reliable signal is the **device**, not the network. The three loopholes you named all
+happen on one device; genuine housemates each use their own phone or laptop.
 
-- the four timestamps,
-- how many of the four share your current network (count only, hash never shown),
-- whether any grant predates the new system going live.
+## Proposed design
 
-## Proposed step (read-only, no behaviour change)
+Three layers, strongest first.
 
-Extend the existing temporary endpoint `src/routes/api/public/trial-check.ts` with a
-`grants` list containing, per row: `trialStartedAt`, `createdAt`, `repeatSuspected`, and
-`sameNetworkAsThisRequest` (true/false). No hash, no cookie value, no IP, no credential.
-It stays strictly read-only: no insert, no cookie issued, no analytics.
+**1. Server-issued cookie (already built, unchanged).**
+Handles the normal case. Fast, exact, no signal needed.
 
-That single output answers all three outstanding questions at once:
+**2. Device signal (new).**
+When there is no cookie, the browser sends a small set of stable, non-personal device
+characteristics. The server combines them with the salted network value and stores only a
+one-way hash. If that hash already has a trial, the visitor inherits the existing clock
+instead of starting a new one — access is never blocked, the days simply do not reset.
 
-- **Do the four correspond to our tests?** The timestamps will either cluster around the
-  publish and Incognito tests, or they will not.
-- **Any grant from before publish?** A `created_at` earlier than the publish time proves it.
-  The table was created for this system, so a pre-publish row is unlikely but must be shown,
-  not assumed.
+Characteristics used: screen dimensions and pixel ratio, timezone, language, platform
+string, hardware concurrency, memory class, touch support. These are the same values every
+website already receives in normal operation.
 
-## The allowance question, answered now
+**3. Network velocity limit (replaces the lifetime cap).**
+The lifetime per-network cap is removed entirely. In its place, a rolling limit — for
+example, more than 8 new trials from one network in 24 hours — marks further grants as
+suspected and makes them inherit rather than restart. A real household never reaches that;
+a scripted attack does.
 
-Changing `NETWORK_GRANT_ALLOWANCE` from **2** to **1**:
+`NETWORK_GRANT_ALLOWANCE = 2` is deleted.
 
-```text
-allowance = 2   first browser -> new trial      second browser -> new trial
-                third browser -> inherits the oldest clock
+## What this achieves
 
-allowance = 1   first browser -> new trial      second browser -> inherits the oldest clock
-```
+- Four, six or ten people in one house each get a full trial, because each has a different device.
+- Incognito on a device that already had a trial: same device signal, clock inherited, no new
+  `trial_started`.
+- Cleared site data: same result.
+- A different browser on the same device: same result, as long as the characteristics match.
 
-With 1, the second cookie-less visitor on a network does **not** get a fresh 14 days. They
-still get access, but on the *existing* clock, and no second `trial_started` is recorded.
-That closes both loopholes you named: Incognito and cleared site data.
+## Honest limitations
 
-**The trade-off, precisely**
+- **Two identical devices, same house, same settings** (e.g. two iPhone 15s on the same Wi-Fi,
+  same language and timezone) can collide. The second person inherits the first person's clock.
+  Mitigation: include enough characteristics that identical-model collisions are uncommon, and
+  never block — the person still has full access to the app, just fewer trial days. A support
+  route ("my trial looks wrong") stays possible.
+- **The same person on a second device** (phone after laptop) gets a fresh trial. Closing that
+  needs an account, which is out of scope here.
+- **Privacy trade-off, stated plainly:** this is a light device fingerprint. Nothing personal
+  is collected — no name, email, IP, advertising ID or canvas/font probing — and only a salted
+  one-way hash is stored, which cannot be reversed or matched across sites. But it is a
+  behavioural identifier and the privacy page must say so. If you would rather not fingerprint
+  at all, the only equally strong alternative is requiring an email address to start the trial.
 
-- Gain: one network = one trial period. Incognito and storage-clearing stop buying extra days.
-- Cost: two genuinely different people behind the same public address — a household, a
-  couple sharing broadband, an office, a school, a coffee shop, or anyone on carrier-grade
-  NAT or a VPN — share one trial window. The second person is not blocked, but if the first
-  person's trial started 12 days ago the second sees only 2 days left.
-- Mobile networks are the sharpest edge: carrier NAT can put thousands of unrelated phones
-  behind one address, so on mobile an allowance of 1 can shorten trials for people who have
-  never visited before.
+## Technical changes
 
-There is no setting that separates "same person again" from "different person, same router"
-using a network address alone — that distinction is exactly what the address cannot carry.
-The allowance is the dial between the two failure modes.
+- `src/lib/trial.server.ts`: remove `NETWORK_GRANT_ALLOWANCE`; add `hashDevice(signal, address)`;
+  `claimTrial` gains a `device` input and looks up `device_hash` before deciding; add a rolling
+  24-hour network count used only as a velocity guard.
+- `src/lib/trial.functions.ts`: accept a `device` payload from the browser and pass it through.
+- New `src/lib/device-signal.ts`: browser-side collection of the characteristics above,
+  returned as a plain object; no storage, no third party.
+- `src/lib/trial.ts`: collect the signal before calling the server function.
+- Database: add `device_hash text` and an index to `public.trial_grants`; keep `network_hash`
+  for the velocity guard only. Delivered as a SQL file you apply, as before.
+- `src/routes/privacy.tsx`: one sentence describing the device signal and its purpose.
+- Untouched: trial length, reminders, funnel event meanings, Creator Mode, test-device
+  protection, Stripe, pricing, UI.
 
-**Middle options, if you want them later**
+## Before implementing
 
-- Keep 2, but make the second grant on a network *inherit* rather than restart the clock
-  (stricter than today, softer than 1).
-- Set 1 but expire the network signal after, say, 30 days, so a shared network is not
-  permanently spent.
-
-No change is made in this step.
+The temporary `/api/public/trial-check` endpoint stays until this is verified, then is removed.
+Test sequence after publish: normal browser gets a trial; Incognito on the same device inherits
+it and records no new `trial_started`; a second physical device on the same Wi-Fi gets its own
+full trial.
