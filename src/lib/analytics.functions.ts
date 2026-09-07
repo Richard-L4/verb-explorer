@@ -41,6 +41,12 @@ export const getFunnelCounts = createServerFn({ method: "POST" })
     if (data.key !== CREATOR_QUERY_VALUE) {
       throw new Error("Forbidden");
     }
-    const { getFunnelCountsFromDb } = await import("./analytics.server");
-    return getFunnelCountsFromDb();
+    const { getFunnelCountsFromDb, getRepeatVisitorsFromDb } = await import(
+      "./analytics.server"
+    );
+    const [funnel, repeatVisitors] = await Promise.all([
+      getFunnelCountsFromDb(),
+      getRepeatVisitorsFromDb(),
+    ]);
+    return { ...funnel, repeatVisitors };
   });
