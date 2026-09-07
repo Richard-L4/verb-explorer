@@ -5,6 +5,8 @@
  * Trial: everything is open for 14 days from first visit.
  * Unlock: one-off £4.99 purchase gives permanent access in this browser.
  */
+import { isLovablePreviewHost } from "./preview";
+
 export interface AccessState {
   /** ISO date of the first visit — start of the 14-day trial. */
   trialStart: string | null;
@@ -131,7 +133,9 @@ function creatorParamPresent() {
 export function hydrate() {
   if (hydrated || !isBrowser()) return;
   hydrated = true;
-  if (creatorParamPresent()) enableCreatorAccess();
+  // Lovable Preview always runs in the existing creator mode — no ?creator=
+  // parameter, no manual storage. Production hosts never match.
+  if (creatorParamPresent() || isLovablePreviewHost()) enableCreatorAccess();
   previewCache = readPreview();
   const current = read();
   // An existing creator browser (or an active banner preview) is a test device.
