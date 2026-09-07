@@ -95,6 +95,14 @@ function Privacy() {
             one-way scrambled fingerprint of the network the request came from — your IP address itself is never
             stored and can never be recovered from it, and it is never shared with anyone.
           </p>
+          <p>
+            For the same purpose we also check a small set of ordinary device characteristics that your browser sends
+            to every website — screen size, time zone, language and similar. These are combined into a one-way
+            scrambled code so that a private window or cleared storage on the same device does not start a second free
+            trial. The characteristics themselves are never stored, the code cannot be reversed or matched to you on
+            any other website, and it is used for nothing except the free trial.
+          </p>
+
         </LegalSection>
 
         <LegalSection title="Your rights">

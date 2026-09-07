@@ -4,11 +4,19 @@ import { z } from "zod";
 
 /**
  * Resolves (and, on a genuine first visit, creates) this visitor's trial
- * entitlement. The server owns the identity: an opaque HttpOnly cookie plus a
- * salted one-way network hash. Test/creator devices are ignored entirely.
+ * entitlement. The server owns the identity: an opaque HttpOnly cookie, a
+ * salted one-way device hash and a salted one-way network hash. Test/creator
+ * devices are ignored entirely.
  */
 export const claimTrialSession = createServerFn({ method: "POST" })
-  .inputValidator((input) => z.object({ testDevice: z.boolean().optional() }).parse(input))
+  .inputValidator((input) =>
+    z
+      .object({
+        testDevice: z.boolean().optional(),
+        device: z.record(z.string(), z.string()).nullable().optional(),
+      })
+      .parse(input),
+  )
   .handler(async ({ data }) => {
     if (data.testDevice === true) {
       return { available: false, trialStart: null, isNew: false, repeat: false };
@@ -24,7 +32,7 @@ export const claimTrialSession = createServerFn({ method: "POST" })
       address = null;
     }
 
-    const result = await claimTrial({ token: existing, address });
+    const result = await claimTrial({ token: existing, address, device: data.device ?? null });
 
     if (result.issueToken) {
       setCookie(TRIAL_COOKIE, result.issueToken, {
