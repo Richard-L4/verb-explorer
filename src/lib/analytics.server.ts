@@ -66,6 +66,17 @@ export async function recordTrialEvent(input: TrialEventInput): Promise<boolean>
 
 export type FunnelCounts = Record<AnalyticsEvent, number>;
 
+/**
+ * One-time display baseline (7 Sep 2026): subtracts the ~10 known
+ * creator/test devices from the Creator Funnel display only. The database
+ * keeps the complete raw record; new genuine events raise the displayed
+ * count one-for-one.
+ */
+const BASELINE_ADJUSTMENT: Partial<Record<AnalyticsEvent, number>> = {
+  app_visit: 10,
+  trial_started: 10,
+};
+
 function emptyCounts(): FunnelCounts {
   return Object.fromEntries(ANALYTICS_EVENTS.map((e) => [e, 0])) as FunnelCounts;
 }
