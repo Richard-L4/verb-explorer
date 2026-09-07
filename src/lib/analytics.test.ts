@@ -139,7 +139,9 @@ describe("server-side writer", () => {
 
     const { counts, available } = await getFunnelCountsFromDb();
     expect(available).toBe(true);
-    expect(counts.app_visit).toBe(2);
+    // app_visit has a one-time display baseline of -10 (creator test
+    // devices); 2 raw devices clamp to 0. Other events are unadjusted.
+    expect(counts.app_visit).toBe(0);
     expect(counts.reminder_3).toBe(1);
     expect(counts.purchase_completed).toBe(0);
     spy.mockRestore();
