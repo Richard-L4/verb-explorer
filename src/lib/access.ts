@@ -141,16 +141,35 @@ export function hydrate() {
   // An existing creator browser (or an active banner preview) is a test device.
   if (current.creator || previewCache !== null) latchTestDevice();
 
-  if (!current.trialStart) {
+  const firstVisit = !current.trialStart;
+  if (firstVisit) {
+    // Local clock starts immediately so the UI never waits on the network;
+    // the server's answer below is authoritative and may move it earlier.
     write({ ...current, trialStart: new Date().toISOString() });
-    // Analytics only — the trial clock above is unchanged.
-    void import("./analytics").then(({ logEvent }) =>
-      logEvent("trial_started", { trialDay: TRIAL_DAYS }),
-    );
+  } else {
+    cache = current;
+    listeners.forEach((l) => l());
+  }
+
+  // Server decides trial entitlement and whether `trial_started` is legitimate.
+  void import("./trial").then(({ syncServerTrial }) => syncServerTrial(firstVisit));
+}
+
+/**
+ * Adopts the server's authoritative trial start. Only ever moves the clock
+ * backwards (an earlier start), so clearing storage or opening a private
+ * window cannot buy extra trial days. Never touches creator/unlock state.
+ */
+export function applyServerTrialStart(iso: string) {
+  const serverStart = Date.parse(iso);
+  if (Number.isNaN(serverStart)) return;
+  const current = read();
+  const localStart = current.trialStart ? Date.parse(current.trialStart) : NaN;
+  if (!Number.isNaN(localStart) && localStart <= serverStart) {
+    cache = current;
     return;
   }
-  cache = current;
-  listeners.forEach((l) => l());
+  write({ ...current, trialStart: new Date(serverStart).toISOString() });
 }
 
 

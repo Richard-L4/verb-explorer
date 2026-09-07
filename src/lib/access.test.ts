@@ -23,7 +23,9 @@ async function freshAccess() {
 }
 
 async function flush() {
-  await new Promise((r) => setTimeout(r, 0));
+  // The trial sync hops through two dynamic imports before falling back to
+  // the local analytics path, so give the microtask/macrotask queues a moment.
+  for (let i = 0; i < 20; i += 1) await new Promise((r) => setTimeout(r, 5));
 }
 
 describe("trial clock behaviour is unchanged", () => {
