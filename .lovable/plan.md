@@ -23,8 +23,10 @@ Exactly one send per day, every day, at 18:00 UK. The `Europe/London` timezone d
 - Only `db/schedule_daily_reminders.sql` is rewritten (comments and schedule).
 - No change to `db/push_subscriptions.sql`, no change to the reminder endpoint or any application code.
 - No SQL is executed; the file stays a manual run for you in the Supabase SQL Editor.
-- Job name stays `verbwise-daily-reminders`. Re-running `cron.schedule` with the same name replaces the existing schedule rather than adding a second one, so no duplicate job is created.
+- Job name stays `verbwise-daily-reminders`.
+- pg_cron's `cron.schedule()` **does NOT replace an existing job by name**; calling it again with the same name creates a duplicate. Therefore the corrected file first unschedules any existing `verbwise-daily-reminders` job, then creates it fresh.
 - `<REMINDER_CRON_SECRET>` remains the one placeholder you replace by hand.
+- The file is wrapped in a single transaction (`begin; ... commit;`) so the unschedule and schedule happen atomically. The unschedule call is safe even when the job does not exist; pg_cron simply reports that zero rows were removed.
 
 ## Corrected file contents
 
@@ -46,11 +48,18 @@ Exactly one send per day, every day, at 18:00 UK. The `Europe/London` timezone d
 --   Summer (BST): 17:00 UTC = 18:00 London -> send. 18:00 UTC -> skipped.
 --   Winter (GMT): 17:00 UTC = 17:00 London -> skipped. 18:00 UTC -> send.
 --
--- Re-running this statement with the same job name replaces the existing
--- schedule, so it cannot create a duplicate job or a double send.
+-- pg_cron does NOT replace an existing job when cron.schedule() is called with
+-- the same job name, so the script first unschedules any existing
+-- verbwise-daily-reminders job and then creates it fresh. This avoids
+-- duplicate schedules and double sends.
+
+begin;
 
 create extension if not exists pg_cron;
 create extension if not exists pg_net;
+
+-- Remove any pre-existing schedule with this name (safe even if absent).
+select cron.unschedule('verbwise-daily-reminders');
 
 select cron.schedule(
   'verbwise-daily-reminders',
@@ -67,6 +76,8 @@ select cron.schedule(
   where extract(hour from (now() at time zone 'Europe/London')) = 18;
   $$
 );
+
+commit;
 
 -- Check the schedule:
 -- select jobname, schedule, active from cron.job where jobname = 'verbwise-daily-reminders';
