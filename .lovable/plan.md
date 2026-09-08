@@ -4,14 +4,15 @@ One feature, built end to end on top of what Verb Wise already has. Nothing in t
 
 ## 1. Random Cards
 
-- New page at `/random`, reached from a button on the home page only (navigation stays as it is).
-- Opens straight onto a randomly chosen card — no setup screen, no quiz.
-- The card is shown with the same layout, colours and buttons as the normal card page (favourite, learned, examples, notes).
-- Only cards the user can actually read are drawn; locked cards are skipped.
+- The home page's two buttons ("Start studying" and "Search the deck") become an evenly spaced group of three, with a new **Random Cards** button last: on wide screens side by side with equal gaps and matching size, on a phone stacked vertically with Random Cards at the bottom. Existing buttons and navigation are untouched; the new one uses the existing primary "Verbs" styling, no new colour.
+- It leads to a new page at `/random` — straight onto a randomly chosen card, no setup screen, no quiz, no delay.
+- The card uses the same layout, colours and controls as the normal card page (favourite, learned, examples, notes).
+- Only cards the user can actually read are drawn; locked cards are skipped and their content is never shown.
 - Controls at the bottom, big enough for a thumb:
-  - `← Previous` (back through the cards seen this session)
+  - `← Previous` — steps back through cards already seen this session, never jumps somewhere random
   - `Next: ponerse →` — the next verb's name is shown before they move to it, so they can decide.
-- The order is a shuffled run through the deck, so nothing repeats until the whole deck has been seen.
+- The order is a shuffled run through the available deck, so nothing repeats until the whole run has been seen; then a fresh shuffle begins.
+
 
 ## 2. Counting cards studied
 
