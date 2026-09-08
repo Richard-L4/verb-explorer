@@ -229,8 +229,6 @@ export function PostStudyPanel() {
           )}
         </motion.section>
       )}
-    </motion.section>
-  )}
     </AnimatePresence>
   );
 }
