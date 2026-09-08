@@ -166,6 +166,8 @@ function Settings() {
 
       {creator ? <FunnelPanel /> : null}
 
+      <ReminderSettings />
+
 
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
