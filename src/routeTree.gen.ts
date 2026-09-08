@@ -25,6 +25,7 @@ import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
 import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
 import { Route as ApiPublicEnvCheckRouteImport } from './routes/api/public/env-check'
+import { Route as ApiPublicSendDailyRemindersRouteImport } from './routes/api/public/send-daily-reminders'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as ApiPublicTrialCheckRouteImport } from './routes/api/public/trial-check'
 
@@ -108,6 +109,12 @@ const ApiPublicEnvCheckRoute = ApiPublicEnvCheckRouteImport.update({
   path: '/api/public/env-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSendDailyRemindersRoute =
+  ApiPublicSendDailyRemindersRouteImport.update({
+    id: '/api/public/send-daily-reminders',
+    path: '/api/public/send-daily-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
@@ -136,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
+  '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
+  '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
@@ -177,6 +186,7 @@ export interface FileRoutesById {
   '/saying/$sayingId': typeof SayingSayingIdRoute
   '/unlock_/success': typeof UnlockSuccessRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
+  '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/trial-check': typeof ApiPublicTrialCheckRoute
 }
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/saying/$sayingId'
     | '/unlock/success'
     | '/api/public/env-check'
+    | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
     | '/api/public/trial-check'
   fileRoutesByTo: FileRoutesByTo
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/saying/$sayingId'
     | '/unlock/success'
     | '/api/public/env-check'
+    | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
     | '/api/public/trial-check'
   id:
@@ -239,6 +251,7 @@ export interface FileRouteTypes {
     | '/saying/$sayingId'
     | '/unlock_/success'
     | '/api/public/env-check'
+    | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
     | '/api/public/trial-check'
   fileRoutesById: FileRoutesById
@@ -260,6 +273,7 @@ export interface RootRouteChildren {
   SayingSayingIdRoute: typeof SayingSayingIdRoute
   UnlockSuccessRoute: typeof UnlockSuccessRoute
   ApiPublicEnvCheckRoute: typeof ApiPublicEnvCheckRoute
+  ApiPublicSendDailyRemindersRoute: typeof ApiPublicSendDailyRemindersRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   ApiPublicTrialCheckRoute: typeof ApiPublicTrialCheckRoute
 }
@@ -378,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEnvCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/send-daily-reminders': {
+      id: '/api/public/send-daily-reminders'
+      path: '/api/public/send-daily-reminders'
+      fullPath: '/api/public/send-daily-reminders'
+      preLoaderRoute: typeof ApiPublicSendDailyRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/stripe-webhook': {
       id: '/api/public/stripe-webhook'
       path: '/api/public/stripe-webhook'
@@ -412,6 +433,7 @@ const rootRouteChildren: RootRouteChildren = {
   SayingSayingIdRoute: SayingSayingIdRoute,
   UnlockSuccessRoute: UnlockSuccessRoute,
   ApiPublicEnvCheckRoute: ApiPublicEnvCheckRoute,
+  ApiPublicSendDailyRemindersRoute: ApiPublicSendDailyRemindersRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   ApiPublicTrialCheckRoute: ApiPublicTrialCheckRoute,
 }
