@@ -82,6 +82,13 @@ function Home() {
           >
             <Search className="size-4" aria-hidden="true" /> Search the deck
           </Link>
+          <Link
+            to="/random"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card/70 px-6 text-sm font-semibold backdrop-blur transition-colors hover:border-primary/40 hover:bg-secondary"
+          >
+            <Shuffle className="size-4" aria-hidden="true" /> Random Cards
+          </Link>
+
         </div>
       </section>
 
