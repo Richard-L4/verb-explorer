@@ -80,4 +80,5 @@ Random Cards navigation and next-verb label; the count persisting; the message a
 
 ## What you'll need to do
 
-Run the new SQL file, and I'll ask for the two secrets at the right moment. The VAPID key pair I can generate for you.
+I'll build everything, then stop and tell you exactly which values are needed and where each one goes: the new SQL file to run yourself in the SQL Editor (it only creates the new table), the two private values to save in the project's secure settings, and the one scheduling line to run in the database. The key pair I can generate for you — the private half is stored server-side only and never appears in the app or in chat.
+
