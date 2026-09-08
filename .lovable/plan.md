@@ -4,7 +4,7 @@ One feature, built end to end on top of what Verb Wise already has. Nothing in t
 
 ## 1. Random Cards
 
-- The home page's two buttons ("Start studying" and "Search the deck") become an evenly spaced group of three, with a new **Random Cards** button last: on wide screens side by side with equal gaps and matching size, on a phone stacked vertically with Random Cards at the bottom. Existing buttons and navigation are untouched; the new one uses the existing primary "Verbs" styling, no new colour.
+- The home page's two buttons become one evenly spaced group of three, in this order: **Start studying → Search the deck → Random Cards**. On wide screens they sit side by side with equal gaps and matching size; on a phone they stack vertically in that same order with Random Cards at the bottom. The existing two are not moved, resized, restyled or replaced beyond being part of that group; the new one uses the existing primary "Verbs" styling, no new colour.
 - It leads to a new page at `/random` — straight onto a randomly chosen card, no setup screen, no quiz, no delay.
 - The card uses the same layout, colours and controls as the normal card page (favourite, learned, examples, notes).
 - Only cards the user can actually read are drawn; locked cards are skipped and their content is never shown.
@@ -45,7 +45,7 @@ Prominent, first thing on the page, using the existing "Verbs" gradient and the 
 
 ## 5. Optional daily reminders
 
-Shown only *after* the install step (installed, or the CTA acted on) — never on first arrival:
+Offered only once the app is confirmed added to the home screen, where the browser lets us detect that. Where it can't be confirmed (iPhone in particular), the invitation follows the platform's normal behaviour and is shown at most once — never on first arrival, and never before the install step:
 
 > Want a little reminder to keep your Spanish going? 🇪🇸
 > Allow daily reminders and Verb Wise can remind you to practise each day.
