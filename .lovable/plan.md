@@ -58,10 +58,11 @@ Settings gains a simple **Daily reminders — On / Off** switch. Turning it off 
 
 ## 6. The reminders themselves
 
-- Sent from the server at one fixed time each day (18:00 UK), so they arrive whether or not the app or browser is open.
+- Sent from the server at one fixed time each day, 18:00 UK, adjusting automatically for British Summer Time, so they arrive whether or not the app or browser is open.
 - Content is genuinely useful and rotates daily, built from the existing verb deck, e.g.
   *Spanish verb of the day 🇪🇸 — Ponerse: to put on / become.*
-- Tapping one opens Verb Wise on that card.
+- Tapping one opens Verb Wise directly on that verb's card.
+
 
 ## Technical notes
 
