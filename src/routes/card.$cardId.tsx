@@ -1,14 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, AlertTriangle, Quote } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getCard, getNeighbours, getCardIndex, cardCount } from "@/data/cards";
 import { useLearner } from "@/hooks/use-learner";
 import { useAccess } from "@/hooks/use-access";
 import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
-import { FavouriteButton } from "@/components/app/FavouriteButton";
-import { LearnedButton } from "@/components/app/LearnedButton";
+import { VerbCardBody } from "@/components/app/VerbCardBody";
 
 export const Route = createFileRoute("/card/$cardId")({
   loader: ({ params }) => {
@@ -36,7 +34,7 @@ export const Route = createFileRoute("/card/$cardId")({
 
 function CardDetail() {
   const { card } = Route.useLoaderData();
-  const { isFavourite, isLearned, toggleFavourite, toggleLearned, markViewed } = useLearner();
+  const { markViewed } = useLearner();
   const { isLocked } = useAccess();
   const locked = isLocked(card.id);
   const { prev, next } = getNeighbours(card.id);
