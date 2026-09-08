@@ -48,27 +48,39 @@ export function PostStudyPanel() {
   }, []);
 
   useEffect(() => {
+    if (pathname !== "/" && pathname !== "/random") markMovedAwayFromHome();
+
     if (pathname === "/random") {
-      setVisible(false);
-      return;
-    }
-    if (!postStudyPending()) {
       setVisible(false);
       return;
     }
 
     const installed = isStandalone();
-    const nextMode: InstallMode = installed
-      ? "installed"
-      : getDeferredPrompt()
-        ? "prompt"
-        : isIos()
-          ? "ios"
-          : "desktop";
 
-    setMode(nextMode);
+    // Installed: the reminder invitation is available immediately, anywhere.
+    if (installed) {
+      if (reminderInvitePending() && canOfferReminders()) {
+        setMode("installed");
+        setCount(studiedCount());
+        setStage("reminders");
+        setVisible(true);
+        return;
+      }
+      setVisible(false);
+      return;
+    }
+
+    // Not installed: offer the install step once the user is off the Home page,
+    // or straight away after a Random Cards session.
+    const showInstall = installCtaPending() && (movedAwayFromHome() || postStudyPending());
+    if (!showInstall) {
+      setVisible(false);
+      return;
+    }
+
+    setMode(getDeferredPrompt() ? "prompt" : isIos() ? "ios" : "desktop");
     setCount(studiedCount());
-    setStage(installed && canOfferReminders() ? "reminders" : "install");
+    setStage("install");
     setVisible(true);
   }, [pathname, tick]);
 
