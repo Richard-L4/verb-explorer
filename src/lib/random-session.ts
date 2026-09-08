@@ -108,3 +108,34 @@ export function dismissPostStudyPanel() {
   writeFlag(POST_STUDY_DISMISSED_KEY, "1");
   clearFlag(RANDOM_PENDING_KEY);
 }
+
+/** Session-scoped marker: the user has moved off the Home page this visit. */
+const MOVED_AWAY_KEY = "vw_moved_away_v1";
+
+export function markMovedAwayFromHome() {
+  if (!isBrowser()) return;
+  try {
+    window.sessionStorage.setItem(MOVED_AWAY_KEY, "1");
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+export function movedAwayFromHome(): boolean {
+  if (!isBrowser()) return false;
+  try {
+    return window.sessionStorage.getItem(MOVED_AWAY_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** The install CTA has not yet been completed, acted on or dismissed. */
+export function installCtaPending(): boolean {
+  return readFlag(INSTALL_STEP_KEY) === null && readFlag(POST_STUDY_DISMISSED_KEY) !== "1";
+}
+
+/** The daily-reminder invitation has never been answered on this device. */
+export function reminderInvitePending(): boolean {
+  return readFlag(REMINDER_INVITE_KEY) === null;
+}
