@@ -14,8 +14,12 @@ import {
   INSTALL_STEP_KEY,
   REMINDER_INVITE_KEY,
   dismissPostStudyPanel,
+  installCtaPending,
+  markMovedAwayFromHome,
+  movedAwayFromHome,
   postStudyPending,
   readFlag,
+  reminderInvitePending,
   studiedCount,
   subscribeRandom,
   writeFlag,
@@ -48,27 +52,39 @@ export function PostStudyPanel() {
   }, []);
 
   useEffect(() => {
+    if (pathname !== "/" && pathname !== "/random") markMovedAwayFromHome();
+
     if (pathname === "/random") {
-      setVisible(false);
-      return;
-    }
-    if (!postStudyPending()) {
       setVisible(false);
       return;
     }
 
     const installed = isStandalone();
-    const nextMode: InstallMode = installed
-      ? "installed"
-      : getDeferredPrompt()
-        ? "prompt"
-        : isIos()
-          ? "ios"
-          : "desktop";
 
-    setMode(nextMode);
+    // Installed: the reminder invitation is available immediately, anywhere.
+    if (installed) {
+      if (reminderInvitePending() && canOfferReminders()) {
+        setMode("installed");
+        setCount(studiedCount());
+        setStage("reminders");
+        setVisible(true);
+        return;
+      }
+      setVisible(false);
+      return;
+    }
+
+    // Not installed: offer the install step once the user is off the Home page,
+    // or straight away after a Random Cards session.
+    const showInstall = installCtaPending() && (movedAwayFromHome() || postStudyPending());
+    if (!showInstall) {
+      setVisible(false);
+      return;
+    }
+
+    setMode(getDeferredPrompt() ? "prompt" : isIos() ? "ios" : "desktop");
     setCount(studiedCount());
-    setStage(installed && canOfferReminders() ? "reminders" : "install");
+    setStage("install");
     setVisible(true);
   }, [pathname, tick]);
 
@@ -139,16 +155,20 @@ export function PostStudyPanel() {
 
           {stage === "install" ? (
             <>
-              <p className="pr-12 font-display text-2xl font-bold leading-tight sm:text-3xl">
-                <span className="gradient-text">
-                  Great! You&apos;ve studied {count} card{count === 1 ? "" : "s"}. 🇪🇸
-                </span>
-              </p>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                Be sure to come back soon and keep your Spanish going.
-              </p>
+              {count > 0 ? (
+                <>
+                  <p className="pr-12 font-display text-2xl font-bold leading-tight sm:text-3xl">
+                    <span className="gradient-text">
+                      Great! You&apos;ve studied {count} card{count === 1 ? "" : "s"}. 🇪🇸
+                    </span>
+                  </p>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    Be sure to come back soon and keep your Spanish going.
+                  </p>
+                </>
+              ) : null}
 
-              <h2 className="mt-6 font-display text-xl font-bold tracking-tight">
+              <h2 className={`${count > 0 ? "mt-6" : "pr-12"} font-display text-xl font-bold tracking-tight`}>
                 <span className="gradient-text">Add Verb Wise to your Home Screen</span>
               </h2>
               <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
