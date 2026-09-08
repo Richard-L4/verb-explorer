@@ -6,6 +6,7 @@ import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
 import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
+import { PostStudyPanel } from "./PostStudyPanel";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
