@@ -9,6 +9,7 @@ import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
 import { isTestDeviceLatched } from "@/lib/access";
 import { FunnelPanel } from "@/components/app/FunnelPanel";
+import { ReminderSettings } from "@/components/app/ReminderSettings";
 
 
 
@@ -165,6 +166,8 @@ function Settings() {
       ) : null}
 
       {creator ? <FunnelPanel /> : null}
+
+      <ReminderSettings />
 
 
       <section className="surface-card mt-6 border-destructive/30 p-6 sm:p-7">

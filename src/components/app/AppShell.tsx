@@ -6,6 +6,7 @@ import { navItems } from "./nav-items";
 import { SiteFooter } from "./SiteFooter";
 import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
+import { PostStudyPanel } from "./PostStudyPanel";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -99,6 +100,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">
+        <PostStudyPanel />
         <TrialBanner />
         {children}
         <div className="mx-auto mt-24 flex w-full max-w-[16rem] justify-center">

@@ -47,8 +47,10 @@ export default defineConfig({
           ],
         },
         workbox: {
+          // Daily reminder push/notification handlers live in public/push-sw.js.
+          importScripts: ["/push-sw.js"],
           globPatterns: ["**/*.{js,css,png,svg,ico,woff,woff2}"],
-          globIgnores: ["**/sw.js", "**/workbox-*.js", "**/_headers"],
+          globIgnores: ["**/sw.js", "**/workbox-*.js", "**/push-sw.js", "**/_headers"],
           navigateFallback: null,
           cleanupOutdatedCaches: true,
           clientsClaim: true,
