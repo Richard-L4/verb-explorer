@@ -9,6 +9,7 @@ import { cardCount } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
 import { isTestDeviceLatched } from "@/lib/access";
 import { FunnelPanel } from "@/components/app/FunnelPanel";
+import { ReminderSettings } from "@/components/app/ReminderSettings";
 
 
 
