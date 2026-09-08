@@ -23,8 +23,10 @@ Exactly one send per day, every day, at 18:00 UK. The `Europe/London` timezone d
 - Only `db/schedule_daily_reminders.sql` is rewritten (comments and schedule).
 - No change to `db/push_subscriptions.sql`, no change to the reminder endpoint or any application code.
 - No SQL is executed; the file stays a manual run for you in the Supabase SQL Editor.
-- Job name stays `verbwise-daily-reminders`. Re-running `cron.schedule` with the same name replaces the existing schedule rather than adding a second one, so no duplicate job is created.
+- Job name stays `verbwise-daily-reminders`.
+- pg_cron's `cron.schedule()` **does NOT replace an existing job by name**; calling it again with the same name creates a duplicate. Therefore the corrected file first unschedules any existing `verbwise-daily-reminders` job, then creates it fresh.
 - `<REMINDER_CRON_SECRET>` remains the one placeholder you replace by hand.
+- The file is wrapped in a single transaction (`begin; ... commit;`) so the unschedule and schedule happen atomically. The unschedule call is safe even when the job does not exist; pg_cron simply reports that zero rows were removed.
 
 ## Corrected file contents
 
