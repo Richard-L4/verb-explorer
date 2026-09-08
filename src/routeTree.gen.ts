@@ -14,6 +14,7 @@ import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as RandomRouteImport } from './routes/random'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SayingsRouteImport } from './routes/sayings'
 import { Route as SearchRouteImport } from './routes/search'
@@ -52,6 +53,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomRoute = RandomRouteImport.update({
+  id: '/random',
+  path: '/random',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RefundsRoute = RefundsRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/random': typeof RandomRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/random': typeof RandomRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/favourites': typeof FavouritesRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
+  '/random': typeof RandomRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
+    | '/random'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
+    | '/random'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -240,6 +251,7 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/privacy'
     | '/quiz'
+    | '/random'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -262,6 +274,7 @@ export interface RootRouteChildren {
   FavouritesRoute: typeof FavouritesRoute
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
+  RandomRoute: typeof RandomRoute
   RefundsRoute: typeof RefundsRoute
   SayingsRoute: typeof SayingsRoute
   SearchRoute: typeof SearchRoute
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random': {
+      id: '/random'
+      path: '/random'
+      fullPath: '/random'
+      preLoaderRoute: typeof RandomRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/refunds': {
@@ -422,6 +442,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavouritesRoute: FavouritesRoute,
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
+  RandomRoute: RandomRoute,
   RefundsRoute: RefundsRoute,
   SayingsRoute: SayingsRoute,
   SearchRoute: SearchRoute,
