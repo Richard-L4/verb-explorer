@@ -39,11 +39,20 @@ function shuffle(list: VerbCard[]): VerbCard[] {
   return out;
 }
 
+/** Cards shown per session once the trial has ended and nothing was purchased. */
+const TASTER_LIMIT = 5;
+
 function RandomCards() {
-  const { isLocked } = useAccess();
+  const { isLocked, fullAccess } = useAccess();
   const { markViewed } = useLearner();
 
-  const available = useMemo(() => cards.filter((c) => !isLocked(c.id)), [isLocked]);
+  // Expired, unpurchased visitors get a short taster drawn from the whole deck.
+  const limited = !fullAccess;
+
+  const available = useMemo(
+    () => (limited ? cards : cards.filter((c) => !isLocked(c.id))),
+    [isLocked, limited],
+  );
 
   const [queue, setQueue] = useState<VerbCard[]>([]);
   const [index, setIndex] = useState(0);
