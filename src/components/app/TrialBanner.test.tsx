@@ -6,7 +6,7 @@ const access = {
   creator: false,
   unlocked: false,
   inTrial: true,
-  trialDaysLeft: 7,
+  trialDaysLeft: 5,
   price: "£4.99",
   bannerPreview: null as null | number | "expired",
 };
@@ -32,7 +32,7 @@ beforeEach(() => {
     creator: false,
     unlocked: false,
     inTrial: true,
-    trialDaysLeft: 7,
+    trialDaysLeft: 5,
     bannerPreview: null,
   });
 });
@@ -42,7 +42,7 @@ async function flush() {
 }
 
 describe("reminder events fire on actual render", () => {
-  for (const days of [7, 3, 2, 1] as const) {
+  for (const days of [5, 3, 2, 1] as const) {
     it(`records reminder_${days} when the ${days}-day banner renders`, async () => {
       access.trialDaysLeft = days;
       render(<TrialBanner />);

@@ -29,7 +29,7 @@ async function flush() {
 }
 
 describe("trial clock behaviour is unchanged", () => {
-  it("starts a 14-day trial on first visit and reports 14 days left", async () => {
+  it("starts a 7-day trial on first visit and reports 7 days left", async () => {
     const access = await freshAccess();
     access.hydrate();
     const state = access.getSnapshot();
@@ -50,7 +50,7 @@ describe("trial clock behaviour is unchanged", () => {
     const access = await freshAccess();
     expect(access.UNLOCK_PRICE).toBe("£4.99");
     expect(access.FREE_CARD_COUNT).toBe(10);
-    expect(access.TRIAL_DAYS).toBe(14);
+    expect(access.TRIAL_DAYS).toBe(7);
   });
 });
 
