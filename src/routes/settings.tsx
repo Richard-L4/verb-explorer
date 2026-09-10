@@ -134,7 +134,7 @@ function Settings() {
               access to cards.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {([7, 3, 2, 1, "expired"] as const).map((value) => {
+              {([5, 3, 2, 1, "expired"] as const).map((value) => {
                 const active = bannerPreview === value;
                 return (
                   <button

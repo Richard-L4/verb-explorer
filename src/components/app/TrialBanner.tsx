@@ -13,7 +13,7 @@ import { logEvent } from "@/lib/analytics";
  */
 function reminderFor(daysLeft: number, trialActive: boolean): string | null {
   if (!trialActive) return "Your full-access trial has ended.";
-  if (daysLeft === 7) return "7 days left in your full-access trial.";
+  if (daysLeft === 5) return "5 days left in your full-access trial.";
   if (daysLeft === 3) return "3 days left in your full-access trial.";
   if (daysLeft === 2) return "2 days left in your full-access trial.";
   if (daysLeft === 1) return "Your full-access trial ends tomorrow.";
@@ -36,7 +36,7 @@ export function TrialBanner() {
           ? reminderFor(0, false)
           : reminderFor(bannerPreview as number, true);
     } else if (!creator) {
-      if (!inTrial || [7, 3, 2, 1].includes(trialDaysLeft)) {
+      if (!inTrial || [5, 3, 2, 1].includes(trialDaysLeft)) {
         message = reminderFor(trialDaysLeft, inTrial);
       }
     }
@@ -51,8 +51,8 @@ export function TrialBanner() {
       void logEvent("trial_expired", { trialDay: 0 });
       return;
     }
-    if ([7, 3, 2, 1].includes(trialDaysLeft)) {
-      void logEvent(`reminder_${trialDaysLeft}` as "reminder_7", { trialDay: trialDaysLeft });
+    if ([5, 3, 2, 1].includes(trialDaysLeft)) {
+      void logEvent(`reminder_${trialDaysLeft}` as "reminder_5", { trialDay: trialDaysLeft });
     }
   }, [rendered, inTrial, trialDaysLeft]);
 

@@ -15,6 +15,7 @@ export const ANALYTICS_EVENTS = [
   "app_visit",
   "trial_started",
   "reminder_7",
+  "reminder_5",
   "reminder_3",
   "reminder_2",
   "reminder_1",

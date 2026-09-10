@@ -2,13 +2,13 @@
  * Access / entitlement state (localStorage). No React or UI concerns here.
  *
  * Free tier: the first 10 verb cards are always available.
- * Trial: everything is open for 14 days from first visit.
+ * Trial: everything is open for 7 days from first visit.
  * Unlock: one-off £4.99 purchase gives permanent access in this browser.
  */
 import { isLovablePreviewHost } from "./preview";
 
 export interface AccessState {
-  /** ISO date of the first visit — start of the 14-day trial. */
+  /** ISO date of the first visit — start of the 7-day trial. */
   trialStart: string | null;
   /** True once the one-off unlock has been purchased. */
   unlocked: boolean;
@@ -21,7 +21,7 @@ export const BANNER_PREVIEW_KEY = "verbo.banner-preview.v1";
 export const CREATOR_STORAGE_KEY = "creator_access";
 export const CREATOR_QUERY_KEY = "creator";
 export const CREATOR_QUERY_VALUE = "hilary53";
-export const TRIAL_DAYS = 14;
+export const TRIAL_DAYS = 7;
 export const FREE_CARD_COUNT = 10;
 export const UNLOCK_PRICE = "£4.99";
 
@@ -204,7 +204,7 @@ export function getServerSnapshot(): AccessState {
 }
 
 /** Creator-only, display-only override for the trial banner. Never affects entitlement. */
-export type BannerPreview = 7 | 3 | 2 | 1 | "expired" | null;
+export type BannerPreview = 5 | 3 | 2 | 1 | "expired" | null;
 
 let previewCache: BannerPreview = null;
 
@@ -215,7 +215,7 @@ function readPreview(): BannerPreview {
     if (!raw) return null;
     if (raw === "expired") return "expired";
     const n = Number(raw);
-    return n === 7 || n === 3 || n === 2 || n === 1 ? (n as BannerPreview) : null;
+    return n === 5 || n === 3 || n === 2 || n === 1 ? (n as BannerPreview) : null;
   } catch {
     return null;
   }

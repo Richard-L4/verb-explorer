@@ -8,7 +8,7 @@ import type { AnalyticsEvent } from "@/lib/analytics";
 const ROWS: { event: AnalyticsEvent; label: string }[] = [
   { event: "app_visit", label: "App visits" },
   { event: "trial_started", label: "Trials started" },
-  { event: "reminder_7", label: "7-day reminder" },
+  { event: "reminder_5", label: "5-day reminder" },
   { event: "reminder_3", label: "3-day reminder" },
   { event: "reminder_2", label: "2-day reminder" },
   { event: "reminder_1", label: "1-day reminder" },
