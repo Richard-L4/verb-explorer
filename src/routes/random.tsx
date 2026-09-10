@@ -58,10 +58,13 @@ function RandomCards() {
   const [index, setIndex] = useState(0);
 
   // First shuffled run, created after hydration so access state is known.
+  // Nothing is persisted, so every fresh visit produces a different order.
   useEffect(() => {
     if (!available.length) return;
-    setQueue((current) => (current.length ? current : shuffle(available)));
-  }, [available]);
+    setQueue((current) =>
+      current.length ? current : shuffle(available).slice(0, limited ? TASTER_LIMIT : available.length),
+    );
+  }, [available, limited]);
 
   const current = queue[index];
 
@@ -73,16 +76,27 @@ function RandomCards() {
   }, [current, markViewed]);
 
   const next = useCallback(() => {
+    if (limited) {
+      setIndex((i) => Math.min(i + 1, TASTER_LIMIT - 1));
+      return;
+    }
     setQueue((q) => {
       // At the end of a run, start a fresh shuffle after the ones already seen.
       if (index >= q.length - 1) return [...q, ...shuffle(available)];
       return q;
     });
     setIndex((i) => i + 1);
-  }, [available, index]);
+  }, [available, index, limited]);
 
   const previous = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
 
+  /** Taster only: throw the set away and draw five different cards. */
+  const reshuffle = useCallback(() => {
+    setQueue(shuffle(available).slice(0, TASTER_LIMIT));
+    setIndex(0);
+  }, [available]);
+
+  const atTasterEnd = limited && index >= Math.min(TASTER_LIMIT, queue.length) - 1;
   const upcoming = queue[index + 1];
   const upcomingLabel = upcoming?.sides?.[0]?.word ?? upcoming?.title;
 
