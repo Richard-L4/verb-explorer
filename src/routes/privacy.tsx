@@ -57,8 +57,8 @@ function Privacy() {
         <LegalSection title="Anonymous usage counts">
           <p>
             To understand how the free trial is working, Verb Wise records a small set of anonymous, aggregate usage
-            events: an app visit (at most once a day), the start of your 14-day trial, the trial countdown reminders you
-            actually see at 7, 3, 2 and 1 days, the trial ending, starting a checkout, and a completed purchase.
+            events: an app visit (at most once a day), the start of your 7-day trial, the trial countdown reminders you
+            actually see at 5, 3, 2 and 1 days, the trial ending, starting a checkout, and a completed purchase.
           </p>
           <p>
             These events are stored against a random identifier generated in your browser. It is not linked to your
