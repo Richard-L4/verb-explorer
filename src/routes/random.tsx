@@ -43,7 +43,7 @@ function shuffle(list: VerbCard[]): VerbCard[] {
 const TASTER_LIMIT = 5;
 
 function RandomCards() {
-  const { isLocked, fullAccess } = useAccess();
+  const { isLocked, fullAccess, price } = useAccess();
   const { markViewed } = useLearner();
 
   // Expired, unpurchased visitors get a short taster drawn from the whole deck.
@@ -133,7 +133,12 @@ function RandomCards() {
         </Link>
       </div>
 
-      {current ? <VerbCardBody card={current} meta={`Card ${index + 1} this session`} /> : null}
+      {current ? (
+        <VerbCardBody
+          card={current}
+          meta={limited ? `Card ${index + 1} of ${TASTER_LIMIT}` : `Card ${index + 1} this session`}
+        />
+      ) : null}
 
       <nav aria-label="Random card navigation" className="mt-8 grid gap-3 sm:grid-cols-2">
         <button
@@ -159,13 +164,16 @@ function RandomCards() {
         <button
           type="button"
           onClick={next}
-          className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)]"
+          disabled={atTasterEnd}
+          className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)] disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="min-w-0">
             <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
               Next
             </span>
-            <span className="truncate font-display font-bold">{upcomingLabel ?? "Another card"}</span>
+            <span className="truncate font-display font-bold">
+              {atTasterEnd ? "End of this five" : (upcomingLabel ?? "Another card")}
+            </span>
           </span>
           <ArrowRight
             className="size-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1"
@@ -173,6 +181,29 @@ function RandomCards() {
           />
         </button>
       </nav>
+
+      {atTasterEnd ? (
+        <section className="surface-card mt-6 border border-primary/25 bg-primary/5 p-5 text-center sm:p-6">
+          <p className="text-sm font-semibold text-foreground sm:text-base">
+            That's your five random cards. Unlock full access for the whole deck, every time.
+          </p>
+          <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={reshuffle}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-5 text-sm font-bold text-foreground transition-colors hover:border-primary/40"
+            >
+              <Shuffle className="size-4" aria-hidden="true" /> Five more at random
+            </button>
+            <Link
+              to="/unlock"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)]"
+            >
+              Buy now — {price}
+            </Link>
+          </div>
+        </section>
+      ) : null}
     </PageTransition>
   );
 }
