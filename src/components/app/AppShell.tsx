@@ -100,6 +100,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <InstallBanner />
       </header>
 
+      <PromoPopup />
+
       <main className="mx-auto w-full max-w-6xl px-4 py-8 pb-24 sm:px-6 sm:py-12">
         <PostStudyPanel />
         <TrialBanner />
