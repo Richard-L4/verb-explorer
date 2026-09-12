@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const SESSION_KEY = "vw_promo_popup_session_v1";
 const SHOW_DELAY_MS = 3000;
-const AUTO_HIDE_MS = 5000;
+const AUTO_HIDE_MS = 10000;
 
 function getDismissed(): boolean {
   if (typeof window === "undefined") return false;
