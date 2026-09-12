@@ -27,7 +27,7 @@ Add a polished, informational promotional popup to the Verb Wise app that surfac
 
 ### 2. Show / hide behaviour
 - State stored in `sessionStorage` under a single key (e.g. `vw_promo_popup_session_v1`) so it survives client-side navigation but does not persist across browser sessions.
-- The popup is considered "shown" once it has appeared; closing it or letting it auto-hide both set the dismissed flag.
+- The popup is considered "shown" once it has actually become visible; the `sessionStorage` dismissed flag is only set at that point, not when the component mounts or when the 3-second timer starts.
 - Show timer: 3 seconds after the component mounts, if not already dismissed.
 - Auto-hide timer: 5 seconds after it becomes visible, unless the user has already closed it.
 - Cleanup timers on unmount to avoid leaks.
