@@ -7,6 +7,7 @@ import { SiteFooter } from "./SiteFooter";
 import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
 import { PostStudyPanel } from "./PostStudyPanel";
+import { PromoPopup } from "./PromoPopup";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 

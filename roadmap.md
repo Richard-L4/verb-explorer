@@ -8,3 +8,4 @@
   - [ ] secondary one-way salted hash of network address (never raw, never exposed)
   - [ ] trial_started logged only after the server accepts a first trial
   - [ ] preserve test-device protection + creator mode
+- [x] Promotional popup — 7-day trial / £4.99 offer
