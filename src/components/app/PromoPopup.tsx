@@ -1,55 +1,54 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const SESSION_KEY = "vw_promo_popup_session_v1";
+const ENTERED_KEY = "vw_has_entered_app_v1";
 const SHOW_DELAY_MS = 3000;
-const AUTO_HIDE_MS = 10000;
 
-function getDismissed(): boolean {
+function getHasEnteredApp(): boolean {
   if (typeof window === "undefined") return false;
   try {
-    return window.sessionStorage.getItem(SESSION_KEY) === "1";
+    return window.localStorage.getItem(ENTERED_KEY) === "1";
   } catch {
     return false;
   }
 }
 
-function markDismissed(): void {
+function markHasEnteredApp(): void {
   if (typeof window === "undefined") return;
   try {
-    window.sessionStorage.setItem(SESSION_KEY, "1");
+    window.localStorage.setItem(ENTERED_KEY, "1");
   } catch {
     // Ignore storage errors.
   }
 }
 
 export function PromoPopup() {
+  const { pathname } = useLocation();
   const [visible, setVisible] = useState(false);
 
+  const isLanding = pathname === "/";
+
+  // Any existing navigation away from the landing page counts as entering the app.
   useEffect(() => {
-    if (getDismissed()) return;
+    if (!isLanding) {
+      markHasEnteredApp();
+    }
+  }, [isLanding]);
+
+  useEffect(() => {
+    if (!isLanding || getHasEnteredApp()) return;
 
     const showTimer = window.setTimeout(() => {
-      if (!getDismissed()) {
+      if (!getHasEnteredApp()) {
         setVisible(true);
       }
     }, SHOW_DELAY_MS);
 
     return () => window.clearTimeout(showTimer);
-  }, []);
-
-  useEffect(() => {
-    if (!visible) return;
-
-    markDismissed();
-    const hideTimer = window.setTimeout(() => {
-      setVisible(false);
-    }, AUTO_HIDE_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [visible]);
+  }, [isLanding, pathname]);
 
   const close = () => setVisible(false);
 
