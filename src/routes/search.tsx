@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search as SearchIcon, SearchX } from "lucide-react";
 import { searchCards, cardCount } from "@/data/cards";
 import { PageTransition } from "@/components/app/PageTransition";
@@ -21,8 +21,13 @@ export const Route = createFileRoute("/search")({
 
 function SearchPage() {
   const [query, setQuery] = useState("");
-  const trimmed = query.trim();
-  const results = searchCards(query);
+  const [debounced, setDebounced] = useState("");
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(query), 150);
+    return () => clearTimeout(t);
+  }, [query]);
+  const trimmed = debounced.trim();
+  const results = searchCards(debounced);
 
   return (
     <PageTransition>

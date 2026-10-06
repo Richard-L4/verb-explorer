@@ -2191,5 +2191,2912 @@
       }
     ],
     "tricky": "The typo/slip of 'creo una empresa' (I believe a company??) instead of 'creo una empresa' — wait, those are spelled the same in present tense first person! The confusion hits hardest in other forms: 'creó' (he created) vs 'creyó' (he believed). The accent makes all the difference."
+  },
+  {
+    "id": "quedar-vs-quedarse",
+    "category": "verbs",
+    "title": "quedar vs quedarse",
+    "tagline": "Quedar is what's left or how something fits. Quedarse is staying put. One letter pair, two different ideas.",
+    "sides": [
+      {
+        "word": "quedar",
+        "core": "To be left over, to remain, to fit or look on someone, or to be located.",
+        "examples": [
+          {
+            "es": "Quedan dos días para las vacaciones.",
+            "en": "There are two days left until the holidays.",
+            "note": "What remains. Works like gustar: the days are the subject, so it agrees (quedan)."
+          },
+          {
+            "es": "Esa chaqueta te queda genial.",
+            "en": "That jacket looks great on you.",
+            "note": "Quedar bien/mal = to fit or suit. Different from sentar, which is more about comfort and agreement."
+          },
+          {
+            "es": "¿Dónde queda la estación?",
+            "en": "Where is the station?",
+            "note": "Quedar for location is very common in Latin America and increasingly in Spain."
+          }
+        ]
+      },
+      {
+        "word": "quedarse",
+        "core": "To stay, to remain in a place or state, or to end up somewhere.",
+        "examples": [
+          {
+            "es": "Me quedo en casa esta noche.",
+            "en": "I'm staying home tonight.",
+            "note": "You choose to stay. The reflexive marks the subject staying put."
+          },
+          {
+            "es": "Se quedó sin batería.",
+            "en": "It ran out of battery.",
+            "note": "Quedarse sin = to run out of / end up without."
+          },
+          {
+            "es": "Quédate con el cambio.",
+            "en": "Keep the change.",
+            "note": "Quedarse con = to keep or to take (an option). '¿Con cuál te quedas?' = which one are you going with?"
+          }
+        ]
+      }
+    ],
+    "tricky": "'Me quedan cinco euros' (I have five euros left) vs 'me quedo con cinco euros' (I'll keep five euros). The first is what's left; the second is your choice."
+  },
+  {
+    "id": "volverse-vs-hacerse",
+    "category": "verbs",
+    "title": "volverse vs hacerse (become)",
+    "tagline": "Both mean 'become' but for different kinds of change. Hacerse is chosen or earned. Volverse is a deep change that happens to you.",
+    "sides": [
+      {
+        "word": "hacerse",
+        "core": "Becoming something through effort, choice or gradual progress — professions, religions, rich, old.",
+        "examples": [
+          {
+            "es": "Se hizo médico a los treinta.",
+            "en": "He became a doctor at thirty.",
+            "note": "A deliberate path. You work to become a profession."
+          },
+          {
+            "es": "Se hizo rico con una app.",
+            "en": "He got rich off an app.",
+            "note": "Result of effort or luck over time."
+          },
+          {
+            "es": "Me estoy haciendo mayor.",
+            "en": "I'm getting old.",
+            "note": "Gradual change over time."
+          }
+        ]
+      },
+      {
+        "word": "volverse",
+        "core": "Becoming something radically different, often unwanted — a lasting change in character or state.",
+        "examples": [
+          {
+            "es": "Se volvió muy desconfiado.",
+            "en": "He became very distrustful.",
+            "note": "A change in personality that's hard to reverse. Usually after an experience."
+          },
+          {
+            "es": "El mundo se ha vuelto loco.",
+            "en": "The world has gone mad.",
+            "note": "Sweeping change of state. Volverse loco = go mad."
+          },
+          {
+            "es": "Se volvió insoportable.",
+            "en": "She became unbearable.",
+            "note": "Not a choice. She changed and the change stuck."
+          }
+        ]
+      }
+    ],
+    "tricky": "The 'become' family: ponerse (temporary emotional or physical change), volverse (deep change), hacerse (effort or choice), quedarse (ending up in a state: quedarse calvo, quedarse ciego). Match the verb to how the change happened."
+  },
+  {
+    "id": "dejar-de-vs-parar",
+    "category": "verbs",
+    "title": "dejar de vs parar",
+    "tagline": "Both mean 'stop' but dejar de quits a habit or activity for good, parar halts something physically or temporarily.",
+    "sides": [
+      {
+        "word": "dejar de",
+        "core": "To stop doing something, usually permanently, followed by an infinitive.",
+        "examples": [
+          {
+            "es": "Dejé de fumar hace dos años.",
+            "en": "I quit smoking two years ago.",
+            "note": "A habit given up for good. Always dejar de + infinitive."
+          },
+          {
+            "es": "Deja de quejarte.",
+            "en": "Stop complaining.",
+            "note": "Telling someone to quit an ongoing action."
+          },
+          {
+            "es": "No dejes de llamarme.",
+            "en": "Don't stop calling me / make sure you keep calling.",
+            "note": "No dejar de = to keep on doing. A negative that means continuity."
+          }
+        ]
+      },
+      {
+        "word": "parar",
+        "core": "To stop movement or an event — a vehicle, a machine, rain, a person walking.",
+        "examples": [
+          {
+            "es": "El tren no para en esta estación.",
+            "en": "The train doesn't stop at this station.",
+            "note": "Physical halt. Parar is the verb of vehicles and machines."
+          },
+          {
+            "es": "Paramos a comer en un pueblo.",
+            "en": "We stopped for lunch in a village.",
+            "note": "Pausing a journey. Parar a + infinitive = to stop in order to."
+          },
+          {
+            "es": "¡Para ya!",
+            "en": "Stop it already!",
+            "note": "Parar on its own works as 'cut it out'. Parar de + infinitive also exists: 'paró de llover'."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Dejé de correr' (I gave up running) vs 'paré de correr' (I stopped running, maybe to catch my breath). Parar can take 'de' too, but dejar de carries the sense of quitting for good."
+  },
+  {
+    "id": "acabar-vs-terminar",
+    "category": "verbs",
+    "title": "acabar vs terminar",
+    "tagline": "Both mean 'finish' and are often interchangeable — but acabar also means 'just did' and 'run out of', and terminar is the cleaner choice for completing a task.",
+    "sides": [
+      {
+        "word": "terminar",
+        "core": "To finish or complete something — the neutral, task-oriented verb.",
+        "examples": [
+          {
+            "es": "Terminé el informe a las cinco.",
+            "en": "I finished the report at five.",
+            "note": "Completing a task. Acabé would also work, but terminar is the safe default."
+          },
+          {
+            "es": "¿A qué hora termina la película?",
+            "en": "What time does the film end?",
+            "note": "Events ending. Both verbs work."
+          },
+          {
+            "es": "Terminaron la relación.",
+            "en": "They ended the relationship.",
+            "note": "Terminar can take a person as the one ending things: 'terminar con alguien' = to break up."
+          }
+        ]
+      },
+      {
+        "word": "acabar",
+        "core": "To finish, but also: acabar de = to have just done, acabar con = to put an end to, acabarse = to run out.",
+        "examples": [
+          {
+            "es": "Acabo de llegar.",
+            "en": "I've just arrived.",
+            "note": "Acabar de + infinitive = just did. Terminar can't do this. Essential structure."
+          },
+          {
+            "es": "Se ha acabado el café.",
+            "en": "We've run out of coffee.",
+            "note": "Acabarse = to run out. 'Se me acabó la paciencia' = I ran out of patience."
+          },
+          {
+            "es": "Acabó pidiéndome perdón.",
+            "en": "He ended up apologising to me.",
+            "note": "Acabar + gerund = to end up doing. Great for stories."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Acabo de comer' (I just ate) is a present tense verb with a past meaning. Don't try 'terminé de comer' for the same sense — that means you've completed your meal, not that it just happened."
+  },
+  {
+    "id": "soler-vs-acostumbrarse",
+    "category": "verbs",
+    "title": "soler vs acostumbrarse",
+    "tagline": "Soler means 'to usually do'. Acostumbrarse means 'to get used to'. English uses 'used to' for both ideas and learners tangle them.",
+    "sides": [
+      {
+        "word": "soler",
+        "core": "To usually do something — a habit expressed with soler + infinitive.",
+        "examples": [
+          {
+            "es": "Suelo levantarme a las siete.",
+            "en": "I usually get up at seven.",
+            "note": "A routine. Shorter and more natural than 'normalmente me levanto'."
+          },
+          {
+            "es": "Aquí no suele llover en verano.",
+            "en": "It doesn't usually rain here in summer.",
+            "note": "Works for general tendencies too."
+          },
+          {
+            "es": "Solíamos ir a la playa.",
+            "en": "We used to go to the beach.",
+            "note": "Imperfect soler = used to. Only exists in present and imperfect, rarely elsewhere."
+          }
+        ]
+      },
+      {
+        "word": "acostumbrarse",
+        "core": "To get used to something, with acostumbrarse a + noun or infinitive.",
+        "examples": [
+          {
+            "es": "Me he acostumbrado al frío.",
+            "en": "I've got used to the cold.",
+            "note": "Getting used to a new situation. 'Estar acostumbrado a' = to be used to."
+          },
+          {
+            "es": "No me acostumbro a madrugar.",
+            "en": "I can't get used to getting up early.",
+            "note": "Acostumbrarse a + infinitive."
+          },
+          {
+            "es": "Te acostumbrarás.",
+            "en": "You'll get used to it.",
+            "note": "Reassurance with the future tense. Very common."
+          }
+        ]
+      }
+    ],
+    "tricky": "English 'I used to' (past habit) is 'solía' or the imperfect, while 'I'm used to' is 'estoy acostumbrado a'. Don't use acostumbrarse for past habits — 'acostumbraba' exists but sounds literary."
+  },
+  {
+    "id": "darse-cuenta-vs-realizar",
+    "category": "verbs",
+    "title": "darse cuenta vs realizar",
+    "tagline": "'Realize' in English means to notice, but realizar in Spanish means to carry out. A classic false friend.",
+    "sides": [
+      {
+        "word": "darse cuenta",
+        "core": "To realise, to notice something mentally — always darse cuenta de.",
+        "examples": [
+          {
+            "es": "No me di cuenta de que era tarde.",
+            "en": "I didn't realise it was late.",
+            "note": "Always darse cuenta de + noun or que. Never 'realizar'."
+          },
+          {
+            "es": "¿Te das cuenta de lo que dices?",
+            "en": "Do you realise what you're saying?",
+            "note": "Often used as a rhetorical question to emphasise a point."
+          },
+          {
+            "es": "Me di cuenta al llegar a casa.",
+            "en": "I realised when I got home.",
+            "note": "The moment of realisation. Use preterite for the moment."
+          }
+        ]
+      },
+      {
+        "word": "realizar",
+        "core": "To carry out, perform or achieve — a task, study, plan or dream.",
+        "examples": [
+          {
+            "es": "Realizaron un estudio sobre el sueño.",
+            "en": "They carried out a study on sleep.",
+            "note": "Formal register — realizar un estudio, un pago, una llamada."
+          },
+          {
+            "es": "Quiere realizar su sueño de viajar.",
+            "en": "She wants to fulfil her dream of travelling.",
+            "note": "Realizar un sueño = to achieve a dream. The nearest English meaning to 'realise'."
+          },
+          {
+            "es": "La reunión se realizará mañana.",
+            "en": "The meeting will take place tomorrow.",
+            "note": "Se realizará = will be held. Formal and administrative."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Realicé que...' as 'I realised that...' is a very common learner mistake. Say 'me di cuenta de que...'. Realizar is reserved for doing, not noticing."
+  },
+  {
+    "id": "asistir-vs-atender",
+    "category": "verbs",
+    "title": "asistir vs atender",
+    "tagline": "'Assist' is a trap. Asistir means to attend an event; atender means to serve someone or pay attention.",
+    "sides": [
+      {
+        "word": "asistir",
+        "core": "To attend (an event, class, meeting) — asistir a. Also to give care to someone, formally.",
+        "examples": [
+          {
+            "es": "Asistí a la reunión.",
+            "en": "I attended the meeting.",
+            "note": "Always asistir a. This is the everyday meaning. 'Attend' is the English match, not 'assist'."
+          },
+          {
+            "es": "Asistieron más de cien personas.",
+            "en": "More than a hundred people attended.",
+            "note": "Used for turnout at events."
+          },
+          {
+            "es": "Los médicos asistieron al herido.",
+            "en": "The doctors treated the injured man.",
+            "note": "Formal medical sense of providing aid. Also 'asistente' = assistant."
+          }
+        ]
+      },
+      {
+        "word": "atender",
+        "core": "To serve, to see to someone, to answer a call, or to pay attention.",
+        "examples": [
+          {
+            "es": "¿Ya le atienden?",
+            "en": "Are you being served?",
+            "note": "The shop assistant's question. Atender = to serve a customer."
+          },
+          {
+            "es": "Atiende, por favor.",
+            "en": "Pay attention, please.",
+            "note": "In many regions atender also means pay attention. In Spain, 'prestar atención' is more usual."
+          },
+          {
+            "es": "No pude atender el teléfono.",
+            "en": "I couldn't answer the phone.",
+            "note": "Atender una llamada = to take a call."
+          }
+        ]
+      }
+    ],
+    "tricky": "To say 'help' use ayudar. Learners who say 'asistir a mi madre' mean to attend her like an event — unless they mean caring for her in a formal medical sense."
+  },
+  {
+    "id": "soportar-vs-apoyar",
+    "category": "verbs",
+    "title": "soportar vs apoyar",
+    "tagline": "'Support' splits in two. Soportar is to bear or put up with. Apoyar is to back someone or lean something on a surface.",
+    "sides": [
+      {
+        "word": "soportar",
+        "core": "To bear, endure, stand — or to hold up a weight structurally.",
+        "examples": [
+          {
+            "es": "No soporto el calor.",
+            "en": "I can't stand the heat.",
+            "note": "Toleration of something unpleasant. Almost always in the negative."
+          },
+          {
+            "es": "No lo soporto.",
+            "en": "I can't stand him.",
+            "note": "Strong dislike of a person. Stronger than 'no me gusta'."
+          },
+          {
+            "es": "Estas vigas soportan todo el techo.",
+            "en": "These beams support the whole roof.",
+            "note": "Structural support — physical load."
+          }
+        ]
+      },
+      {
+        "word": "apoyar",
+        "core": "To back someone emotionally or politically, or to lean or rest something on a surface.",
+        "examples": [
+          {
+            "es": "Te apoyo en lo que decidas.",
+            "en": "I support you whatever you decide.",
+            "note": "Moral or practical backing. The everyday 'support' for people."
+          },
+          {
+            "es": "Apoyó la bici contra la pared.",
+            "en": "He leaned the bike against the wall.",
+            "note": "Physical resting. Apoyarse = to lean on."
+          },
+          {
+            "es": "Muchos votantes apoyan la propuesta.",
+            "en": "Many voters support the proposal.",
+            "note": "Political backing."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Te soporto' means 'I put up with you' — not at all 'I support you'. Learners who want to be kind and say 'te soporto' give offence. Use 'te apoyo'."
+  },
+  {
+    "id": "introducir-vs-presentar",
+    "category": "verbs",
+    "title": "introducir vs presentar",
+    "tagline": "'Introduce' someone is presentar. Introducir is to insert or bring in something new.",
+    "sides": [
+      {
+        "word": "presentar",
+        "core": "To introduce people, present an item, or submit something formally.",
+        "examples": [
+          {
+            "es": "Te presento a mi hermana.",
+            "en": "Let me introduce my sister.",
+            "note": "The standard introduction. Presentar a + person."
+          },
+          {
+            "es": "Se presentó como ingeniero.",
+            "en": "He introduced himself as an engineer.",
+            "note": "Presentarse = to introduce yourself or to turn up."
+          },
+          {
+            "es": "Presentó la denuncia ayer.",
+            "en": "She filed the complaint yesterday.",
+            "note": "Presentar = to submit or file a document."
+          }
+        ]
+      },
+      {
+        "word": "introducir",
+        "core": "To insert, enter data, or bring a new thing into use.",
+        "examples": [
+          {
+            "es": "Introduzca la tarjeta en la ranura.",
+            "en": "Insert the card into the slot.",
+            "note": "Instructions language. Formal imperative."
+          },
+          {
+            "es": "Introduce tu contraseña.",
+            "en": "Enter your password.",
+            "note": "Entering data into a system."
+          },
+          {
+            "es": "Introdujeron cambios en el reglamento.",
+            "en": "They introduced changes to the rules.",
+            "note": "Bringing in something new, not a person."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Te introduzco a mi madre' is a common slip and sounds odd or even comic. For people, always 'presentar'."
+  },
+  {
+    "id": "pretender-vs-fingir",
+    "category": "verbs",
+    "title": "pretender vs fingir",
+    "tagline": "False friend alert. 'Pretend' in English is fingir. Pretender means to intend or aim to do something.",
+    "sides": [
+      {
+        "word": "fingir",
+        "core": "To pretend, to fake, to put on an act.",
+        "examples": [
+          {
+            "es": "Fingió estar dormido.",
+            "en": "He pretended to be asleep.",
+            "note": "Fingir + infinitive = to pretend to do or be."
+          },
+          {
+            "es": "No finjas que no lo sabías.",
+            "en": "Don't pretend you didn't know.",
+            "note": "Fingir que + clause. Subjunctive in the negative command."
+          },
+          {
+            "es": "Fingieron sorpresa.",
+            "en": "They feigned surprise.",
+            "note": "Fingir + noun = to fake an emotion."
+          }
+        ]
+      },
+      {
+        "word": "pretender",
+        "core": "To intend, aim or aspire to something, or to claim.",
+        "examples": [
+          {
+            "es": "Pretendo terminar hoy.",
+            "en": "I intend to finish today.",
+            "note": "A plan, with some ambition behind it. Pretender + infinitive."
+          },
+          {
+            "es": "¿Qué pretendes con eso?",
+            "en": "What are you trying to achieve by that?",
+            "note": "Often suspicious in tone — what's your game?"
+          },
+          {
+            "es": "Pretende que le crea.",
+            "en": "He expects me to believe him.",
+            "note": "Pretender que + subjunctive = to expect or demand."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Pretendo ser médico' means 'I aim to be a doctor', not 'I'm pretending to be one'. Say 'finjo ser médico' for the pretence."
+  },
+  {
+    "id": "avergonzado-vs-embarazada",
+    "category": "verbs",
+    "title": "avergonzado vs embarazada",
+    "tagline": "The most embarrassing false friend. 'Estoy embarazada' is not 'I'm embarrassed' — it means 'I'm pregnant'.",
+    "sides": [
+      {
+        "word": "avergonzar / dar vergüenza",
+        "core": "To embarrass or shame. Estar avergonzado or tener/dar vergüenza.",
+        "examples": [
+          {
+            "es": "Me da vergüenza hablar en público.",
+            "en": "I'm embarrassed to speak in public.",
+            "note": "Dar vergüenza follows the gustar pattern. The most natural way to say it."
+          },
+          {
+            "es": "Estoy avergonzado por lo que dije.",
+            "en": "I'm ashamed of what I said.",
+            "note": "Avergonzado = ashamed, a real regret."
+          },
+          {
+            "es": "¡Qué vergüenza!",
+            "en": "How embarrassing!",
+            "note": "Exclamation, widely used. In Spain you'll also hear 'qué corte'."
+          }
+        ]
+      },
+      {
+        "word": "embarazar / estar embarazada",
+        "core": "Embarazada means pregnant. It never means embarrassed.",
+        "examples": [
+          {
+            "es": "Mi hermana está embarazada de seis meses.",
+            "en": "My sister is six months pregnant.",
+            "note": "The only meaning of the adjective. Used only for women."
+          },
+          {
+            "es": "Se quedó embarazada en mayo.",
+            "en": "She got pregnant in May.",
+            "note": "Quedarse embarazada = to get pregnant."
+          },
+          {
+            "es": "Me puse rojo de vergüenza.",
+            "en": "I went red with embarrassment.",
+            "note": "What to say instead when you mean embarrassed. Ponerse rojo works well."
+          }
+        ]
+      }
+    ],
+    "tricky": "Say 'estoy embarazada' to a Spanish speaker thinking 'I'm embarrassed' and you've announced a pregnancy. Use 'me da vergüenza' or 'estoy avergonzado/a'."
+  },
+  {
+    "id": "conducir-vs-manejar",
+    "category": "verbs",
+    "title": "conducir vs manejar",
+    "tagline": "Both mean 'to drive', split by region. Conducir in Spain, manejar across Latin America — and manejar means 'handle' in Spain.",
+    "sides": [
+      {
+        "word": "conducir",
+        "core": "To drive a vehicle. Standard in Spain and in formal contexts everywhere.",
+        "examples": [
+          {
+            "es": "Conduce con cuidado.",
+            "en": "Drive carefully.",
+            "note": "The command you'd hear in Spain."
+          },
+          {
+            "es": "¿Sabes conducir?",
+            "en": "Can you drive?",
+            "note": "Saber conducir for the skill. 'Carnet de conducir' = driving licence in Spain."
+          },
+          {
+            "es": "Conducía un camión.",
+            "en": "He drove a lorry.",
+            "note": "Imperfect for background. Also a professional word: 'conductor' = driver."
+          }
+        ]
+      },
+      {
+        "word": "manejar",
+        "core": "To drive in Latin America. In Spain it means to handle, operate or manage.",
+        "examples": [
+          {
+            "es": "Manejo desde los dieciocho.",
+            "en": "I've driven since I was eighteen.",
+            "note": "Normal in Mexico, Argentina, Colombia. 'Licencia de manejar' in Mexico."
+          },
+          {
+            "es": "Maneja muy bien el inglés.",
+            "en": "She handles English very well.",
+            "note": "Manejar = to handle or command a skill. Used in both regions this way."
+          },
+          {
+            "es": "No sé manejar este programa.",
+            "en": "I don't know how to use this software.",
+            "note": "Operating tools or software. In Spain this is the only meaning you'll hear."
+          }
+        ]
+      }
+    ],
+    "tricky": "In Spain, 'manejar un coche' is understood but sounds off. In Latin America, 'conducir' is understood and slightly formal. Pick one for your target region."
+  },
+  {
+    "id": "probar-vs-intentar",
+    "category": "verbs",
+    "title": "probar vs intentar",
+    "tagline": "'Try' covers two ideas. Probar is to test or taste. Intentar is to attempt.",
+    "sides": [
+      {
+        "word": "probar",
+        "core": "To try out, taste or test — you experience the thing to see what it's like.",
+        "examples": [
+          {
+            "es": "Prueba esta salsa.",
+            "en": "Try this sauce.",
+            "note": "Tasting. The most common use."
+          },
+          {
+            "es": "¿Has probado el pulpo?",
+            "en": "Have you tried octopus?",
+            "note": "Experiencing something for the first time."
+          },
+          {
+            "es": "Prueba a reiniciar el ordenador.",
+            "en": "Try restarting the computer.",
+            "note": "Probar a + infinitive = try doing it as an experiment."
+          }
+        ]
+      },
+      {
+        "word": "intentar",
+        "core": "To attempt something, with effort and uncertain success.",
+        "examples": [
+          {
+            "es": "Intenté llamarte tres veces.",
+            "en": "I tried to call you three times.",
+            "note": "Attempt. Intentar + infinitive."
+          },
+          {
+            "es": "Inténtalo otra vez.",
+            "en": "Try again.",
+            "note": "Intentar + lo = attempt it. A very common phrase."
+          },
+          {
+            "es": "Lo intentaré, pero no prometo nada.",
+            "en": "I'll try, but I don't promise anything.",
+            "note": "Intent to do, with no guarantee."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Probé hablar con ella' sounds like a test run. 'Intenté hablar con ella' is the attempt you mean. 'Tratar de' is a synonym of intentar and extremely common."
+  },
+  {
+    "id": "mover-vs-mudarse",
+    "category": "verbs",
+    "title": "mover vs mudarse",
+    "tagline": "'Move' in English has two meanings. Mover is to shift something. Mudarse is to move house.",
+    "sides": [
+      {
+        "word": "mover",
+        "core": "To move, shift or stir something or yourself — physical movement.",
+        "examples": [
+          {
+            "es": "Mueve el coche, por favor.",
+            "en": "Move the car, please.",
+            "note": "Moving an object. Moverse = to move oneself."
+          },
+          {
+            "es": "No te muevas.",
+            "en": "Don't move.",
+            "note": "Reflexive. Stay still."
+          },
+          {
+            "es": "Me mueve la curiosidad.",
+            "en": "Curiosity drives me.",
+            "note": "Figurative: motivation. Mover = to motivate."
+          }
+        ]
+      },
+      {
+        "word": "mudarse",
+        "core": "To move house, city or country — change where you live.",
+        "examples": [
+          {
+            "es": "Nos mudamos a Valencia en enero.",
+            "en": "We moved to Valencia in January.",
+            "note": "Always reflexive for changing homes. Never 'movimos a Valencia'."
+          },
+          {
+            "es": "Se mudó de casa.",
+            "en": "He moved house.",
+            "note": "Mudarse de casa/piso = move house/flat."
+          },
+          {
+            "es": "¿Cuándo te mudas?",
+            "en": "When are you moving?",
+            "note": "Also 'la mudanza' = removal, the noun for moving house."
+          }
+        ]
+      }
+    ],
+    "tricky": "Using 'moverse' for relocating gives a different meaning: 'me muevo mucho por trabajo' = I travel a lot for work. If you mean a new home, use mudarse."
+  },
+  {
+    "id": "aprender-vs-enseñar",
+    "category": "verbs",
+    "title": "aprender vs enseñar",
+    "tagline": "Learn vs teach — and enseñar also means 'show'. Mixing them up is one of the few errors that flips who's doing what.",
+    "sides": [
+      {
+        "word": "aprender",
+        "core": "To learn, to pick up a skill or knowledge.",
+        "examples": [
+          {
+            "es": "Aprendí inglés en Londres.",
+            "en": "I learned English in London.",
+            "note": "Acquiring a language or subject."
+          },
+          {
+            "es": "Aprendí a nadar de niño.",
+            "en": "I learned to swim as a child.",
+            "note": "Aprender a + infinitive = to learn how to."
+          },
+          {
+            "es": "Aprende muy rápido.",
+            "en": "He learns very fast.",
+            "note": "General ability."
+          }
+        ]
+      },
+      {
+        "word": "enseñar",
+        "core": "To teach — and to show something to someone.",
+        "examples": [
+          {
+            "es": "Enseña matemáticas en un instituto.",
+            "en": "She teaches maths at a secondary school.",
+            "note": "Teaching a subject. 'Dar clase' is a common alternative."
+          },
+          {
+            "es": "Me enseñó a conducir.",
+            "en": "He taught me to drive.",
+            "note": "Enseñar a + person + a + infinitive."
+          },
+          {
+            "es": "Enséñame la foto.",
+            "en": "Show me the photo.",
+            "note": "Enseñar also means show, even without any teaching going on. Mostrar is more formal."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Me enseñó español' = he taught me Spanish. 'Aprendí español con él' = I learned Spanish with him. The subject changes depending on the verb, so mixing them swaps teacher and student."
+  },
+  {
+    "id": "dar-vs-regalar",
+    "category": "verbs",
+    "title": "dar vs regalar",
+    "tagline": "Dar is general giving. Regalar is giving a gift — no payment, no reason beyond kindness or celebration.",
+    "sides": [
+      {
+        "word": "regalar",
+        "core": "To give as a gift, or to give away for free.",
+        "examples": [
+          {
+            "es": "Me regaló un libro por mi cumpleaños.",
+            "en": "He gave me a book for my birthday.",
+            "note": "Gift. The noun is 'el regalo'."
+          },
+          {
+            "es": "¿Qué le regalamos a tu madre?",
+            "en": "What shall we get your mum as a present?",
+            "note": "Regalar is the verb for gift-giving decisions."
+          },
+          {
+            "es": "Te lo regalo, ya no lo uso.",
+            "en": "You can have it, I don't use it any more.",
+            "note": "Giving away something for free."
+          }
+        ]
+      },
+      {
+        "word": "dar",
+        "core": "To give in the general sense — handing over, providing, offering.",
+        "examples": [
+          {
+            "es": "Dame el libro, por favor.",
+            "en": "Give me the book, please.",
+            "note": "Handing something over. No gift implied."
+          },
+          {
+            "es": "Me dio un buen consejo.",
+            "en": "He gave me good advice.",
+            "note": "Dar for abstract things: advice, permission, time."
+          },
+          {
+            "es": "Le di las llaves al portero.",
+            "en": "I gave the keys to the porter.",
+            "note": "Handing items for practical reasons."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Te doy un regalo' is fine but clunky; native speakers say 'te regalo X'. And 'dar' for a present can work ('me dio un reloj'), but regalar makes the generosity explicit."
+  },
+  {
+    "id": "prestar-vs-pedir-prestado",
+    "category": "verbs",
+    "title": "prestar vs pedir prestado",
+    "tagline": "English 'borrow' and 'lend' are two verbs. Spanish has prestar for lending and needs a whole phrase, pedir prestado, to borrow.",
+    "sides": [
+      {
+        "word": "prestar",
+        "core": "To lend — you hand something over temporarily.",
+        "examples": [
+          {
+            "es": "Préstame el coche este fin de semana.",
+            "en": "Lend me the car this weekend.",
+            "note": "The lender is the subject. The borrower is the indirect object."
+          },
+          {
+            "es": "Me prestó diez euros.",
+            "en": "He lent me ten euros.",
+            "note": "Money can be lent too. English 'loan' or 'lend'."
+          },
+          {
+            "es": "Presta atención.",
+            "en": "Pay attention.",
+            "note": "Prestar atención = to pay attention. Fixed phrase."
+          }
+        ]
+      },
+      {
+        "word": "pedir prestado",
+        "core": "To borrow — literally 'ask to be lent'. Always a phrase, never one verb.",
+        "examples": [
+          {
+            "es": "Le pedí prestado el coche.",
+            "en": "I borrowed his car.",
+            "note": "Literally 'I asked him for the car lent'. The borrower is the subject."
+          },
+          {
+            "es": "¿Puedo pedirte prestado un bolígrafo?",
+            "en": "Can I borrow a pen?",
+            "note": "Polite, very common."
+          },
+          {
+            "es": "Pidieron prestado dinero al banco.",
+            "en": "They borrowed money from the bank.",
+            "note": "Prestado stays invariable in this phrase. 'Pidieron dinero prestado' is also fine."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Voy a prestar tu bolígrafo' means 'I'm going to lend your pen' — to someone else. If you want to borrow it, say 'te pido prestado el bolígrafo'."
+  },
+  {
+    "id": "llamar-vs-llamarse",
+    "category": "verbs",
+    "title": "llamar vs llamarse",
+    "tagline": "Llamar is to call someone or to name something. Llamarse is to be named. The reflexive 'se' matters.",
+    "sides": [
+      {
+        "word": "llamar",
+        "core": "To call, phone, summon, or to label someone something.",
+        "examples": [
+          {
+            "es": "Te llamo luego.",
+            "en": "I'll call you later.",
+            "note": "Phoning. Also 'llamar por teléfono'."
+          },
+          {
+            "es": "Llaman a la puerta.",
+            "en": "Someone is knocking at the door.",
+            "note": "Llamar a la puerta = to knock or ring. The 'a' is needed."
+          },
+          {
+            "es": "Me llamó mentiroso.",
+            "en": "He called me a liar.",
+            "note": "To label someone. Llamar + person + noun."
+          }
+        ]
+      },
+      {
+        "word": "llamarse",
+        "core": "To be called — your name, or the name of something.",
+        "examples": [
+          {
+            "es": "Me llamo Ana.",
+            "en": "My name is Ana.",
+            "note": "Literally 'I call myself Ana'. The standard way to give your name."
+          },
+          {
+            "es": "¿Cómo te llamas?",
+            "en": "What's your name?",
+            "note": "Informal. Formal: '¿cómo se llama usted?'"
+          },
+          {
+            "es": "¿Cómo se llama esta calle?",
+            "en": "What's this street called?",
+            "note": "Works for things, places and animals."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Te llamo Ana' means 'I call you Ana' — you're naming someone else. 'Me llamo Ana' means your name is Ana. One pronoun, completely different meaning."
+  },
+  {
+    "id": "levantar-vs-levantarse",
+    "category": "verbs",
+    "title": "levantar vs levantarse",
+    "tagline": "Levantar is lifting something. Levantarse is getting up yourself. The reflexive marks who is doing the rising.",
+    "sides": [
+      {
+        "word": "levantar",
+        "core": "To lift, raise or pick up something or someone else.",
+        "examples": [
+          {
+            "es": "Levanta la mano si lo sabes.",
+            "en": "Raise your hand if you know.",
+            "note": "Raising a body part or an object."
+          },
+          {
+            "es": "No puedo levantar esta caja.",
+            "en": "I can't lift this box.",
+            "note": "Physical lifting. Compare: cargar = to carry."
+          },
+          {
+            "es": "Levantó la voz.",
+            "en": "She raised her voice.",
+            "note": "Figurative use: tone and volume."
+          }
+        ]
+      },
+      {
+        "word": "levantarse",
+        "core": "To get up, stand up, rise from bed or a chair.",
+        "examples": [
+          {
+            "es": "Me levanto a las siete.",
+            "en": "I get up at seven.",
+            "note": "Getting out of bed. Not 'levanto a las siete'."
+          },
+          {
+            "es": "Levántate, que llegamos tarde.",
+            "en": "Get up, we're late.",
+            "note": "Reflexive imperative. The 'te' attaches to the verb."
+          },
+          {
+            "es": "Se levantó de la mesa.",
+            "en": "He got up from the table.",
+            "note": "Standing up. 'Se levantó' + de + place."
+          }
+        ]
+      }
+    ],
+    "tricky": "Dropping the reflexive changes the sentence. 'Levanto a mi hijo a las siete' = I get my son up at seven. 'Me levanto a las siete' = I get up myself."
+  },
+  {
+    "id": "ir-vs-irse",
+    "category": "verbs",
+    "title": "ir vs irse",
+    "tagline": "Ir is going toward a place. Irse is leaving, departing from where you are.",
+    "sides": [
+      {
+        "word": "ir",
+        "core": "To go to a destination — the focus is the place you're heading.",
+        "examples": [
+          {
+            "es": "Voy al banco.",
+            "en": "I'm going to the bank.",
+            "note": "Destination. Always ir a + place."
+          },
+          {
+            "es": "¿Vas a venir?",
+            "en": "Are you going to come?",
+            "note": "Ir a + infinitive = going to do (near future)."
+          },
+          {
+            "es": "Fuimos en tren.",
+            "en": "We went by train.",
+            "note": "Means of transport. Ir en tren/coche/avión."
+          }
+        ]
+      },
+      {
+        "word": "irse",
+        "core": "To leave, go away — the focus is departing from the current place.",
+        "examples": [
+          {
+            "es": "Me voy, que llego tarde.",
+            "en": "I'm off, I'm late.",
+            "note": "Announcing departure. Not 'voy' alone, which would need a destination."
+          },
+          {
+            "es": "¡Vete!",
+            "en": "Go away!",
+            "note": "Reflexive imperative. Rude but common. Compare 'Ve' = go."
+          },
+          {
+            "es": "Se fue sin decir nada.",
+            "en": "He left without saying anything.",
+            "note": "Departure. Fue = he went; se fue = he left."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Fue al médico' (he went to the doctor's) vs 'se fue del médico' (he left the doctor's). Same movement, but ir is anchored to the destination and irse is anchored to the exit."
+  },
+  {
+    "id": "dormir-vs-dormirse",
+    "category": "verbs",
+    "title": "dormir vs dormirse",
+    "tagline": "Dormir is the state of sleeping. Dormirse is the moment of falling asleep.",
+    "sides": [
+      {
+        "word": "dormir",
+        "core": "To sleep — the ongoing state.",
+        "examples": [
+          {
+            "es": "Duermo ocho horas.",
+            "en": "I sleep eight hours.",
+            "note": "How much you sleep. Stem change: duermo, duermes."
+          },
+          {
+            "es": "¿Has dormido bien?",
+            "en": "Did you sleep well?",
+            "note": "The standard morning question."
+          },
+          {
+            "es": "Duerme como un lirón.",
+            "en": "He sleeps like a log.",
+            "note": "Literally 'like a dormouse'. A fixed idiom."
+          }
+        ]
+      },
+      {
+        "word": "dormirse",
+        "core": "To fall asleep, to oversleep, or for a limb to go numb.",
+        "examples": [
+          {
+            "es": "Me dormí en el sofá.",
+            "en": "I fell asleep on the sofa.",
+            "note": "The transition from awake to asleep."
+          },
+          {
+            "es": "Me quedé dormido y llegué tarde.",
+            "en": "I overslept and was late.",
+            "note": "Quedarse dormido = to oversleep or doze off."
+          },
+          {
+            "es": "Se me ha dormido el pie.",
+            "en": "My foot has gone to sleep.",
+            "note": "Numb limbs. Accidental structure with 'se me'."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Dormí en el sofá' = I slept on the sofa (spent the night). 'Me dormí en el sofá' = I dozed off on the sofa. One reflexive pronoun, one big difference."
+  },
+  {
+    "id": "estar-de-acuerdo-vs-acordar",
+    "category": "verbs",
+    "title": "estar de acuerdo vs acordar",
+    "tagline": "'Agree' needs two Spanish forms. Estar de acuerdo is to share an opinion. Acordar is to settle a decision together.",
+    "sides": [
+      {
+        "word": "estar de acuerdo",
+        "core": "To agree in opinion — you think the same as someone else.",
+        "examples": [
+          {
+            "es": "Estoy de acuerdo contigo.",
+            "en": "I agree with you.",
+            "note": "Always estar de acuerdo, never 'ser de acuerdo'. Use con + person."
+          },
+          {
+            "es": "No estamos de acuerdo en eso.",
+            "en": "We don't agree on that.",
+            "note": "Disagreement. 'En' introduces the topic."
+          },
+          {
+            "es": "¿Estás de acuerdo con la propuesta?",
+            "en": "Do you agree with the proposal?",
+            "note": "Agreement with an idea."
+          }
+        ]
+      },
+      {
+        "word": "acordar",
+        "core": "To agree on a decision or arrangement — make a deal.",
+        "examples": [
+          {
+            "es": "Acordamos un precio.",
+            "en": "We agreed a price.",
+            "note": "A negotiated outcome. Active verb of making an agreement."
+          },
+          {
+            "es": "Se acordó cerrar la tienda.",
+            "en": "It was agreed to close the shop.",
+            "note": "Passive se for formal decisions."
+          },
+          {
+            "es": "Nos pusimos de acuerdo en la fecha.",
+            "en": "We agreed on the date.",
+            "note": "Ponerse de acuerdo = to reach agreement. Common in conversation."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Acordarse' is to remember, not to agree. 'Acordamos' = we agreed, 'nos acordamos' = we remember. The reflexive changes the whole meaning."
+  },
+  {
+    "id": "hacer-falta-vs-necesitar",
+    "category": "verbs",
+    "title": "hacer falta vs necesitar",
+    "tagline": "Both express need. Necesitar puts you as the subject. Hacer falta works like gustar — the thing needed is the subject.",
+    "sides": [
+      {
+        "word": "necesitar",
+        "core": "To need — the person who needs is the subject.",
+        "examples": [
+          {
+            "es": "Necesito ayuda.",
+            "en": "I need help.",
+            "note": "Direct and universal."
+          },
+          {
+            "es": "Necesitas descansar.",
+            "en": "You need to rest.",
+            "note": "Necesitar + infinitive."
+          },
+          {
+            "es": "¿Necesitas algo?",
+            "en": "Do you need anything?",
+            "note": "A polite offer to help."
+          }
+        ]
+      },
+      {
+        "word": "hacer falta",
+        "core": "To be needed or lacking. The needed thing is the subject, the person is the indirect object.",
+        "examples": [
+          {
+            "es": "Me hace falta ayuda.",
+            "en": "I need help.",
+            "note": "Same meaning as 'necesito ayuda' but with the gustar structure."
+          },
+          {
+            "es": "Hacen falta dos personas más.",
+            "en": "Two more people are needed.",
+            "note": "Plural noun gives plural verb: hacen falta."
+          },
+          {
+            "es": "No hace falta que vengas.",
+            "en": "You don't need to come.",
+            "note": "No hace falta que + subjunctive. Very useful way to say 'no need'."
+          }
+        ]
+      }
+    ],
+    "tricky": "'No me hace falta' = I don't need it. 'Me hace falta' = I need it. Learners add 'yo' as the subject and get 'yo hago falta', which means 'I'm needed'."
+  },
+  {
+    "id": "importar-vs-interesar",
+    "category": "verbs",
+    "title": "importar vs interesar",
+    "tagline": "Both follow the gustar pattern. Importar is 'to matter' or 'to mind'. Interesar is 'to be interested in'. And importar also means 'import'.",
+    "sides": [
+      {
+        "word": "importar",
+        "core": "To matter, to mind, or to import goods.",
+        "examples": [
+          {
+            "es": "No me importa.",
+            "en": "I don't mind. / It doesn't matter to me.",
+            "note": "Not a rejection — just indifference."
+          },
+          {
+            "es": "¿Te importa si abro la ventana?",
+            "en": "Do you mind if I open the window?",
+            "note": "Polite request. Answer 'no, claro que no' to say yes."
+          },
+          {
+            "es": "Importan petróleo de otros países.",
+            "en": "They import oil from other countries.",
+            "note": "The commercial sense. Here it's a normal subject-verb structure."
+          }
+        ]
+      },
+      {
+        "word": "interesar",
+        "core": "To interest — the thing is the subject, you're the indirect object.",
+        "examples": [
+          {
+            "es": "Me interesa la historia.",
+            "en": "I'm interested in history.",
+            "note": "The gustar pattern. History interests me."
+          },
+          {
+            "es": "¿Te interesan los coches?",
+            "en": "Are you into cars?",
+            "note": "Plural subject, plural verb."
+          },
+          {
+            "es": "No me interesa esa oferta.",
+            "en": "I'm not interested in that offer.",
+            "note": "Used for polite refusals."
+          }
+        ]
+      }
+    ],
+    "tricky": "'¿Te importa?' with a yes/no answer trips up speakers of English. 'Do you mind?' 'No, no me importa' (I don't mind). Saying 'sí' means you do mind."
+  },
+  {
+    "id": "funcionar-vs-trabajar",
+    "category": "verbs",
+    "title": "funcionar vs trabajar",
+    "tagline": "In English a machine 'works' as well as a person. In Spanish, machines funcionan and people trabajan.",
+    "sides": [
+      {
+        "word": "funcionar",
+        "core": "To work (of machines, plans, systems) — to function properly.",
+        "examples": [
+          {
+            "es": "El ascensor no funciona.",
+            "en": "The lift isn't working.",
+            "note": "A broken machine. Never 'no trabaja'."
+          },
+          {
+            "es": "Esa idea no va a funcionar.",
+            "en": "That idea isn't going to work.",
+            "note": "Plans and ideas can function too."
+          },
+          {
+            "es": "¿Cómo funciona esto?",
+            "en": "How does this work?",
+            "note": "A common question when learning a gadget."
+          }
+        ]
+      },
+      {
+        "word": "trabajar",
+        "core": "To work as a person — a job, effort, a task.",
+        "examples": [
+          {
+            "es": "Trabajo en un banco.",
+            "en": "I work at a bank.",
+            "note": "Where you work. Trabajar en + place."
+          },
+          {
+            "es": "Trabaja de camarera.",
+            "en": "She works as a waitress.",
+            "note": "Trabajar de = to work as (a job). 'Trabajar como' also works."
+          },
+          {
+            "es": "Hoy no trabajo.",
+            "en": "I'm not working today.",
+            "note": "Days off. Also 'trabajo' = work or job."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Mi coche no trabaja' is understood but sounds like the car lacks a job. Always 'funciona'. For people, 'funcionar' is wrong unless you mean something like 'he's not functioning today'."
+  },
+  {
+    "id": "cumplir-solo",
+    "category": "verbs",
+    "title": "cumplir",
+    "tagline": "Cumplir means to fulfil — which covers birthdays, promises, rules and sentences. English uses a different verb for each.",
+    "sides": [
+      {
+        "word": "cumplir (age)",
+        "core": "To turn a given age. The verb for birthdays.",
+        "examples": [
+          {
+            "es": "Cumplo treinta años el lunes.",
+            "en": "I turn thirty on Monday.",
+            "note": "Cumplir + age. The number plus 'años' is the object."
+          },
+          {
+            "es": "¿Cuántos años cumples?",
+            "en": "How old are you turning?",
+            "note": "Asked about the coming birthday. 'Cuántos años tienes' is how old you are."
+          },
+          {
+            "es": "Mi hija cumplió cinco años ayer.",
+            "en": "My daughter turned five yesterday.",
+            "note": "The birthday that just passed."
+          }
+        ]
+      },
+      {
+        "word": "cumplir (fulfil)",
+        "core": "To do what's required — a promise, rule, deadline, sentence.",
+        "examples": [
+          {
+            "es": "Siempre cumple sus promesas.",
+            "en": "He always keeps his promises.",
+            "note": "Cumplir una promesa = to keep a promise. 'Mantener' is rarer."
+          },
+          {
+            "es": "Hay que cumplir las normas.",
+            "en": "You have to follow the rules.",
+            "note": "Complying with rules and regulations."
+          },
+          {
+            "es": "Cumplió condena de tres años.",
+            "en": "He served a three-year sentence.",
+            "note": "Cumplir condena = to serve a sentence."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Cumplir con' is used for duties: 'cumplir con su deber' = to do one's duty. Without 'con' you get a direct object ('cumplió su deber'). Both are fine, but 'con' is more common for abstract obligations."
+  },
+  {
+    "id": "llegar-vs-alcanzar",
+    "category": "verbs",
+    "title": "llegar vs alcanzar",
+    "tagline": "Llegar is arriving. Alcanzar is reaching — by stretching, catching up, or achieving.",
+    "sides": [
+      {
+        "word": "llegar",
+        "core": "To arrive at a place or point in time.",
+        "examples": [
+          {
+            "es": "Llego a las ocho.",
+            "en": "I arrive at eight.",
+            "note": "Arrival time. Llegar a + place."
+          },
+          {
+            "es": "Llegamos a casa muy tarde.",
+            "en": "We got home very late.",
+            "note": "No preposition needed with 'casa'. Llegar a casa = to arrive home."
+          },
+          {
+            "es": "Llegó a ser director.",
+            "en": "He ended up becoming director.",
+            "note": "Llegar a ser = to end up being. A result after effort."
+          }
+        ]
+      },
+      {
+        "word": "alcanzar",
+        "core": "To reach something by stretching, to catch up with, to pass something, or to achieve a goal.",
+        "examples": [
+          {
+            "es": "Alcánzame la sal, por favor.",
+            "en": "Pass me the salt, please.",
+            "note": "Hand something to someone. Very common at the table."
+          },
+          {
+            "es": "No alcanzo el estante.",
+            "en": "I can't reach the shelf.",
+            "note": "Physical reach."
+          },
+          {
+            "es": "Alcanzaron al ladrón en la esquina.",
+            "en": "They caught up with the thief at the corner.",
+            "note": "Catching up. Also 'alcanzar un objetivo' = to reach a goal."
+          }
+        ]
+      }
+    ],
+    "tricky": "In Latin America 'alcanzar' also means 'be enough': 'no me alcanza el dinero' = I can't afford it. Same word, new sense."
+  },
+  {
+    "id": "quitar-vs-quitarse",
+    "category": "verbs",
+    "title": "quitar vs quitarse",
+    "tagline": "Quitar is taking something away. Quitarse is taking off your own clothes or stepping aside. The reflexive points back at you.",
+    "sides": [
+      {
+        "word": "quitar",
+        "core": "To remove, take away or clear something.",
+        "examples": [
+          {
+            "es": "Quita eso de ahí.",
+            "en": "Take that away from there.",
+            "note": "Removing an object from a place."
+          },
+          {
+            "es": "Me quitó el sitio.",
+            "en": "He took my seat.",
+            "note": "Taking from someone. The person who loses is the indirect object."
+          },
+          {
+            "es": "Quita la mesa, por favor.",
+            "en": "Clear the table, please.",
+            "note": "Quitar la mesa = to clear the table. Poner la mesa = to set it."
+          }
+        ]
+      },
+      {
+        "word": "quitarse",
+        "core": "To take off your own clothes or accessories, or to get out of the way.",
+        "examples": [
+          {
+            "es": "Quítate los zapatos.",
+            "en": "Take your shoes off.",
+            "note": "Clothing: the opposite of ponerse."
+          },
+          {
+            "es": "Se quitó el abrigo.",
+            "en": "He took off his coat.",
+            "note": "Body part or clothing comes after the reflexive pronoun."
+          },
+          {
+            "es": "Quítate de en medio.",
+            "en": "Get out of the way.",
+            "note": "Idiom, informal. Quitarse de + place."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Quitar los zapatos' means remove someone else's shoes. 'Quitarse los zapatos' is the normal way to take your own off. Don't use 'quitar' for yourself."
+  },
+  {
+    "id": "llevar-vs-vestirse",
+    "category": "verbs",
+    "title": "llevar vs vestirse (wear)",
+    "tagline": "English 'wear' has no single Spanish match. Llevar is the state of wearing, vestirse is the process of dressing, and ponerse is the act of putting on.",
+    "sides": [
+      {
+        "word": "llevar",
+        "core": "To wear — what's on your body right now.",
+        "examples": [
+          {
+            "es": "Lleva gafas.",
+            "en": "He wears glasses.",
+            "note": "Describing someone's usual look."
+          },
+          {
+            "es": "Llevaba un vestido rojo.",
+            "en": "She was wearing a red dress.",
+            "note": "Imperfect for what someone had on at a moment."
+          },
+          {
+            "es": "¿Qué llevas puesto?",
+            "en": "What are you wearing?",
+            "note": "'Puesto' makes it explicit: on you now."
+          }
+        ]
+      },
+      {
+        "word": "vestirse",
+        "core": "To get dressed, or to dress in a style or colour.",
+        "examples": [
+          {
+            "es": "Me visto en cinco minutos.",
+            "en": "I get dressed in five minutes.",
+            "note": "The process. Stem change: visto, vistes."
+          },
+          {
+            "es": "Se vistió de negro.",
+            "en": "She dressed in black.",
+            "note": "Vestirse de + colour or role: 'vestirse de payaso'."
+          },
+          {
+            "es": "Se viste muy bien.",
+            "en": "He dresses very well.",
+            "note": "Style. Vestirse bien/mal."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Ponerse' = put on, 'llevar' = be wearing, 'vestirse' = get dressed. 'Me pongo el abrigo, llevo el abrigo' — first the action, then the state."
+  },
+  {
+    "id": "ganar-vs-ganarse",
+    "category": "verbs",
+    "title": "ganar vs ganarse",
+    "tagline": "Ganar is to win or earn. Ganarse is to earn something through your own effort — the reflexive stresses that you've deserved it.",
+    "sides": [
+      {
+        "word": "ganar",
+        "core": "To win a contest, earn money or gain something.",
+        "examples": [
+          {
+            "es": "Ganamos el partido.",
+            "en": "We won the match.",
+            "note": "Winning contests. Also 'ganar un premio'."
+          },
+          {
+            "es": "Gano mil euros al mes.",
+            "en": "I earn a thousand euros a month.",
+            "note": "Salary. Not 'cobrar' for the amount, though cobrar is used for being paid."
+          },
+          {
+            "es": "Ha ganado peso.",
+            "en": "He's put on weight.",
+            "note": "Ganar peso = gain weight. Also 'ganar tiempo' = to save time."
+          }
+        ]
+      },
+      {
+        "word": "ganarse",
+        "core": "To earn through effort or deserve — often used with reputation, trust or living.",
+        "examples": [
+          {
+            "es": "Se ganó la confianza del equipo.",
+            "en": "He earned the team's trust.",
+            "note": "Intangible things you win over time."
+          },
+          {
+            "es": "Se gana la vida como fotógrafa.",
+            "en": "She earns a living as a photographer.",
+            "note": "Ganarse la vida = to make a living. Fixed phrase."
+          },
+          {
+            "es": "¡Te lo has ganado!",
+            "en": "You've earned it!",
+            "note": "Deserving something. Also used ironically: 'te lo ganaste a pulso'."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Ganar la vida' sounds like you're winning life. Always 'ganarse la vida'. And 'me ganó' = he beat me; 'me gané' = I earned for myself."
+  },
+  {
+    "id": "soñar-solo",
+    "category": "verbs",
+    "title": "soñar",
+    "tagline": "Soñar con is the key phrase. You dream 'with' something in Spanish, both when sleeping and when aspiring.",
+    "sides": [
+      {
+        "word": "soñar con (sleep)",
+        "core": "To dream while asleep. Always soñar con.",
+        "examples": [
+          {
+            "es": "Anoche soñé contigo.",
+            "en": "I dreamed about you last night.",
+            "note": "Contigo, not 'de ti' or 'sobre ti'."
+          },
+          {
+            "es": "Sueño con volar.",
+            "en": "I dream about flying.",
+            "note": "Soñar con + noun or infinitive."
+          },
+          {
+            "es": "Tuve una pesadilla.",
+            "en": "I had a nightmare.",
+            "note": "Nightmares don't use soñar. 'Soñé una pesadilla' is rare."
+          }
+        ]
+      },
+      {
+        "word": "soñar (aspire)",
+        "core": "To dream of a future you want, or to daydream.",
+        "examples": [
+          {
+            "es": "Sueña con ser actriz.",
+            "en": "She dreams of becoming an actress.",
+            "note": "Aspiration. Soñar con + infinitive."
+          },
+          {
+            "es": "Soñar es gratis.",
+            "en": "Dreaming is free.",
+            "note": "A common saying when someone is fantasising."
+          },
+          {
+            "es": "¡Ni lo sueñes!",
+            "en": "Don't even think about it!",
+            "note": "Ni soñarlo = no way. Informal refusal."
+          }
+        ]
+      }
+    ],
+    "tricky": "Learners say 'soñé de ti' or 'soñé sobre ti' from English 'dream about'. Spanish uses 'con' every time. And 'sueño' is also 'sleepiness': 'tengo sueño' = I'm tired."
+  },
+  {
+    "id": "olvidar-vs-olvidarse",
+    "category": "verbs",
+    "title": "olvidar vs olvidarse",
+    "tagline": "Olvidar is to forget something. Olvidarse de is the same thing in a more personal way — and 'se me olvidó' is the structure that makes it accidental.",
+    "sides": [
+      {
+        "word": "olvidar",
+        "core": "To forget — direct object, you as the subject.",
+        "examples": [
+          {
+            "es": "Olvidé su nombre.",
+            "en": "I forgot his name.",
+            "note": "A simple statement. You are the one who forgot."
+          },
+          {
+            "es": "Nunca olvidaré aquel día.",
+            "en": "I'll never forget that day.",
+            "note": "Emotional memory. Also 'olvidar' = to put out of mind."
+          },
+          {
+            "es": "Olvídalo.",
+            "en": "Forget it.",
+            "note": "Let it go. A common answer to 'never mind'."
+          }
+        ]
+      },
+      {
+        "word": "olvidarse",
+        "core": "To forget — reflexive, with olvidarse de, or the accidental 'se me olvidó'.",
+        "examples": [
+          {
+            "es": "Me olvidé de las llaves.",
+            "en": "I forgot my keys.",
+            "note": "Olvidarse de + thing. You are still the subject."
+          },
+          {
+            "es": "Se me olvidó llamarte.",
+            "en": "I forgot to call you.",
+            "note": "'Se me olvidó' puts the forgotten thing as the subject. It happened to me, it wasn't my fault."
+          },
+          {
+            "es": "Se nos olvidaron los billetes.",
+            "en": "We forgot the tickets.",
+            "note": "The verb agrees with the forgotten item (billetes → olvidaron)."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Olvidé las llaves' (I left the keys behind) can mean physically leaving them somewhere. 'Se me olvidaron las llaves' is the softer, no-blame option."
+  },
+  {
+    "id": "notar-vs-fijarse",
+    "category": "verbs",
+    "title": "notar vs fijarse",
+    "tagline": "Notar is to notice or sense passively. Fijarse is to pay attention on purpose — to look carefully.",
+    "sides": [
+      {
+        "word": "notar",
+        "core": "To notice, to sense, to feel that something is the case.",
+        "examples": [
+          {
+            "es": "Noto que estás cansado.",
+            "en": "I can tell you're tired.",
+            "note": "Perception without effort."
+          },
+          {
+            "es": "Se nota que has estudiado.",
+            "en": "It shows that you've studied.",
+            "note": "Se nota = it's obvious, it shows. Very common."
+          },
+          {
+            "es": "No noto la diferencia.",
+            "en": "I don't notice the difference.",
+            "note": "Not perceiving something."
+          }
+        ]
+      },
+      {
+        "word": "fijarse",
+        "core": "To pay attention, to look closely, to notice on purpose — fijarse en.",
+        "examples": [
+          {
+            "es": "Fíjate en este detalle.",
+            "en": "Look closely at this detail.",
+            "note": "Directing attention. Fijarse en + thing."
+          },
+          {
+            "es": "¿Te has fijado en su sonrisa?",
+            "en": "Have you noticed her smile?",
+            "note": "Asking if someone paid attention."
+          },
+          {
+            "es": "¡Fíjate!",
+            "en": "Just imagine! / Would you believe it!",
+            "note": "Idiomatic reaction to surprising news."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Noté su corbata' is just a passing observation. 'Me fijé en su corbata' means you paid attention to it, perhaps because it was odd or striking."
+  },
+  {
+    "id": "preocupar-vs-preocuparse",
+    "category": "verbs",
+    "title": "preocupar vs preocuparse",
+    "tagline": "Preocupar means 'to worry someone' — gustar-style. Preocuparse means 'to worry yourself'. Both are common and easy to mix up.",
+    "sides": [
+      {
+        "word": "preocupar",
+        "core": "To worry, concern someone — the cause is the subject.",
+        "examples": [
+          {
+            "es": "Me preocupa tu salud.",
+            "en": "Your health worries me.",
+            "note": "The cause is the subject. Gustar pattern."
+          },
+          {
+            "es": "¿Qué te preocupa?",
+            "en": "What's bothering you?",
+            "note": "Asking what's on someone's mind."
+          },
+          {
+            "es": "No me preocupa el dinero.",
+            "en": "I'm not worried about money.",
+            "note": "Negative: not a source of concern."
+          }
+        ]
+      },
+      {
+        "word": "preocuparse",
+        "core": "To worry, to take care or be concerned about someone — you are the subject.",
+        "examples": [
+          {
+            "es": "No te preocupes.",
+            "en": "Don't worry.",
+            "note": "The most common use. Command to relax."
+          },
+          {
+            "es": "Me preocupo por mis hijos.",
+            "en": "I worry about my children.",
+            "note": "Preocuparse por/de + person or thing."
+          },
+          {
+            "es": "Se preocupa demasiado.",
+            "en": "She worries too much.",
+            "note": "General trait."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Estoy preocupado' (I'm worried) is the state. 'Me preocupo' is the habit or the act. And 'preocuparse de' can mean 'to take care of': 'yo me preocupo de la cena' = I'll see to dinner."
+  },
+  {
+    "id": "resultar-solo",
+    "category": "verbs",
+    "title": "resultar",
+    "tagline": "Resultar means 'to turn out' — but also fills gaps where Spanish avoids ser or tener, especially with 'me resulta'.",
+    "sides": [
+      {
+        "word": "resultar (turn out)",
+        "core": "To turn out, to prove to be, or to end up.",
+        "examples": [
+          {
+            "es": "La película resultó aburrida.",
+            "en": "The film turned out to be boring.",
+            "note": "Unexpected evaluation after the fact."
+          },
+          {
+            "es": "Resulta que no tenía dinero.",
+            "en": "It turns out that he had no money.",
+            "note": "Resulta que = it turns out that. A great narrative opener."
+          },
+          {
+            "es": "El plan resultó ser un desastre.",
+            "en": "The plan turned out to be a disaster.",
+            "note": "Resultar ser + noun."
+          }
+        ]
+      },
+      {
+        "word": "resultar (gustar-style)",
+        "core": "To be or seem, with an indirect object — it 'resultas' something to you.",
+        "examples": [
+          {
+            "es": "Me resulta difícil entenderlo.",
+            "en": "I find it hard to understand.",
+            "note": "Me resulta + adjective = I find it. Smoother than 'es difícil para mí'."
+          },
+          {
+            "es": "Me resulta raro verte aquí.",
+            "en": "It's strange to see you here.",
+            "note": "Personal reaction to a situation."
+          },
+          {
+            "es": "Resultaron heridas tres personas.",
+            "en": "Three people were injured.",
+            "note": "News language: resultar herido = to be injured."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Resultar' is often a more elegant way to say 'ser' or 'encontrar': 'me resulta imposible' = I find it impossible. Don't confuse it with 'resultado' (the noun) in other places."
+  },
+  {
+    "id": "sobrar-vs-bastar",
+    "category": "verbs",
+    "title": "sobrar vs bastar",
+    "tagline": "Sobrar means there's too much or some left over. Bastar means that's enough. Neighbours on the same scale.",
+    "sides": [
+      {
+        "word": "sobrar",
+        "core": "To be left over or to be more than needed — works like gustar.",
+        "examples": [
+          {
+            "es": "Sobra comida.",
+            "en": "There's food left over.",
+            "note": "Leftovers. Also 'las sobras' = leftovers."
+          },
+          {
+            "es": "Me sobran dos euros.",
+            "en": "I have two euros to spare.",
+            "note": "What's left after paying. Gustar pattern."
+          },
+          {
+            "es": "Aquí sobras tú.",
+            "en": "You're not wanted here.",
+            "note": "Strong idiom: you're superfluous."
+          }
+        ]
+      },
+      {
+        "word": "bastar",
+        "core": "To be enough, to suffice.",
+        "examples": [
+          {
+            "es": "Con una basta.",
+            "en": "One is enough.",
+            "note": "Short and idiomatic. Basta con + noun."
+          },
+          {
+            "es": "Basta con que me avises.",
+            "en": "All you have to do is let me know.",
+            "note": "Basta con que + subjunctive."
+          },
+          {
+            "es": "¡Basta ya!",
+            "en": "That's enough!",
+            "note": "A firm demand to stop. Used by parents and teachers."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Bastante' (quite, enough) is an adverb from bastar. 'Hay bastante comida' = there's enough food; 'sobra comida' = there's more than enough."
+  },
+  {
+    "id": "costar-vs-valer",
+    "category": "verbs",
+    "title": "costar vs valer",
+    "tagline": "Both express price. Costar is what you pay. Valer is what something is worth. Valer also means 'to be okay'.",
+    "sides": [
+      {
+        "word": "costar",
+        "core": "To cost — and to be difficult or take effort.",
+        "examples": [
+          {
+            "es": "¿Cuánto cuesta este abrigo?",
+            "en": "How much does this coat cost?",
+            "note": "The standard price question."
+          },
+          {
+            "es": "Me costó mucho esfuerzo.",
+            "en": "It cost me a lot of effort.",
+            "note": "Costar for effort, not just money."
+          },
+          {
+            "es": "Me cuesta levantarme temprano.",
+            "en": "I find it hard to get up early.",
+            "note": "Costar + infinitive = to find it difficult."
+          }
+        ]
+      },
+      {
+        "word": "valer",
+        "core": "To be worth, to be valid, to be acceptable.",
+        "examples": [
+          {
+            "es": "¿Cuánto vale esta casa?",
+            "en": "How much is this house worth?",
+            "note": "Valuation, often large amounts."
+          },
+          {
+            "es": "Vale la pena intentarlo.",
+            "en": "It's worth trying.",
+            "note": "Valer la pena = to be worth it. Fixed phrase."
+          },
+          {
+            "es": "¡Vale!",
+            "en": "OK! / Fine!",
+            "note": "The single most common word in Spain for agreeing. Literally 'it's valid'."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Cuesta' and 'vale' overlap for prices, but 'cuánto cuesta' is the shop question. 'Cuánto vale' feels more appraisal-like. And 'valer' in Latin America is less used for 'okay', where 'ok' or 'dale' appear."
+  },
+  {
+    "id": "durar-vs-tardar",
+    "category": "verbs",
+    "title": "durar vs tardar",
+    "tagline": "Both measure time. Durar is how long something lasts. Tardar is how long it takes to get done or arrive.",
+    "sides": [
+      {
+        "word": "durar",
+        "core": "To last — how long something continues.",
+        "examples": [
+          {
+            "es": "La película dura dos horas.",
+            "en": "The film lasts two hours.",
+            "note": "The event has a length."
+          },
+          {
+            "es": "Esta batería dura todo el día.",
+            "en": "This battery lasts all day.",
+            "note": "Lifespan of an object."
+          },
+          {
+            "es": "Nada dura para siempre.",
+            "en": "Nothing lasts forever.",
+            "note": "General truth."
+          }
+        ]
+      },
+      {
+        "word": "tardar",
+        "core": "To take time, to be late — the time needed for a person or process to complete something.",
+        "examples": [
+          {
+            "es": "Tardo veinte minutos en llegar.",
+            "en": "It takes me twenty minutes to get there.",
+            "note": "Tardar + time + en + infinitive."
+          },
+          {
+            "es": "¿Cuánto tardas?",
+            "en": "How long will you be?",
+            "note": "Asked while someone gets ready or is on the way."
+          },
+          {
+            "es": "No tardes.",
+            "en": "Don't be long.",
+            "note": "A common send-off. Also 'tarde' = late."
+          }
+        ]
+      }
+    ],
+    "tricky": "'El viaje dura tres horas' (the journey lasts three hours) vs 'tardo tres horas en llegar' (it takes me three hours to arrive). The first describes the thing, the second the person."
+  },
+  {
+    "id": "pagar-vs-cobrar",
+    "category": "verbs",
+    "title": "pagar vs cobrar",
+    "tagline": "Pagar is handing over money. Cobrar is receiving it — as a wage, a fee or a bill.",
+    "sides": [
+      {
+        "word": "pagar",
+        "core": "To pay, to hand money over — for something, to someone.",
+        "examples": [
+          {
+            "es": "Pago yo.",
+            "en": "I'll pay.",
+            "note": "Offering to cover the bill."
+          },
+          {
+            "es": "Pagué con tarjeta.",
+            "en": "I paid by card.",
+            "note": "Pagar con tarjeta/efectivo. No direct object needed."
+          },
+          {
+            "es": "Pagamos la cuenta a medias.",
+            "en": "We split the bill.",
+            "note": "A medias = half each."
+          }
+        ]
+      },
+      {
+        "word": "cobrar",
+        "core": "To charge, to collect payment, to earn a wage.",
+        "examples": [
+          {
+            "es": "Cobro a fin de mes.",
+            "en": "I get paid at the end of the month.",
+            "note": "Receiving a salary. The employee is the subject."
+          },
+          {
+            "es": "Me han cobrado de más.",
+            "en": "They've overcharged me.",
+            "note": "The shop or bank is the one charging."
+          },
+          {
+            "es": "¿Me cobra, por favor?",
+            "en": "Can I pay, please?",
+            "note": "Said to a waiter. Literally 'can you charge me?'. Also 'la cuenta, por favor' works."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Cobrar' has both directions: you charge a client or you collect your salary. 'Cobrar vida' means to come to life. 'Pagar' is always the one handing money over."
+  },
+  {
+    "id": "mandar-vs-enviar",
+    "category": "verbs",
+    "title": "mandar vs enviar",
+    "tagline": "Both mean 'to send'. Enviar is neutral and a touch formal; mandar is common in speech and also means 'to order'.",
+    "sides": [
+      {
+        "word": "enviar",
+        "core": "To send — letters, emails, packages, people.",
+        "examples": [
+          {
+            "es": "Te envío el archivo por correo.",
+            "en": "I'm sending you the file by email.",
+            "note": "Slightly formal. Common in writing."
+          },
+          {
+            "es": "Enviaron un paquete a mi casa.",
+            "en": "They sent a package to my house.",
+            "note": "Postal and delivery contexts."
+          },
+          {
+            "es": "Han enviado a un enviado especial.",
+            "en": "They have sent a special envoy.",
+            "note": "Sending a person on a mission. Enviado = envoy."
+          }
+        ]
+      },
+      {
+        "word": "mandar",
+        "core": "To send in everyday speech, and to order or be in charge.",
+        "examples": [
+          {
+            "es": "Mándame un mensaje.",
+            "en": "Send me a message.",
+            "note": "Casual, spoken. Very common in Latin America."
+          },
+          {
+            "es": "Mandó a su hijo a la tienda.",
+            "en": "She sent her son to the shop.",
+            "note": "Mandar a + person + a + place."
+          },
+          {
+            "es": "Aquí manda mi madre.",
+            "en": "My mum is the boss here.",
+            "note": "Mandar = to be in command. '¿Mande?' in Mexico = pardon?"
+          }
+        ]
+      }
+    ],
+    "tricky": "'Mandar a alguien a paseo' / 'mandar a freír espárragos' = to tell someone to get lost. Mandar covers more idioms than enviar."
+  },
+  {
+    "id": "casarse-solo",
+    "category": "verbs",
+    "title": "casarse",
+    "tagline": "Casarse con — you marry 'with' someone in Spanish. The preposition and the reflexive are both non-negotiable.",
+    "sides": [
+      {
+        "word": "casarse",
+        "core": "To get married. Always reflexive and always followed by con.",
+        "examples": [
+          {
+            "es": "Se casó con su mejor amigo.",
+            "en": "She married her best friend.",
+            "note": "Casarse con + person. Never 'casó a'."
+          },
+          {
+            "es": "Nos casamos en mayo.",
+            "en": "We're getting married in May.",
+            "note": "Plural for the couple. Reflexive pronoun nos."
+          },
+          {
+            "es": "¿Cuándo os casáis?",
+            "en": "When are you getting married?",
+            "note": "Vosotros form, used in Spain."
+          }
+        ]
+      },
+      {
+        "word": "estar casado / casar",
+        "core": "Estar casado is the state; casar is to marry someone off (an officiant).",
+        "examples": [
+          {
+            "es": "Estoy casado desde 2015.",
+            "en": "I've been married since 2015.",
+            "note": "The state of being married. Estar casado/a. Not 'ser casado'."
+          },
+          {
+            "es": "El juez los casó.",
+            "en": "The judge married them.",
+            "note": "The officiant does the marrying. No reflexive."
+          },
+          {
+            "es": "Están recién casados.",
+            "en": "They're newlyweds.",
+            "note": "Recién casados. Also 'los novios' = bride and groom."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Me casé a ella' is a classic mistake. Use 'me casé con ella'. Also 'me divorcié de' (not 'con')."
+  },
+  {
+    "id": "despedir-vs-despedirse",
+    "category": "verbs",
+    "title": "despedir vs despedirse",
+    "tagline": "Despedir is to fire someone or see them off. Despedirse is to say goodbye yourself.",
+    "sides": [
+      {
+        "word": "despedir",
+        "core": "To fire an employee, to see someone off, or to give off (smell, light).",
+        "examples": [
+          {
+            "es": "Lo despidieron por llegar tarde.",
+            "en": "They fired him for being late.",
+            "note": "The standard word for dismissal. 'Echar' is a colloquial alternative."
+          },
+          {
+            "es": "Fuimos a despedirla al aeropuerto.",
+            "en": "We went to see her off at the airport.",
+            "note": "Saying goodbye as someone leaves."
+          },
+          {
+            "es": "La fábrica despide humo.",
+            "en": "The factory gives off smoke.",
+            "note": "Emitting something. Stem change like pedir: despido, despides."
+          }
+        ]
+      },
+      {
+        "word": "despedirse",
+        "core": "To say goodbye — despedirse de.",
+        "examples": [
+          {
+            "es": "Me despedí de todos.",
+            "en": "I said goodbye to everyone.",
+            "note": "Always despedirse de + person."
+          },
+          {
+            "es": "Despídete de la abuela.",
+            "en": "Say goodbye to Grandma.",
+            "note": "A parent's command to a child."
+          },
+          {
+            "es": "Se despidió con un beso.",
+            "en": "She said goodbye with a kiss.",
+            "note": "How you say goodbye: con + noun."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Me despidieron' = I was fired. 'Me despedí' = I said goodbye. Learners often say 'me despedí' for 'I was laid off' and cause a puzzled look."
+  },
+  {
+    "id": "morir-vs-matar",
+    "category": "verbs",
+    "title": "morir vs matar",
+    "tagline": "Morir is to die. Matar is to kill. The reflexive forms morirse and matarse change the tone completely.",
+    "sides": [
+      {
+        "word": "morir / morirse",
+        "core": "To die. Morirse is more colloquial and used for figurative death.",
+        "examples": [
+          {
+            "es": "Murió en 2010.",
+            "en": "He died in 2010.",
+            "note": "Formal and written. Stem change o→ue: muero, mueres."
+          },
+          {
+            "es": "Se murió mi abuelo.",
+            "en": "My grandfather has died.",
+            "note": "Morirse is the usual word in speech for a death in the family."
+          },
+          {
+            "es": "Me muero de hambre.",
+            "en": "I'm starving.",
+            "note": "Figurative: morirse de hambre/risa/frío/sueño."
+          }
+        ]
+      },
+      {
+        "word": "matar / matarse",
+        "core": "To kill, or to kill oneself accidentally or figuratively.",
+        "examples": [
+          {
+            "es": "Mataron al rey.",
+            "en": "They killed the king.",
+            "note": "Deliberate killing."
+          },
+          {
+            "es": "Se mató en un accidente.",
+            "en": "He was killed in an accident.",
+            "note": "Matarse = to die by accident, or to kill oneself, context decides."
+          },
+          {
+            "es": "Me mata el calor.",
+            "en": "The heat is killing me.",
+            "note": "Figurative. Also 'matar el tiempo' = to kill time."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Está muerto' = he's dead (state). 'Lo mataron' = they killed him. 'Murió' alone doesn't say anyone caused it. In news, 'murió' vs 'fue asesinado' matters."
+  },
+  {
+    "id": "oler-vs-saber-a",
+    "category": "verbs",
+    "title": "oler vs saber a",
+    "tagline": "Oler is smell and saber a is taste — but saber is also 'to know'. The preposition 'a' signals flavour.",
+    "sides": [
+      {
+        "word": "oler",
+        "core": "To smell — both to give off a smell and to perceive one. Oler a = to smell of.",
+        "examples": [
+          {
+            "es": "Huele muy bien.",
+            "en": "It smells great.",
+            "note": "Irregular: huelo, hueles. Add h before ue."
+          },
+          {
+            "es": "Huele a humo.",
+            "en": "It smells of smoke.",
+            "note": "Oler a + noun = to smell like."
+          },
+          {
+            "es": "¿A qué huele?",
+            "en": "What does it smell like?",
+            "note": "Question form. Note a qué."
+          }
+        ]
+      },
+      {
+        "word": "saber a",
+        "core": "To taste of — flavour. Not 'probar', which means to try.",
+        "examples": [
+          {
+            "es": "Sabe a fresa.",
+            "en": "It tastes of strawberry.",
+            "note": "Saber a + flavour."
+          },
+          {
+            "es": "¿A qué sabe esto?",
+            "en": "What does this taste like?",
+            "note": "Same pattern as oler: a qué."
+          },
+          {
+            "es": "Este café sabe raro.",
+            "en": "This coffee tastes weird.",
+            "note": "Saber + adjective for quality of taste."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Sé a fresa' would be 'I know of strawberry' — nonsense. For taste use the third person: 'sabe a'. And 'huelo' (I smell) vs 'huele' (it smells) is a different thing from 'sabe' vs 'sé'."
+  },
+  {
+    "id": "cerrar-vs-apagar",
+    "category": "verbs",
+    "title": "cerrar vs apagar",
+    "tagline": "English 'turn off' has two Spanish forms. Cerrar closes taps, doors, accounts. Apagar switches off lights, devices, flames.",
+    "sides": [
+      {
+        "word": "cerrar",
+        "core": "To close or shut — doors, windows, taps, shops.",
+        "examples": [
+          {
+            "es": "Cierra la puerta.",
+            "en": "Close the door.",
+            "note": "Stem change e→ie: cierro, cierras."
+          },
+          {
+            "es": "Cierra el grifo.",
+            "en": "Turn the tap off.",
+            "note": "Taps and gas are closed, not apagados."
+          },
+          {
+            "es": "Cerramos a las nueve.",
+            "en": "We close at nine.",
+            "note": "Shop opening hours."
+          }
+        ]
+      },
+      {
+        "word": "apagar",
+        "core": "To switch off electrical devices, lights, flames.",
+        "examples": [
+          {
+            "es": "Apaga la luz, por favor.",
+            "en": "Turn the light off, please.",
+            "note": "The opposite of encender."
+          },
+          {
+            "es": "Apaga el móvil en el cine.",
+            "en": "Switch your phone off in the cinema.",
+            "note": "Devices. 'Apagar el ordenador' too."
+          },
+          {
+            "es": "Los bomberos apagaron el fuego.",
+            "en": "The firefighters put out the fire.",
+            "note": "Flames and cigarettes: apagar."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Cerrar la luz' is a common Latin American usage in some regions, but in Spain it sounds odd. And 'apagar el grifo' doesn't exist — taps are closed, not switched off."
+  },
+  {
+    "id": "arreglar-vs-arreglarse",
+    "category": "verbs",
+    "title": "arreglar vs arreglarse",
+    "tagline": "Arreglar is fixing, tidying or sorting something. Arreglarse is getting ready and managing — the reflexive brings it back to you.",
+    "sides": [
+      {
+        "word": "arreglar",
+        "core": "To repair, tidy up, sort out or alter.",
+        "examples": [
+          {
+            "es": "Arregló el coche en un día.",
+            "en": "He fixed the car in a day.",
+            "note": "Repairing. 'Reparar' also works but is more formal."
+          },
+          {
+            "es": "Arregla tu habitación.",
+            "en": "Tidy up your room.",
+            "note": "Tidying. Also 'ordenar'."
+          },
+          {
+            "es": "Ya lo arreglaré con ella.",
+            "en": "I'll sort it out with her.",
+            "note": "Resolving a problem between people."
+          }
+        ]
+      },
+      {
+        "word": "arreglarse",
+        "core": "To get ready, dress up, manage, or work out.",
+        "examples": [
+          {
+            "es": "Me arreglo para salir.",
+            "en": "I'm getting ready to go out.",
+            "note": "Dressing up, doing hair and makeup."
+          },
+          {
+            "es": "Ya me las arreglaré.",
+            "en": "I'll manage.",
+            "note": "Arreglárselas = to cope, to get by. Fixed phrase."
+          },
+          {
+            "es": "Todo se arreglará.",
+            "en": "Everything will sort itself out.",
+            "note": "Se impersonal: things work out."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Arreglarse el pelo' (do your hair) vs 'arreglar el pelo a alguien' (do someone's hair). The reflexive tells you whose hair it is."
+  },
+  {
+    "id": "pegar-solo",
+    "category": "verbs",
+    "title": "pegar",
+    "tagline": "Pegar means to hit, to stick and to match — three unrelated meanings, plus a family of 'give a shout/jump' expressions.",
+    "sides": [
+      {
+        "word": "pegar (hit/stick)",
+        "core": "To hit someone or to glue/stick something.",
+        "examples": [
+          {
+            "es": "No pegues a tu hermano.",
+            "en": "Don't hit your brother.",
+            "note": "Hitting. Pegar a + person."
+          },
+          {
+            "es": "Pega la foto en el álbum.",
+            "en": "Stick the photo in the album.",
+            "note": "Gluing. The noun is 'pegamento' = glue."
+          },
+          {
+            "es": "Se me ha pegado el arroz.",
+            "en": "The rice has stuck to the pan.",
+            "note": "Pegarse = to stick, to burn on the pan, or to catch (a habit)."
+          }
+        ]
+      },
+      {
+        "word": "pegar (match/idioms)",
+        "core": "To go with or suit, and to deliver a physical action: a shout, a jump, a fright.",
+        "examples": [
+          {
+            "es": "Esa camisa no pega con los pantalones.",
+            "en": "That shirt doesn't go with the trousers.",
+            "note": "Pegar con = to match. Informal."
+          },
+          {
+            "es": "Pegó un grito.",
+            "en": "He let out a shout.",
+            "note": "Pegar un grito/salto/susto/portazo = to shout, jump, frighten, slam."
+          },
+          {
+            "es": "Pega fuerte este verano.",
+            "en": "It's hitting hard this summer.",
+            "note": "Figurative: a trend or season arriving strongly."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Me he pegado con la puerta' = I bumped into the door. Whether pegar means 'hit' or 'stick' depends on context, and the reflexive adds a third reading: to catch something (pegarse un resfriado)."
+  },
+  {
+    "id": "meter-vs-poner",
+    "category": "verbs",
+    "title": "meter vs poner",
+    "tagline": "Poner places something on a surface. Meter puts something inside. 'Put' needs two verbs in Spanish.",
+    "sides": [
+      {
+        "word": "meter",
+        "core": "To put inside — into a container, a space, a situation.",
+        "examples": [
+          {
+            "es": "Mete la ropa en la maleta.",
+            "en": "Put the clothes in the suitcase.",
+            "note": "Into a container. The preposition 'en' marks the place."
+          },
+          {
+            "es": "Se metió en la cama.",
+            "en": "He got into bed.",
+            "note": "Meterse = to get into. Also 'meterse en problemas'."
+          },
+          {
+            "es": "¡No te metas en mis asuntos!",
+            "en": "Don't get involved in my business!",
+            "note": "Meterse en = to interfere. Also 'meter la pata' = to put your foot in it."
+          }
+        ]
+      },
+      {
+        "word": "poner",
+        "core": "To put on a surface, to place or position something.",
+        "examples": [
+          {
+            "es": "Pon el libro sobre la mesa.",
+            "en": "Put the book on the table.",
+            "note": "On a surface. Preposition 'sobre' or 'en'."
+          },
+          {
+            "es": "Ponlo ahí.",
+            "en": "Put it there.",
+            "note": "General placing. The position is open."
+          },
+          {
+            "es": "¿Dónde has puesto las gafas?",
+            "en": "Where have you put your glasses?",
+            "note": "Irregular past participle: puesto."
+          }
+        ]
+      }
+    ],
+    "tricky": "Both can translate 'put', so check the destination. Is it inside something? Use meter. On top of something? Poner. 'Pon la llave en la cerradura' is fine, but 'mete la llave' stresses the insertion."
+  },
+  {
+    "id": "andar-vs-caminar",
+    "category": "verbs",
+    "title": "andar vs caminar",
+    "tagline": "Both mean 'to walk'. Caminar is the neutral verb. Andar is looser and often means 'to be' or 'to go about'.",
+    "sides": [
+      {
+        "word": "caminar",
+        "core": "To walk — the physical action, often a purposeful journey on foot.",
+        "examples": [
+          {
+            "es": "Camino al trabajo todos los días.",
+            "en": "I walk to work every day.",
+            "note": "Standard walking."
+          },
+          {
+            "es": "Caminar es muy sano.",
+            "en": "Walking is very healthy.",
+            "note": "As a noun-like subject."
+          },
+          {
+            "es": "Caminaron por el bosque.",
+            "en": "They walked through the forest.",
+            "note": "Journey or exploration on foot."
+          }
+        ]
+      },
+      {
+        "word": "andar",
+        "core": "To walk, to go about, to be (in a state), and to work (of a device).",
+        "examples": [
+          {
+            "es": "Anda por la calle sin mirar.",
+            "en": "He walks down the street without looking.",
+            "note": "Casual walking."
+          },
+          {
+            "es": "Anda buscando trabajo.",
+            "en": "He's looking for a job (these days).",
+            "note": "Andar + gerund = to be doing something over a period."
+          },
+          {
+            "es": "¡Anda ya!",
+            "en": "Oh come on! / No way!",
+            "note": "Exclamation of disbelief. Also 'anda' for surprise or encouragement."
+          }
+        ]
+      }
+    ],
+    "tricky": "'¿Cómo andas?' = how are you getting on? 'No anda' for a machine means it's not working (common in Argentina). Andar covers many moods; caminar is always on foot."
+  },
+  {
+    "id": "comprender-vs-entender",
+    "category": "verbs",
+    "title": "comprender vs entender",
+    "tagline": "Both mean 'to understand'. Entender is the everyday verb. Comprender suggests deeper or empathetic understanding — and also means 'to include'.",
+    "sides": [
+      {
+        "word": "entender",
+        "core": "To understand — language, instructions, how something works.",
+        "examples": [
+          {
+            "es": "No entiendo nada.",
+            "en": "I don't understand anything.",
+            "note": "Stem change e→ie: entiendo."
+          },
+          {
+            "es": "¿Me entiendes?",
+            "en": "Do you understand me?",
+            "note": "Checking that you're clear."
+          },
+          {
+            "es": "Entiende de coches.",
+            "en": "He knows about cars.",
+            "note": "Entender de = to be knowledgeable about."
+          }
+        ]
+      },
+      {
+        "word": "comprender",
+        "core": "To understand fully, to empathise — or to comprise.",
+        "examples": [
+          {
+            "es": "Te comprendo perfectamente.",
+            "en": "I understand you completely.",
+            "note": "Empathy. 'Te entiendo' can sound more practical."
+          },
+          {
+            "es": "No comprendo por qué lo hizo.",
+            "en": "I don't understand why he did it.",
+            "note": "Motives and feelings."
+          },
+          {
+            "es": "El precio comprende el desayuno.",
+            "en": "The price includes breakfast.",
+            "note": "Comprender also means to include, to consist of."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Comprar' (buy) and 'comprender' (understand) differ by two letters but are not related. 'Entender' is also used for opinions: 'a mi entender' = in my understanding."
+  },
+  {
+    "id": "discutir-vs-comentar",
+    "category": "verbs",
+    "title": "discutir vs comentar",
+    "tagline": "'Discuss' is a false friend. Discutir means to argue. Comentar is to talk through, remark on or mention.",
+    "sides": [
+      {
+        "word": "discutir",
+        "core": "To argue, quarrel — a heated exchange.",
+        "examples": [
+          {
+            "es": "Discutimos por dinero.",
+            "en": "We argued about money.",
+            "note": "A row. Discutir por + reason."
+          },
+          {
+            "es": "No quiero discutir contigo.",
+            "en": "I don't want to argue with you.",
+            "note": "A common phrase to avoid conflict."
+          },
+          {
+            "es": "Han discutido otra vez.",
+            "en": "They've had another argument.",
+            "note": "A couple or family quarrel."
+          }
+        ]
+      },
+      {
+        "word": "comentar",
+        "core": "To discuss, comment on, mention, talk over casually.",
+        "examples": [
+          {
+            "es": "Te comento una cosa.",
+            "en": "Let me tell you something.",
+            "note": "Conversational. 'Te comento' = I'll fill you in."
+          },
+          {
+            "es": "Comentamos la película al salir.",
+            "en": "We talked about the film on the way out.",
+            "note": "Casual discussion of an experience."
+          },
+          {
+            "es": "Nadie comentó nada.",
+            "en": "Nobody said anything.",
+            "note": "Comentar = to remark. 'Comentario' = comment."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Vamos a discutir el contrato' sounds like you plan to fight over it. For a neutral talk, use 'hablar de' or 'tratar'. In formal Latin American contexts, 'discutir' can be neutral — region matters."
+  },
+  {
+    "id": "tratar-vs-tratarse",
+    "category": "verbs",
+    "title": "tratar vs tratarse",
+    "tagline": "Tratar de is to try. Tratar a is to treat someone. Tratarse de is 'it's about'. Three prepositions, three meanings.",
+    "sides": [
+      {
+        "word": "tratar",
+        "core": "To try (tratar de), to treat or behave towards (tratar a), to deal with (tratar sobre).",
+        "examples": [
+          {
+            "es": "Trato de llegar a tiempo.",
+            "en": "I try to arrive on time.",
+            "note": "Tratar de + infinitive. Same as intentar."
+          },
+          {
+            "es": "Me trata muy bien.",
+            "en": "He treats me very well.",
+            "note": "Behaviour towards someone. Tratar a + person."
+          },
+          {
+            "es": "El libro trata sobre la guerra.",
+            "en": "The book deals with war.",
+            "note": "Subject matter. Tratar de/sobre."
+          }
+        ]
+      },
+      {
+        "word": "tratarse de",
+        "core": "To be about, to concern — an impersonal use, always with 'se' and 'de'.",
+        "examples": [
+          {
+            "es": "¿De qué se trata?",
+            "en": "What's it about?",
+            "note": "The standard question for a plot or a meeting."
+          },
+          {
+            "es": "Se trata de un malentendido.",
+            "en": "It's a misunderstanding.",
+            "note": "Se trata de + noun = it's a matter of."
+          },
+          {
+            "es": "Se trata de ser honesto.",
+            "en": "It's all about being honest.",
+            "note": "Se trata de + infinitive = the point is to."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Tratar' with a subject like 'la película' = the film is about. But 'se trata de' has no real subject. 'La película se trata de amor' is a heard error — say 'la película trata de amor'."
+  },
+  {
+    "id": "dedicar-vs-dedicarse",
+    "category": "verbs",
+    "title": "dedicar vs dedicarse",
+    "tagline": "Dedicar is to devote or dedicate something. Dedicarse a is to do for a living — the question '¿a qué te dedicas?' is everywhere.",
+    "sides": [
+      {
+        "word": "dedicar",
+        "core": "To devote time, effort or a work to someone or something.",
+        "examples": [
+          {
+            "es": "Dedico dos horas al día a estudiar.",
+            "en": "I spend two hours a day studying.",
+            "note": "Devoting time. Dedicar + time + a."
+          },
+          {
+            "es": "Le dedicó una canción.",
+            "en": "He dedicated a song to her.",
+            "note": "A tribute."
+          },
+          {
+            "es": "Dedica mucho tiempo a su familia.",
+            "en": "He devotes a lot of time to his family.",
+            "note": "Priority."
+          }
+        ]
+      },
+      {
+        "word": "dedicarse",
+        "core": "To work as, to be occupied with — dedicarse a + noun or infinitive.",
+        "examples": [
+          {
+            "es": "¿A qué te dedicas?",
+            "en": "What do you do for a living?",
+            "note": "The standard question about someone's job. Not '¿qué haces?' alone."
+          },
+          {
+            "es": "Me dedico a la enseñanza.",
+            "en": "I work in education.",
+            "note": "Dedicarse a + noun."
+          },
+          {
+            "es": "Se dedica a vender coches.",
+            "en": "He sells cars for a living.",
+            "note": "Dedicarse a + infinitive."
+          }
+        ]
+      }
+    ],
+    "tricky": "'¿A qué te dedicas?' needs 'a'. Saying '¿qué te dedicas?' is a common mistake. And 'me dedico a' answers it: 'me dedico a la informática'."
+  },
+  {
+    "id": "haber-que-vs-tener-que",
+    "category": "verbs",
+    "title": "hay que vs tener que",
+    "tagline": "Both express obligation. Hay que is impersonal — 'one has to'. Tener que is personal and names who must do it.",
+    "sides": [
+      {
+        "word": "hay que",
+        "core": "Impersonal necessity — a general rule for everyone, no subject. Only the 'hay' form is used in the present.",
+        "examples": [
+          {
+            "es": "Hay que esperar.",
+            "en": "We have to wait. / One has to wait.",
+            "note": "No subject. A general or shared necessity."
+          },
+          {
+            "es": "No hay que preocuparse.",
+            "en": "There's no need to worry.",
+            "note": "No hay que = there's no need to. Not 'it's forbidden'."
+          },
+          {
+            "es": "Habrá que ver.",
+            "en": "We'll have to see.",
+            "note": "Future: habrá que. Past: había que."
+          }
+        ]
+      },
+      {
+        "word": "tener que",
+        "core": "Personal obligation — a specific person must do something.",
+        "examples": [
+          {
+            "es": "Tengo que irme.",
+            "en": "I have to go.",
+            "note": "The subject is 'I'. Conjugates."
+          },
+          {
+            "es": "Tienes que probarlo.",
+            "en": "You have to try it.",
+            "note": "Personal recommendation."
+          },
+          {
+            "es": "Tuvimos que esperar dos horas.",
+            "en": "We had to wait two hours.",
+            "note": "Preterite tuvimos. Obligation completed in the past."
+          }
+        ]
+      }
+    ],
+    "tricky": "'No tienes que ir' = you don't have to go (it's optional). 'No hay que ir' = one shouldn't go / there's no need. Spanish negation of obligation can mean 'don't have to' or 'must not' depending on the verb, so check the context."
+  },
+  {
+    "id": "aprobar-vs-suspender",
+    "category": "verbs",
+    "title": "aprobar vs suspender",
+    "tagline": "English 'pass' an exam is aprobar, not pasar. And suspender is to fail — but also to suspend and cancel.",
+    "sides": [
+      {
+        "word": "aprobar",
+        "core": "To pass an exam, approve a proposal, or give approval.",
+        "examples": [
+          {
+            "es": "He aprobado el examen.",
+            "en": "I've passed the exam.",
+            "note": "Aprobar = to pass. Stem change o→ue: apruebo."
+          },
+          {
+            "es": "Aprobaron la ley.",
+            "en": "They approved the law.",
+            "note": "Passing a law or proposal."
+          },
+          {
+            "es": "No apruebo su comportamiento.",
+            "en": "I don't approve of his behaviour.",
+            "note": "Moral approval."
+          }
+        ]
+      },
+      {
+        "word": "suspender",
+        "core": "To fail an exam (Spain), to suspend, to call off.",
+        "examples": [
+          {
+            "es": "Suspendí matemáticas.",
+            "en": "I failed maths.",
+            "note": "In Spain, suspender = to fail. In Latin America 'reprobar' or 'perder'."
+          },
+          {
+            "es": "Suspendieron el concierto por la lluvia.",
+            "en": "They called off the concert because of rain.",
+            "note": "Cancel."
+          },
+          {
+            "es": "Lo suspendieron de empleo.",
+            "en": "He was suspended from work.",
+            "note": "Disciplinary suspension."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Pasar un examen' means to take an exam in some regions, so 'pasé el examen' can be ambiguous. Use 'aprobé' for passing and 'suspendí' (or 'reprobé' in Latin America) for failing."
+  },
+  {
+    "id": "caber-solo",
+    "category": "verbs",
+    "title": "caber",
+    "tagline": "Caber means 'to fit inside'. It's irregular, little-used by learners, and has several idioms with a surprising reach.",
+    "sides": [
+      {
+        "word": "caber (fit)",
+        "core": "To fit inside something — physical or abstract space.",
+        "examples": [
+          {
+            "es": "No cabe más gente.",
+            "en": "There's no more room for people.",
+            "note": "Irregular: quepo, cabes, cabe. Present only."
+          },
+          {
+            "es": "¿Cabemos todos en el coche?",
+            "en": "Can we all fit in the car?",
+            "note": "A natural question. Caber en = to fit in."
+          },
+          {
+            "es": "Esta mesa no cabe por la puerta.",
+            "en": "This table won't fit through the door.",
+            "note": "Por for movement through."
+          }
+        ]
+      },
+      {
+        "word": "caber (idioms)",
+        "core": "Abstract use: possible, appropriate, or conceivable.",
+        "examples": [
+          {
+            "es": "No cabe duda.",
+            "en": "There's no doubt.",
+            "note": "A frequent expression. No cabe duda de que + indicative."
+          },
+          {
+            "es": "No me cabe en la cabeza.",
+            "en": "I can't get my head around it.",
+            "note": "Used for things you can't accept or understand."
+          },
+          {
+            "es": "Cabe destacar que...",
+            "en": "It's worth pointing out that...",
+            "note": "Formal writing. Cabe + infinitive = it's possible or fitting to."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Quepo' (I fit) is one of the strangest first-person forms in Spanish, and subjunctive is 'quepa'. Nobody expects learners to master it, but 'no cabe duda' is worth memorising."
+  },
+  {
+    "id": "disfrutar-vs-gozar",
+    "category": "verbs",
+    "title": "disfrutar vs gozar",
+    "tagline": "Both mean 'to enjoy'. Disfrutar is the everyday word. Gozar is more formal and often means to possess a benefit, like good health.",
+    "sides": [
+      {
+        "word": "disfrutar",
+        "core": "To enjoy — an experience, an activity, a moment. Usually disfrutar de, or no preposition for activities.",
+        "examples": [
+          {
+            "es": "Disfruté mucho de la cena.",
+            "en": "I really enjoyed the dinner.",
+            "note": "Disfrutar de + noun. The 'de' is standard but often dropped."
+          },
+          {
+            "es": "Disfruta leyendo.",
+            "en": "He enjoys reading.",
+            "note": "Disfrutar + gerund."
+          },
+          {
+            "es": "¡Que disfrutes!",
+            "en": "Enjoy!",
+            "note": "A common send-off. Subjunctive of wish."
+          }
+        ]
+      },
+      {
+        "word": "gozar",
+        "core": "To enjoy in a deeper or formal sense — to have a benefit or privilege. Gozar de.",
+        "examples": [
+          {
+            "es": "Goza de buena salud.",
+            "en": "She enjoys good health.",
+            "note": "Possession of a good thing. 'Enjoy' as 'have', not 'have fun'."
+          },
+          {
+            "es": "Gozan de muchos privilegios.",
+            "en": "They enjoy many privileges.",
+            "note": "Formal language about rights or benefits."
+          },
+          {
+            "es": "Gozaron con la música.",
+            "en": "They took great pleasure in the music.",
+            "note": "Strong enjoyment. In some regions it can carry sexual overtones, so avoid in casual speech."
+          }
+        ]
+      }
+    ],
+    "tricky": "'Gozar' is rarely the safe choice for casual enjoyment. 'Disfrutar' fits every situation: 'disfruta de las vacaciones'. Reserve 'gozar de' for good health, rights, reputation."
   }
 ]
