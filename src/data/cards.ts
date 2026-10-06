@@ -49,12 +49,12 @@ if (import.meta.env.DEV) {
   for (const [key, idx] of pairs) {
     if (idx.length < 2) continue;
     const kinds = Array.from(new Set(idx.map(origin))).sort().join(" vs ");
-    console.warn(`[verbs] Duplicate verb card (${kinds}): ${key} — ids: ${idx.map((i) => `${cards[i].id} (${origin(i)})`).join(", ")}`);
+    console.warn(`[verbs] Duplicate verb card (${kinds}): ${key} — ids: ${idx.map((i) => `${cards[i]!.id} (${origin(i)})`).join(", ")}`);
   }
   const shared = [...words].filter(([, idx]) => idx.length > 1);
   if (shared.length) {
     console.groupCollapsed(`[verbs] ${shared.length} verb(s) appear on more than one card (check only)`);
-    for (const [w, idx] of shared) console.info(`${w}: ${idx.map((i) => `${cards[i].id} (${origin(i)})`).join(", ")}`);
+    for (const [w, idx] of shared) console.info(`${w}: ${idx.map((i) => `${cards[i]!.id} (${origin(i)})`).join(", ")}`);
     console.groupEnd();
   }
 }
