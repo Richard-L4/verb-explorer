@@ -10,6 +10,7 @@ export function useLearner() {
 
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
 
+  const known = (id: string) => cards.some((c) => c.id === id);
   const isFavourite = useCallback((id: string) => state.favourites.includes(id), [state.favourites]);
   const isLearned = useCallback((id: string) => state.learned.includes(id), [state.learned]);
 
@@ -18,8 +19,8 @@ export function useLearner() {
     .map((id) => cards.find((c) => c.id === id))
     .filter(Boolean) as VerbCard[];
 
-  const studiedCount = Object.keys(state.viewed).length;
-  const learnedCount = state.learned.length;
+  const studiedCount = Object.keys(state.viewed).filter(known).length;
+  const learnedCount = state.learned.filter(known).length;
 
   return {
     state,
