@@ -24,6 +24,8 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as SayingSayingIdRouteImport } from './routes/saying.$sayingId'
+import { Route as SubjunctiveIndexRouteImport } from './routes/subjunctive.index'
+import { Route as SubjunctiveEntryIdRouteImport } from './routes/subjunctive.$entryId'
 import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
 import { Route as ApiPublicEnvCheckRouteImport } from './routes/api/public/env-check'
 import { Route as ApiPublicSendDailyRemindersRouteImport } from './routes/api/public/send-daily-reminders'
@@ -105,6 +107,16 @@ const SayingSayingIdRoute = SayingSayingIdRouteImport.update({
   path: '/saying/$sayingId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubjunctiveIndexRoute = SubjunctiveIndexRouteImport.update({
+  id: '/subjunctive/',
+  path: '/subjunctive/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjunctiveEntryIdRoute = SubjunctiveEntryIdRouteImport.update({
+  id: '/subjunctive/$entryId',
+  path: '/subjunctive/$entryId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UnlockSuccessRoute = UnlockSuccessRouteImport.update({
   id: '/unlock_/success',
   path: '/unlock/success',
@@ -148,7 +160,9 @@ export interface FileRoutesByFullPath {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/subjunctive/$entryId': typeof SubjunctiveEntryIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
+  '/subjunctive/': typeof SubjunctiveIndexRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -170,7 +184,9 @@ export interface FileRoutesByTo {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/subjunctive/$entryId': typeof SubjunctiveEntryIdRoute
   '/unlock/success': typeof UnlockSuccessRoute
+  '/subjunctive': typeof SubjunctiveIndexRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -193,7 +209,9 @@ export interface FileRoutesById {
   '/unlock': typeof UnlockRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/saying/$sayingId': typeof SayingSayingIdRoute
+  '/subjunctive/$entryId': typeof SubjunctiveEntryIdRoute
   '/unlock_/success': typeof UnlockSuccessRoute
+  '/subjunctive/': typeof SubjunctiveIndexRoute
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
@@ -217,7 +235,9 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/subjunctive/$entryId'
     | '/unlock/success'
+    | '/subjunctive/'
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
@@ -239,7 +259,9 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/subjunctive/$entryId'
     | '/unlock/success'
+    | '/subjunctive'
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
@@ -261,7 +283,9 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/card/$cardId'
     | '/saying/$sayingId'
+    | '/subjunctive/$entryId'
     | '/unlock_/success'
+    | '/subjunctive/'
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
@@ -284,7 +308,9 @@ export interface RootRouteChildren {
   UnlockRoute: typeof UnlockRoute
   CardCardIdRoute: typeof CardCardIdRoute
   SayingSayingIdRoute: typeof SayingSayingIdRoute
+  SubjunctiveEntryIdRoute: typeof SubjunctiveEntryIdRoute
   UnlockSuccessRoute: typeof UnlockSuccessRoute
+  SubjunctiveIndexRoute: typeof SubjunctiveIndexRoute
   ApiPublicEnvCheckRoute: typeof ApiPublicEnvCheckRoute
   ApiPublicSendDailyRemindersRoute: typeof ApiPublicSendDailyRemindersRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
@@ -398,6 +424,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SayingSayingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/subjunctive/': {
+      id: '/subjunctive/'
+      path: '/subjunctive'
+      fullPath: '/subjunctive/'
+      preLoaderRoute: typeof SubjunctiveIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subjunctive/$entryId': {
+      id: '/subjunctive/$entryId'
+      path: '/subjunctive/$entryId'
+      fullPath: '/subjunctive/$entryId'
+      preLoaderRoute: typeof SubjunctiveEntryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/unlock_/success': {
       id: '/unlock_/success'
       path: '/unlock/success'
@@ -452,7 +492,9 @@ const rootRouteChildren: RootRouteChildren = {
   UnlockRoute: UnlockRoute,
   CardCardIdRoute: CardCardIdRoute,
   SayingSayingIdRoute: SayingSayingIdRoute,
+  SubjunctiveEntryIdRoute: SubjunctiveEntryIdRoute,
   UnlockSuccessRoute: UnlockSuccessRoute,
+  SubjunctiveIndexRoute: SubjunctiveIndexRoute,
   ApiPublicEnvCheckRoute: ApiPublicEnvCheckRoute,
   ApiPublicSendDailyRemindersRoute: ApiPublicSendDailyRemindersRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
