@@ -24,8 +24,8 @@ export function RandomMenu({
   onNavigate,
 }: {
   linkBase: string;
-  vertical?: boolean;
-  onNavigate?: () => void;
+  vertical?: boolean | undefined;
+  onNavigate?: (() => void) | undefined;
 }) {
   const { pathname } = useLocation();
   const active = options.some((o) => pathname === o.to);
