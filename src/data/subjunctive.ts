@@ -1,4 +1,7 @@
-import rawEntries from "./subjunctive.json";
+/**
+ * Subjunctive types and completeness rule. Pure — never imports the full
+ * dataset, which is server-only (see subjunctive-full.server.ts).
+ */
 import { getCard } from "./cards";
 
 export interface SubjunctiveContrast {
@@ -92,69 +95,3 @@ export function isCompleteEntry(entry: unknown, knownId?: (id: string) => boolea
   return entryProblems(entry, knownId).length === 0;
 }
 
-/** Single source of truth: subjunctive.json, used unchanged. */
-export const subjunctiveEntries: SubjunctiveEntry[] = rawEntries as SubjunctiveEntry[];
-
-const byId = new Map(subjunctiveEntries.map((e) => [e.id, e]));
-const completeIds = new Set(subjunctiveEntries.filter((e) => isCompleteEntry(e)).map((e) => e.id));
-
-export const completeEntries = subjunctiveEntries.filter((e) => completeIds.has(e.id));
-export const completeEntryCount = completeEntries.length;
-
-export function getEntry(id: string): SubjunctiveEntry | undefined {
-  return byId.get(id);
-}
-export function isEntryComplete(id: string): boolean {
-  return completeIds.has(id);
-}
-
-/** Previous/next among complete entries, wrapping round. */
-export function getEntryNeighbours(id: string) {
-  const i = completeEntries.findIndex((e) => e.id === id);
-  const n = completeEntries.length;
-  if (i < 0 || n < 2) return { position: i + 1, total: n };
-  return {
-    prev: completeEntries[(i - 1 + n) % n],
-    next: completeEntries[(i + 1) % n],
-    position: i + 1,
-    total: n,
-  };
-}
-
-const norm = (v: string) =>
-  v
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-const index = subjunctiveEntries.map((e) => ({
-  e,
-  hay: norm(
-    [
-      e.title,
-      ...(e.triggers ?? []).flatMap((t) => [
-        t.trigger,
-        t.category,
-        ...(t.examples ?? []).flatMap((x) => [x.es, x.en, x.form]),
-      ]),
-    ].join(" \u0000 "),
-  ),
-}));
-export function searchEntries(query: string): SubjunctiveEntry[] {
-  const q = norm(query.trim());
-  if (!q) return subjunctiveEntries;
-  const terms = q.split(/\s+/);
-  return index.filter(({ hay }) => terms.every((t) => hay.includes(t))).map(({ e }) => e);
-}
-
-if (import.meta.env.DEV && import.meta.env.MODE !== "test") {
-  const problems: string[] = [];
-  const seen = new Map<string, number>();
-  (rawEntries as unknown[]).forEach((e) => {
-    problems.push(...entryProblems(e));
-    const id = isObj(e) && isText(e.id) ? e.id : null;
-    if (id) seen.set(id, (seen.get(id) ?? 0) + 1);
-  });
-  for (const [id, n] of seen) if (n > 1) problems.push(`${id}: duplicate id (${n} entries)`);
-  if (problems.length)
-    console.warn(`[subjunctive] ${problems.length} data issue(s):\n` + problems.join("\n"));
-}
