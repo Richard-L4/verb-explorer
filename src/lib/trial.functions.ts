@@ -25,12 +25,8 @@ export const claimTrialSession = createServerFn({ method: "POST" })
     const { claimTrial, TRIAL_COOKIE, TRIAL_COOKIE_MAX_AGE } = await import("./trial.server");
 
     const existing = getCookie(TRIAL_COOKIE) ?? null;
-    let address: string | null = null;
-    try {
-      address = getRequestIP({ xForwardedFor: true }) ?? null;
-    } catch {
-      address = null;
-    }
+    const { trustedRequestAddress } = await import("./client-address.server");
+    const address = await trustedRequestAddress();
 
     const result = await claimTrial({ token: existing, address, device: data.device ?? null });
 

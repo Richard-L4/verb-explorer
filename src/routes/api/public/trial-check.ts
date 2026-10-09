@@ -24,12 +24,8 @@ export const Route = createFileRoute("/api/public/trial-check")({
           .split(";")
           .some((part) => part.trim().startsWith(`${TRIAL_COOKIE}=`));
 
-        let address: string | null = null;
-        try {
-          address = getRequestIP({ xForwardedFor: true }) ?? null;
-        } catch {
-          address = null;
-        }
+        const { trustedAddressFromHeaders } = await import("@/lib/client-address.server");
+        const address = trustedAddressFromHeaders(request.headers);
         const networkHash = hashNetwork(address);
         const networkResolvable = networkHash !== null;
 
