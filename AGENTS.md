@@ -16,3 +16,5 @@
 - Creator mode is server-validated: `?creator=` is stripped from the URL and checked against the server-only `CREATOR_ACCESS_KEY` (`creator.functions.ts`), which issues a 30-day creator pass bound to a key fingerprint; never put a creator code in client code.
 - Restore by email requires a one-time emailed code (`restore.server.ts`, table `restore_codes`); only HMACs of emails, codes and networks are stored, and replies never reveal purchase status.
 - The visitor network address comes only from `client-address.server.ts` (Cloudflare `cf-connecting-ip`); browser-supplied forwarding headers are never trusted, because clients can forge them.
+- Funnel events are recorded only from production hostnames (`isProductionAnalyticsHost` in `analytics.server.ts`); preview and workspace copies share the production database, so they must never write analytics.
+- Funnel display corrections live in `funnel-exclusions.server.ts` and are applied only on the read path; `trial_events` rows are never deleted or edited, so raw history stays intact.
