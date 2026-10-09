@@ -128,29 +128,3 @@ export const confirmCheckout = createServerFn({
       pass: await signPass("cs", data.sessionId),
     };
   });
-
-/**
- * Restores access on another device from the
- * email used at checkout.
- */
-export const restorePurchase = createServerFn({
-  method: "POST",
-})
-  .inputValidator((input) =>
-    z
-      .object({
-        email: z.string().email(),
-      })
-      .parse(input),
-  )
-  .handler(async ({ data }) => {
-    const { purchaseExistsForEmail } = await import("./payments.server");
-
-    const found = await purchaseExistsForEmail(data.email);
-    const { signPass } = await import("./content-pass.server");
-
-    return {
-      found,
-      pass: found ? await signPass("email", data.email.trim().toLowerCase()) : null,
-    };
-  });
