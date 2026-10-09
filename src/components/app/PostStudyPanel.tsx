@@ -35,6 +35,7 @@ type InstallMode = "prompt" | "ios" | "desktop" | "installed";
  */
 export function PostStudyPanel() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  console.log("DBG psp render");
   const [visible, setVisible] = useState(false);
   const [count, setCount] = useState(0);
   const [stage, setStage] = useState<Stage>("install");

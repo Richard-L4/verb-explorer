@@ -60,6 +60,7 @@ function RandomCards() {
   // First shuffled run, created after hydration so access state is known.
   // Nothing is persisted, so every fresh visit produces a different order.
   useEffect(() => {
+    console.log("DBG queue effect", available.length, limited);
     if (!available.length) return;
     setQueue((current) =>
       current.length ? current : shuffle(available).slice(0, limited ? TASTER_LIMIT : available.length),
@@ -70,6 +71,7 @@ function RandomCards() {
 
   useEffect(() => {
     if (!current) return;
+    console.log("DBG view effect", current.id);
     markRandomStudied(current.id);
     armPostStudyPanel();
     markViewed(current.id);
