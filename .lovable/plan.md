@@ -1,72 +1,109 @@
-# Random dropdown, Random Subjunctive and revised access policy
+# Pre-publish security: secure creator access, verified email restore, full verification
 
-Decisions already agreed: free entries show the **3 Easy examples per entry** (the data has one Easy, one Medium and one Hard example per trigger, so 9 Easy examples per entry doesn't exist); locked examples are **protected on the server**; the free 20 are the **first 20 in deck order**.
+Nothing is published during this work.
 
-## 1. What exists today (inspected)
+## 1. Gaps found in the current code
 
-- **Navigation** (`nav-items.ts`, `AppShell.tsx`): Home, Browse, Subjunctive, Sayings, Search, Favourites, Statistics, Settings. There is **no "Random Cards" item in the top navigation**. Random Cards is only a button on the Home page that opens `/random`.
-- **One access rule for everything** (`use-access.ts` → `isLocked(id)`): unlocked if purchased, creator, or in the 7-day trial. Otherwise only the IDs of the first 10 verb cards are free. Verb cards, Sayings and Subjunctive all use this same check, so after the trial Sayings and Subjunctive are fully locked, and 90 verb cards are locked.
-- **Random Cards** (`random.tsx`): shuffles once per visit, then adds a fresh shuffle when the run ends. Expired, unpaid users get a 5-card taster.
-- **Purchases**: Stripe Checkout → `confirmCheckout` records the purchase in the database → the browser saves `unlocked: true` locally. "Restore purchase" checks the email on the server and sets the same local flag. **The server never sees proof of purchase on later visits**. The app only trusts the browser's local flag.
-- **Subjunctive data**: `subjunctive.ts` imports the whole `subjunctive.json`, so **every entry, trigger and example (all difficulties) is sent to every visitor's browser** today. Hiding on screen can't protect it.
+1. **Creator code is public.** `CREATOR_QUERY_VALUE` is written in `src/lib/access.ts`, so it ships in the browser bundle and is in GitHub history. Creator mode is only a local browser flag. The server never checks it, which is why paid Subjunctive stays locked for you on the live site.
+2. **The Funnel panel uses the same public code.** `analytics.functions.ts` checks that same public value, so anyone who reads the bundle could read your funnel and repeat-visitor numbers.
+3. **Restore by email doesn't prove ownership.** It only checks that a purchase exists for the address, so anyone who knows a buyer's email gets a purchase pass. It also reveals whether an email has bought ("We couldn't find a purchase").
+4. **Passes never expire.** Purchase passes are re-checked against the database on every request (good), but they have no expiry, and there is no creator pass type.
+5. **Already sound, to be re-verified rather than changed:**
+   - Checkout only issues a pass when Stripe reports `paid`.
+   - The webhook is idempotent (checks the session id).
+   - The full dataset is only loaded inside a server handler.
+   - Price is the live `price_1U66oMJ7wpJmIRgYHaLwO2VH`, £4.99 GBP, one-off, active.
 
-### Conflicts with the new policy
-- The trial currently unlocks all Subjunctive content. Under the new policy the trial unlocks nothing extra in Subjunctive: Medium and Hard stay locked, and only the free 20 have Easy content.
-- The first-10 verb rule and the 5-card Random taster both go, because all verbs become free.
-- Sayings must keep today's behaviour, so the existing `isLocked` stays and is used only for Sayings.
+## 2. Secure creator access (URL stays `?creator=...`)
 
-## 2. Navigation dropdown
-- Add a **"Random"** item (Shuffle icon) to the top navigation, after Sayings. It opens a small menu with **Random Verbs** (`/random`) and **Random Subjunctive** (`/random-subjunctive`). It's built with the project's existing accessible dropdown menu component, so it works with the keyboard (Enter/Space/arrow keys/Esc), matches the pill styling and lights up when either page is open.
-- Mobile menu: the two options appear as normal links in the list. The menu closes after a choice, like the other links.
-- The Home page "Random Cards" button is renamed **Random Verbs** and keeps the same place and style.
+- **New secret code.** A new server-only secret `CREATOR_ACCESS_KEY`. Because the old code `hilary53` is permanently public in GitHub history, it must not be reused. You choose a new strong value and enter it once in the secure secrets form I'll open. You'll need to know it, so I can't auto-generate it. Your creator link becomes `?creator=<your new value>`.
+- **Validation:**
+  1. On page load with `?creator=`, the app immediately removes the parameter from the address bar, so it isn't kept in history or shared links. It then sends the value once to a new server function, `claimCreator`.
+  2. The server compares it with `CREATOR_ACCESS_KEY` in constant time. On a match it issues a **creator pass**, signed with `CONTENT_PASS_SECRET`, of type `creator`, expiring in **30 days**. The pass also carries a fingerprint of the current key, so changing the key cancels every existing creator pass.
+  3. A wrong, missing or edited value gets the same generic "no" and no pass. Attempts are rate-limited. The value is never logged or sent to analytics.
+- **In use:**
+  - The pass is stored in the browser and sent with every protected request: Subjunctive content and the Funnel panel. The server checks the signature, expiry and key fingerprint each time.
+  - Pages, direct links, Random Subjunctive and refreshes all work with no further action.
+  - Removing the parameter later changes nothing while the pass is valid.
+  - When it expires, the app falls back to normal free access until you open the creator link again.
+- **Local creator flag:** existing creator-only tools (banner previews, test-device latching, Settings badge) are only switched on after the server accepts the code. The old "any `?creator=hilary53` works" path is removed. Lovable Preview keeps its automatic creator mode, which the server already verifies from the preview address.
+- **Separate from purchases:** creator and purchase passes are different types. A purchase pass never grants creator tools such as the Funnel panel. Both give all 100 entries and every difficulty.
 
-## 3. Random Verbs (`/random`, same layout)
-- Page title and badge renamed to "Random Verbs". The pool is always all 100 cards.
-- The deck is shuffled once when a session starts. Next walks through it with no repeats until all 100 have been seen. Then a fresh shuffle is added, arranged so its first card is never the card just shown. Previous goes back through the cards already seen.
-- The 5-card taster and its buy prompt are removed.
+## 3. Verified Restore by email
 
-## 4. Random Subjunctive (`/random-subjunctive`)
-- One entry at a time, using the same trigger tabs and example layout as the Subjunctive detail page (shared component taken out of the detail page).
-- **Pool**: without a purchase, only the 20 free entries. The other 80 are never in the list being shuffled. With a confirmed purchase, all 100.
-- It uses the same shuffle-once / no-repeat-until-exhausted / Previous-Next logic as Random Verbs (one shared helper), with its own separate sequence.
-- For each trigger, the Easy example is shown. Medium and Hard show a level badge with a locked panel ("Medium and Hard examples come with full access — £4.99") for unpaid users, or the real examples once a purchase is confirmed.
+- **Resend:** you already use it, sending from `noreply@richard-wells.com` with `RESEND_API_KEY`. The free tier is 100 emails a day, so no new cost and no dashboard change.
+- **New table `restore_codes`** (manual SQL file `db/restore_codes.sql`, like your earlier ones). It is needed because one-time use, attempt limits and rate limits must be stored somewhere: servers keep no memory between requests. It holds:
+  - an email hash (not the email)
+  - a salted hash of the code (never the code itself)
+  - the expiry time and attempt count
+  - when the code was used
+  - a hashed network value for rate limiting
 
-## 5. The 20 free entries (fixed, deck order)
-ser-vs-estar, fue-vs-era, por-vs-para, saber-vs-conocer, salir-vs-quedar, llevar-vs-hacer, pedir-vs-preguntar, poder-vs-saber, deber-vs-tener-que, ir-vs-venir, traer-vs-llevar, querer-vs-amar, mirar-vs-ver, escuchar-vs-oir, acordarse-vs-recordar, sentir-vs-sentirse, pensar-vs-creer, gastar-vs-pasar, hablar-vs-decir, encontrar-vs-buscar.
+  The table is locked down to server-only access.
+- **Flow:**
+  1. The user enters an email. The server always replies "If that email has a purchase, we've sent a code". A code is only sent when a paid purchase exists.
+  2. The code is 6 digits, valid for 10 minutes, single use, with 5 wrong attempts at most. Limits are 3 requests per email per hour and 10 per network per hour.
+  3. The user enters the code. The server checks it and marks it used, then re-checks the purchase and issues the `email` purchase pass. The browser never decides success.
+- **Existing buyers:** this works after clearing the browser or changing device, and an expired trial doesn't block it. The "Confirm your purchase" panel uses this flow.
+- Codes, passes and secrets are never logged.
 
-These are stored as a fixed list of IDs (not "first 20 at runtime"), so the free set can't change later without anyone noticing.
+## 4. Passes, all types
 
-## 6. One shared access policy
-A new `content-access` module answers every question in one place:
-- `verbCardOpen(id)` → always true.
-- `subjunctiveEasyOpen(id)` → true for the free 20, or with a confirmed purchase.
-- `subjunctiveLevelOpen(id, difficulty)` → Easy follows the rule above. Medium and Hard need a confirmed purchase (trial ignored).
-- `sayingLocked(id)` → today's rule, unchanged.
+- Every pass gets an expiry: purchase 1 year, creator 30 days, preview 1 day.
+- Purchase passes keep their database re-check on each request.
+- Tampered, fabricated or expired passes are rejected and the browser deletes them.
 
-Browse, Search, card pages, Subjunctive list/search/detail, Random Verbs and Random Subjunctive all call this module. The Subjunctive list shows a locked badge on the 80. Their detail pages show the title and a "Requires full access" panel with the existing Paywall. Medium/Hard tabs show their labels but no content.
+## 5. Policy kept exactly
 
-## 7. Protecting the content (server-side)
-- **Browser copy**: a derived file `subjunctive.public.json` is generated from the original by a small script. It holds titles for all 100, plus triggers, explanations and **Easy examples only** for the free 20. The original `subjunctive.json` is left untouched and is only read on the server. A test checks that the public file matches the original exactly and contains nothing locked.
-- **Paid content**: a server function `getSubjunctiveContent(entryId)` returns locked content only when the request carries a valid **purchase pass**. A purchase pass is a signed token issued by the server when `confirmCheckout` or Restore succeeds. It's saved in the browser alongside the existing flag and checked with a new server-only secret (`CONTENT_PASS_SECRET`, created securely, never shown or put in the code). Changing the URL, the difficulty, reloading or using Random doesn't help, because the server decides what to return.
-- **Creator mode**: the server issues a pass when the existing creator key is presented. Creator mode itself is unchanged.
-- **Infrastructure**: no new services, tables or costs. It uses the existing server functions and the existing purchases table.
+The policy stays as now:
+- All 100 verbs free.
+- The fixed 20 Subjunctive IDs free at Easy only.
+- The other 80, and all Medium and Hard, need a purchase or creator pass. The trial doesn't unlock them.
+- Sayings unchanged.
 
-## 8. Existing purchases and Stripe
-Prices, Stripe products, checkout, webhook and purchase records are unchanged. Verbs and Sayings keep using the existing local unlock flag. **Risk**: browsers that bought before this change have the flag but no pass. They see a one-time "Confirm your purchase" panel on locked Subjunctive content, which uses the existing Restore-by-email to fetch a pass. Purchases made after the change get the pass automatically.
+Trial, reminders, Stripe price, checkout, webhook and analytics events are unchanged. The only analytics change is that the Funnel panel now requires a creator pass instead of the public code.
 
-## 9. Files
-- New: `src/lib/content-access.ts`, `src/lib/random-sequence.ts`, `src/lib/content-pass.server.ts`, `src/lib/subjunctive-content.functions.ts`, `src/data/subjunctive.public.json` (+ generator script), `src/routes/random-subjunctive.tsx`, `src/components/app/SubjunctiveEntryView.tsx`, `src/components/app/RandomMenu.tsx`.
-- Changed: `nav-items.ts`, `AppShell.tsx`, `use-access.ts` (exposes `paid` vs `trial` separately), `random.tsx`, `routes/index.tsx` (button label), `subjunctive.ts`, `subjunctive.index.tsx`, `subjunctive.$entryId.tsx`, `card.$cardId.tsx`, `CardGrid.tsx`, `checkout.functions.ts`, `RestorePurchase.tsx`, `unlock_.success.tsx` (store pass), `Paywall.tsx` copy only if needed.
-- Unchanged: both JSON datasets, Sayings rules, trial length/tracking/reminders, analytics, Stripe.
+## 6. Files
 
-## 10. Tests
-- Access: all 100 verbs open for never-trialled, in-trial and expired users. The free list equals the 20 IDs above. Easy is open for the free 20 only when unpaid. Medium and Hard stay locked in trial, after expiry and for free entries, and open when paid. Sayings unchanged.
-- Random sequence: no duplicates before exhaustion (100 and 20), no reshuffle on Next, Previous/Next correct, no repeat across the run boundary. The unpaid Random Subjunctive pool equals exactly the free 20.
-- Public data: contains no Medium/Hard examples and nothing from the 80 apart from titles. Matches the original.
-- Server: no pass / bad pass → no locked content. Valid pass → full entry.
-- Existing 44 tests, type check, and browser checks at phone/tablet/desktop (dropdown, keyboard, both random pages, direct URLs, no sideways scrolling).
+- **New:**
+  - `src/lib/creator.functions.ts` (claimCreator)
+  - `src/lib/restore.functions.ts` and `src/lib/restore.server.ts` (request and verify code)
+  - `db/restore_codes.sql`
+  - tests `creator.test.ts` and `restore.test.ts`
+- **Changed:**
+  - `content-pass.server.ts`: creator type, expiry, key fingerprint
+  - `subjunctive-content.functions.ts`
+  - `access.ts`: remove the public code, enable creator only after the server says yes
+  - `use-subjunctive.ts`
+  - `analytics.functions.ts` and `FunnelPanel.tsx`: require a creator pass
+  - `RestorePurchase.tsx`: two-step email then code
+  - `checkout.functions.ts`: the old email restore is removed
+  - `payments.server.ts`: email sending helper
+  - `AGENTS.md`
 
-## Assumptions needing your OK
-- "Random" sits as a new top-navigation item, since none exists today.
-- The 5-card taster is removed because all verbs become free.
-- Earlier buyers confirm once by email to see Medium/Hard examples.
+## 7. Verification before you publish
+
+- **Automated tests:**
+  - creator pass valid, wrong, edited, expired, or issued under an old key
+  - purchase pass doesn't grant creator tools
+  - codes: expiry, single use, attempt limit, rate limits, same reply for unknown emails, successful restore
+  - checkout not paid means no pass
+  - all existing 66 tests
+- **Server checks against the running app:**
+  - direct calls to the content and Funnel functions with no pass, a fake pass, an expired pass and an edited pass all return nothing
+  - a valid creator pass and a real purchase pass return content
+- **Production build:** I'll make a build in a temporary folder and search the browser files for the creator secret, the old code, and every locked example sentence.
+- **Browser, phone/tablet/desktop:**
+  - free user
+  - expired-trial user
+  - purchaser
+  - creator link (the parameter disappears from the address bar, full access across pages, direct links, Random Subjunctive and refresh)
+  - wrong creator value
+  - Random dropdown and sequences, Sayings, no sideways scrolling or errors
+- **Report:** a final checklist of manual steps (set `CREATOR_ACCESS_KEY`, run `db/restore_codes.sql`), with results, for your approval before publishing.
+
+## Decisions needing your OK
+
+- You'll set a new creator code (the old one can't be made secret again).
+- The new `restore_codes` table, created by running one SQL file in Supabase.
+- Expiry times: creator 30 days, purchase 1 year, code 10 minutes.
