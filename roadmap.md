@@ -9,3 +9,4 @@
   - [ ] trial_started logged only after the server accepts a first trial
   - [ ] preserve test-device protection + creator mode
 - [x] Promotional popup — 7-day trial / £4.99 offer
+- [ ] Subjunctive section (nav, landing box, list, detail, access, validation, tests)
