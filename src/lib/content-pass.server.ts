@@ -25,10 +25,13 @@ function fromB64url(s: string): Uint8Array<ArrayBuffer> {
 }
 
 async function key(secret: string) {
-  return crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, [
-    "sign",
-    "verify",
-  ]);
+  return crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"],
+  );
 }
 
 function getSecret(override?: string): string {
@@ -38,8 +41,12 @@ function getSecret(override?: string): string {
 }
 
 export async function signPass(kind: PassKind, ref: string, secret?: string): Promise<string> {
-  const body = b64url(enc.encode(JSON.stringify({ k: kind, r: ref, iat: Date.now() } satisfies PassPayload)));
-  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", await key(getSecret(secret)), enc.encode(body)));
+  const body = b64url(
+    enc.encode(JSON.stringify({ k: kind, r: ref, iat: Date.now() } satisfies PassPayload)),
+  );
+  const sig = new Uint8Array(
+    await crypto.subtle.sign("HMAC", await key(getSecret(secret)), enc.encode(body)),
+  );
   return `${body}.${b64url(sig)}`;
 }
 
@@ -57,7 +64,8 @@ export async function verifyPass(token: unknown, secret?: string): Promise<PassP
     );
     if (!ok) return null;
     const p = JSON.parse(new TextDecoder().decode(fromB64url(body))) as PassPayload;
-    if (!["cs", "email", "pi", "preview"].includes(p.k) || typeof p.r !== "string" || !p.r) return null;
+    if (!["cs", "email", "pi", "preview"].includes(p.k) || typeof p.r !== "string" || !p.r)
+      return null;
     return p;
   } catch {
     return null;

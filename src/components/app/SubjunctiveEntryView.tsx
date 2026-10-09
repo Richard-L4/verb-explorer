@@ -67,7 +67,11 @@ export function SubjunctiveEntryView({
         ) : null}
       </header>
 
-      <div role="tablist" aria-label="Subjunctive triggers" className="mt-6 grid gap-2 sm:grid-cols-3">
+      <div
+        role="tablist"
+        aria-label="Subjunctive triggers"
+        className="mt-6 grid gap-2 sm:grid-cols-3"
+      >
         {entry.triggers.map((t, i) => (
           <button
             key={t.trigger}
@@ -100,7 +104,9 @@ export function SubjunctiveEntryView({
         aria-labelledby={`trigger-tab-${active}`}
         className="surface-card hairline-top relative mt-4 overflow-hidden p-6 sm:p-7"
       >
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">Why the subjunctive</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+          Why the subjunctive
+        </p>
         <p className="mt-2 text-base leading-relaxed text-foreground">{trigger.explanation}</p>
 
         <ul className="mt-6 grid gap-4 lg:grid-cols-3">

@@ -15,7 +15,11 @@ export function shuffle<T>(list: readonly T[], rand: () => number = Math.random)
   return out;
 }
 
-export function nextRun<T>(pool: readonly T[], last: T | undefined, rand: () => number = Math.random): T[] {
+export function nextRun<T>(
+  pool: readonly T[],
+  last: T | undefined,
+  rand: () => number = Math.random,
+): T[] {
   const run = shuffle(pool, rand);
   if (run.length > 1 && last !== undefined && run[0] === last) {
     const a = run[0]!;
@@ -26,7 +30,12 @@ export function nextRun<T>(pool: readonly T[], last: T | undefined, rand: () => 
 }
 
 /** Returns the queue to use when stepping to `index + 1`. Never reshuffles existing items. */
-export function advance<T>(queue: readonly T[], index: number, pool: readonly T[], rand?: () => number): T[] {
+export function advance<T>(
+  queue: readonly T[],
+  index: number,
+  pool: readonly T[],
+  rand?: () => number,
+): T[] {
   if (index < queue.length - 1) return queue as T[];
   return [...queue, ...nextRun(pool, queue[queue.length - 1], rand)];
 }

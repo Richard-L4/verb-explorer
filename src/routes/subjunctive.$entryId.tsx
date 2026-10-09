@@ -111,4 +111,3 @@ function EntryDetail() {
     </PageTransition>
   );
 }
-

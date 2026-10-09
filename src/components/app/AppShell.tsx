@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 
 const linkBase =
-  "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0";
+  "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0 lg:max-xl:px-3 lg:max-xl:[&>svg:first-child]:hidden";
 
 function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
   return (

@@ -51,14 +51,24 @@ export function RandomMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={cn(linkBase, active ? activeCls : idleCls, "outline-none focus-visible:ring-2 focus-visible:ring-ring")}>
+      <DropdownMenuTrigger
+        className={cn(
+          linkBase,
+          active ? activeCls : idleCls,
+          "outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        )}
+      >
         <Shuffle className="size-4 shrink-0" aria-hidden="true" />
         <span>Random</span>
         <ChevronDown className="size-3.5 shrink-0 opacity-70" aria-hidden="true" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-52 rounded-2xl p-1.5">
         {options.map(({ to, label, icon: Icon }) => (
-          <DropdownMenuItem key={to} asChild className="min-h-11 cursor-pointer rounded-xl px-3 text-sm font-medium">
+          <DropdownMenuItem
+            key={to}
+            asChild
+            className="min-h-11 cursor-pointer rounded-xl px-3 text-sm font-medium"
+          >
             <Link to={to} onClick={onNavigate}>
               <Icon className="size-4 text-primary" aria-hidden="true" />
               {label}

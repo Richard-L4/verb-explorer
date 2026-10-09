@@ -63,7 +63,10 @@ export interface PublicSubjunctiveEntry {
   triggers?: SubjunctiveEntry["triggers"];
 }
 
-export function filterEntryForAccess(entry: SubjunctiveEntry, paid: boolean): PublicSubjunctiveEntry {
+export function filterEntryForAccess(
+  entry: SubjunctiveEntry,
+  paid: boolean,
+): PublicSubjunctiveEntry {
   if (!subjunctiveEntryOpen(entry.id, paid)) return { id: entry.id, title: entry.title };
   return {
     id: entry.id,

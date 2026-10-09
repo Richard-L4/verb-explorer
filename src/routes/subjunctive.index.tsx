@@ -51,7 +51,11 @@ function SubjunctiveList() {
       <PageHeader
         eyebrow="Subjunctive"
         title="When Spanish needs the subjunctive"
-        description={paid ? `${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and nine graded examples.` : `${SUBJUNCTIVE_TOTAL} verb pairs. The first 20 are free with Easy examples; Medium, Hard and the full set come with full access.`}
+        description={
+          paid
+            ? `${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and nine graded examples.`
+            : `${SUBJUNCTIVE_TOTAL} verb pairs. The first 20 are free with Easy examples; Medium, Hard and the full set come with full access.`
+        }
       />
 
       <div className="relative mb-7">
@@ -122,7 +126,9 @@ function SubjunctiveList() {
                   ) : null}
                   <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
                     <span className="capitalize">
-                      {triggers ? triggers.map((t) => t.category).join(" · ") : "Requires full access"}
+                      {triggers
+                        ? triggers.map((t) => t.category).join(" · ")
+                        : "Requires full access"}
                     </span>
                     <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-primary">
                       {locked ? "Unlock" : "Study"}

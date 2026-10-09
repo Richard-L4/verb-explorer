@@ -17,10 +17,14 @@ export const Route = createFileRoute("/random-subjunctive")({
         content:
           "Practise the Spanish subjunctive one verb pair at a time, in random order, with triggers and graded examples.",
       },
-      { property: "og:title", content: "Random Subjunctive — Spanish subjunctive at random | Verb Wise" },
+      {
+        property: "og:title",
+        content: "Random Subjunctive — Spanish subjunctive at random | Verb Wise",
+      },
       {
         property: "og:description",
-        content: "Random subjunctive practice: three triggers per verb pair, shuffled once per session.",
+        content:
+          "Random subjunctive practice: three triggers per verb pair, shuffled once per session.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -33,7 +37,12 @@ function RandomSubjunctive() {
 
   // Pool = only entries this browser may open. Unpaid: the 20 free entries.
   const pool = useMemo(() => {
-    const ids = new Set(randomSubjunctivePool(entries.map((e) => e.id), paid));
+    const ids = new Set(
+      randomSubjunctivePool(
+        entries.map((e) => e.id),
+        paid,
+      ),
+    );
     return entries.filter((e) => ids.has(e.id) && e.triggers);
   }, [entries, paid]);
 
@@ -110,7 +119,9 @@ function RandomSubjunctive() {
             <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
               Previous
             </span>
-            <span className="truncate font-display font-bold">{before?.title ?? "Start of session"}</span>
+            <span className="truncate font-display font-bold">
+              {before?.title ?? "Start of session"}
+            </span>
           </span>
         </button>
         <button
@@ -123,7 +134,9 @@ function RandomSubjunctive() {
             <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
               Next
             </span>
-            <span className="truncate font-display font-bold">{upcoming?.title ?? "A fresh shuffle"}</span>
+            <span className="truncate font-display font-bold">
+              {upcoming?.title ?? "A fresh shuffle"}
+            </span>
           </span>
           <ArrowRight className="size-5 shrink-0 text-primary" aria-hidden="true" />
         </button>

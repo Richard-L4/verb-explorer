@@ -98,7 +98,7 @@ function RandomCards() {
       {current ? (
         <VerbCardBody
           card={current}
-          meta={`Card ${((index % available.length) + 1)} of ${available.length}${index >= available.length ? ` · round ${Math.floor(index / available.length) + 1}` : ""}`}
+          meta={`Card ${(index % available.length) + 1} of ${available.length}${index >= available.length ? ` · round ${Math.floor(index / available.length) + 1}` : ""}`}
         />
       ) : null}
 
@@ -118,7 +118,9 @@ function RandomCards() {
               Previous
             </span>
             <span className="truncate font-display font-bold">
-              {index > 0 ? (queue[index - 1]?.sides?.[0]?.word ?? queue[index - 1]?.title) : "Start of session"}
+              {index > 0
+                ? (queue[index - 1]?.sides?.[0]?.word ?? queue[index - 1]?.title)
+                : "Start of session"}
             </span>
           </span>
         </button>
@@ -126,7 +128,7 @@ function RandomCards() {
         <button
           type="button"
           onClick={next}
-                    className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)] disabled:cursor-not-allowed disabled:opacity-40"
+          className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)] disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="min-w-0">
             <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
@@ -142,7 +144,6 @@ function RandomCards() {
           />
         </button>
       </nav>
-
     </PageTransition>
   );
 }

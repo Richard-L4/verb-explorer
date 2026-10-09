@@ -2,9 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 async function checks() {
-  const { purchaseExists, purchaseExistsForEmail, paymentIntentPurchased } = await import(
-    "./payments.server"
-  );
+  const { purchaseExists, purchaseExistsForEmail, paymentIntentPurchased } =
+    await import("./payments.server");
   const { getRequest } = await import("@tanstack/react-start/server");
   const { isLovablePreviewHost } = await import("./preview");
   return {
@@ -27,7 +26,10 @@ export const getProtectedSubjunctive = createServerFn({ method: "POST" })
     try {
       ok = await passGrantsAccess(data.pass, await checks());
     } catch (error) {
-      console.error("[subjunctive] pass check failed:", error instanceof Error ? error.message : error);
+      console.error(
+        "[subjunctive] pass check failed:",
+        error instanceof Error ? error.message : error,
+      );
     }
     if (!ok) return { paid: false as const, entries: null };
     const { fullSubjunctive } = await import("./subjunctive-full.server");

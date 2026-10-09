@@ -57,7 +57,9 @@ describe("public subjunctive file", () => {
     expect(pub).toHaveLength(100);
     const withContent = pub.filter((e) => e.triggers);
     expect(withContent.map((e) => e.id)).toEqual([...FREE_SUBJUNCTIVE_IDS]);
-    pub.filter((e) => !e.triggers).forEach((e) => expect(Object.keys(e).sort()).toEqual(["id", "title"]));
+    pub
+      .filter((e) => !e.triggers)
+      .forEach((e) => expect(Object.keys(e).sort()).toEqual(["id", "title"]));
   });
   it("each free entry has 3 triggers with exactly the one Easy example", () => {
     for (const e of pub.filter((x) => x.triggers)) {
@@ -70,7 +72,9 @@ describe("public subjunctive file", () => {
   it("contains no Medium or Hard sentence, and nothing from the locked 80", () => {
     const text = JSON.stringify(pub);
     const freeExplanations = new Set(
-      full.filter((e) => isFreeSubjunctive(e.id)).flatMap((e) => e.triggers.map((t) => t.explanation)),
+      full
+        .filter((e) => isFreeSubjunctive(e.id))
+        .flatMap((e) => e.triggers.map((t) => t.explanation)),
     );
     for (const e of full) {
       for (const t of e.triggers) {
@@ -142,14 +146,21 @@ describe("purchase pass", () => {
   const secret = "test-secret-value-for-unit-tests-only";
   const yes = async () => true;
   const no = async () => false;
-  const checks = { sessionPaid: yes, emailPaid: yes, paymentIntentPaid: yes, isPreviewRequest: () => false };
+  const checks = {
+    sessionPaid: yes,
+    emailPaid: yes,
+    paymentIntentPaid: yes,
+    isPreviewRequest: () => false,
+  };
 
   it("rejects missing, garbage and tampered passes", async () => {
     expect(await passGrantsAccess("", checks, secret)).toBe(false);
     expect(await passGrantsAccess("abc.def", checks, secret)).toBe(false);
     const good = await signPass("cs", "cs_test_1", secret);
     const [body, sig] = good.split(".");
-    const forged = Buffer.from(JSON.stringify({ k: "cs", r: "cs_other", iat: 1 })).toString("base64url");
+    const forged = Buffer.from(JSON.stringify({ k: "cs", r: "cs_other", iat: 1 })).toString(
+      "base64url",
+    );
     expect(await passGrantsAccess(`${forged}.${sig}`, checks, secret)).toBe(false);
     expect(await passGrantsAccess(`${body}.${sig}x`, checks, secret)).toBe(false);
   });
@@ -165,6 +176,8 @@ describe("purchase pass", () => {
   it("preview pass only works on a preview request", async () => {
     const p = await signPass("preview", "preview", secret);
     expect(await passGrantsAccess(p, checks, secret)).toBe(false);
-    expect(await passGrantsAccess(p, { ...checks, isPreviewRequest: () => true }, secret)).toBe(true);
+    expect(await passGrantsAccess(p, { ...checks, isPreviewRequest: () => true }, secret)).toBe(
+      true,
+    );
   });
 });
