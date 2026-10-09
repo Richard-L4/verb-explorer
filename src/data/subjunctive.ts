@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import rawEntries from "./subjunctive.json";
 import { getCard } from "./cards";
 
@@ -33,8 +32,11 @@ export const EXAMPLES_PER_TRIGGER = 3;
 const DIFFICULTIES = ["easy", "medium", "hard"];
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
+/** Shape used only while validating unknown JSON. */
+type Loose = { [k: string]: unknown } & Partial<Record<"id" | "title" | "triggers" | "examples" | "difficulty" | "level" | "contrast", unknown>>;
+
 const isText = (v: unknown): v is string => typeof v === "string" && v.trim().length > 0;
-const isObj = (v: unknown): v is Record<string, any> => typeof v === "object" && v !== null && !Array.isArray(v);
+const isObj = (v: unknown): v is Loose => typeof v === "object" && v !== null && !Array.isArray(v);
 
 /**
  * Lists every problem with one entry. Empty list = complete and usable.
