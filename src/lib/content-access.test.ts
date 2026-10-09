@@ -69,13 +69,18 @@ describe("public subjunctive file", () => {
   });
   it("contains no Medium or Hard sentence, and nothing from the locked 80", () => {
     const text = JSON.stringify(pub);
+    const freeExplanations = new Set(
+      full.filter((e) => isFreeSubjunctive(e.id)).flatMap((e) => e.triggers.map((t) => t.explanation)),
+    );
     for (const e of full) {
       for (const t of e.triggers) {
         for (const x of t.examples) {
           const allowed = x.difficulty === "easy" && isFreeSubjunctive(e.id);
           if (!allowed) expect(text.includes(JSON.stringify(x.es))).toBe(false);
         }
-        if (!isFreeSubjunctive(e.id)) expect(text.includes(JSON.stringify(t.explanation))).toBe(false);
+        // Generic explanations shared with a free entry are legitimately public.
+        if (!isFreeSubjunctive(e.id) && !freeExplanations.has(t.explanation))
+          expect(text.includes(JSON.stringify(t.explanation))).toBe(false);
       }
     }
   });
