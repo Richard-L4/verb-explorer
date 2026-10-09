@@ -37,22 +37,13 @@ export const getProtectedSubjunctive = createServerFn({ method: "POST" })
   });
 
 /**
- * Issues a pass without user input where the server can verify entitlement:
- * Lovable Preview (existing creator mode), or an earlier purchase linked to
- * this browser's anonymous device id in Stripe.
+ * Issues a pass without user input only where the server itself can verify
+ * entitlement: a request served from a Lovable Preview host. No browser-supplied
+ * identifier is ever accepted as proof of purchase.
  */
-export const requestAutomaticPass = createServerFn({ method: "POST" })
-  .inputValidator((input) =>
-    z.object({ deviceId: z.string().min(8).max(128).nullable() }).parse(input),
-  )
-  .handler(async ({ data }) => {
-    const { signPass } = await import("./content-pass.server");
-    const c = await checks();
-    if (c.isPreviewRequest()) return { pass: await signPass("preview", "preview") };
-    if (data.deviceId) {
-      const { findPurchaseForDevice } = await import("./payments.server");
-      const pi = await findPurchaseForDevice(data.deviceId);
-      if (pi) return { pass: await signPass("pi", pi) };
-    }
-    return { pass: null };
-  });
+export const requestAutomaticPass = createServerFn({ method: "POST" }).handler(async () => {
+  const { signPass } = await import("./content-pass.server");
+  const c = await checks();
+  if (c.isPreviewRequest()) return { pass: await signPass("preview", "preview") };
+  return { pass: null };
+});

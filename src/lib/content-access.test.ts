@@ -111,6 +111,14 @@ describe("full dataset never reaches browser code", () => {
   });
 });
 
+describe("automatic pass", () => {
+  it("never accepts a browser-supplied identifier", () => {
+    const fns = readFileSync("src/lib/subjunctive-content.functions.ts", "utf8");
+    const auto = fns.slice(fns.indexOf("export const requestAutomaticPass"));
+    expect(auto).not.toMatch(/inputValidator|deviceId|data\./);
+  });
+});
+
 describe("random subjunctive pool", () => {
   const ids = full.map((e) => e.id);
   it("unpaid pool is exactly the free 20", () => {

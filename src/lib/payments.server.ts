@@ -499,25 +499,3 @@ export async function paymentIntentPurchased(paymentIntentId: string): Promise<b
     .limit(1);
   return Boolean(data && data.length);
 }
-
-/**
- * Automatic restore for earlier buyers: checkout stored the anonymous
- * analytics device id in the PaymentIntent metadata. Looks for a succeeded
- * PaymentIntent with that device id that also has a recorded purchase.
- * Returns null when Stripe search is unavailable or nothing matches.
- */
-export async function findPurchaseForDevice(deviceId: string): Promise<string | null> {
-  if (!/^[A-Za-z0-9_-]{8,128}$/.test(deviceId)) return null;
-  try {
-    const res = await getStripe().paymentIntents.search({
-      query: `metadata['device_id']:'${deviceId}' AND status:'succeeded'`,
-      limit: 5,
-    });
-    for (const pi of res.data) {
-      if (await paymentIntentPurchased(pi.id)) return pi.id;
-    }
-  } catch (error) {
-    console.error("[restore] device lookup unavailable:", error instanceof Error ? error.message : error);
-  }
-  return null;
-}
