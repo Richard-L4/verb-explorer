@@ -157,7 +157,7 @@ describe("purchase pass", () => {
   const checks = {
     sessionPaid: yes,
     emailPaid: yes,
-    paymentIntentPaid: yes,
+    creatorFingerprint: async () => null,
     isPreviewRequest: () => false,
   };
 

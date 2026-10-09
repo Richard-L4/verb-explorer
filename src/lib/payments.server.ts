@@ -488,14 +488,23 @@ export async function purchaseExistsForEmail(
   );
 }
 
-/** True when a paid purchase row exists for this Stripe PaymentIntent. */
-export async function paymentIntentPurchased(paymentIntentId: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
-  const { data } = await db
-    .from("purchases")
-    .select("id")
-    .eq("stripe_payment_intent", paymentIntentId)
-    .eq("status", "paid")
-    .limit(1);
-  return Boolean(data && data.length);
+
+/** Sends a one-time restore code via the existing Resend setup. Never logs the code. */
+export async function sendRestoreCodeEmail(email: string, code: string): Promise<void> {
+  const apiKey = readEnv("RESEND_API_KEY");
+  if (!apiKey) throw new Error("email unavailable");
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: "noreply@richard-wells.com",
+      to: email,
+      subject: "Your Verb Wise restore code",
+      html: `<p>Your Verb Wise restore code is:</p><p style="font-size:24px;font-weight:bold;letter-spacing:4px">${code}</p><p>It expires in 10 minutes and can be used once. If you didn't ask for this, you can ignore this email.</p>`,
+    }),
+  });
+  if (!response.ok) {
+    console.error("[restore] email send failed with status", response.status);
+    throw new Error("email unavailable");
+  }
 }

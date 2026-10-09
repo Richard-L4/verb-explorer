@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { ANALYTICS_EVENTS } from "./analytics";
-import { CREATOR_QUERY_VALUE } from "./access";
 
 const eventSchema = z.object({
   deviceId: z.string().min(8).max(128),
@@ -32,13 +31,16 @@ export const logTrialEvent = createServerFn({ method: "POST" })
 
 
 /**
- * Creator-only aggregate read. Gated by the existing creator key, so the
+ * Creator-only aggregate read. Gated by a server-verified creator pass, so the
  * funnel is not a public endpoint. Returns distinct device counts only.
  */
 export const getFunnelCounts = createServerFn({ method: "POST" })
-  .inputValidator((input) => z.object({ key: z.string() }).parse(input))
+  .inputValidator((input) => z.object({ pass: z.string().max(2048) }).parse(input))
   .handler(async ({ data }) => {
-    if (data.key !== CREATOR_QUERY_VALUE) {
+    const { passRole } = await import("./content-pass.server");
+    const { buildChecks } = await import("./content-checks.server");
+    // Creator pass only — a purchase pass never opens the funnel.
+    if ((await passRole(data.pass, await buildChecks())) !== "creator") {
       throw new Error("Forbidden");
     }
     const { getFunnelCountsFromDb, getRepeatVisitorsFromDb } = await import(

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { BarChart3, Loader2 } from "lucide-react";
 import { getFunnelCounts } from "@/lib/analytics.functions";
-import { CREATOR_QUERY_VALUE } from "@/lib/access";
+import { readContentPass } from "@/lib/content-pass-store";
 import type { AnalyticsEvent } from "@/lib/analytics";
 
 const ROWS: { event: AnalyticsEvent; label: string }[] = [
@@ -95,7 +95,7 @@ export function FunnelPanel() {
     let cancelled = false;
     (async () => {
       try {
-        const result = await fetchCounts({ data: { key: CREATOR_QUERY_VALUE } });
+        const result = await fetchCounts({ data: { pass: readContentPass() ?? "" } });
         if (!cancelled) {
           setState({
             status: "ready",
