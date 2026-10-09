@@ -134,13 +134,13 @@ describe("server-side writer", () => {
       { device_id: "d2", event: "reminder_3" },
     ];
     const spy = vi.spyOn(mod, "getSupabaseAdmin").mockReturnValue({
-      from: () => ({ select: async () => ({ data: rows, error: null }) }),
+      from: () => ({ select: () => ({ range: async () => ({ data: rows, error: null }) }) }),
     } as never);
 
     const { counts, available } = await getFunnelCountsFromDb();
     expect(available).toBe(true);
-    // app_visit has a one-time display baseline of -10 (creator test
-    // devices); 2 raw devices clamp to 0. Other events are unadjusted.
+    // 2 raw devices - 10 (7 Sep baseline) + 3 (9 Oct estimate) clamps to 0.
+
     expect(counts.app_visit).toBe(0);
     expect(counts.reminder_3).toBe(1);
     expect(counts.purchase_completed).toBe(0);
