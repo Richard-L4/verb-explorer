@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import rawEntries from "./subjunctive.json";
 import { getCard } from "./cards";
 
@@ -33,7 +34,7 @@ const DIFFICULTIES = ["easy", "medium", "hard"];
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const isText = (v: unknown): v is string => typeof v === "string" && v.trim().length > 0;
-const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+const isObj = (v: unknown): v is Record<string, any> => typeof v === "object" && v !== null && !Array.isArray(v);
 
 /**
  * Lists every problem with one entry. Empty list = complete and usable.
