@@ -488,17 +488,6 @@ export async function purchaseExistsForEmail(
   );
 }
 
-/** True when a paid purchase row exists for this Stripe PaymentIntent. */
-export async function paymentIntentPurchased(paymentIntentId: string): Promise<boolean> {
-  const db = getSupabaseAdmin();
-  const { data } = await db
-    .from("purchases")
-    .select("id")
-    .eq("stripe_payment_intent", paymentIntentId)
-    .eq("status", "paid")
-    .limit(1);
-  return Boolean(data && data.length);
-}
 
 /** Sends a one-time restore code via the existing Resend setup. Never logs the code. */
 export async function sendRestoreCodeEmail(email: string, code: string): Promise<void> {
