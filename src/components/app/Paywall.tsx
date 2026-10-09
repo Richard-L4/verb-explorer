@@ -14,7 +14,7 @@ const MARKETING =
   "Yes, I'd like to hear about future products and updates from Richard Wells.";
 
 export function Paywall({ title }: { title?: string }) {
-  const { price, freeCardCount } = useAccess();
+  const { price } = useAccess();
   const startCheckout = useServerFn(createCheckoutSession);
   const [agreed, setAgreed] = useState(false);
   const [marketing, setMarketing] = useState(false);
@@ -61,7 +61,7 @@ export function Paywall({ title }: { title?: string }) {
         <p className="mt-3 text-base text-foreground">One-off payment. Yours permanently. No subscription.</p>
         {title ? (
           <p className="mt-2 text-sm text-muted-foreground">
-            “{title}” is part of the full deck. The first {freeCardCount} cards stay free forever.
+            “{title}” needs full access. All 100 verb cards stay free for everyone.
           </p>
         ) : null}
 

@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest";
-import {
-  entryProblems,
-  isCompleteEntry,
-  subjunctiveEntries,
-  completeEntryCount,
-} from "./subjunctive";
+import { entryProblems, isCompleteEntry, type SubjunctiveEntry } from "./subjunctive";
+import raw from "./subjunctive.json";
+
+const subjunctiveEntries = raw as SubjunctiveEntry[];
+const completeEntryCount = subjunctiveEntries.filter((e) => isCompleteEntry(e)).length;
 import { getCard } from "./cards";
 
 const ex = (extra: object = {}) => ({

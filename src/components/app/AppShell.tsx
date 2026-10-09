@@ -8,19 +8,21 @@ import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
 import { PostStudyPanel } from "./PostStudyPanel";
 import { PromoPopup } from "./PromoPopup";
+import { RandomMenu } from "./RandomMenu";
+import { Fragment } from "react";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 
 const linkBase =
-  "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0";
+  "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0 lg:max-xl:px-3 lg:max-xl:[&>svg:first-child]:hidden";
 
 function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
   return (
     <>
       {navItems.map(({ to, label, icon: Icon }) => (
+        <Fragment key={to}>
         <Link
-          key={to}
           to={to}
           onClick={onNavigate}
           activeOptions={{ exact: to === "/" }}
@@ -37,6 +39,10 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
           <Icon className="size-4 shrink-0" aria-hidden="true" />
           <span>{label}</span>
         </Link>
+        {to === "/sayings" ? (
+          <RandomMenu linkBase={linkBase} vertical={vertical} onNavigate={onNavigate} />
+        ) : null}
+        </Fragment>
       ))}
     </>
   );

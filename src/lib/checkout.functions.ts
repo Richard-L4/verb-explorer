@@ -98,10 +98,13 @@ export const confirmCheckout = createServerFn({
       "./payments.server"
     );
 
+    const { signPass } = await import("./content-pass.server");
+
     if (await purchaseExists(data.sessionId)) {
       return {
         paid: true,
         recorded: true,
+        pass: await signPass("cs", data.sessionId),
       };
     }
 
@@ -113,6 +116,7 @@ export const confirmCheckout = createServerFn({
       return {
         paid: false,
         recorded: false,
+        pass: null,
       };
     }
 
@@ -121,6 +125,7 @@ export const confirmCheckout = createServerFn({
     return {
       paid: true,
       recorded: true,
+      pass: await signPass("cs", data.sessionId),
     };
   });
 
@@ -141,7 +146,11 @@ export const restorePurchase = createServerFn({
   .handler(async ({ data }) => {
     const { purchaseExistsForEmail } = await import("./payments.server");
 
+    const found = await purchaseExistsForEmail(data.email);
+    const { signPass } = await import("./content-pass.server");
+
     return {
-      found: await purchaseExistsForEmail(data.email),
+      found,
+      pass: found ? await signPass("email", data.email.trim().toLowerCase()) : null,
     };
   });

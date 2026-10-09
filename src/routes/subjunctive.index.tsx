@@ -2,13 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowRight, Lock, Search as SearchIcon } from "lucide-react";
-import {
-  subjunctiveEntries,
-  completeEntryCount,
-  isEntryComplete,
-  searchEntries,
-} from "@/data/subjunctive";
-import { useAccess } from "@/hooks/use-access";
+import { SUBJUNCTIVE_TOTAL, searchSubjunctive } from "@/data/subjunctive-public";
+import { isFreeSubjunctive } from "@/lib/content-access";
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 
@@ -37,7 +33,7 @@ export const Route = createFileRoute("/subjunctive/")({
 });
 
 function SubjunctiveList() {
-  const { isLocked } = useAccess();
+  const { entries, paid } = useSubjunctive();
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
   const [shown, setShown] = useState(PAGE);
@@ -47,7 +43,7 @@ function SubjunctiveList() {
   }, [query]);
   useEffect(() => setShown(PAGE), [debounced]);
 
-  const results = debounced.trim() ? searchEntries(debounced) : subjunctiveEntries;
+  const results = searchSubjunctive(entries, debounced);
   const visible = results.slice(0, shown);
 
   return (
@@ -55,7 +51,11 @@ function SubjunctiveList() {
       <PageHeader
         eyebrow="Subjunctive"
         title="When Spanish needs the subjunctive"
-        description={`${completeEntryCount} verb pairs, each with three triggers and nine graded examples.`}
+        description={
+          paid
+            ? `${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and nine graded examples.`
+            : `${SUBJUNCTIVE_TOTAL} verb pairs. The first 20 are free with Easy examples; Medium, Hard and the full set come with full access.`
+        }
       />
 
       <div className="relative mb-7">
@@ -76,8 +76,9 @@ function SubjunctiveList() {
       {visible.length ? (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((entry, i) => {
-            const locked = isLocked(entry.id);
-            const complete = isEntryComplete(entry.id);
+            const triggers = entry.triggers;
+            const locked = !triggers;
+            const easyOnly = !paid && isFreeSubjunctive(entry.id);
             return (
               <motion.div
                 key={entry.id}
@@ -101,18 +102,18 @@ function SubjunctiveList() {
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
                         <Lock className="size-3" aria-hidden="true" /> Locked
                       </span>
-                    ) : !complete ? (
+                    ) : easyOnly ? (
                       <span className="rounded-full border border-border/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                        Coming soon
+                        Free · Easy
                       </span>
                     ) : null}
                   </div>
                   <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">
                     {entry.title}
                   </h3>
-                  {complete && !locked ? (
+                  {triggers ? (
                     <div className="flex flex-wrap gap-2">
-                      {entry.triggers.map((t) => (
+                      {triggers.map((t) => (
                         <span
                           key={t.trigger}
                           lang="es"
@@ -125,7 +126,9 @@ function SubjunctiveList() {
                   ) : null}
                   <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
                     <span className="capitalize">
-                      {complete ? entry.triggers.map((t) => t.category).join(" · ") : "In progress"}
+                      {triggers
+                        ? triggers.map((t) => t.category).join(" · ")
+                        : "Requires full access"}
                     </span>
                     <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-primary">
                       {locked ? "Unlock" : "Study"}

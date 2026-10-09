@@ -10,3 +10,4 @@
   - [ ] preserve test-device protection + creator mode
 - [x] Promotional popup — 7-day trial / £4.99 offer
 - [x] Subjunctive section (nav, landing box, list, detail, access, validation, tests)
+- [x] Random dropdown (Random Verbs / Random Subjunctive), all verbs free, 20 free Easy subjunctive entries, server-protected paid content

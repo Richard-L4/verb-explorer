@@ -15,6 +15,7 @@ import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RandomRouteImport } from './routes/random'
+import { Route as RandomSubjunctiveRouteImport } from './routes/random-subjunctive'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SayingsRouteImport } from './routes/sayings'
 import { Route as SearchRouteImport } from './routes/search'
@@ -60,6 +61,11 @@ const QuizRoute = QuizRouteImport.update({
 const RandomRoute = RandomRouteImport.update({
   id: '/random',
   path: '/random',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomSubjunctiveRoute = RandomSubjunctiveRouteImport.update({
+  id: '/random-subjunctive',
+  path: '/random-subjunctive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RefundsRoute = RefundsRouteImport.update({
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/random': typeof RandomRoute
+  '/random-subjunctive': typeof RandomSubjunctiveRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/random': typeof RandomRoute
+  '/random-subjunctive': typeof RandomSubjunctiveRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/random': typeof RandomRoute
+  '/random-subjunctive': typeof RandomSubjunctiveRoute
   '/refunds': typeof RefundsRoute
   '/sayings': typeof SayingsRoute
   '/search': typeof SearchRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/random'
+    | '/random-subjunctive'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/random'
+    | '/random-subjunctive'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/random'
+    | '/random-subjunctive'
     | '/refunds'
     | '/sayings'
     | '/search'
@@ -299,6 +311,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
   RandomRoute: typeof RandomRoute
+  RandomSubjunctiveRoute: typeof RandomSubjunctiveRoute
   RefundsRoute: typeof RefundsRoute
   SayingsRoute: typeof SayingsRoute
   SearchRoute: typeof SearchRoute
@@ -359,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/random'
       fullPath: '/random'
       preLoaderRoute: typeof RandomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random-subjunctive': {
+      id: '/random-subjunctive'
+      path: '/random-subjunctive'
+      fullPath: '/random-subjunctive'
+      preLoaderRoute: typeof RandomSubjunctiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/refunds': {
@@ -483,6 +503,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
   RandomRoute: RandomRoute,
+  RandomSubjunctiveRoute: RandomSubjunctiveRoute,
   RefundsRoute: RefundsRoute,
   SayingsRoute: SayingsRoute,
   SearchRoute: SearchRoute,

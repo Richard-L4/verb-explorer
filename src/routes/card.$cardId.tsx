@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getCard, getNeighbours, getCardIndex, cardCount } from "@/data/cards";
 import { useLearner } from "@/hooks/use-learner";
-import { useAccess } from "@/hooks/use-access";
+import { verbCardLocked } from "@/lib/content-access";
 import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/card/$cardId")({
 function CardDetail() {
   const { card } = Route.useLoaderData();
   const { markViewed } = useLearner();
-  const { isLocked } = useAccess();
+  const isLocked = verbCardLocked;
   const locked = isLocked(card.id);
   const { prev, next } = getNeighbours(card.id);
   const position = getCardIndex(card.id) + 1;

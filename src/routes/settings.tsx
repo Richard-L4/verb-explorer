@@ -29,7 +29,7 @@ function Settings() {
   const { reset, studiedCount, learnedCount, state } = useLearner();
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price, bannerPreview, setBannerPreview } =
+  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, price, bannerPreview, setBannerPreview } =
     useAccess();
   // Informational only — read after hydration, no in-app control removes it.
   const [testDevice, setTestDevice] = useState(false);
@@ -78,8 +78,8 @@ function Settings() {
             : unlocked
             ? `Unlocked. You paid the one-off ${price} and have permanent access to every card.`
             : inTrial
-              ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After that the first ${freeCardCount} cards stay free and the rest need the one-off ${price} unlock.`
-              : `Trial finished. The first ${freeCardCount} cards are free; the rest need the one-off ${price} unlock.`}
+              ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. All verb cards stay free; Sayings, the full Subjunctive and its Medium and Hard examples need the one-off ${price} unlock.`
+              : `Trial finished. All verb cards and 20 Subjunctive entries stay free; the rest needs the one-off ${price} unlock.`}
         </p>
         {!creator && !unlocked ? (
           <div className="mt-5">

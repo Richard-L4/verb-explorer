@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
 import { cards, type VerbCard } from "@/data/cards";
-import { useAccess } from "@/hooks/use-access";
+import { advance, shuffle } from "@/lib/random-sequence";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
@@ -12,13 +12,13 @@ export const Route = createFileRoute("/random")({
   component: RandomCards,
   head: () => ({
     meta: [
-      { title: "Random Cards — Spanish verbs at random | Verbs" },
+      { title: "Random Verbs — Spanish verb cards at random | Verb Wise" },
       {
         name: "description",
         content:
           "Flick through Spanish verb cards at random. One card at a time, with the next verb always shown so you can decide before you move on.",
       },
-      { property: "og:title", content: "Random Cards — Spanish verbs at random | Verbs" },
+      { property: "og:title", content: "Random Verbs — Spanish verb cards at random | Verb Wise" },
       {
         property: "og:description",
         content: "Flick through Spanish verb cards at random, one useful contrast at a time.",
@@ -27,45 +27,21 @@ export const Route = createFileRoute("/random")({
   }),
 });
 
-function shuffle(list: VerbCard[]): VerbCard[] {
-  const out = [...list];
-  for (let i = out.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const a = out[i]!;
-    const b = out[j]!;
-    out[i] = b;
-    out[j] = a;
-  }
-  return out;
-}
-
-/** Cards shown per session once the trial has ended and nothing was purchased. */
-const TASTER_LIMIT = 5;
-
 function RandomCards() {
-  const { isLocked, fullAccess, price } = useAccess();
   const { markViewed } = useLearner();
-
-  // Expired, unpurchased visitors get a short taster drawn from the whole deck.
-  const limited = !fullAccess;
-
-  const available = useMemo(
-    () => (limited ? cards : cards.filter((c) => !isLocked(c.id))),
-    [isLocked, limited],
-  );
+  // Every verb card is free, so the pool is always the full deck.
+  const available = cards;
 
   const [queue, setQueue] = useState<VerbCard[]>([]);
   const [index, setIndex] = useState(0);
 
-  // First shuffled run, created after hydration so access state is known.
-  // Nothing is persisted, so every fresh visit produces a different order.
-  // Shuffle once, outside the state updater so a re-render can never reshuffle.
+  // Shuffled once when the session starts (after hydration); never reshuffled on Next.
   const seeded = useRef(false);
   useEffect(() => {
-    if (!available.length || seeded.current) return;
+    if (seeded.current) return;
     seeded.current = true;
-    setQueue(shuffle(available).slice(0, limited ? TASTER_LIMIT : available.length));
-  }, [available, limited]);
+    setQueue(shuffle(available));
+  }, [available]);
 
   const current = queue[index];
 
@@ -77,27 +53,12 @@ function RandomCards() {
   }, [current, markViewed]);
 
   const next = useCallback(() => {
-    if (limited) {
-      setIndex((i) => Math.min(i + 1, TASTER_LIMIT - 1));
-      return;
-    }
-    setQueue((q) => {
-      // At the end of a run, start a fresh shuffle after the ones already seen.
-      if (index >= q.length - 1) return [...q, ...shuffle(available)];
-      return q;
-    });
+    setQueue((q) => advance(q, index, available));
     setIndex((i) => i + 1);
-  }, [available, index, limited]);
+  }, [available, index]);
 
   const previous = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
 
-  /** Taster only: throw the set away and draw five different cards. */
-  const reshuffle = useCallback(() => {
-    setQueue(shuffle(available).slice(0, TASTER_LIMIT));
-    setIndex(0);
-  }, [available]);
-
-  const atTasterEnd = limited && index >= Math.min(TASTER_LIMIT, queue.length) - 1;
   const upcoming = queue[index + 1];
   const upcomingLabel = upcoming?.sides?.[0]?.word ?? upcoming?.title;
 
@@ -105,9 +66,9 @@ function RandomCards() {
     return (
       <PageTransition>
         <section className="surface-card p-7 text-center sm:p-10">
-          <h1 className="font-display text-2xl font-bold">Random Cards</h1>
+          <h1 className="font-display text-2xl font-bold">Random Verbs</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            There are no cards open to you just yet.
+            There are no cards in the deck just yet.
           </p>
           <Link
             to="/browse"
@@ -124,7 +85,7 @@ function RandomCards() {
     <PageTransition>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-          <Shuffle className="size-3.5" aria-hidden="true" /> Random cards
+          <Shuffle className="size-3.5" aria-hidden="true" /> Random verbs
         </span>
         <Link
           to="/browse"
@@ -137,7 +98,7 @@ function RandomCards() {
       {current ? (
         <VerbCardBody
           card={current}
-          meta={limited ? `Card ${index + 1} of ${TASTER_LIMIT}` : `Card ${index + 1} this session`}
+          meta={`Card ${(index % available.length) + 1} of ${available.length}${index >= available.length ? ` · round ${Math.floor(index / available.length) + 1}` : ""}`}
         />
       ) : null}
 
@@ -157,7 +118,9 @@ function RandomCards() {
               Previous
             </span>
             <span className="truncate font-display font-bold">
-              {index > 0 ? (queue[index - 1]?.sides?.[0]?.word ?? queue[index - 1]?.title) : "Start of session"}
+              {index > 0
+                ? (queue[index - 1]?.sides?.[0]?.word ?? queue[index - 1]?.title)
+                : "Start of session"}
             </span>
           </span>
         </button>
@@ -165,7 +128,6 @@ function RandomCards() {
         <button
           type="button"
           onClick={next}
-          disabled={atTasterEnd}
           className="surface-card group flex min-h-16 items-center justify-end gap-3 p-4 text-right transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)] disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="min-w-0">
@@ -173,7 +135,7 @@ function RandomCards() {
               Next
             </span>
             <span className="truncate font-display font-bold">
-              {atTasterEnd ? "End of this five" : (upcomingLabel ?? "Another card")}
+              {upcomingLabel ?? "A fresh shuffle"}
             </span>
           </span>
           <ArrowRight
@@ -182,29 +144,6 @@ function RandomCards() {
           />
         </button>
       </nav>
-
-      {atTasterEnd ? (
-        <section className="surface-card mt-6 border border-primary/25 bg-primary/5 p-5 text-center sm:p-6">
-          <p className="text-sm font-semibold text-foreground sm:text-base">
-            That's your five random cards. Unlock full access for the whole deck, every time.
-          </p>
-          <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={reshuffle}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-5 text-sm font-bold text-foreground transition-colors hover:border-primary/40"
-            >
-              <Shuffle className="size-4" aria-hidden="true" /> Five more at random
-            </button>
-            <Link
-              to="/unlock"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)]"
-            >
-              Buy now — {price}
-            </Link>
-          </div>
-        </section>
-      ) : null}
     </PageTransition>
   );
 }
