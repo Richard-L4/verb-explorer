@@ -65,6 +65,10 @@ describe("creator code is not in browser code", () => {
     const hits = walk("src")
       .filter((f) => !/\.test\.tsx?$/.test(f))
       .filter((f) => readFileSync(f, "utf8").includes("CREATOR_ACCESS_KEY"));
-    expect(hits.sort()).toEqual(["src/lib/content-checks.server.ts", "src/lib/creator.functions.ts"]);
+    expect(hits.sort()).toEqual([
+      "src/lib/content-checks.server.ts",
+      "src/lib/content-pass.server.ts",
+      "src/lib/creator.functions.ts",
+    ]);
   });
 });
