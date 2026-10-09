@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getRequestIP } from "@tanstack/react-start/server";
 
 /**
  * TEMPORARY, read-only trial diagnostic.
