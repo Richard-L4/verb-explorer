@@ -71,7 +71,7 @@ function RandomCards() {
 
   useEffect(() => {
     if (!current) return;
-    console.log("DBG view effect", current.id);
+    console.log("DBG view effect", current.id, index, queue.length, queue[0]?.id);
     markRandomStudied(current.id);
     armPostStudyPanel();
     markViewed(current.id);
