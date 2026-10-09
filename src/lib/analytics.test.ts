@@ -120,7 +120,7 @@ describe("server-side writer", () => {
       throw new Error("no credentials");
     });
     await expect(
-      recordTrialEvent({ deviceId: "device-aaaaaaa", event: "purchase_completed" }),
+      recordTrialEvent({ host: "verb-wise.richard-wells.com", deviceId: "device-aaaaaaa", event: "purchase_completed" }),
     ).resolves.toBe(false);
     spy.mockRestore();
   });

@@ -24,10 +24,10 @@ describe("server-side test-device guard", () => {
     const spy = vi.spyOn(payments, "getSupabaseAdmin");
 
     await expect(
-      recordTrialEvent({ deviceId: "test-abcdefgh", event: "trial_expired" }),
+      recordTrialEvent({ host: "verb-wise.richard-wells.com", deviceId: "test-abcdefgh", event: "trial_expired" }),
     ).resolves.toBe(false);
     await expect(
-      recordTrialEvent({ deviceId: "device-1234567", event: "checkout_started", testDevice: true }),
+      recordTrialEvent({ host: "verb-wise.richard-wells.com", deviceId: "device-1234567", event: "checkout_started", testDevice: true }),
     ).resolves.toBe(false);
 
     expect(spy).not.toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe("server-side test-device guard", () => {
     } as never);
 
     await expect(
-      recordTrialEvent({ deviceId: "device-1234567", event: "app_visit", testDevice: false }),
+      recordTrialEvent({ host: "verb-wise.richard-wells.com", deviceId: "device-1234567", event: "app_visit", testDevice: false }),
     ).resolves.toBe(true);
     expect(rows).toHaveLength(1);
     spy.mockRestore();

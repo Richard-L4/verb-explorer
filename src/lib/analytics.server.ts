@@ -34,7 +34,8 @@ export async function recordTrialEvent(
 ): Promise<boolean> {
   // Only the live production site records analytics; preview and workspace
   // copies share the production database and must never add events.
-  if (!isProductionAnalyticsHost(input.host)) return false;
+  const host = input.host !== undefined ? input.host : await currentRequestHost();
+  if (!isProductionAnalyticsHost(host)) return false;
   // Server-side guard: creator/developer/testing traffic is dropped before
   // it can reach production analytics. Existing rows are never touched.
   if (isTestEvent(input)) return false;
@@ -78,6 +79,15 @@ export const PRODUCTION_ANALYTICS_HOSTS: readonly string[] = [
 
 export function isProductionAnalyticsHost(host: string | null | undefined): boolean {
   return Boolean(host) && PRODUCTION_ANALYTICS_HOSTS.includes(host!.toLowerCase());
+}
+
+async function currentRequestHost(): Promise<string | null> {
+  try {
+    const { getRequest } = await import("@tanstack/react-start/server");
+    return new URL(getRequest().url).hostname;
+  } catch {
+    return null;
+  }
 }
 
 /** Funnel/Repeat visitors read path: drops the fixed 9 Oct 2026 test devices. */
