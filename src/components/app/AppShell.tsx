@@ -8,6 +8,8 @@ import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
 import { PostStudyPanel } from "./PostStudyPanel";
 import { PromoPopup } from "./PromoPopup";
+import { RandomMenu } from "./RandomMenu";
+import { Fragment } from "react";
 import { logAppVisit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -19,8 +21,8 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
   return (
     <>
       {navItems.map(({ to, label, icon: Icon }) => (
+        <Fragment key={to}>
         <Link
-          key={to}
           to={to}
           onClick={onNavigate}
           activeOptions={{ exact: to === "/" }}
@@ -37,6 +39,10 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
           <Icon className="size-4 shrink-0" aria-hidden="true" />
           <span>{label}</span>
         </Link>
+        {to === "/sayings" ? (
+          <RandomMenu linkBase={linkBase} vertical={vertical} onNavigate={onNavigate} />
+        ) : null}
+        </Fragment>
       ))}
     </>
   );
