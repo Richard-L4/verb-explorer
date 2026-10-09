@@ -33,7 +33,9 @@ const DIFFICULTIES = ["easy", "medium", "hard"];
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 /** Shape used only while validating unknown JSON. */
-type Loose = { [k: string]: unknown } & Partial<Record<"id" | "title" | "triggers" | "examples" | "difficulty" | "level" | "contrast", unknown>>;
+type Loose = { [k: string]: unknown } & Partial<
+  Record<"id" | "title" | "triggers" | "examples" | "difficulty" | "level" | "contrast", unknown>
+>;
 
 const isText = (v: unknown): v is string => typeof v === "string" && v.trim().length > 0;
 const isObj = (v: unknown): v is Loose => typeof v === "object" && v !== null && !Array.isArray(v);
@@ -42,7 +44,10 @@ const isObj = (v: unknown): v is Loose => typeof v === "object" && v !== null &&
  * Lists every problem with one entry. Empty list = complete and usable.
  * `knownId` decides whether the id matches a real verb card.
  */
-export function entryProblems(entry: unknown, knownId: (id: string) => boolean = (id) => !!getCard(id)): string[] {
+export function entryProblems(
+  entry: unknown,
+  knownId: (id: string) => boolean = (id) => !!getCard(id),
+): string[] {
   const p: string[] = [];
   if (!isObj(entry)) return ["entry is not an object"];
   const id = isText(entry.id) ? entry.id : "(missing id)";
@@ -58,19 +63,25 @@ export function entryProblems(entry: unknown, knownId: (id: string) => boolean =
   entry.triggers.forEach((t, ti) => {
     const tl = `${id} trigger ${ti + 1}`;
     if (!isObj(t)) return void p.push(`${tl}: not an object`);
-    for (const k of ["category", "trigger", "explanation"]) if (!isText(t[k])) p.push(`${tl}: missing ${k}`);
+    for (const k of ["category", "trigger", "explanation"])
+      if (!isText(t[k])) p.push(`${tl}: missing ${k}`);
     if (!Array.isArray(t.examples)) return void p.push(`${tl}: examples missing or not an array`);
     if (t.examples.length !== EXAMPLES_PER_TRIGGER)
       p.push(`${tl}: has ${t.examples.length} examples, expected ${EXAMPLES_PER_TRIGGER}`);
     t.examples.forEach((ex, ei) => {
       const el = `${tl} example ${ei + 1}`;
       if (!isObj(ex)) return void p.push(`${el}: not an object`);
-      for (const k of ["es", "en", "form", "note"]) if (!isText(ex[k])) p.push(`${el}: missing ${k}`);
-      if (!DIFFICULTIES.includes(ex.difficulty as string)) p.push(`${el}: invalid difficulty "${String(ex.difficulty)}"`);
-      if (!LEVELS.includes(ex.level as string)) p.push(`${el}: invalid level "${String(ex.level)}"`);
+      for (const k of ["es", "en", "form", "note"])
+        if (!isText(ex[k])) p.push(`${el}: missing ${k}`);
+      if (!DIFFICULTIES.includes(ex.difficulty as string))
+        p.push(`${el}: invalid difficulty "${String(ex.difficulty)}"`);
+      if (!LEVELS.includes(ex.level as string))
+        p.push(`${el}: invalid level "${String(ex.level)}"`);
       if (ex.contrast !== undefined) {
         if (!isObj(ex.contrast)) p.push(`${el}: contrast is not an object`);
-        else for (const k of ["es", "en", "note"]) if (!isText(ex.contrast[k])) p.push(`${el}: contrast missing ${k}`);
+        else
+          for (const k of ["es", "en", "note"])
+            if (!isText(ex.contrast[k])) p.push(`${el}: contrast missing ${k}`);
       }
     });
   });
@@ -102,14 +113,30 @@ export function getEntryNeighbours(id: string) {
   const i = completeEntries.findIndex((e) => e.id === id);
   const n = completeEntries.length;
   if (i < 0 || n < 2) return { position: i + 1, total: n };
-  return { prev: completeEntries[(i - 1 + n) % n], next: completeEntries[(i + 1) % n], position: i + 1, total: n };
+  return {
+    prev: completeEntries[(i - 1 + n) % n],
+    next: completeEntries[(i + 1) % n],
+    position: i + 1,
+    total: n,
+  };
 }
 
-const norm = (v: string) => v.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const norm = (v: string) =>
+  v
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 const index = subjunctiveEntries.map((e) => ({
   e,
   hay: norm(
-    [e.title, ...(e.triggers ?? []).flatMap((t) => [t.trigger, t.category, ...(t.examples ?? []).flatMap((x) => [x.es, x.en, x.form])])].join(" \u0000 "),
+    [
+      e.title,
+      ...(e.triggers ?? []).flatMap((t) => [
+        t.trigger,
+        t.category,
+        ...(t.examples ?? []).flatMap((x) => [x.es, x.en, x.form]),
+      ]),
+    ].join(" \u0000 "),
   ),
 }));
 export function searchEntries(query: string): SubjunctiveEntry[] {
@@ -128,5 +155,6 @@ if (import.meta.env.DEV && import.meta.env.MODE !== "test") {
     if (id) seen.set(id, (seen.get(id) ?? 0) + 1);
   });
   for (const [id, n] of seen) if (n > 1) problems.push(`${id}: duplicate id (${n} entries)`);
-  if (problems.length) console.warn(`[subjunctive] ${problems.length} data issue(s):\n` + problems.join("\n"));
+  if (problems.length)
+    console.warn(`[subjunctive] ${problems.length} data issue(s):\n` + problems.join("\n"));
 }

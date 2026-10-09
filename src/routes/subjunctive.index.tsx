@@ -2,7 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowRight, Lock, Search as SearchIcon } from "lucide-react";
-import { subjunctiveEntries, completeEntryCount, isEntryComplete, searchEntries } from "@/data/subjunctive";
+import {
+  subjunctiveEntries,
+  completeEntryCount,
+  isEntryComplete,
+  searchEntries,
+} from "@/data/subjunctive";
 import { useAccess } from "@/hooks/use-access";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -14,9 +19,17 @@ export const Route = createFileRoute("/subjunctive/")({
   head: () => ({
     meta: [
       { title: "Spanish subjunctive by verb | Verb Wise" },
-      { name: "description", content: "Learn when Spanish needs the subjunctive: three triggers and nine graded examples for every verb pair." },
+      {
+        name: "description",
+        content:
+          "Learn when Spanish needs the subjunctive: three triggers and nine graded examples for every verb pair.",
+      },
       { property: "og:title", content: "Spanish subjunctive by verb | Verb Wise" },
-      { property: "og:description", content: "Wish, doubt, emotion and more — the subjunctive triggers explained with real examples." },
+      {
+        property: "og:description",
+        content:
+          "Wish, doubt, emotion and more — the subjunctive triggers explained with real examples.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -46,7 +59,10 @@ function SubjunctiveList() {
       />
 
       <div className="relative mb-7">
-        <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary" aria-hidden="true" />
+        <SearchIcon
+          className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary"
+          aria-hidden="true"
+        />
         <input
           type="search"
           value={query}
@@ -67,7 +83,11 @@ function SubjunctiveList() {
                 key={entry.id}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: Math.min(i * 0.045, 0.28), ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.4,
+                  delay: Math.min(i * 0.045, 0.28),
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 whileHover={{ y: -6 }}
                 className="h-full"
               >
@@ -87,7 +107,9 @@ function SubjunctiveList() {
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">{entry.title}</h3>
+                  <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">
+                    {entry.title}
+                  </h3>
                   {complete ? (
                     <div className="flex flex-wrap gap-2">
                       {entry.triggers.map((t) => (
@@ -102,10 +124,15 @@ function SubjunctiveList() {
                     </div>
                   ) : null}
                   <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
-                    <span className="capitalize">{complete ? entry.triggers.map((t) => t.category).join(" · ") : "In progress"}</span>
+                    <span className="capitalize">
+                      {complete ? entry.triggers.map((t) => t.category).join(" · ") : "In progress"}
+                    </span>
                     <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-primary">
                       {locked ? "Unlock" : "Study"}
-                      <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                      <ArrowRight
+                        className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
                     </span>
                   </div>
                 </Link>
@@ -114,7 +141,9 @@ function SubjunctiveList() {
           })}
         </div>
       ) : (
-        <p className="surface-card p-12 text-center text-sm text-muted-foreground">No entries match “{debounced.trim()}”.</p>
+        <p className="surface-card p-12 text-center text-sm text-muted-foreground">
+          No entries match “{debounced.trim()}”.
+        </p>
       )}
 
       {visible.length ? (
