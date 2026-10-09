@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
 import { cards, type VerbCard } from "@/data/cards";
 import { useAccess } from "@/hooks/use-access";
@@ -59,11 +59,12 @@ function RandomCards() {
 
   // First shuffled run, created after hydration so access state is known.
   // Nothing is persisted, so every fresh visit produces a different order.
+  // Shuffle once, outside the state updater so a re-render can never reshuffle.
+  const seeded = useRef(false);
   useEffect(() => {
-    if (!available.length) return;
-    setQueue((current) =>
-      current.length ? current : shuffle(available).slice(0, limited ? TASTER_LIMIT : available.length),
-    );
+    if (!available.length || seeded.current) return;
+    seeded.current = true;
+    setQueue(shuffle(available).slice(0, limited ? TASTER_LIMIT : available.length));
   }, [available, limited]);
 
   const current = queue[index];
