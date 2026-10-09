@@ -91,6 +91,37 @@ function Home() {
           </Link>
 
         </div>
+
+        <div className="relative mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Link
+            to="/subjunctive"
+            className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Subjunctive</p>
+            <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
+              Master the Spanish subjunctive
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Explore tricky triggers and real examples across three difficulty levels.
+            </p>
+            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+              Explore the subjunctive
+              <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </p>
+          </Link>
+          <div
+            className="min-w-0 rounded-2xl border-2 border-accent/70 bg-accent/10 p-5 sm:p-6"
+            aria-label="Coming soon: Quiz"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent">Coming soon · Quiz</p>
+            <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
+              Test what you've learned
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Put your Spanish to the test with mixed questions, difficulty levels and quiz modes.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="surface-card gradient-soft hairline-top relative mt-6 overflow-hidden p-7 sm:mt-8 sm:p-12">
