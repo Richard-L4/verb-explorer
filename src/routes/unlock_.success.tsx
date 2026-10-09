@@ -6,6 +6,7 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { confirmCheckout } from "@/lib/checkout.functions";
 import { useAccess } from "@/hooks/use-access";
+import { saveContentPass } from "@/hooks/use-subjunctive";
 
 export const Route = createFileRoute("/unlock_/success")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -56,6 +57,7 @@ function SuccessRoute() {
           if (cancelled) return;
           if (result.paid) {
             unlock();
+            void saveContentPass(result.pass);
             setStatus("done");
             return;
           }

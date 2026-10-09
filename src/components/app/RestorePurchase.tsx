@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Loader2, RotateCcw } from "lucide-react";
 import { restorePurchase } from "@/lib/checkout.functions";
 import { useAccess } from "@/hooks/use-access";
+import { saveContentPass } from "@/hooks/use-subjunctive";
 
 /** Guest checkout: re-open access on another device using the checkout email. */
 export function RestorePurchase() {
@@ -18,9 +19,10 @@ export function RestorePurchase() {
     setBusy(true);
     setMessage(null);
     try {
-      const { found } = await restore({ data: { email: email.trim().toLowerCase() } });
+      const { found, pass } = await restore({ data: { email: email.trim().toLowerCase() } });
       if (found) {
         unlock();
+        await saveContentPass(pass);
         setMessage("Purchase found — everything is unlocked in this browser.");
       } else {
         setMessage("We couldn't find a purchase for that email address.");
