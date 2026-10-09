@@ -1,39 +1,24 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-async function checks() {
-  const { purchaseExists, purchaseExistsForEmail, paymentIntentPurchased } =
-    await import("./payments.server");
-  const { getRequest } = await import("@tanstack/react-start/server");
-  const { isLovablePreviewHost } = await import("./preview");
-  return {
-    sessionPaid: purchaseExists,
-    emailPaid: purchaseExistsForEmail,
-    paymentIntentPaid: paymentIntentPurchased,
-    isPreviewRequest: () => isLovablePreviewHost(new URL(getRequest().url).hostname),
-  };
-}
-
 /**
- * Returns the full subjunctive dataset only for a valid signed pass whose
- * purchase still exists. Anything else gets { paid: false } and no content.
+ * Returns the full subjunctive dataset only for a valid, unexpired signed pass
+ * whose entitlement (purchase or creator) the server re-confirms.
  */
 export const getProtectedSubjunctive = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({ pass: z.string().max(2048) }).parse(input))
   .handler(async ({ data }) => {
-    const { passGrantsAccess } = await import("./content-pass.server");
-    let ok = false;
+    const { passRole } = await import("./content-pass.server");
+    const { buildChecks } = await import("./content-checks.server");
+    let role: Awaited<ReturnType<typeof passRole>> = null;
     try {
-      ok = await passGrantsAccess(data.pass, await checks());
-    } catch (error) {
-      console.error(
-        "[subjunctive] pass check failed:",
-        error instanceof Error ? error.message : error,
-      );
+      role = await passRole(data.pass, await buildChecks());
+    } catch {
+      console.error("[subjunctive] pass check failed");
     }
-    if (!ok) return { paid: false as const, entries: null };
+    if (!role) return { paid: false as const, role: null, entries: null };
     const { fullSubjunctive } = await import("./subjunctive-full.server");
-    return { paid: true as const, entries: fullSubjunctive };
+    return { paid: true as const, role, entries: fullSubjunctive };
   });
 
 /**
@@ -43,7 +28,8 @@ export const getProtectedSubjunctive = createServerFn({ method: "POST" })
  */
 export const requestAutomaticPass = createServerFn({ method: "POST" }).handler(async () => {
   const { signPass } = await import("./content-pass.server");
-  const c = await checks();
+  const { buildChecks } = await import("./content-checks.server");
+  const c = await buildChecks();
   if (c.isPreviewRequest()) return { pass: await signPass("preview", "preview") };
   return { pass: null };
 });
