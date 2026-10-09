@@ -20,7 +20,6 @@ export const ACCESS_STORAGE_KEY = "verbo.access.v1";
 export const BANNER_PREVIEW_KEY = "verbo.banner-preview.v1";
 export const CREATOR_STORAGE_KEY = "creator_access";
 export const CREATOR_QUERY_KEY = "creator";
-export const CREATOR_QUERY_VALUE = "hilary53";
 export const TRIAL_DAYS = 7;
 export const FREE_CARD_COUNT = 10;
 export const UNLOCK_PRICE = "£4.99";
@@ -121,13 +120,66 @@ export function enableCreatorAccess() {
 }
 
 
-function creatorParamPresent() {
-  if (!isBrowser()) return false;
+/**
+ * Reads and immediately strips ?creator= from the address bar so the value is
+ * not kept in history, bookmarks or shared links. Only the server can validate it.
+ */
+function takeCreatorParam(): string | null {
+  if (!isBrowser()) return null;
   try {
-    return new URLSearchParams(window.location.search).get(CREATOR_QUERY_KEY) === CREATOR_QUERY_VALUE;
+    const url = new URL(window.location.href);
+    const value = url.searchParams.get(CREATOR_QUERY_KEY);
+    if (value === null) return null;
+    url.searchParams.delete(CREATOR_QUERY_KEY);
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+    return value || null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+/** Removes local creator mode (used when the server does not confirm it). */
+export function revokeCreatorAccess() {
+  if (!isBrowser()) return;
+  try {
+    window.localStorage.removeItem(CREATOR_STORAGE_KEY);
+  } catch {
+    /* storage unavailable */
+  }
+  write({ ...read(), creator: false });
+}
+
+/**
+ * Creator mode is only switched on after the server validates the ?creator=
+ * value (or the request is on a Lovable Preview host). A local flag without a
+ * server-confirmed creator pass is revoked.
+ */
+async function resolveCreator(claimed: string | null) {
+  const store = await import("./content-pass-store");
+  const { claimCreator, checkCreatorPass } = await import("./creator.functions");
+  if (claimed) {
+    try {
+      const { pass } = await claimCreator({ data: { value: claimed } });
+      if (pass) {
+        enableCreatorAccess();
+        await store.saveContentPass(pass);
+        return;
+      }
+    } catch {
+      /* fall through to the existing-pass check */
+    }
+  }
+  if (!read().creator || isLovablePreviewHost()) return;
+  const existing = store.readContentPass();
+  let ok = false;
+  if (existing) {
+    try {
+      ok = (await checkCreatorPass({ data: { pass: existing } })).creator;
+    } catch {
+      ok = false;
+    }
+  }
+  if (!ok) revokeCreatorAccess();
 }
 
 export function hydrate() {
@@ -135,7 +187,9 @@ export function hydrate() {
   hydrated = true;
   // Lovable Preview always runs in the existing creator mode — no ?creator=
   // parameter, no manual storage. Production hosts never match.
-  if (creatorParamPresent() || isLovablePreviewHost()) enableCreatorAccess();
+  const claimed = takeCreatorParam();
+  if (isLovablePreviewHost()) enableCreatorAccess();
+  void resolveCreator(claimed);
   previewCache = readPreview();
   const current = read();
   // An existing creator browser (or an active banner preview) is a test device.
