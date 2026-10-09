@@ -23,6 +23,7 @@ describe("recordTrialEvent", () => {
     const spy = vi.spyOn(payments, "getSupabaseAdmin").mockReturnValue(client as never);
 
     const ok = await recordTrialEvent({
+      host: "verb-wise.richard-wells.com",
       deviceId: "device-1234567",
       event: "purchase_completed",
     });
@@ -49,7 +50,7 @@ describe("recordTrialEvent", () => {
     } as never);
 
     await expect(
-      recordTrialEvent({ deviceId: "device-1234567", event: "app_visit" }),
+      recordTrialEvent({ host: "verb-wise.richard-wells.com", deviceId: "device-1234567", event: "app_visit" }),
     ).resolves.toBe(false);
     spy.mockRestore();
   });
