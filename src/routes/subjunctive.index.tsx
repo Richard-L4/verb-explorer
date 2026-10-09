@@ -110,7 +110,7 @@ function SubjunctiveList() {
                   <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">
                     {entry.title}
                   </h3>
-                  {complete ? (
+                  {complete && !locked ? (
                     <div className="flex flex-wrap gap-2">
                       {entry.triggers.map((t) => (
                         <span
