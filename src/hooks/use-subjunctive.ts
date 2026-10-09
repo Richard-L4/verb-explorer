@@ -2,7 +2,6 @@ import { useEffect, useSyncExternalStore } from "react";
 import { publicSubjunctive } from "@/data/subjunctive-public";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { getProtectedSubjunctive, requestAutomaticPass } from "@/lib/subjunctive-content.functions";
-import { getDeviceId } from "@/lib/analytics";
 import * as access from "@/lib/access";
 
 /**
@@ -64,12 +63,12 @@ async function resolve() {
   if (pass && (await loadWithPass(pass))) return;
   if (pass) write(CONTENT_PASS_KEY, null);
 
-  // A local purchase/creator flag only triggers a server check; it never unlocks.
+  // The local creator flag only triggers a server check (preview hosts); it never unlocks.
   const state = access.getSnapshot();
-  if ((state.unlocked || state.creator) && read(AUTO_TRIED_KEY, "session") !== "1") {
+  if (state.creator && read(AUTO_TRIED_KEY, "session") !== "1") {
     write(AUTO_TRIED_KEY, "1", "session");
     try {
-      const res = await requestAutomaticPass({ data: { deviceId: getDeviceId() } });
+      const res = await requestAutomaticPass();
       if (res.pass) {
         write(CONTENT_PASS_KEY, res.pass);
         if (await loadWithPass(res.pass)) return;
