@@ -8,6 +8,7 @@
 
 import { getSupabaseAdmin } from "./payments.server";
 import { ANALYTICS_EVENTS, type AnalyticsEvent } from "./analytics";
+import { EXCLUDED_DEVICE_IDS_2026_10_09, ESTIMATED_GENUINE_ALLOWANCE } from "./funnel-exclusions.server";
 
 export interface TrialEventInput {
   deviceId: string;

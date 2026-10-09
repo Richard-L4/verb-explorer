@@ -19,12 +19,20 @@ export const logTrialEvent = createServerFn({ method: "POST" })
   .inputValidator((input) => eventSchema.parse(input))
   .handler(async ({ data }) => {
     const { recordTrialEvent } = await import("./analytics.server");
+    const { getRequest } = await import("@tanstack/react-start/server");
+    let host: string | null = null;
+    try {
+      host = new URL(getRequest().url).hostname;
+    } catch {
+      host = null;
+    }
     const recorded = await recordTrialEvent({
       deviceId: data.deviceId,
       event: data.event,
       trialDay: data.trialDay ?? null,
       occurredOn: data.occurredOn ?? null,
       testDevice: data.testDevice === true,
+      host,
     });
     return { recorded };
   });
