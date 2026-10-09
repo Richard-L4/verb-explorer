@@ -68,9 +68,9 @@ function UnlockRoute() {
             </p>
           ) : null}
           <Paywall />
-          <RestorePurchase />
         </>
       )}
+      <RestorePurchase />
     </PageTransition>
   );
 }
