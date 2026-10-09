@@ -28,7 +28,12 @@ export function isTestEvent(input: Pick<TrialEventInput, "deviceId" | "testDevic
  * Never throws: if Supabase is unavailable or the migration has not been run
  * yet, the app must carry on as normal.
  */
-export async function recordTrialEvent(input: TrialEventInput): Promise<boolean> {
+export async function recordTrialEvent(
+  input: TrialEventInput & { host?: string | null },
+): Promise<boolean> {
+  // Only the live production site records analytics; preview and workspace
+  // copies share the production database and must never add events.
+  if (!isProductionAnalyticsHost(input.host)) return false;
   // Server-side guard: creator/developer/testing traffic is dropped before
   // it can reach production analytics. Existing rows are never touched.
   if (isTestEvent(input)) return false;
@@ -64,6 +69,38 @@ export async function recordTrialEvent(input: TrialEventInput): Promise<boolean>
   }
 }
 
+/** Hostnames of the live production site. Anything else never records events. */
+export const PRODUCTION_ANALYTICS_HOSTS: readonly string[] = [
+  "verb-wise.richard-wells.com",
+  "verb-wise-flashcards.lovable.app",
+];
+
+export function isProductionAnalyticsHost(host: string | null | undefined): boolean {
+  return Boolean(host) && PRODUCTION_ANALYTICS_HOSTS.includes(host!.toLowerCase());
+}
+
+/** Funnel/Repeat visitors read path: drops the fixed 9 Oct 2026 test devices. */
+export function withoutExcludedDevices<T extends { device_id: string }>(rows: T[]): T[] {
+  return rows.filter((r) => !EXCLUDED_DEVICE_IDS_2026_10_09.has(r.device_id));
+}
+
+/** Pure Funnel count: distinct devices, minus exclusions, minus 7 Sep baseline, plus estimate. */
+export function computeFunnelCounts(rows: { device_id: string; event: string }[]): FunnelCounts {
+  const seen = new Map<string, Set<string>>();
+  for (const row of withoutExcludedDevices(rows)) {
+    if (!seen.has(row.event)) seen.set(row.event, new Set());
+    seen.get(row.event)!.add(row.device_id);
+  }
+  const counts = emptyCounts();
+  for (const event of ANALYTICS_EVENTS) {
+    const raw = seen.get(event)?.size ?? 0;
+    const allowance =
+      (ESTIMATED_GENUINE_ALLOWANCE as Partial<Record<AnalyticsEvent, number>>)[event] ?? 0;
+    counts[event] = Math.max(0, raw - (BASELINE_ADJUSTMENT[event] ?? 0) + allowance);
+  }
+  return counts;
+}
+
 export type FunnelCounts = Record<AnalyticsEvent, number>;
 
 /**
@@ -91,24 +128,14 @@ export async function getFunnelCountsFromDb(): Promise<{
 }> {
   try {
     const db = getSupabaseAdmin();
-    const { data, error } = await db.from("trial_events").select("device_id, event");
+    const { data, error } = await db.from("trial_events").select("device_id, event").range(0, 49999);
 
     if (error) {
       console.warn("[analytics] funnel read failed:", error.message);
       return { counts: emptyCounts(), available: false };
     }
 
-    const seen = new Map<string, Set<string>>();
-    for (const row of (data ?? []) as { device_id: string; event: string }[]) {
-      if (!seen.has(row.event)) seen.set(row.event, new Set());
-      seen.get(row.event)!.add(row.device_id);
-    }
-
-    const counts = emptyCounts();
-    for (const event of ANALYTICS_EVENTS) {
-      const raw = seen.get(event)?.size ?? 0;
-      counts[event] = Math.max(0, raw - (BASELINE_ADJUSTMENT[event] ?? 0));
-    }
+    const counts = computeFunnelCounts((data ?? []) as { device_id: string; event: string }[]);
     return { counts, available: true };
   } catch (error) {
     console.warn(
@@ -180,7 +207,8 @@ export async function getRepeatVisitorsFromDb(): Promise<RepeatVisitorSummary> {
     const { data, error } = await db
       .from("trial_events")
       .select("device_id, event, occurred_at")
-      .in("event", ["app_visit", "trial_started"]);
+      .in("event", ["app_visit", "trial_started"])
+      .range(0, 49999);
 
     if (error) {
       console.warn("[analytics] repeat visitors read failed:", error.message);
@@ -193,7 +221,7 @@ export async function getRepeatVisitorsFromDb(): Promise<RepeatVisitorSummary> {
       { visits: number; first: string; last: string; trialStart: string | null }
     >();
 
-    for (const row of (data ?? []) as Row[]) {
+    for (const row of withoutExcludedDevices((data ?? []) as Row[])) {
       const at = row.occurred_at;
       const entry =
         byDevice.get(row.device_id) ??
