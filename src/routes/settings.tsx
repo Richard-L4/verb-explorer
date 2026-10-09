@@ -29,7 +29,7 @@ function Settings() {
   const { reset, studiedCount, learnedCount, state } = useLearner();
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, freeCardCount, price, bannerPreview, setBannerPreview } =
+  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, price, bannerPreview, setBannerPreview } =
     useAccess();
   // Informational only — read after hydration, no in-app control removes it.
   const [testDevice, setTestDevice] = useState(false);
