@@ -19,10 +19,6 @@ export async function buildChecks(): Promise<EntitlementChecks> {
 }
 
 export async function requestAddress(): Promise<string | null> {
-  try {
-    const { getRequestIP } = await import("@tanstack/react-start/server");
-    return getRequestIP({ xForwardedFor: true }) ?? null;
-  } catch {
-    return null;
-  }
+  const { trustedRequestAddress } = await import("./client-address.server");
+  return trustedRequestAddress();
 }

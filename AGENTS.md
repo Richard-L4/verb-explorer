@@ -15,3 +15,4 @@
 - Paid subjunctive content is released only for a server-signed purchase pass (`content-pass.server.ts`) whose purchase is re-checked in the database; the local `unlocked` flag never authorises protected content.
 - Creator mode is server-validated: `?creator=` is stripped from the URL and checked against the server-only `CREATOR_ACCESS_KEY` (`creator.functions.ts`), which issues a 30-day creator pass bound to a key fingerprint; never put a creator code in client code.
 - Restore by email requires a one-time emailed code (`restore.server.ts`, table `restore_codes`); only HMACs of emails, codes and networks are stored, and replies never reveal purchase status.
+- The visitor network address comes only from `client-address.server.ts` (Cloudflare `cf-connecting-ip`); browser-supplied forwarding headers are never trusted, because clients can forge them.
