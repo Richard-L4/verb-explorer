@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Quote, Search, Wand2, Shuffle, Sparkles, GraduationCap, BookOpen } from "lucide-react";
 import { cards, cardCount } from "@/data/cards";
 import { sayingCount } from "@/data/sayings";
-import { completeEntryCount } from "@/data/subjunctive";
+import { SUBJUNCTIVE_TOTAL as completeEntryCount } from "@/data/subjunctive-public";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { CardGrid } from "@/components/app/CardGrid";
@@ -87,7 +87,7 @@ function Home() {
             to="/random"
             className="gradient-hero inline-flex min-h-12 items-center gap-2 rounded-full px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-300 hover:-translate-y-0.5"
           >
-            <Shuffle className="size-4" aria-hidden="true" /> Random Cards
+            <Shuffle className="size-4" aria-hidden="true" /> Random Verbs
           </Link>
 
         </div>
