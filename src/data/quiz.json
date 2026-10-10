@@ -1,0 +1,2902 @@
+[
+  {
+    "id": "q001",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "ser-vs-estar",
+    "question": "A friend says «Es aburrido» about a new classmate. What does that tell you?",
+    "options": [
+      {
+        "text": "He's bored right now.",
+        "correct": false,
+        "feedback": "That would be «Está aburrido». With estar, boredom is a current state, not who he is."
+      },
+      {
+        "text": "He has a boring personality.",
+        "correct": true,
+        "feedback": "Correct. Ser describes what someone fundamentally is, so «Es aburrido» is a verdict on his personality."
+      },
+      {
+        "text": "He finds the class boring.",
+        "correct": false,
+        "feedback": "«Es aburrido» is about him, not about how he feels toward the class."
+      },
+      {
+        "text": "He's only boring at the moment.",
+        "correct": false,
+        "feedback": "A passing moment is a state, which calls for estar. Ser describes what he is like in general."
+      }
+    ]
+  },
+  {
+    "id": "q002",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "por-vs-para",
+    "question": "Complete the sentence, thanking someone for everything they've done for you: «Gracias ___ todo, de verdad.»",
+    "options": [
+      {
+        "text": "para",
+        "correct": false,
+        "feedback": "Para points forward to a goal or recipient. «Gracias para» doesn't exist; thanks acknowledge what was given, which is por."
+      },
+      {
+        "text": "a",
+        "correct": false,
+        "feedback": "«Gracias a» means 'thanks to' and gives credit for a result. It doesn't thank someone for what they gave."
+      },
+      {
+        "text": "de",
+        "correct": false,
+        "feedback": "«Gracias de todo» isn't how Spanish thanks someone. Por (exchange) is the preposition used."
+      },
+      {
+        "text": "por",
+        "correct": true,
+        "feedback": "Correct. «Gracias por todo» uses por for exchange: you're acknowledging what they gave you."
+      }
+    ]
+  },
+  {
+    "id": "q003",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "salir-vs-quedar",
+    "question": "Lucía says: «Quedé con Pablo, pero al final no salimos.» What happened?",
+    "options": [
+      {
+        "text": "They went out together but never made a plan.",
+        "correct": false,
+        "feedback": "This reverses the verbs. Quedar is the plan, salir is the outing, and here the plan came first."
+      },
+      {
+        "text": "They broke up, so they stopped dating.",
+        "correct": false,
+        "feedback": "Here salir is the activity of going out, not dating. Nothing in the sentence suggests a break-up."
+      },
+      {
+        "text": "They arranged to meet but didn't end up going out.",
+        "correct": true,
+        "feedback": "Correct. Quedar is the arrangement and salir is the outing, so you can have one without the other."
+      },
+      {
+        "text": "They never arranged to meet, so they stayed at home.",
+        "correct": false,
+        "feedback": "«Quedé con Pablo» says they did arrange to meet."
+      }
+    ]
+  },
+  {
+    "id": "q004",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "pedir-vs-preguntar",
+    "question": "Which sentence correctly says 'He ordered a white coffee'?",
+    "options": [
+      {
+        "text": "Pidió un café con leche.",
+        "correct": true,
+        "feedback": "Correct. Ordering food and drink is always pedir: you want something from someone."
+      },
+      {
+        "text": "Preguntó un café con leche.",
+        "correct": false,
+        "feedback": "Preguntar asks a question, so it can't take a thing as its object. Ordering is pedir."
+      },
+      {
+        "text": "Preguntó por un café con leche.",
+        "correct": false,
+        "feedback": "This means he asked about a coffee (where it was, for instance), not that he ordered one."
+      },
+      {
+        "text": "Preguntó si quería un café con leche.",
+        "correct": false,
+        "feedback": "This means he asked whether someone wanted a coffee. Preguntar seeks information, not a thing."
+      }
+    ]
+  },
+  {
+    "id": "q005",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "deber-vs-tener-que",
+    "question": "Your boss told you to lie to a client or lose your job. Afterwards you explain that circumstances left you no choice. Which sentence fits?",
+    "options": [
+      {
+        "text": "Debí mentir.",
+        "correct": false,
+        "feedback": "Deber suggests a moral duty, which would sound odd here. Nobody owed it to anyone to lie; circumstances forced you."
+      },
+      {
+        "text": "Debo de mentir.",
+        "correct": false,
+        "feedback": "«Deber de» expresses probability ('I probably lie'), not necessity."
+      },
+      {
+        "text": "Tuve que mentir.",
+        "correct": true,
+        "feedback": "Correct. Tener que is practical necessity: external circumstances left no choice and there is no moral dimension."
+      },
+      {
+        "text": "Debería mentir.",
+        "correct": false,
+        "feedback": "«Debería» is the mild 'should', a moral suggestion, and it is not past tense. It doesn't say you were forced."
+      }
+    ]
+  },
+  {
+    "id": "q006",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "traer-vs-llevar",
+    "question": "How do you ask 'How long have you been waiting?'",
+    "options": [
+      {
+        "text": "¿Cuánto tiempo traes esperando?",
+        "correct": false,
+        "feedback": "Traer means to bring something towards the speaker. It doesn't express time elapsed."
+      },
+      {
+        "text": "¿Cuánto tiempo llevas esperando?",
+        "correct": true,
+        "feedback": "Correct. Llevar + gerund expresses how long something has been going on."
+      },
+      {
+        "text": "¿Cuánto tiempo haces esperando?",
+        "correct": false,
+        "feedback": "Hacer expresses time with a different structure («Hace cuánto esperas»), not with a gerund."
+      },
+      {
+        "text": "¿Cuánto tiempo vienes esperando?",
+        "correct": false,
+        "feedback": "Venir would suggest you are coming towards the speaker as you wait. Llevar is the verb for time elapsed."
+      }
+    ]
+  },
+  {
+    "id": "q007",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "mirar-vs-ver",
+    "question": "Which sentence correctly asks 'Have you seen my keys?'",
+    "options": [
+      {
+        "text": "¿Has visto mis llaves?",
+        "correct": true,
+        "feedback": "Correct. Ver is what registers in your eyes. You're asking if the keys entered their field of vision."
+      },
+      {
+        "text": "¿Has mirado mis llaves?",
+        "correct": false,
+        "feedback": "Mirar is the active act of looking at something, so this asks if they looked at the keys on purpose."
+      },
+      {
+        "text": "¿Miras mis llaves?",
+        "correct": false,
+        "feedback": "This asks 'Are you looking at my keys?', an active gaze happening now, not whether they've seen them."
+      },
+      {
+        "text": "¿Ves mis llaves?",
+        "correct": false,
+        "feedback": "This asks if you can see them right now, not whether the person has seen them at some point."
+      }
+    ]
+  },
+  {
+    "id": "q008",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "acordarse-vs-recordar",
+    "question": "You want a colleague to prompt you later. Which sentence correctly says 'Remind me to call the doctor'?",
+    "options": [
+      {
+        "text": "Acuérdame que llame al médico.",
+        "correct": false,
+        "feedback": "Acordarse can't mean 'to remind'. Only recordar can do this."
+      },
+      {
+        "text": "Recuerdo que llame al médico.",
+        "correct": false,
+        "feedback": "«Recuerdo» means 'I remember' and doesn't fit with this que + subjunctive structure."
+      },
+      {
+        "text": "Me acuerdo de llamar al médico.",
+        "correct": false,
+        "feedback": "This means 'I remember to call the doctor': you are doing the remembering, not asking to be reminded."
+      },
+      {
+        "text": "Recuérdame que llame al médico.",
+        "correct": true,
+        "feedback": "Correct. Recordar is the verb that can mean 'to remind', and «Recuérdame que…» is the natural request."
+      }
+    ]
+  },
+  {
+    "id": "q009",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "pensar-vs-creer",
+    "question": "A friend is staring silently out of the window. You want to ask what is occupying his mind. Which question fits?",
+    "options": [
+      {
+        "text": "¿Tú crees?",
+        "correct": false,
+        "feedback": "This means 'Do you think so?', a reaction to something said. It doesn't ask what he is thinking about."
+      },
+      {
+        "text": "¿Qué piensas de esto?",
+        "correct": false,
+        "feedback": "Pensar de asks for an opinion about something specific. It doesn't ask what is on his mind."
+      },
+      {
+        "text": "¿En qué piensas?",
+        "correct": true,
+        "feedback": "Correct. Pensar en is active mental occupation, thinking about something, which is exactly what you are asking."
+      },
+      {
+        "text": "¿Qué crees que va a pasar?",
+        "correct": false,
+        "feedback": "Creer expresses a belief or prediction, not the thoughts currently occupying him."
+      }
+    ]
+  },
+  {
+    "id": "q010",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "hablar-vs-decir",
+    "question": "Someone mumbles and you didn't catch what they said. Which question asks them to repeat the content?",
+    "options": [
+      {
+        "text": "¿Qué hablas?",
+        "correct": false,
+        "feedback": "Hablar is the activity of talking, not the content. Asking about the content needs decir."
+      },
+      {
+        "text": "¿Cómo hablas?",
+        "correct": false,
+        "feedback": "This asks how someone speaks, such as their accent or manner, not what they said."
+      },
+      {
+        "text": "¿Qué hablaste?",
+        "correct": false,
+        "feedback": "Hablar can't ask for the content of the message. That is decir."
+      },
+      {
+        "text": "¿Qué dices?",
+        "correct": true,
+        "feedback": "Correct. Decir focuses on the content of what's said, and «¿Qué dices?» is also used as 'What?' when you didn't catch something."
+      }
+    ]
+  },
+  {
+    "id": "q011",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "perder-vs-faltar",
+    "question": "Marta has just started learning the guitar and has never played before. She wants to say she lacks practice. Which sentence is right?",
+    "options": [
+      {
+        "text": "Me falta práctica.",
+        "correct": true,
+        "feedback": "Correct. Faltar expresses absence: practice is missing from her life, and it works like gustar, with práctica as the subject."
+      },
+      {
+        "text": "Perdí la práctica.",
+        "correct": false,
+        "feedback": "This means she lost a skill she once had. Marta has never played, so there is nothing to lose."
+      },
+      {
+        "text": "Yo falto práctica.",
+        "correct": false,
+        "feedback": "Faltar works like gustar: the missing thing is the subject, so it should be «Me falta práctica»."
+      },
+      {
+        "text": "Estoy perdiendo práctica.",
+        "correct": false,
+        "feedback": "This means she is getting rusty, losing a skill she already had. That isn't true for a beginner."
+      }
+    ]
+  },
+  {
+    "id": "q012",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "volver-vs-regresar",
+    "question": "How do you say 'He called again'?",
+    "options": [
+      {
+        "text": "Regresó a llamar.",
+        "correct": false,
+        "feedback": "Regresar means to return and has no 'again' use. This would suggest he came back in order to call."
+      },
+      {
+        "text": "Volvió a llamar.",
+        "correct": true,
+        "feedback": "Correct. Volver a + infinitive is how Spanish says 'again'."
+      },
+      {
+        "text": "Volvió llamar.",
+        "correct": false,
+        "feedback": "Volver needs the a here: volver a + infinitive."
+      },
+      {
+        "text": "Volvió de llamar.",
+        "correct": false,
+        "feedback": "Volver de + infinitive isn't the 'again' structure. It needs a."
+      }
+    ]
+  },
+  {
+    "id": "q013",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "ser-vs-parecer",
+    "question": "You see your colleague yawning and slumped over his desk. You don't know how he really feels and want to give only your impression. Which sentence does that?",
+    "options": [
+      {
+        "text": "Es cansado.",
+        "correct": false,
+        "feedback": "Ser states something as fact about what he is, and «ser cansado» means being tiring, not feeling tired."
+      },
+      {
+        "text": "Está cansado.",
+        "correct": false,
+        "feedback": "Estar states a current condition as a fact. You only want to report an impression."
+      },
+      {
+        "text": "Es una persona cansada.",
+        "correct": false,
+        "feedback": "This describes his character as tiring or tired by nature. It is a statement of identity, not an impression."
+      },
+      {
+        "text": "Parece cansado.",
+        "correct": true,
+        "feedback": "Correct. Parecer hedges: you're reading the signs, not making a diagnosis. It is much softer than «está cansado»."
+      }
+    ]
+  },
+  {
+    "id": "q014",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "tener-solo",
+    "question": "Which sentence correctly says 'I'm thirty years old'?",
+    "options": [
+      {
+        "text": "Soy treinta años.",
+        "correct": false,
+        "feedback": "English 'am' doesn't carry over: age uses tener, never ser."
+      },
+      {
+        "text": "Tengo treinta años.",
+        "correct": true,
+        "feedback": "Correct. Spanish uses tener for age, as in «¿Cuántos años tienes?»"
+      },
+      {
+        "text": "Estoy treinta años.",
+        "correct": false,
+        "feedback": "Estar doesn't express age either. Age uses tener."
+      },
+      {
+        "text": "Cumplo treinta años.",
+        "correct": false,
+        "feedback": "Cumplir means you are turning thirty, a birthday, not stating your age."
+      }
+    ]
+  },
+  {
+    "id": "q015",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "dar-solo",
+    "question": "A friend asks if you'd prefer Italian or Thai food. You genuinely don't mind either. Which reply fits?",
+    "options": [
+      {
+        "text": "Me da miedo.",
+        "correct": false,
+        "feedback": "Dar miedo means 'it scares me'. Dar expresses feelings, but this is fear, not indifference."
+      },
+      {
+        "text": "Me da vergüenza.",
+        "correct": false,
+        "feedback": "Dar vergüenza means 'it embarrasses me', which is a different feeling."
+      },
+      {
+        "text": "Me da igual.",
+        "correct": true,
+        "feedback": "Correct. Dar igual means to be indifferent: 'I don't mind.'"
+      },
+      {
+        "text": "Me da las gracias.",
+        "correct": false,
+        "feedback": "This means 'he/she thanks me'. It is a dar phrase, but it has nothing to do with indifference."
+      }
+    ]
+  },
+  {
+    "id": "q016",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "gustar-solo",
+    "question": "You want to say you like your new colleague as a friendly person, without sounding romantically interested. Which sentence does that?",
+    "options": [
+      {
+        "text": "Me cae bien.",
+        "correct": true,
+        "feedback": "Correct. Between people, gustar tends to signal romantic attraction, and caerle bien expresses friendly liking."
+      },
+      {
+        "text": "Él me gusta mucho.",
+        "correct": false,
+        "feedback": "Gustar between people suggests attraction, so this risks sounding romantic."
+      },
+      {
+        "text": "Yo gusto de él.",
+        "correct": false,
+        "feedback": "Gustar never works with yo as the subject like this. The person or thing liked is the subject."
+      },
+      {
+        "text": "Le gusto mucho.",
+        "correct": false,
+        "feedback": "This reverses the roles: it says that he likes you."
+      }
+    ]
+  },
+  {
+    "id": "q017",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "coger-solo",
+    "question": "A Spanish friend is about to travel around Mexico and Argentina. Which of these sentences should they avoid, because coger has an explicit sexual meaning in most of Latin America?",
+    "options": [
+      {
+        "text": "Coge el autobús, es más rápido.",
+        "correct": true,
+        "feedback": "Correct. Coger is everyday Spanish in Spain, but in most of Latin America it has an explicit sexual meaning. «Toma el autobús» is the safe version."
+      },
+      {
+        "text": "Toma el autobús, es más rápido.",
+        "correct": false,
+        "feedback": "Tomar is the universal safe option for taking transport."
+      },
+      {
+        "text": "Agarra el libro que está en la mesa.",
+        "correct": false,
+        "feedback": "Agarrar is the safe replacement for coger when you mean 'grab'."
+      },
+      {
+        "text": "¿Puedes recoger esto del suelo?",
+        "correct": false,
+        "feedback": "Recoger (to pick up) is another safe alternative for the physical sense of coger."
+      }
+    ]
+  },
+  {
+    "id": "q018",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "subir-vs-bajar",
+    "question": "Which sentence says 'I downloaded the app'?",
+    "options": [
+      {
+        "text": "Subí la aplicación.",
+        "correct": false,
+        "feedback": "Subir is up, which means upload, not download."
+      },
+      {
+        "text": "Bajé la aplicación.",
+        "correct": true,
+        "feedback": "Correct. Download = bajar: the data comes down to you."
+      },
+      {
+        "text": "Subí a la aplicación.",
+        "correct": false,
+        "feedback": "This would mean you climbed or got onto the app, and subir is the wrong direction for a download anyway."
+      },
+      {
+        "text": "Bajé a la aplicación.",
+        "correct": false,
+        "feedback": "Bajar a means going down to a place. It doesn't mean downloading anything."
+      }
+    ]
+  },
+  {
+    "id": "q019",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "echar-solo",
+    "question": "You want to find out what is on TV tonight. Which question uses the right verb?",
+    "options": [
+      {
+        "text": "¿Qué tiran esta noche?",
+        "correct": false,
+        "feedback": "Tirar means to throw away or pull. It isn't used for showing programmes."
+      },
+      {
+        "text": "¿Qué sacan esta noche?",
+        "correct": false,
+        "feedback": "Sacar means to take out. It doesn't mean to show a film or programme."
+      },
+      {
+        "text": "¿Qué echan esta noche?",
+        "correct": true,
+        "feedback": "Correct. Echar una película means to show or screen a film, and «¿Qué echan?» asks what's on."
+      },
+      {
+        "text": "¿Qué lanzan esta noche?",
+        "correct": false,
+        "feedback": "Lanzar means to launch or throw. It isn't the verb used to ask what's showing on TV."
+      }
+    ]
+  },
+  {
+    "id": "q020",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "sentarse-solo",
+    "question": "Spicy food always upsets your stomach. Which sentence says that it doesn't agree with you?",
+    "options": [
+      {
+        "text": "La comida picante no me siento bien.",
+        "correct": false,
+        "feedback": "This mixes up sentir and sentar. Spanish says the food sits badly, with the food as the subject."
+      },
+      {
+        "text": "No me siento la comida picante.",
+        "correct": false,
+        "feedback": "Sentirse needs a state (me siento mal), and here it has no sensible meaning with the food as its object."
+      },
+      {
+        "text": "La comida picante no se sienta bien.",
+        "correct": false,
+        "feedback": "With the reflexive se, sentarse means to sit down oneself. It can't mean 'to agree with'."
+      },
+      {
+        "text": "La comida picante no me sienta bien.",
+        "correct": true,
+        "feedback": "Correct. Non-reflexive sentar works like gustar: food agreeing or disagreeing with you, with the food as the subject."
+      }
+    ]
+  },
+  {
+    "id": "q021",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "esperar-solo",
+    "question": "You're at the station with a friend and want to say 'Wait until my sister arrives.' Which sentence is correct?",
+    "options": [
+      {
+        "text": "Espera a que llegue mi hermana.",
+        "correct": true,
+        "feedback": "Correct. Esperar a que + subjunctive is the structure for waiting for an event to happen."
+      },
+      {
+        "text": "Espera a que llega mi hermana.",
+        "correct": false,
+        "feedback": "Esperar a que needs the subjunctive (llegue), not the indicative."
+      },
+      {
+        "text": "Espera a llegar mi hermana.",
+        "correct": false,
+        "feedback": "Esperar a + infinitive doesn't work when the arriving is done by a different person. It needs a que + subjunctive."
+      },
+      {
+        "text": "Espero que llegue mi hermana.",
+        "correct": false,
+        "feedback": "This is the 'hope' sense: 'I hope my sister arrives.' It doesn't tell your friend to wait."
+      }
+    ]
+  },
+  {
+    "id": "q022",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "crear-vs-creer",
+    "question": "Complete the sentence: «Han ___ una aplicación nueva.» (They've made a brand-new app.)",
+    "options": [
+      {
+        "text": "creído",
+        "correct": false,
+        "feedback": "Creído comes from creer, to believe, not from crear."
+      },
+      {
+        "text": "creado",
+        "correct": true,
+        "feedback": "Correct. Crear means to create, to bring something into existence."
+      },
+      {
+        "text": "crecido",
+        "correct": false,
+        "feedback": "Crecido comes from crecer, to grow. It doesn't mean to create."
+      },
+      {
+        "text": "criado",
+        "correct": false,
+        "feedback": "Criado comes from criar, to raise or bring up. It doesn't mean to create an app."
+      }
+    ]
+  },
+  {
+    "id": "q023",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "volverse-vs-hacerse",
+    "question": "After being betrayed by a close friend, Tomás changed deeply and now trusts nobody. Which sentence describes that lasting change in him?",
+    "options": [
+      {
+        "text": "Se hizo muy desconfiado.",
+        "correct": false,
+        "feedback": "Hacerse is for becoming something through effort, choice or gradual progress. This was a deep change after an experience."
+      },
+      {
+        "text": "Se puso muy desconfiado.",
+        "correct": false,
+        "feedback": "Ponerse is for temporary changes, but here the change in character is lasting."
+      },
+      {
+        "text": "Se volvió muy desconfiado.",
+        "correct": true,
+        "feedback": "Correct. Volverse is a deep change that happens to you, often unwanted and hard to reverse, as in a change of personality."
+      },
+      {
+        "text": "Se quedó muy desconfiado.",
+        "correct": false,
+        "feedback": "Quedarse is for ending up in a state, such as quedarse calvo. It isn't the verb for a change of character."
+      }
+    ]
+  },
+  {
+    "id": "q024",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "acabar-vs-terminar",
+    "question": "A friend offers you lunch, but you have literally just finished eating. Which reply says 'I've just eaten'?",
+    "options": [
+      {
+        "text": "Terminé de comer.",
+        "correct": false,
+        "feedback": "This means you completed your meal. It doesn't have the sense of 'just now'."
+      },
+      {
+        "text": "Terminé comer.",
+        "correct": false,
+        "feedback": "Terminar needs de before the infinitive, and it still wouldn't mean 'just did'."
+      },
+      {
+        "text": "Acabé comer.",
+        "correct": false,
+        "feedback": "Acabar de + infinitive is needed here, and 'acabé' without de doesn't give the 'just did' meaning."
+      },
+      {
+        "text": "Acabo de comer.",
+        "correct": true,
+        "feedback": "Correct. Acabar de + infinitive means to have just done something. It is present tense with a past meaning."
+      }
+    ]
+  },
+  {
+    "id": "q025",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "darse-cuenta-vs-realizar",
+    "question": "Which sentence correctly says 'I didn't realise it was late'?",
+    "options": [
+      {
+        "text": "No realicé que era tarde.",
+        "correct": false,
+        "feedback": "Realizar means to carry out or achieve something. It is a false friend of English 'realise'."
+      },
+      {
+        "text": "No realicé de que era tarde.",
+        "correct": false,
+        "feedback": "Same false friend: realizar is for doing or achieving, never for noticing."
+      },
+      {
+        "text": "No me di cuenta de que era tarde.",
+        "correct": true,
+        "feedback": "Correct. Darse cuenta de que is how Spanish says 'to realise', in the sense of noticing."
+      },
+      {
+        "text": "No me realicé de que era tarde.",
+        "correct": false,
+        "feedback": "Realizarse means to fulfil oneself, which has nothing to do with noticing."
+      }
+    ]
+  },
+  {
+    "id": "q026",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "soportar-vs-apoyar",
+    "question": "Your sister is going through a difficult divorce. You want to tell her that you'll back whatever she decides. Which sentence does that?",
+    "options": [
+      {
+        "text": "Te apoyo en lo que decidas.",
+        "correct": true,
+        "feedback": "Correct. Apoyar is moral or practical backing for people."
+      },
+      {
+        "text": "Te soporto en lo que decidas.",
+        "correct": false,
+        "feedback": "Soportar means to put up with or tolerate. «Te soporto» is an insult, not support."
+      },
+      {
+        "text": "Me apoyo en ti en lo que decidas.",
+        "correct": false,
+        "feedback": "Apoyarse en is to lean on someone. It says you rely on her, not that you back her."
+      },
+      {
+        "text": "Te aguanto en lo que decidas.",
+        "correct": false,
+        "feedback": "Aguantar, like soportar, means to put up with someone. It doesn't mean to back them."
+      }
+    ]
+  },
+  {
+    "id": "q027",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "pretender-vs-fingir",
+    "question": "Your nephew proudly announces that he aims to become a doctor. Which sentence reports his ambition?",
+    "options": [
+      {
+        "text": "Finge ser médico.",
+        "correct": false,
+        "feedback": "Fingir means to pretend. This says he pretends to be a doctor, which is not an ambition."
+      },
+      {
+        "text": "Finge que es médico.",
+        "correct": false,
+        "feedback": "This also means he pretends to be a doctor, and it isn't an aim."
+      },
+      {
+        "text": "Pretende que sea médico.",
+        "correct": false,
+        "feedback": "Pretender que + subjunctive means to expect that something happens, and the subject changes. It doesn't say he aims to become one."
+      },
+      {
+        "text": "Pretende ser médico.",
+        "correct": true,
+        "feedback": "Correct. Pretender + infinitive means to intend or aim to do something."
+      }
+    ]
+  },
+  {
+    "id": "q028",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "conducir-vs-manejar",
+    "question": "A new colleague says they can't operate the company software. Which sentence uses a verb that means this in both Spain and Latin America?",
+    "options": [
+      {
+        "text": "No sé conducir este programa.",
+        "correct": false,
+        "feedback": "Conducir is to drive a vehicle. It isn't used for operating software."
+      },
+      {
+        "text": "No sé manejar este programa.",
+        "correct": true,
+        "feedback": "Correct. Manejar means to handle or operate tools and software. This is the only meaning you'll hear in Spain."
+      },
+      {
+        "text": "No sé dirigir este programa.",
+        "correct": false,
+        "feedback": "Dirigir means to direct or run something like a company or a team, not to use software."
+      },
+      {
+        "text": "No sé guiar este programa.",
+        "correct": false,
+        "feedback": "Guiar means to guide or lead someone. It doesn't mean to use a program."
+      }
+    ]
+  },
+  {
+    "id": "q029",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "mover-vs-mudarse",
+    "question": "Which sentence says 'We moved to Valencia in January' (to a new home)?",
+    "options": [
+      {
+        "text": "Nos mudamos a Valencia en enero.",
+        "correct": true,
+        "feedback": "Correct. Mudarse is the reflexive verb for moving house, city or country."
+      },
+      {
+        "text": "Nos movimos a Valencia en enero.",
+        "correct": false,
+        "feedback": "Moverse is physical movement. It doesn't mean changing where you live."
+      },
+      {
+        "text": "Movimos a Valencia en enero.",
+        "correct": false,
+        "feedback": "Mover without the reflexive means to shift an object, and it can't mean relocating."
+      },
+      {
+        "text": "Nos mudó a Valencia en enero.",
+        "correct": false,
+        "feedback": "Mudarse is reflexive, and «nos mudó» would mean that someone else moved us."
+      }
+    ]
+  },
+  {
+    "id": "q030",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "dar-vs-regalar",
+    "question": "You hand your keys to the porter so he can water your plants while you're away. Which sentence describes this?",
+    "options": [
+      {
+        "text": "Le regalé las llaves al portero.",
+        "correct": false,
+        "feedback": "Regalar means to give as a gift. Handing over keys for a practical reason is not a gift."
+      },
+      {
+        "text": "Le doné las llaves al portero.",
+        "correct": false,
+        "feedback": "Donar means to donate. You are lending access, not donating the keys."
+      },
+      {
+        "text": "Le di las llaves al portero.",
+        "correct": true,
+        "feedback": "Correct. Dar is for handing something over for practical reasons, with no gift implied."
+      },
+      {
+        "text": "Le regalo las llaves al portero.",
+        "correct": false,
+        "feedback": "This is also gift-giving, and in the present tense, while the keys were handed over for a practical reason."
+      }
+    ]
+  },
+  {
+    "id": "q031",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "llamar-vs-llamarse",
+    "question": "Which sentence says 'My name is Ana'?",
+    "options": [
+      {
+        "text": "Llamo Ana.",
+        "correct": false,
+        "feedback": "Without the reflexive me, this isn't how you give your name. Llamarse is reflexive."
+      },
+      {
+        "text": "Me llamo Ana.",
+        "correct": true,
+        "feedback": "Correct. Me llamo literally means 'I call myself Ana', the standard way to give your name."
+      },
+      {
+        "text": "Te llamo Ana.",
+        "correct": false,
+        "feedback": "This means 'I call you Ana': you are naming someone else."
+      },
+      {
+        "text": "Se llama Ana.",
+        "correct": false,
+        "feedback": "This says someone else is called Ana, in the third person."
+      }
+    ]
+  },
+  {
+    "id": "q032",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "ir-vs-irse",
+    "question": "Which sentence says 'He left the doctor's without waiting for his results'?",
+    "options": [
+      {
+        "text": "Fue al médico sin esperar los resultados.",
+        "correct": false,
+        "feedback": "This says he went to the doctor's. Ir is anchored to the destination, but here you want the exit."
+      },
+      {
+        "text": "Fue del médico sin esperar los resultados.",
+        "correct": false,
+        "feedback": "Ir isn't used to describe leaving a place. That is irse, with the reflexive."
+      },
+      {
+        "text": "Se fue al médico sin esperar los resultados.",
+        "correct": false,
+        "feedback": "This says he left in order to go to the doctor's. The destination is the doctor, not the place he was leaving."
+      },
+      {
+        "text": "Se fue del médico sin esperar los resultados.",
+        "correct": true,
+        "feedback": "Correct. Irse is anchored to the exit: se fue de + the place he left."
+      }
+    ]
+  },
+  {
+    "id": "q033",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "estar-de-acuerdo-vs-acordar",
+    "question": "Which sentence says 'I agree with you' (you share the same opinion)?",
+    "options": [
+      {
+        "text": "Soy de acuerdo contigo.",
+        "correct": false,
+        "feedback": "The expression is always estar de acuerdo, never ser."
+      },
+      {
+        "text": "Estoy de acuerdo contigo.",
+        "correct": true,
+        "feedback": "Correct. Estar de acuerdo con + person is how Spanish expresses sharing someone's opinion."
+      },
+      {
+        "text": "Acordé contigo.",
+        "correct": false,
+        "feedback": "Acordar means to settle or agree on a decision or arrangement, and it needs something to agree on, such as a price. It doesn't mean sharing an opinion."
+      },
+      {
+        "text": "Me acuerdo contigo.",
+        "correct": false,
+        "feedback": "Acordarse means to remember, so this says 'I remember with you'."
+      }
+    ]
+  },
+  {
+    "id": "q034",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "importar-vs-interesar",
+    "question": "Someone asks «¿Te importa si abro la ventana?» and you're happy for them to open it. Which reply is correct?",
+    "options": [
+      {
+        "text": "Sí, me importa.",
+        "correct": false,
+        "feedback": "This says you do mind, so the answer is 'no, don't open it'."
+      },
+      {
+        "text": "Sí, me interesa.",
+        "correct": false,
+        "feedback": "Interesar means to be interested in. It isn't an answer to «¿Te importa…?» and doesn't give permission."
+      },
+      {
+        "text": "No, me importa mucho.",
+        "correct": false,
+        "feedback": "This starts with 'no' but then says it matters a lot to you, which is contradictory."
+      },
+      {
+        "text": "No, claro que no.",
+        "correct": true,
+        "feedback": "Correct. «¿Te importa?» asks 'Do you mind?', so 'no' means you don't mind. Saying 'sí' would mean you do mind."
+      }
+    ]
+  },
+  {
+    "id": "q035",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "cumplir-solo",
+    "question": "A friend's birthday is next week. Which question asks how old she is about to turn?",
+    "options": [
+      {
+        "text": "¿Cuántos años cumples?",
+        "correct": true,
+        "feedback": "Correct. Cumplir + age is the verb for the birthday, asking about the age she is turning."
+      },
+      {
+        "text": "¿Cuántos años tienes?",
+        "correct": false,
+        "feedback": "Tener is for the age she is now. It doesn't ask which age she is turning."
+      },
+      {
+        "text": "¿Cuántos años cumpliste?",
+        "correct": false,
+        "feedback": "The preterite asks about a birthday that has already passed, but hers is next week."
+      },
+      {
+        "text": "¿Cuántos años has cumplido?",
+        "correct": false,
+        "feedback": "This asks how many years she has completed so far, which is her current age, not the one she will turn."
+      }
+    ]
+  },
+  {
+    "id": "q036",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "quitar-vs-quitarse",
+    "question": "You walk into a friend's house and want to tell your guest to take their own shoes off. Which sentence is right?",
+    "options": [
+      {
+        "text": "Quita los zapatos.",
+        "correct": false,
+        "feedback": "Without the reflexive, quitar means to remove something that belongs to someone else, or to clear something away."
+      },
+      {
+        "text": "Ponte los zapatos.",
+        "correct": false,
+        "feedback": "Ponerse is the opposite, to put them on."
+      },
+      {
+        "text": "Quítate los zapatos.",
+        "correct": true,
+        "feedback": "Correct. Quitarse is the normal way to take off your own clothing."
+      },
+      {
+        "text": "Quítame los zapatos.",
+        "correct": false,
+        "feedback": "This tells the guest to take off your shoes, not their own."
+      }
+    ]
+  },
+  {
+    "id": "q037",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "ganar-vs-ganarse",
+    "question": "Which sentence says that a photographer 'earns her living' these days?",
+    "options": [
+      {
+        "text": "Gana la vida como fotógrafa.",
+        "correct": false,
+        "feedback": "«Ganar la vida» sounds like she's winning life. The fixed phrase is always ganarse la vida."
+      },
+      {
+        "text": "Se gana la vida como fotógrafa.",
+        "correct": true,
+        "feedback": "Correct. Ganarse la vida is the fixed phrase for making a living."
+      },
+      {
+        "text": "Le gana la vida como fotógrafa.",
+        "correct": false,
+        "feedback": "This would suggest she beats someone's life. It isn't the phrase for making a living."
+      },
+      {
+        "text": "Se ganó la vida como fotógrafa.",
+        "correct": false,
+        "feedback": "The preterite puts it in the past, but you want to say what she does for a living these days."
+      }
+    ]
+  },
+  {
+    "id": "q038",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "olvidar-vs-olvidarse",
+    "question": "Which sentence correctly says 'We forgot the tickets' using the accidental «se me olvidó» structure?",
+    "options": [
+      {
+        "text": "Se nos olvidaron los billetes.",
+        "correct": true,
+        "feedback": "Correct. In this structure the verb agrees with the forgotten item (billetes → olvidaron), and nos shows who it happened to."
+      },
+      {
+        "text": "Se nos olvidó los billetes.",
+        "correct": false,
+        "feedback": "The verb must agree with what was forgotten. Billetes is plural, so it should be olvidaron."
+      },
+      {
+        "text": "Nos olvidaron los billetes.",
+        "correct": false,
+        "feedback": "This changes the meaning: someone forgot about us or left the tickets with us. It isn't the accidental structure."
+      },
+      {
+        "text": "Se olvidaron los billetes.",
+        "correct": false,
+        "feedback": "Without nos, it doesn't say who forgot them. The accidental structure needs the indirect object."
+      }
+    ]
+  },
+  {
+    "id": "q039",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "preocupar-vs-preocuparse",
+    "question": "You want to tell a nervous friend not to worry. Which sentence does that?",
+    "options": [
+      {
+        "text": "No te preocupa.",
+        "correct": false,
+        "feedback": "This means 'It doesn't worry you': preocupar with the cause as the subject, not a command."
+      },
+      {
+        "text": "No me preocupes.",
+        "correct": false,
+        "feedback": "This means 'Don't worry me', the opposite direction of the order."
+      },
+      {
+        "text": "No preocupes.",
+        "correct": false,
+        "feedback": "Without the reflexive pronoun this makes no sense as 'don't worry'. Preocuparse needs te."
+      },
+      {
+        "text": "No te preocupes.",
+        "correct": true,
+        "feedback": "Correct. Preocuparse is the reflexive verb for worrying yourself, and «No te preocupes» is the most common command to relax."
+      }
+    ]
+  },
+  {
+    "id": "q040",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "sobrar-vs-bastar",
+    "question": "A cook prepared food for ten, but only six people came. Which sentence says there is food left over?",
+    "options": [
+      {
+        "text": "Falta comida.",
+        "correct": false,
+        "feedback": "Faltar means food is missing, the opposite of having too much."
+      },
+      {
+        "text": "Basta comida.",
+        "correct": false,
+        "feedback": "Bastar means 'to be enough' and it needs «con» («Basta con…»). It doesn't say there is a surplus."
+      },
+      {
+        "text": "Sobra comida.",
+        "correct": true,
+        "feedback": "Correct. Sobrar means something is left over or more than needed."
+      },
+      {
+        "text": "Se acaba la comida.",
+        "correct": false,
+        "feedback": "This means the food is running out, the opposite of having leftovers."
+      }
+    ]
+  },
+  {
+    "id": "q041",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "durar-vs-tardar",
+    "question": "Which sentence says 'It takes me twenty minutes to get there'?",
+    "options": [
+      {
+        "text": "Duro veinte minutos en llegar.",
+        "correct": false,
+        "feedback": "Durar says how long something lasts, and the subject is a thing or event, not a person. How long it takes you is tardar."
+      },
+      {
+        "text": "Tardo veinte minutos en llegar.",
+        "correct": true,
+        "feedback": "Correct. Tardar + time + en + infinitive says how long it takes a person to do something."
+      },
+      {
+        "text": "Dura veinte minutos en llegar.",
+        "correct": false,
+        "feedback": "Durar describes how long an event lasts, like a film. It isn't the verb for how long you take."
+      },
+      {
+        "text": "Tardo veinte minutos de llegar.",
+        "correct": false,
+        "feedback": "The structure is tardar + time + en + infinitive, not de."
+      }
+    ]
+  },
+  {
+    "id": "q042",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "mandar-vs-enviar",
+    "question": "At home, everyone knows that one person makes the rules. Which sentence says 'My mum is the boss here'?",
+    "options": [
+      {
+        "text": "Aquí envía mi madre.",
+        "correct": false,
+        "feedback": "Enviar only means to send. It can't mean to be in command."
+      },
+      {
+        "text": "Aquí manda a mi madre.",
+        "correct": false,
+        "feedback": "The personal a would make mi madre the object, so it would be someone ordering her around. In this sentence she is the one giving orders."
+      },
+      {
+        "text": "Aquí mando mi madre.",
+        "correct": false,
+        "feedback": "The verb must agree with the subject mi madre, so it should be manda, not mando."
+      },
+      {
+        "text": "Aquí manda mi madre.",
+        "correct": true,
+        "feedback": "Correct. Mandar also means to order or be in command, and it is the verb that can mean 'to be the boss'."
+      }
+    ]
+  },
+  {
+    "id": "q043",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "despedir-vs-despedirse",
+    "question": "You lost your job because the company cut staff. Which sentence says 'I was fired'?",
+    "options": [
+      {
+        "text": "Me despidieron.",
+        "correct": true,
+        "feedback": "Correct. Despedir is the standard verb for dismissal, so «Me despidieron» means they fired me."
+      },
+      {
+        "text": "Me despedí.",
+        "correct": false,
+        "feedback": "This means 'I said goodbye'. Despedirse is to say goodbye yourself."
+      },
+      {
+        "text": "Despedí a mi jefe.",
+        "correct": false,
+        "feedback": "This means 'I fired my boss', which reverses who did the firing."
+      },
+      {
+        "text": "Se despidió de mí.",
+        "correct": false,
+        "feedback": "This means 'She said goodbye to me'. It doesn't say you were fired."
+      }
+    ]
+  },
+  {
+    "id": "q044",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "oler-vs-saber-a",
+    "question": "You bite into a sweet that has a strawberry flavour. Which sentence describes its taste?",
+    "options": [
+      {
+        "text": "Huele a fresa.",
+        "correct": false,
+        "feedback": "Oler a describes what something smells like, not what it tastes like."
+      },
+      {
+        "text": "Sé a fresa.",
+        "correct": false,
+        "feedback": "This would mean 'I know of strawberry'. For taste, saber a is used in the third person: sabe a."
+      },
+      {
+        "text": "Sabe a fresa.",
+        "correct": true,
+        "feedback": "Correct. Saber a + flavour is how Spanish describes taste."
+      },
+      {
+        "text": "Prueba a fresa.",
+        "correct": false,
+        "feedback": "Probar means to try. It doesn't describe the flavour of something."
+      }
+    ]
+  },
+  {
+    "id": "q045",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "arreglar-vs-arreglarse",
+    "question": "A friend worries about how you'll cope alone this week. You reassure her that you'll manage. Which sentence says that?",
+    "options": [
+      {
+        "text": "Ya lo arreglaré con ella.",
+        "correct": false,
+        "feedback": "This means 'I'll sort it out with her': resolving a specific problem between people, not coping."
+      },
+      {
+        "text": "Ya me las arreglaré.",
+        "correct": true,
+        "feedback": "Correct. Arreglárselas is the fixed reflexive phrase for coping or getting by."
+      },
+      {
+        "text": "Ya me arreglo para salir.",
+        "correct": false,
+        "feedback": "This means 'I'm getting ready to go out'. It doesn't mean managing a situation."
+      },
+      {
+        "text": "Ya arreglaré.",
+        "correct": false,
+        "feedback": "Without an object, arreglar (to fix, tidy, sort out) leaves the sentence incomplete, and it doesn't express coping."
+      }
+    ]
+  },
+  {
+    "id": "q046",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "meter-vs-poner",
+    "question": "Which sentence says 'He got into bed' (inside the covers, not on top of the bed)?",
+    "options": [
+      {
+        "text": "Se puso en la cama.",
+        "correct": false,
+        "feedback": "Poner is for placing things on a surface. For getting into something, Spanish uses meterse."
+      },
+      {
+        "text": "Metió en la cama.",
+        "correct": false,
+        "feedback": "Meter needs the reflexive here, because the person is getting himself into bed."
+      },
+      {
+        "text": "Se metió la cama.",
+        "correct": false,
+        "feedback": "Meterse needs en + place: meterse en la cama."
+      },
+      {
+        "text": "Se metió en la cama.",
+        "correct": true,
+        "feedback": "Correct. Meterse en means to get into something, which is the idea of being inside."
+      }
+    ]
+  },
+  {
+    "id": "q047",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "comprender-vs-entender",
+    "question": "A hotel receptionist explains that breakfast is included in the room price. Which sentence says this using comprender?",
+    "options": [
+      {
+        "text": "El precio comprende el desayuno.",
+        "correct": true,
+        "feedback": "Correct. Comprender can also mean to include or comprise, as in «El precio comprende el desayuno»."
+      },
+      {
+        "text": "El precio entiende el desayuno.",
+        "correct": false,
+        "feedback": "Entender means to understand. It doesn't have the 'include' meaning that comprender has."
+      },
+      {
+        "text": "El precio compra el desayuno.",
+        "correct": false,
+        "feedback": "Comprar means to buy. It is a different word, only two letters away from comprender."
+      },
+      {
+        "text": "El precio comprende de desayuno.",
+        "correct": false,
+        "feedback": "In this sense comprender takes a direct object, without de."
+      }
+    ]
+  },
+  {
+    "id": "q048",
+    "category": "verbs",
+    "difficulty": "hard",
+    "sourceId": "tratar-vs-tratarse",
+    "question": "Which sentence correctly says 'The film is about love', when the film is the subject?",
+    "options": [
+      {
+        "text": "La película se trata de amor.",
+        "correct": false,
+        "feedback": "Tratarse de is impersonal and has no subject. With a real subject like la película, you say trata de."
+      },
+      {
+        "text": "La película trata a amor.",
+        "correct": false,
+        "feedback": "Tratar a is for treating a person, and it doesn't introduce a topic."
+      },
+      {
+        "text": "La película trata de amor.",
+        "correct": true,
+        "feedback": "Correct. With a subject, tratar de/sobre means 'is about'. Se trata de is for impersonal use, as in «¿De qué se trata?»"
+      },
+      {
+        "text": "Se trata la película de amor.",
+        "correct": false,
+        "feedback": "Se trata de can't be split around a subject like this, and it has no real subject."
+      }
+    ]
+  },
+  {
+    "id": "q049",
+    "category": "verbs",
+    "difficulty": "medium",
+    "sourceId": "haber-que-vs-tener-que",
+    "question": "Marta looks at her watch and says that she personally has to leave now to catch her train. Which sentence says that?",
+    "options": [
+      {
+        "text": "Hay que irse.",
+        "correct": false,
+        "feedback": "Hay que is impersonal ('one has to') and doesn't say who must go. Here the obligation is Marta's."
+      },
+      {
+        "text": "Tengo que irme.",
+        "correct": true,
+        "feedback": "Correct. Tener que is personal obligation: the subject is 'I' and the verb conjugates."
+      },
+      {
+        "text": "Hay que irme.",
+        "correct": false,
+        "feedback": "Hay que never conjugates or takes a personal subject, so it can't be combined with irme."
+      },
+      {
+        "text": "Tuve que irme.",
+        "correct": false,
+        "feedback": "This is the past: 'I had to leave', and Marta is talking about now."
+      }
+    ]
+  },
+  {
+    "id": "q050",
+    "category": "verbs",
+    "difficulty": "easy",
+    "sourceId": "caber-solo",
+    "question": "Which question correctly asks 'Can we all fit in the car?'",
+    "options": [
+      {
+        "text": "¿Caemos todos en el coche?",
+        "correct": false,
+        "feedback": "Caer means to fall. Fitting inside something is caber."
+      },
+      {
+        "text": "¿Quepemos todos en el coche?",
+        "correct": false,
+        "feedback": "Caber is irregular only in the yo form (quepo). Nosotros is regular: cabemos."
+      },
+      {
+        "text": "¿Cabemos todos al coche?",
+        "correct": false,
+        "feedback": "Caber takes en for the thing you fit in: caber en."
+      },
+      {
+        "text": "¿Cabemos todos en el coche?",
+        "correct": true,
+        "feedback": "Correct. Caber en means to fit in, and cabemos is the regular nosotros form."
+      }
+    ]
+  },
+  {
+    "id": "q051",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "fue-vs-era",
+    "question": "Complete the sentence: «Ojalá ___ una noche tranquila.» (I hope it's a quiet night.)",
+    "options": [
+      {
+        "text": "sea",
+        "correct": true,
+        "feedback": "Correct. Ojalá expresses a hope, which is not a fact, so it takes the subjunctive. The present subjunctive of ser is sea."
+      },
+      {
+        "text": "es",
+        "correct": false,
+        "feedback": "Es is indicative, which states a fact. A hope with ojalá needs the subjunctive."
+      },
+      {
+        "text": "fue",
+        "correct": false,
+        "feedback": "Fue is a completed past fact, and it can't follow ojalá when you're hoping about the present or future."
+      },
+      {
+        "text": "era",
+        "correct": false,
+        "feedback": "Era is an indicative past tense. After ojalá, a hope about the present or future uses sea."
+      }
+    ]
+  },
+  {
+    "id": "q052",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "saber-vs-conocer",
+    "question": "You need a guide, but you don't have anyone specific in mind. Complete: «Busco a alguien que ___ la ciudad.»",
+    "options": [
+      {
+        "text": "conoce",
+        "correct": false,
+        "feedback": "Conoce is indicative and points to a particular person you already have in mind. For someone who may not exist, the subjunctive is used."
+      },
+      {
+        "text": "conozca",
+        "correct": true,
+        "feedback": "Correct. When you describe someone who may not exist or isn't identified, the relative clause takes the subjunctive. Conocer takes -zc-: conozca."
+      },
+      {
+        "text": "conosca",
+        "correct": false,
+        "feedback": "The spelling is wrong. Conocer takes -zc- in the subjunctive: conozca, never 'conosca'."
+      },
+      {
+        "text": "conozco",
+        "correct": false,
+        "feedback": "Conozco is first person ('I know'), but the person you're looking for is the subject of the clause, not you."
+      }
+    ]
+  },
+  {
+    "id": "q053",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "llevar-vs-hacer",
+    "question": "Which sentence correctly says 'I'm surprised it's been so many years since we last saw each other'?",
+    "options": [
+      {
+        "text": "Me sorprende que hace tantos años que no nos vemos.",
+        "correct": false,
+        "feedback": "Me sorprende que reacts to a fact, so the first verb must be in the subjunctive: haga, not hace."
+      },
+      {
+        "text": "Me sorprende que haca tantos años que no nos vemos.",
+        "correct": false,
+        "feedback": "Hacer is irregular: the subjunctive is haga, never 'haca'."
+      },
+      {
+        "text": "Me sorprende que haga tantos años que no nos vemos.",
+        "correct": true,
+        "feedback": "Correct. Only hace changes to haga after me sorprende que. The second clause stays indicative: nos vemos."
+      },
+      {
+        "text": "Me sorprende que haga tantos años que no nos veamos.",
+        "correct": false,
+        "feedback": "Only the hace clause takes the subjunctive. The clause after «hace… que» stays indicative (nos vemos)."
+      }
+    ]
+  },
+  {
+    "id": "q054",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "poder-vs-saber",
+    "question": "Complete the sentence: «Es posible que mañana no ___ salir.» (It's possible we won't be able to go out tomorrow.)",
+    "options": [
+      {
+        "text": "podemos",
+        "correct": false,
+        "feedback": "Podemos is indicative. After es posible que, which expresses a possibility rather than a fact, you need the subjunctive."
+      },
+      {
+        "text": "puedamos",
+        "correct": false,
+        "feedback": "Poder has an o→ue stem change in all forms except nosotros, so the form is podamos, never 'puedamos'."
+      },
+      {
+        "text": "puedan",
+        "correct": false,
+        "feedback": "Puedan is the ellos form. The sentence is about 'we' (nosotros)."
+      },
+      {
+        "text": "podamos",
+        "correct": true,
+        "feedback": "Correct. Es posible que takes the subjunctive, and the nosotros form of poder keeps the o: podamos."
+      }
+    ]
+  },
+  {
+    "id": "q055",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "ir-vs-venir",
+    "question": "A colleague has stopped coming to meetings. You want to say that you find it odd (a judgement, not just a statement). Which sentence does that?",
+    "options": [
+      {
+        "text": "Es raro que no vengas a las reuniones.",
+        "correct": true,
+        "feedback": "Correct. Es raro que judges the fact, so it takes the subjunctive: vengas."
+      },
+      {
+        "text": "Es raro que no vienes a las reuniones.",
+        "correct": false,
+        "feedback": "Es raro que needs the subjunctive. Vienes (indicative) is what you'd use to state the fact."
+      },
+      {
+        "text": "Es cierto que no vengas a las reuniones.",
+        "correct": false,
+        "feedback": "Es cierto que asserts a fact, so it takes the indicative (vienes). It also doesn't express that you find it odd."
+      },
+      {
+        "text": "Es cierto que no vienes a las reuniones.",
+        "correct": false,
+        "feedback": "The grammar is right, but this only states a fact and doesn't judge it as odd. Es raro que is the evaluation."
+      }
+    ]
+  },
+  {
+    "id": "q056",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "querer-vs-amar",
+    "question": "Complete the sentence: «Prefiero que ___ tu trabajo.» (I'd prefer you to love your job.)",
+    "options": [
+      {
+        "text": "amas",
+        "correct": false,
+        "feedback": "Amas is indicative. Preferring that someone else act in a certain way is a wish, so you need the subjunctive."
+      },
+      {
+        "text": "ame",
+        "correct": false,
+        "feedback": "Ame is the subjunctive for él/ella, but the sentence is about tú."
+      },
+      {
+        "text": "ames",
+        "correct": true,
+        "feedback": "Correct. Prefiero que expresses a wish about someone else, so it takes the subjunctive. Amar is regular: ames."
+      },
+      {
+        "text": "amarás",
+        "correct": false,
+        "feedback": "Amarás is the future indicative. After prefiero que you need the present subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q057",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "escuchar-vs-oir",
+    "question": "Complete the sentence: «Te aconsejo que ___ ambas versiones.» (I advise you to hear both versions.)",
+    "options": [
+      {
+        "text": "oyas",
+        "correct": false,
+        "feedback": "Oír is irregular in the subjunctive: it takes a -g-, as in oigas, never 'oyas'."
+      },
+      {
+        "text": "oigas",
+        "correct": true,
+        "feedback": "Correct. Te aconsejo que expresses a wish, so it takes the subjunctive, and oír has a -g-: oigas."
+      },
+      {
+        "text": "oyes",
+        "correct": false,
+        "feedback": "Oyes is indicative. Advice is a wish, so you need the subjunctive."
+      },
+      {
+        "text": "oiga",
+        "correct": false,
+        "feedback": "Oiga is the usted/él form. You're advising tú, so it must be oigas."
+      }
+    ]
+  },
+  {
+    "id": "q058",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "sentir-vs-sentirse",
+    "question": "You don't yet know whether you'll be tired, but you have to go either way. Which sentence says 'Even if you feel tired, you have to go'?",
+    "options": [
+      {
+        "text": "Aunque te sientes cansado, tienes que ir.",
+        "correct": false,
+        "feedback": "This is indicative: it means 'Although you do feel tired', treating the tiredness as real."
+      },
+      {
+        "text": "Aunque sientas cansado, tienes que ir.",
+        "correct": false,
+        "feedback": "Without the reflexive te, sentir would mean to feel something and needs a noun (sentir cansancio). To feel tired you need sentirse."
+      },
+      {
+        "text": "Aunque te sintieras cansado, tienes que ir.",
+        "correct": false,
+        "feedback": "This is the imperfect subjunctive, which doesn't match tienes in the present."
+      },
+      {
+        "text": "Aunque te sientas cansado, tienes que ir.",
+        "correct": true,
+        "feedback": "Correct. Aunque + subjunctive means 'even if', for something hypothetical. Sentirse + adjective is reflexive: te sientas."
+      }
+    ]
+  },
+  {
+    "id": "q059",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "gastar-vs-pasar",
+    "question": "Complete the sentence: «Me alegra que ___ el verano aquí.» (I'm glad you're spending the summer here.)",
+    "options": [
+      {
+        "text": "gastes",
+        "correct": false,
+        "feedback": "Gastar is for spending money or using something up. For time you spend, the verb is pasar."
+      },
+      {
+        "text": "pasas",
+        "correct": false,
+        "feedback": "Pasas is indicative. Me alegra que is an emotional reaction, so it takes the subjunctive."
+      },
+      {
+        "text": "pases",
+        "correct": true,
+        "feedback": "Correct. Me alegra que takes the subjunctive, and pasar is the verb for spending time."
+      },
+      {
+        "text": "pase",
+        "correct": false,
+        "feedback": "Pase is the form for él/ella. The sentence is about tú (you)."
+      }
+    ]
+  },
+  {
+    "id": "q060",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "encontrar-vs-buscar",
+    "question": "Complete the sentence: «Ojalá ___ un hotel barato.» (I hope we find a cheap hotel.)",
+    "options": [
+      {
+        "text": "encontremos",
+        "correct": true,
+        "feedback": "Correct. Ojalá takes the subjunctive, and in the nosotros form encontrar keeps the o: encontremos."
+      },
+      {
+        "text": "encuentremos",
+        "correct": false,
+        "feedback": "Encontrar has an o→ue stem change in every form except nosotros, so it is encontremos, not 'encuentremos'."
+      },
+      {
+        "text": "encontramos",
+        "correct": false,
+        "feedback": "Encontramos is indicative. Ojalá expresses a hope, so it needs the subjunctive."
+      },
+      {
+        "text": "encuentren",
+        "correct": false,
+        "feedback": "Encuentren is the ellos form. The sentence is about 'we'."
+      }
+    ]
+  },
+  {
+    "id": "q061",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "tocar-vs-jugar",
+    "question": "Which sentence says 'I suggest we play this song at the party', as a suggestion rather than a statement?",
+    "options": [
+      {
+        "text": "Propongo que toquemos esta canción en la fiesta.",
+        "correct": true,
+        "feedback": "Correct. A suggestion tries to influence, so it takes the subjunctive. Tocar goes with music and instruments, and c→qu gives toquemos."
+      },
+      {
+        "text": "Propongo que tocamos esta canción en la fiesta.",
+        "correct": false,
+        "feedback": "Tocamos is indicative. A suggestion with propongo que needs the subjunctive."
+      },
+      {
+        "text": "Propongo que tocemos esta canción en la fiesta.",
+        "correct": false,
+        "feedback": "Tocar needs c→qu before e to keep the hard c sound: toquemos, never 'tocemos'."
+      },
+      {
+        "text": "Propongo que juguemos esta canción en la fiesta.",
+        "correct": false,
+        "feedback": "Jugar goes with games and sports (jugar a). Songs and instruments use tocar."
+      }
+    ]
+  },
+  {
+    "id": "q062",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "dejar-vs-salir",
+    "question": "Complete the sentence: «No permito que ___ sin abrigo.» (I won't let you go out without a coat.)",
+    "options": [
+      {
+        "text": "sales",
+        "correct": false,
+        "feedback": "Sales is indicative. Refusing to allow something is an attempt to influence, so it takes the subjunctive."
+      },
+      {
+        "text": "salgas",
+        "correct": true,
+        "feedback": "Correct. No permito que takes the subjunctive, and salir is irregular with a -g-: salgas."
+      },
+      {
+        "text": "saldrás",
+        "correct": false,
+        "feedback": "Saldrás is the future indicative. After no permito que you need the present subjunctive."
+      },
+      {
+        "text": "salga",
+        "correct": false,
+        "feedback": "Salga is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q063",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "haber-solo",
+    "question": "Which sentence correctly says 'It's possible there are twenty books in the box'?",
+    "options": [
+      {
+        "text": "Es posible que hayan veinte libros en la caja.",
+        "correct": false,
+        "feedback": "Impersonal haber stays singular even with a plural noun: haya veinte libros, not 'hayan'."
+      },
+      {
+        "text": "Es posible que hay veinte libros en la caja.",
+        "correct": false,
+        "feedback": "Hay is indicative. Es posible que expresses a possibility, so it takes the subjunctive: haya."
+      },
+      {
+        "text": "Es posible que haya veinte libros en la caja.",
+        "correct": true,
+        "feedback": "Correct. Es posible que takes the subjunctive, and impersonal haya stays singular even before a plural noun."
+      },
+      {
+        "text": "Es posible que haiga veinte libros en la caja.",
+        "correct": false,
+        "feedback": "Haya is the subjunctive of hay. 'Haiga' is not a correct form."
+      }
+    ]
+  },
+  {
+    "id": "q064",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "hacer-solo",
+    "question": "Complete the sentence: «Insisto en que me ___ caso.» (I insist that you listen to me.)",
+    "options": [
+      {
+        "text": "haces",
+        "correct": false,
+        "feedback": "Haces is indicative. Insisting on something is pressing someone to act, so it takes the subjunctive."
+      },
+      {
+        "text": "haga",
+        "correct": false,
+        "feedback": "Haga is the form for él/ella or usted. The sentence is about tú."
+      },
+      {
+        "text": "hacas",
+        "correct": false,
+        "feedback": "Hacer is irregular in the subjunctive: haga, hagas, never 'hacas'."
+      },
+      {
+        "text": "hagas",
+        "correct": true,
+        "feedback": "Correct. Insisto en que + a different subject takes the subjunctive, and hacer is irregular: hagas."
+      }
+    ]
+  },
+  {
+    "id": "q065",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "poner-solo",
+    "question": "Complete the sentence: «Cuando ___ la mesa, avísame.» (When you've set the table, let me know.)",
+    "options": [
+      {
+        "text": "pongas",
+        "correct": true,
+        "feedback": "Correct. Cuando about a future event takes the subjunctive, and poner has a -g-: pongas."
+      },
+      {
+        "text": "pones",
+        "correct": false,
+        "feedback": "Pones is indicative. This refers to a future event, so cuando needs the subjunctive."
+      },
+      {
+        "text": "ponas",
+        "correct": false,
+        "feedback": "Poner has a -g- in the subjunctive: pongas, never 'ponas'."
+      },
+      {
+        "text": "ponga",
+        "correct": false,
+        "feedback": "Ponga is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q066",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "tomar-solo",
+    "question": "Which sentence correctly says 'I recommend that you make a decision soon'?",
+    "options": [
+      {
+        "text": "Te recomiendo que hagas una decisión pronto.",
+        "correct": false,
+        "feedback": "In Spanish you take a decision, you don't make one: tomar una decisión, never 'hacer una decisión'."
+      },
+      {
+        "text": "Te recomiendo que tomes una decisión pronto.",
+        "correct": true,
+        "feedback": "Correct. Te recomiendo que takes the subjunctive, and the verb for decisions is tomar: tomes una decisión."
+      },
+      {
+        "text": "Te recomiendo que tomas una decisión pronto.",
+        "correct": false,
+        "feedback": "Tomas is indicative. A recommendation is an attempt to influence, so it needs the subjunctive."
+      },
+      {
+        "text": "Te recomiendo que haces una decisión pronto.",
+        "correct": false,
+        "feedback": "Haces is indicative, and hacer is not the verb for decisions either. It is tomar una decisión."
+      }
+    ]
+  },
+  {
+    "id": "q067",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "entrar-solo",
+    "question": "Complete the sentence: «Dejo la llave para que ___ en casa.» (I'm leaving the key so you can get into the house.)",
+    "options": [
+      {
+        "text": "entras",
+        "correct": false,
+        "feedback": "Entras is indicative. Para que expresses a purpose, so it always takes the subjunctive."
+      },
+      {
+        "text": "entres",
+        "correct": true,
+        "feedback": "Correct. The subjects are different (I leave the key, you go in), so para que + subjunctive is needed: entres."
+      },
+      {
+        "text": "entrar",
+        "correct": false,
+        "feedback": "Para + infinitive is only possible when both clauses have the same subject. Here the subjects differ, so you need para que + subjunctive."
+      },
+      {
+        "text": "entre",
+        "correct": false,
+        "feedback": "Entre is the form for él/ella or usted. The person getting in is tú."
+      }
+    ]
+  },
+  {
+    "id": "q068",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "tirar-vs-sacar",
+    "question": "You want to say it's time that we (specifically) draw conclusions, naming who acts. Which sentence is correct?",
+    "options": [
+      {
+        "text": "Es hora de que sacamos conclusiones.",
+        "correct": false,
+        "feedback": "Es hora de que is a judgement about what should happen, so it takes the subjunctive, not sacamos."
+      },
+      {
+        "text": "Es hora de que tiremos conclusiones.",
+        "correct": false,
+        "feedback": "Tirar means to throw or throw away. The verb for drawing conclusions is sacar."
+      },
+      {
+        "text": "Es hora de que saquemos conclusiones.",
+        "correct": true,
+        "feedback": "Correct. Es hora de que takes the subjunctive, and sacar (c→qu) is the verb for drawing conclusions: saquemos."
+      },
+      {
+        "text": "Es hora de que sacemos conclusiones.",
+        "correct": false,
+        "feedback": "Sacar needs c→qu before e to keep the hard c sound: saquemos, never 'sacemos'."
+      }
+    ]
+  },
+  {
+    "id": "q069",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "caer-solo",
+    "question": "Complete the sentence: «Sujeta la escalera para que no me ___.» (Hold the ladder so I don't fall.)",
+    "options": [
+      {
+        "text": "caigo",
+        "correct": false,
+        "feedback": "Caigo is indicative. Para que expresses a purpose, so it always takes the subjunctive."
+      },
+      {
+        "text": "caya",
+        "correct": false,
+        "feedback": "Caer is irregular: the subjunctive is caiga, never 'caya'."
+      },
+      {
+        "text": "caigas",
+        "correct": false,
+        "feedback": "Caigas is the tú form. The person who might fall is the speaker (me), so the verb is caiga."
+      },
+      {
+        "text": "caiga",
+        "correct": true,
+        "feedback": "Correct. Para que takes the subjunctive, and caer is irregular: caiga."
+      }
+    ]
+  },
+  {
+    "id": "q070",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "seguir-solo",
+    "question": "A rescuer is sure the missing hiker is still alive. Which sentence says 'I don't doubt he's still alive'?",
+    "options": [
+      {
+        "text": "No dudo que sigue vivo.",
+        "correct": true,
+        "feedback": "Correct. Dudar takes the subjunctive, but no dudar expresses certainty, so it takes the indicative: sigue."
+      },
+      {
+        "text": "Dudo que siga vivo.",
+        "correct": false,
+        "feedback": "This says 'I doubt he's still alive', the opposite of what the rescuer believes."
+      },
+      {
+        "text": "Dudo que sigue vivo.",
+        "correct": false,
+        "feedback": "This also says 'I doubt…', and dudar would need the subjunctive (siga), not the indicative."
+      },
+      {
+        "text": "No dudo que segue vivo.",
+        "correct": false,
+        "feedback": "Seguir has an e→i stem change, so the form is sigue, never 'segue'."
+      }
+    ]
+  },
+  {
+    "id": "q071",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "conseguir-solo",
+    "question": "Complete the sentence: «Deseo que ___ el trabajo.» (I hope you get the job.)",
+    "options": [
+      {
+        "text": "consigues",
+        "correct": false,
+        "feedback": "Consigues is indicative. A wish about someone else takes the subjunctive."
+      },
+      {
+        "text": "consiguas",
+        "correct": false,
+        "feedback": "Before a, conseguir keeps the g sound and is written with g, not gu: consigas."
+      },
+      {
+        "text": "consigas",
+        "correct": true,
+        "feedback": "Correct. Deseo que expresses a wish, so it takes the subjunctive, and conseguir has e→i and a g: consigas."
+      },
+      {
+        "text": "consiga",
+        "correct": false,
+        "feedback": "Consiga is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q072",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "quedar-vs-quedarse",
+    "question": "Which sentence correctly says 'Call me so that we arrange to meet'?",
+    "options": [
+      {
+        "text": "Llámame para que nos quedemos.",
+        "correct": false,
+        "feedback": "Quedarse means to stay, so this says 'so that we stay'. Arranging to meet is quedar, without the reflexive."
+      },
+      {
+        "text": "Llámame para que quedamos.",
+        "correct": false,
+        "feedback": "Quedamos is indicative. Para que expresses a purpose, so it takes the subjunctive."
+      },
+      {
+        "text": "Llámame para quedemos.",
+        "correct": false,
+        "feedback": "Para que is needed before a subjunctive. Para on its own only takes an infinitive."
+      },
+      {
+        "text": "Llámame para que quedemos.",
+        "correct": true,
+        "feedback": "Correct. Para que + subjunctive, with quedar meaning to arrange to meet: que quedemos."
+      }
+    ]
+  },
+  {
+    "id": "q073",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "dejar-de-vs-parar",
+    "question": "After a hard run, a doctor tells you to stop for a short rest, only for the moment. Which sentence says 'It's essential that you stop running for a moment'?",
+    "options": [
+      {
+        "text": "Es imprescindible que pares de correr un momento.",
+        "correct": true,
+        "feedback": "Correct. Es imprescindible que takes the subjunctive, and parar de means to stop an action, even if only temporarily."
+      },
+      {
+        "text": "Es imprescindible que dejes de correr un momento.",
+        "correct": false,
+        "feedback": "Dejar de means to quit for good. The doctor only asks you to pause, so parar is the better verb."
+      },
+      {
+        "text": "Es imprescindible que paras de correr un momento.",
+        "correct": false,
+        "feedback": "Paras is indicative. Calling something essential is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "Es imprescindible que pare de correr un momento.",
+        "correct": false,
+        "feedback": "Pare is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q074",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "soler-vs-acostumbrarse",
+    "question": "Complete the sentence: «Es bueno que te ___ al frío.» (It's good that you get used to the cold.)",
+    "options": [
+      {
+        "text": "acostumbras",
+        "correct": false,
+        "feedback": "Acostumbras is indicative. Es bueno que is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "acostumbres",
+        "correct": true,
+        "feedback": "Correct. Es bueno que takes the subjunctive, and acostumbrarse is reflexive: te acostumbres."
+      },
+      {
+        "text": "acostumbre",
+        "correct": false,
+        "feedback": "Acostumbre is the form for él/ella or usted. The sentence is about tú."
+      },
+      {
+        "text": "acostumbrar",
+        "correct": false,
+        "feedback": "The infinitive can't follow es bueno que. You need a conjugated subjunctive form."
+      }
+    ]
+  },
+  {
+    "id": "q075",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "asistir-vs-atender",
+    "question": "Complete the sentence: «Es obligatorio que ___ a la reunión.» (It's mandatory that you attend the meeting.)",
+    "options": [
+      {
+        "text": "atiendas",
+        "correct": false,
+        "feedback": "Atender means to serve or look after someone. Attending an event is asistir."
+      },
+      {
+        "text": "asistes",
+        "correct": false,
+        "feedback": "Asistes is indicative. Saying something is obligatory is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "asistas",
+        "correct": true,
+        "feedback": "Correct. Es obligatorio que takes the subjunctive, and asistir a means to attend: asistas."
+      },
+      {
+        "text": "asista",
+        "correct": false,
+        "feedback": "Asista is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q076",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "introducir-vs-presentar",
+    "question": "At a cash machine, you tell your friend to put the card into the slot. Complete: «Quiero que ___ la tarjeta en la ranura.»",
+    "options": [
+      {
+        "text": "introduces",
+        "correct": false,
+        "feedback": "Introduces is indicative. Wanting someone else to act is a wish, so it takes the subjunctive."
+      },
+      {
+        "text": "introduscas",
+        "correct": false,
+        "feedback": "Introducir takes -zc- in the subjunctive: introduzcas, never 'introduscas'."
+      },
+      {
+        "text": "presentes",
+        "correct": false,
+        "feedback": "Presentar is to introduce a person or to present something. It isn't the verb for inserting a card."
+      },
+      {
+        "text": "introduzcas",
+        "correct": true,
+        "feedback": "Correct. Quiero que takes the subjunctive, and introducir (to insert) is irregular with -zc-: introduzcas."
+      }
+    ]
+  },
+  {
+    "id": "q077",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "avergonzado-vs-embarazada",
+    "question": "After tripping in front of everyone, Lucía has gone bright red. Which sentence says 'It's understandable that she's embarrassed after that'?",
+    "options": [
+      {
+        "text": "Es comprensible que esté avergonzada después de aquello.",
+        "correct": true,
+        "feedback": "Correct. Es comprensible que takes the subjunctive, and embarrassed is avergonzada (estar avergonzada): esté."
+      },
+      {
+        "text": "Es comprensible que esté embarazada después de aquello.",
+        "correct": false,
+        "feedback": "Embarazada means pregnant, not embarrassed. It's a false friend."
+      },
+      {
+        "text": "Es comprensible que está avergonzada después de aquello.",
+        "correct": false,
+        "feedback": "Está is indicative. Es comprensible que judges the situation, so it takes the subjunctive: esté."
+      },
+      {
+        "text": "Es comprensible que sea avergonzada después de aquello.",
+        "correct": false,
+        "feedback": "Ser avergonzada would describe her as a shameful person. An embarrassed state needs estar: esté avergonzada."
+      }
+    ]
+  },
+  {
+    "id": "q078",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "probar-vs-intentar",
+    "question": "Complete the sentence: «Es recomendable que ___ el vino antes de comprarlo.» (It's advisable that you taste the wine before buying it.)",
+    "options": [
+      {
+        "text": "probes",
+        "correct": false,
+        "feedback": "Probar has an o→ue stem change: pruebes, never 'probes'."
+      },
+      {
+        "text": "pruebes",
+        "correct": true,
+        "feedback": "Correct. Es recomendable que takes the subjunctive, and probar (to taste) has o→ue: pruebes."
+      },
+      {
+        "text": "intentes",
+        "correct": false,
+        "feedback": "Intentar means to attempt something. Tasting wine is probar."
+      },
+      {
+        "text": "pruebas",
+        "correct": false,
+        "feedback": "Pruebas is indicative. Saying what is advisable is a judgement, so it takes the subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q079",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "aprender-vs-enseñar",
+    "question": "Complete the sentence: «Repetiré la lección para que ___.» (I'll repeat the lesson so that you learn.)",
+    "options": [
+      {
+        "text": "enseñes",
+        "correct": false,
+        "feedback": "Enseñar means to teach. You are the one repeating the lesson, and the listener is the learner, so the verb is aprender."
+      },
+      {
+        "text": "aprendes",
+        "correct": false,
+        "feedback": "Aprendes is indicative. Para que expresses a purpose, so it always takes the subjunctive."
+      },
+      {
+        "text": "aprendas",
+        "correct": true,
+        "feedback": "Correct. Para que takes the subjunctive, and aprender is regular: aprendas."
+      },
+      {
+        "text": "aprenda",
+        "correct": false,
+        "feedback": "Aprenda is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q080",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "prestar-vs-pedir-prestado",
+    "question": "Which sentence says 'When we borrow money, we'll sign a paper', about a future event?",
+    "options": [
+      {
+        "text": "Cuando pedamos prestado dinero, firmaremos un papel.",
+        "correct": false,
+        "feedback": "Pedir keeps its e→i change in nosotros: pidamos, never 'pedamos'."
+      },
+      {
+        "text": "Cuando prestemos dinero, firmaremos un papel.",
+        "correct": false,
+        "feedback": "Prestar means to lend. This says 'When we lend money', the opposite of borrowing."
+      },
+      {
+        "text": "Cuando pedimos prestado dinero, firmaremos un papel.",
+        "correct": false,
+        "feedback": "Pedimos is indicative, used for habits. A future event with cuando takes the subjunctive."
+      },
+      {
+        "text": "Cuando pidamos prestado dinero, firmaremos un papel.",
+        "correct": true,
+        "feedback": "Correct. Cuando about a future event takes the subjunctive, and pedir prestado keeps e→i in nosotros: pidamos."
+      }
+    ]
+  },
+  {
+    "id": "q081",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "levantar-vs-levantarse",
+    "question": "A parent says they'd prefer that you lift the child carefully, not that the child gets up. Which sentence says that?",
+    "options": [
+      {
+        "text": "Prefiero que levantes al niño con cuidado.",
+        "correct": true,
+        "feedback": "Correct. Prefiero que takes the subjunctive, and without the reflexive levantar means to lift someone: levantes."
+      },
+      {
+        "text": "Prefiero que te levantes al niño con cuidado.",
+        "correct": false,
+        "feedback": "The reflexive te would mean you get yourself up. It doesn't work with al niño as the object being lifted."
+      },
+      {
+        "text": "Prefiero que el niño se levante con cuidado.",
+        "correct": false,
+        "feedback": "With the reflexive se, levantarse means to get up, so this says the child should get up carefully. You want someone to lift him."
+      },
+      {
+        "text": "Prefiero que levantas al niño con cuidado.",
+        "correct": false,
+        "feedback": "Levantas is indicative. Preferring that someone else act is a wish, so it takes the subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q082",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "dormir-vs-dormirse",
+    "question": "Which sentence correctly says 'Call me before the child falls asleep'?",
+    "options": [
+      {
+        "text": "Llámame antes de que se duerme el niño.",
+        "correct": false,
+        "feedback": "Antes de que always takes the subjunctive, because the event hasn't happened yet. Duerme is indicative."
+      },
+      {
+        "text": "Llámame antes de que se duerma el niño.",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive, and dormirse (to fall asleep) is reflexive with o→ue: se duerma."
+      },
+      {
+        "text": "Llámame antes de que se durmió el niño.",
+        "correct": false,
+        "feedback": "Durmió is the preterite and describes something that already happened. Antes de que needs the subjunctive."
+      },
+      {
+        "text": "Llámame antes de que se dormirá el niño.",
+        "correct": false,
+        "feedback": "Antes de que doesn't take a future indicative. It needs the present subjunctive: se duerma."
+      }
+    ]
+  },
+  {
+    "id": "q083",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "hacer-falta-vs-necesitar",
+    "question": "Which sentence correctly says 'I don't think you need more books' using hacer falta?",
+    "options": [
+      {
+        "text": "No creo que te haga falta más libros.",
+        "correct": false,
+        "feedback": "With hacer falta, the verb agrees with the thing needed, and libros is plural: hagan."
+      },
+      {
+        "text": "No creo que te hacen falta más libros.",
+        "correct": false,
+        "feedback": "Hacen is indicative. No creo que takes the subjunctive: hagan."
+      },
+      {
+        "text": "No creo que te hagan falta más libros.",
+        "correct": true,
+        "feedback": "Correct. No creo que takes the subjunctive, and hacer falta works like gustar, so the verb agrees with libros: hagan."
+      },
+      {
+        "text": "No creo que me hagan falta más libros.",
+        "correct": false,
+        "feedback": "Me means 'I', so this says that you don't think that you (the speaker) need books. The sentence is about the other person (te)."
+      }
+    ]
+  },
+  {
+    "id": "q084",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "funcionar-vs-trabajar",
+    "question": "Complete the sentence: «Es raro que el coche no ___.» (It's odd that the car doesn't work.)",
+    "options": [
+      {
+        "text": "trabaje",
+        "correct": false,
+        "feedback": "Trabajar is for people working. For machines, the verb is funcionar."
+      },
+      {
+        "text": "funciona",
+        "correct": false,
+        "feedback": "Funciona is indicative. Es raro que is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "funcionen",
+        "correct": false,
+        "feedback": "Funcionen is plural. El coche is singular, so the verb must be funcione."
+      },
+      {
+        "text": "funcione",
+        "correct": true,
+        "feedback": "Correct. Es raro que takes the subjunctive, and funcionar is the verb for machines: funcione."
+      }
+    ]
+  },
+  {
+    "id": "q085",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "llegar-vs-alcanzar",
+    "question": "Which sentence correctly says 'It's impossible that we'll reach the target'?",
+    "options": [
+      {
+        "text": "Es imposible que alcancemos el objetivo.",
+        "correct": true,
+        "feedback": "Correct. Es imposible que takes the subjunctive, and alcanzar takes a direct object and needs z→c: alcancemos."
+      },
+      {
+        "text": "Es imposible que alcanzemos el objetivo.",
+        "correct": false,
+        "feedback": "Alcanzar needs z→c before e: alcancemos, never 'alcanzemos'."
+      },
+      {
+        "text": "Es imposible que alcanzamos el objetivo.",
+        "correct": false,
+        "feedback": "Alcanzamos is indicative. Es imposible que denies the fact, so it takes the subjunctive."
+      },
+      {
+        "text": "Es imposible que lleguemos el objetivo.",
+        "correct": false,
+        "feedback": "Llegar goes with a + place (llegar al objetivo), while alcanzar takes the target as a direct object."
+      }
+    ]
+  },
+  {
+    "id": "q086",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "llevar-vs-vestirse",
+    "question": "Complete the sentence: «Quiero que ___ tu abrigo.» (I want you to wear your coat.)",
+    "options": [
+      {
+        "text": "llevas",
+        "correct": false,
+        "feedback": "Llevas is indicative. Wanting someone else to act is a wish, so it takes the subjunctive."
+      },
+      {
+        "text": "lleves",
+        "correct": true,
+        "feedback": "Correct. Quiero que takes the subjunctive, and llevar means to be wearing something: lleves."
+      },
+      {
+        "text": "vistas",
+        "correct": false,
+        "feedback": "Vestirse means to get dressed and is reflexive. It doesn't take a coat as a direct object."
+      },
+      {
+        "text": "lleve",
+        "correct": false,
+        "feedback": "Lleve is the form for él/ella or usted. The sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q087",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "soñar-solo",
+    "question": "Complete the sentence: «Te deseo que sueñes ___ una vida mejor.» (I hope you dream of a better life.)",
+    "options": [
+      {
+        "text": "de",
+        "correct": false,
+        "feedback": "Soñar always takes con, never de."
+      },
+      {
+        "text": "sobre",
+        "correct": false,
+        "feedback": "Soñar always takes con, never sobre."
+      },
+      {
+        "text": "con",
+        "correct": true,
+        "feedback": "Correct. Soñar con means to dream of or about something."
+      },
+      {
+        "text": "a",
+        "correct": false,
+        "feedback": "Soñar doesn't take a. The preposition is always con."
+      }
+    ]
+  },
+  {
+    "id": "q088",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "notar-vs-fijarse",
+    "question": "Complete the sentence: «Es importante que te ___ en los detalles.» (It's important that you pay attention to the details.)",
+    "options": [
+      {
+        "text": "fijas",
+        "correct": false,
+        "feedback": "Fijas is indicative. Es importante que is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "notes",
+        "correct": false,
+        "feedback": "Notar means to notice, and it isn't reflexive and doesn't take en. Paying attention is fijarse en."
+      },
+      {
+        "text": "fije",
+        "correct": false,
+        "feedback": "Fije is the form for él/ella or usted. With te, the sentence is about tú."
+      },
+      {
+        "text": "fijes",
+        "correct": true,
+        "feedback": "Correct. Es importante que takes the subjunctive, and fijarse en means to pay attention to: te fijes."
+      }
+    ]
+  },
+  {
+    "id": "q089",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "resultar-solo",
+    "question": "Which sentence says 'Even if I find it hard to understand, I'll try', where the difficulty is hypothetical?",
+    "options": [
+      {
+        "text": "Aunque me resulte difícil entenderlo, lo intentaré.",
+        "correct": true,
+        "feedback": "Correct. Aunque + subjunctive means 'even if', and resultar works like gustar: me resulte difícil."
+      },
+      {
+        "text": "Aunque me resulta difícil entenderlo, lo intentaré.",
+        "correct": false,
+        "feedback": "Aunque + indicative means 'although I do find it hard', a known fact. Here the difficulty is hypothetical."
+      },
+      {
+        "text": "Aunque resulto difícil entenderlo, lo intentaré.",
+        "correct": false,
+        "feedback": "Without me, resultar says that 'I' turn out to be hard. It needs the gustar-style structure: me resulte difícil."
+      },
+      {
+        "text": "Aunque me resulten difícil entenderlo, lo intentaré.",
+        "correct": false,
+        "feedback": "With resultar, the verb agrees with the thing that turns out hard. Entenderlo is a single action, so it is singular: resulte, not resulten."
+      }
+    ]
+  },
+  {
+    "id": "q090",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "costar-vs-valer",
+    "question": "Complete the sentence: «Dudo que ___ tanto.» (I doubt it costs that much.)",
+    "options": [
+      {
+        "text": "cuesta",
+        "correct": false,
+        "feedback": "Cuesta is indicative. Dudo que takes the subjunctive."
+      },
+      {
+        "text": "cueste",
+        "correct": true,
+        "feedback": "Correct. Dudo que takes the subjunctive, and costar has o→ue: cueste."
+      },
+      {
+        "text": "coste",
+        "correct": false,
+        "feedback": "Costar has an o→ue stem change: cueste, never 'coste' (which is a noun, 'cost')."
+      },
+      {
+        "text": "valga",
+        "correct": false,
+        "feedback": "Valer means to be worth. Here you want the price you pay, which is costar."
+      }
+    ]
+  },
+  {
+    "id": "q091",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "pagar-vs-cobrar",
+    "question": "Which sentence correctly says 'It's reasonable that she gets paid more for overtime'?",
+    "options": [
+      {
+        "text": "Es razonable que pague más por las horas extra.",
+        "correct": false,
+        "feedback": "Pagar means to hand money over, so this says she pays more. Receiving pay is cobrar."
+      },
+      {
+        "text": "Es razonable que cobra más por las horas extra.",
+        "correct": false,
+        "feedback": "Cobra is indicative. Es razonable que is a judgement, so it takes the subjunctive: cobre."
+      },
+      {
+        "text": "Es razonable que cobre más por las horas extra.",
+        "correct": true,
+        "feedback": "Correct. Es razonable que takes the subjunctive, and cobrar means to receive pay: cobre."
+      },
+      {
+        "text": "Es razonable que pagas más por las horas extra.",
+        "correct": false,
+        "feedback": "Pagas is indicative, and pagar means to hand money over, not to receive it."
+      }
+    ]
+  },
+  {
+    "id": "q092",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "casarse-solo",
+    "question": "Complete the sentence: «Ojalá te ___ pronto.» (I hope you get married soon.)",
+    "options": [
+      {
+        "text": "casas",
+        "correct": false,
+        "feedback": "Casas is indicative. Ojalá expresses a hope, so it takes the subjunctive."
+      },
+      {
+        "text": "casarás",
+        "correct": false,
+        "feedback": "Casarás is the future indicative. Ojalá needs the present subjunctive."
+      },
+      {
+        "text": "case",
+        "correct": false,
+        "feedback": "Case is the form for él/ella or usted. With te, the sentence is about tú."
+      },
+      {
+        "text": "cases",
+        "correct": true,
+        "feedback": "Correct. Ojalá takes the subjunctive, and casarse is regular and reflexive: te cases."
+      }
+    ]
+  },
+  {
+    "id": "q093",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "morir-vs-matar",
+    "question": "Complete the sentence: «Carga el móvil antes de que se ___ la batería.» (Charge your phone before the battery dies.)",
+    "options": [
+      {
+        "text": "muera",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive, and morirse has o→ue: se muera."
+      },
+      {
+        "text": "muere",
+        "correct": false,
+        "feedback": "Muere is indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "mate",
+        "correct": false,
+        "feedback": "Matar means to kill. A battery doesn't get killed here. It runs out, and morirse is used for that."
+      },
+      {
+        "text": "murió",
+        "correct": false,
+        "feedback": "Murió is the preterite, a completed past event. Antes de que refers to something that hasn't happened yet."
+      }
+    ]
+  },
+  {
+    "id": "q094",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "cerrar-vs-apagar",
+    "question": "Complete the sentence: «Es necesario que ___ el móvil.» (It's necessary that you switch off your phone.)",
+    "options": [
+      {
+        "text": "apagas",
+        "correct": false,
+        "feedback": "Apagas is indicative. Es necesario que is a judgement, so it takes the subjunctive."
+      },
+      {
+        "text": "apagues",
+        "correct": true,
+        "feedback": "Correct. Es necesario que takes the subjunctive, and apagar needs g→gu before e: apagues."
+      },
+      {
+        "text": "apages",
+        "correct": false,
+        "feedback": "Apagar needs g→gu before e to keep the hard g sound: apagues, never 'apages'."
+      },
+      {
+        "text": "cierres",
+        "correct": false,
+        "feedback": "Cerrar is for doors, taps, gas and shops. For switching off a device, the verb is apagar."
+      }
+    ]
+  },
+  {
+    "id": "q095",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "pegar-solo",
+    "question": "Which sentence says 'Choose another colour so that it goes with the shirt' (so that it matches)?",
+    "options": [
+      {
+        "text": "Elige otro color para que pege con la camisa.",
+        "correct": false,
+        "feedback": "Pegar needs g→gu before e: pegue, never 'pege'."
+      },
+      {
+        "text": "Elige otro color para que pega con la camisa.",
+        "correct": false,
+        "feedback": "Pega is indicative. Para que expresses a purpose, so it always takes the subjunctive."
+      },
+      {
+        "text": "Elige otro color para que pegue con la camisa.",
+        "correct": true,
+        "feedback": "Correct. Para que takes the subjunctive, and pegar con means to match, with g→gu: pegue."
+      },
+      {
+        "text": "Elige otro color para que se pegue a la camisa.",
+        "correct": false,
+        "feedback": "With se, pegarse means to stick to something, so this says the colour should stick to the shirt."
+      }
+    ]
+  },
+  {
+    "id": "q096",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "andar-vs-caminar",
+    "question": "Complete the sentence: «Ojalá ___ bien el reloj.» (I hope the watch works properly.)",
+    "options": [
+      {
+        "text": "camine",
+        "correct": false,
+        "feedback": "Caminar is for walking. For a machine that runs or works, the verb is andar."
+      },
+      {
+        "text": "anda",
+        "correct": false,
+        "feedback": "Anda is indicative. Ojalá expresses a hope, so it takes the subjunctive."
+      },
+      {
+        "text": "anduve",
+        "correct": false,
+        "feedback": "Anduve is the first-person preterite. After ojalá you need the present subjunctive."
+      },
+      {
+        "text": "ande",
+        "correct": true,
+        "feedback": "Correct. Ojalá takes the subjunctive, and andar bien means to work well, said of a machine: ande."
+      }
+    ]
+  },
+  {
+    "id": "q097",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "discutir-vs-comentar",
+    "question": "You want to ask a business contact to call so that the two of you can talk the contract through casually, without it turning into a row. Which sentence does that?",
+    "options": [
+      {
+        "text": "Llámame para que comentemos el contrato.",
+        "correct": true,
+        "feedback": "Correct. Para que + subjunctive, with different subjects, and comentar means to talk something over without a fight."
+      },
+      {
+        "text": "Llámame para que discutamos el contrato.",
+        "correct": false,
+        "feedback": "Discutir usually means to argue, so this can sound like a fight. Comentar is the verb for talking it over."
+      },
+      {
+        "text": "Llámame para que comentamos el contrato.",
+        "correct": false,
+        "feedback": "Comentamos is indicative. Para que expresses a purpose, so it always takes the subjunctive."
+      },
+      {
+        "text": "Llámame para comentemos el contrato.",
+        "correct": false,
+        "feedback": "Para que is needed before a subjunctive verb. Para alone takes an infinitive."
+      }
+    ]
+  },
+  {
+    "id": "q098",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "dedicar-vs-dedicarse",
+    "question": "Complete the sentence: «Quiero que te ___ a la música.» (I want you to devote yourself to music.)",
+    "options": [
+      {
+        "text": "dedices",
+        "correct": false,
+        "feedback": "Dedicar needs c→qu before e: dediques, never 'dedices'."
+      },
+      {
+        "text": "dediques",
+        "correct": true,
+        "feedback": "Correct. Quiero que takes the subjunctive, and dedicarse a needs c→qu: te dediques."
+      },
+      {
+        "text": "dedicas",
+        "correct": false,
+        "feedback": "Dedicas is indicative. Wanting someone else to act is a wish, so it takes the subjunctive."
+      },
+      {
+        "text": "dedique",
+        "correct": false,
+        "feedback": "Dedique is the form for él/ella or usted. With te, the sentence is about tú."
+      }
+    ]
+  },
+  {
+    "id": "q099",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "aprobar-vs-suspender",
+    "question": "Complete the sentence: «Espero que ___ el examen.» (I hope you pass the exam.)",
+    "options": [
+      {
+        "text": "aprobes",
+        "correct": false,
+        "feedback": "Aprobar has an o→ue stem change: apruebes, never 'aprobes'."
+      },
+      {
+        "text": "apruebas",
+        "correct": false,
+        "feedback": "Apruebas is indicative. Hoping for something is a wish, so it takes the subjunctive."
+      },
+      {
+        "text": "apruebes",
+        "correct": true,
+        "feedback": "Correct. Espero que takes the subjunctive, and aprobar (to pass) has o→ue: apruebes."
+      },
+      {
+        "text": "suspendas",
+        "correct": false,
+        "feedback": "Suspender means to fail (in Spain), the opposite of what you're hoping for."
+      }
+    ]
+  },
+  {
+    "id": "q100",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "disfrutar-vs-gozar",
+    "question": "Complete the sentence: «Te deseo que ___ de buena salud.» (I wish you good health.)",
+    "options": [
+      {
+        "text": "goces",
+        "correct": true,
+        "feedback": "Correct. Te deseo que takes the subjunctive, and gozar needs z→c before e: goces. Gozar de is the formal 'to enjoy'."
+      },
+      {
+        "text": "gozes",
+        "correct": false,
+        "feedback": "Gozar needs z→c before e: goces, never 'gozes'."
+      },
+      {
+        "text": "goza",
+        "correct": false,
+        "feedback": "Goza is indicative. A wish takes the subjunctive."
+      },
+      {
+        "text": "gocen",
+        "correct": false,
+        "feedback": "Gocen is the ellos form. With te, the sentence is about tú."
+      }
+    ]
+  }
+]

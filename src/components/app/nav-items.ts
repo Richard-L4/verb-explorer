@@ -1,9 +1,10 @@
-import { Home, LayoutGrid, Search, Heart, BarChart3, Settings, MessagesSquare, Sparkles } from "lucide-react";
+import { Home, LayoutGrid, Search, Heart, BarChart3, Settings, MessagesSquare, Sparkles, Brain } from "lucide-react";
 
 export const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/browse", label: "Browse", icon: LayoutGrid },
   { to: "/subjunctive", label: "Subjunctive", icon: Sparkles },
+  { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/sayings", label: "Sayings", icon: MessagesSquare, Sparkles },
   { to: "/search", label: "Search", icon: Search },
   { to: "/favourites", label: "Favourites", icon: Heart },
