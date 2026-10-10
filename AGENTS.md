@@ -18,3 +18,4 @@
 - The visitor network address comes only from `client-address.server.ts` (Cloudflare `cf-connecting-ip`); browser-supplied forwarding headers are never trusted, because clients can forge them.
 - Funnel events are recorded only from production hostnames (`isProductionAnalyticsHost` in `analytics.server.ts`); preview and workspace copies share the production database, so they must never write analytics.
 - Funnel display corrections live in `funnel-exclusions.server.ts` and are applied only on the read path; `trial_events` rows are never deleted or edited, so raw history stays intact.
+- The quiz bank `src/data/quiz.json` is imported only by `src/lib/quiz-full.server.ts`; the browser gets the generated `quiz.public.json` (fixed 20 after-trial questions; regenerate with `bun scripts/build-quiz-public.ts`), and `getQuizQuestions` decides the tier on the server from a signed pass or the `vw_vid` trial record, so restricted questions never ship to the browser.

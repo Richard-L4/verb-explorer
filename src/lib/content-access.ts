@@ -82,3 +82,42 @@ export function filterEntryForAccess(
 export function randomSubjunctivePool(allIds: readonly string[], paid: boolean): string[] {
   return paid ? [...allIds] : allIds.filter((id) => freeSet.has(id));
 }
+
+/* ---------------------------------------------------------------- Quiz --- */
+
+/**
+ * Quiz tiers. Decided by the server only (signed pass / server trial record).
+ * - full:   purchase or creator — all 100 questions.
+ * - trial:  active 7-day trial — all Verb questions + Easy Subjunctive.
+ * - public: everyone else — the fixed 20 below.
+ */
+export type QuizTier = "full" | "trial" | "public";
+
+/** Fixed: first 20 Easy questions in quiz.json order (15 verbs, 5 subjunctive). */
+export const FREE_QUIZ_IDS_AFTER_TRIAL = [
+  "q001", "q002", "q004", "q007", "q014", "q018", "q022", "q025", "q029", "q031",
+  "q033", "q036", "q041", "q043", "q050", "q051", "q056", "q059", "q062", "q065",
+] as const;
+
+const freeQuizSet = new Set<string>(FREE_QUIZ_IDS_AFTER_TRIAL);
+
+export function quizTier(input: { role: "purchase" | "creator" | "preview" | null; trialActive: boolean }): QuizTier {
+  if (input.role) return "full";
+  return input.trialActive ? "trial" : "public";
+}
+
+export function quizQuestionAllowed(
+  q: { id: string; category: string; difficulty: string },
+  tier: QuizTier,
+): boolean {
+  if (tier === "full") return true;
+  if (tier === "trial") return q.category === "verbs" || q.difficulty === "easy";
+  return freeQuizSet.has(q.id);
+}
+
+/** Whether a tab/level choice is locked for this tier (for showing the unlock prompt). */
+export function quizLevelLocked(category: "verbs" | "subjunctive" | "mix", difficulty: string, tier: QuizTier): boolean {
+  if (tier === "full") return false;
+  if (tier === "trial") return category === "subjunctive" && difficulty !== "easy";
+  return difficulty !== "easy";
+}

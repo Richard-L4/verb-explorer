@@ -35,7 +35,7 @@ const quickLinks = [
   { to: "/browse", label: "Browse cards", description: "Every verb contrast in the deck", icon: LayoutGrid },
   { to: "/search", label: "Search", description: "Find a verb, meaning or example", icon: Search },
   { to: "/favourites", label: "Favourites", description: "Your saved cards", icon: Heart },
-  { to: "/quiz", label: "Quiz", description: "Coming soon", icon: Brain },
+  { to: "/quiz", label: "Quiz", description: "Test yourself", icon: Brain },
 ] as const;
 
 function Home() {
@@ -109,18 +109,22 @@ function Home() {
               <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </p>
           </Link>
-          <div
-            className="min-w-0 rounded-2xl border-2 border-accent/70 bg-accent/10 p-5 sm:p-6"
-            aria-label="Coming soon: Quiz"
+          <Link
+            to="/quiz"
+            className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
           >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent">Coming soon · Quiz</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Quiz</p>
             <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
               Test what you've learned
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Put your Spanish to the test with mixed questions, difficulty levels and quiz modes.
+              Multiple-choice questions on verbs and the subjunctive, at three levels, with feedback on every answer.
             </p>
-          </div>
+            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+              Take the quiz
+              <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </p>
+          </Link>
         </div>
       </section>
 
@@ -149,6 +153,37 @@ function Home() {
             className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
           >
             Explore the subjunctive
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/random-subjunctive"
+            className="gradient-hero inline-flex min-h-12 items-center gap-2 rounded-full px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            <Shuffle className="size-4" aria-hidden="true" /> Random Subjunctive
+          </Link>
+        </div>
+      </section>
+
+      <section className="surface-card gradient-soft hairline-top relative mt-6 overflow-hidden p-7 sm:mt-8 sm:p-12">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 -top-28 size-80 rounded-full bg-primary/15 blur-3xl"
+        />
+        <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+          <Brain className="size-3.5" aria-hidden="true" /> Test yourself
+        </span>
+        <h2 className="relative mt-6 max-w-2xl text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl">
+          <span className="gradient-text">Quiz</span>
+        </h2>
+        <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          Verbs, Subjunctive or a Mix of both — Easy, Medium and Hard questions with feedback on every answer.
+        </p>
+        <div className="relative mt-8 flex flex-wrap gap-3">
+          <Link
+            to="/quiz"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            Start the quiz
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
