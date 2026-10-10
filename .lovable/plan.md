@@ -1,74 +1,108 @@
-# Add the Quiz to Verb Wise
+# Quiz for Verb Wise — revised with server-side protection
 
-## What visitors will see
+## 1. How paid Subjunctive content is protected today
 
-**Menu:** a new **Quiz** tab, styled like the others, opens the Quiz page. It replaces the current "coming soon" page, at the same address.
+- **The browser gets only free content.** It only receives `subjunctive.public.json`, which holds the free Easy examples for the first 20 entries. A script generates it.
+- **The full file is server-only.** `subjunctive.json` is read only by `subjunctive-full.server.ts`. That module is loaded inside a server handler, and the build blocks `*.server.ts` files from browser code.
+- **Paid examples need a server-signed pass.** `getProtectedSubjunctive` returns paid examples only for a valid pass that the server signed. The server re-checks the purchase in the database, or checks the creator key or preview host.
+- **Browser flags never unlock anything.** The local "unlocked" flag, URL values and other browser state are never trusted.
+- **Production builds were scanned:** 0 of 840 locked sentences were found.
+- **The trial is held on the server.** An HttpOnly cookie, `vw_vid`, points to a row in `trial_grants` that stores the trial start date. The browser can't change it.
 
-**Top box on the home page:** the yellow "Coming soon · Quiz" card becomes a clickable green **NEW · Quiz** card. It looks and behaves like the NEW · Subjunctive card, and the label uses the same green. Clicking it opens the Quiz page. All the text on the card changes except the heading "Test what you've learned".
+## 2. Is the earlier plan secure? Not fully
 
-**Subjunctive box on the home page:**
-- A **Random Subjunctive** button next to "Explore the subjunctive", styled like the Random Verbs button.
-- It opens the existing Random Subjunctive page, so its behaviour and rules stay the same.
+The earlier plan put **all Verb questions** (Easy, Medium and Hard) and the Easy Subjunctive questions in the public file. It decided trial versus after-trial in the browser.
 
-**Quiz box on the home page:** a short box in the same style as the Subjunctive and Sayings boxes, with a "Start the quiz" button.
+After the trial, an unpaid visitor may only use 20 Easy questions. They could change browser state, or read the public file, and get every Verb question plus every Easy Subjunctive question. That breaks your rule that paid questions can't be obtained by manipulating the browser.
 
-**Quiz page:**
-- Three tabs: **Verbs**, **Subjunctive** and **Mix**. Below them, **Easy**, **Medium** and **Hard**, with the same wording and colours as the Subjunctive section.
-- One question at a time, with four answer buttons. After you answer:
-  - the right and wrong answers are marked
-  - the feedback for your choice appears
-  - you can't answer that question again
-- A **Next question** button, plus progress and score ("Question 3 of 15 · Score 2").
-- Questions come in a random order, with no repeats until all the questions in that choice have been used. Then a completion screen shows your final score and a **Restart** button.
-- Changing a tab or a level starts a new round using only matching questions. Mix draws from both Verbs and Subjunctive.
-- If a choice has no questions available, a clear message appears. Questions from another level or tab are never swapped in.
-- Works on phone, tablet and desktop.
+Medium and Hard Subjunctive questions would have stayed protected. Medium and Hard Verb questions, and the trial-only Easy questions, would not.
 
-## Who can answer which questions
+## 3. Revised design (smallest secure version)
 
-| Visitor | Verbs questions | Subjunctive questions |
-|---|---|---|
-| Bought Verb Wise | All levels | All levels |
-| In the 7-day trial | All levels | Easy only |
-| Trial ended, not bought | 20 Easy questions in total, across Verbs and Subjunctive ||
+**Public file (`src/data/quiz.public.json`):**
+- Contains only the **20 fixed after-trial questions**: the first 20 Easy questions in file order. That gives 15 Verb and 5 Subjunctive questions.
+- Everyone may see these, so it's safe for them to ship to the browser.
+- Mix uses this same pool and never adds questions.
 
-- Locked levels show the existing unlock prompt with the £4.99 price, not the questions.
-- **The 20 questions after the trial:** the first 20 Easy questions in the question file's own order, a fixed list. In Mix they come from both categories.
-  - **Please confirm:** the file opens with Easy verb questions, so this may give 20 verb questions and no subjunctive ones. Tell me if you want a different split, for example 10 verb and 10 subjunctive.
-- Nothing else changes: trial length, purchases, Stripe, Restore by email, creator mode, analytics, and the verb, subjunctive and sayings content.
+**Master file (`src/data/quiz.json`):**
+- Your file, copied byte for byte and verified by checksum.
+- Read only by a new `src/lib/quiz-full.server.ts`, which is loaded inside a server handler. This is the same pattern as Subjunctive.
+- Never imported by the browser or the build script's output.
 
-## The question bank
+**New server function `getQuizQuestions` (in `src/lib/quiz.functions.ts`):** the server works out the visitor's level itself.
 
-- Your 100 questions are copied into the app byte for byte and checked: 100 unique IDs, four options each, exactly one right answer.
-- No question text is written into the page code.
-- Your quiz progress is kept on your device only, separate from your flashcard progress and trial.
+| Server finds | Questions returned |
+|---|---|
+| A valid purchase or creator pass, re-checked in the database (preview-host passes as today) | All 100 |
+| No pass, and the trial cookie maps to a trial that started less than 7 days ago | All 50 Verb questions plus the 15 Easy Subjunctive questions |
+| Anything else (expired, no cookie, tampered pass, unknown) | Nothing extra; the page uses the public 20 |
 
-## Testing
+- The trial check reads only the server's own cookie and the `trial_grants` row. The trial length is the same 7-day setting the app already uses, unchanged.
+- Nothing the browser sends can raise the level except a server-signed pass.
 
-**Automated tests for:**
-- filtering by tab and level, and Mix including both categories
-- no repeats until a round is used up
+**In the browser:**
+- `useAccess()` decides only which unlock prompt to show. Locked levels show the existing prompt with the £4.99 price.
+- Access rules live in `content-access.ts` as pure functions (`quizTier`, `FREE_QUIZ_IDS_AFTER_TRIAL`). The server uses them to filter, and the page uses them for the prompts.
+
+**Also part of the build (unchanged from the first plan):**
+- the Quiz page and nav tab
+- the green NEW · Quiz card
+- the Random Subjunctive button, linking to the existing page
+- the home-page Quiz box
+- quiz score and progress kept on your device only, separate from flashcards and trial
+- shuffling through `random-sequence.ts` with no repeats until a round is used up
 - the empty-choice message
-- the three access levels, including exactly 20 Easy questions after the trial
-- no Medium or Hard subjunctive questions reaching unpaid visitors
 
-**Browser checks at 390px, 820px and 1280px:**
-- the Quiz menu tab, the NEW card and the home-page Quiz box
-- answering, feedback, scoring, Next and Restart
-- Random Subjunctive
+**Failure handling:** if the server can't confirm the trial, for example because the database is unavailable, the visitor gets only the public 20. Nothing extra is ever opened by mistake.
 
-I'll also run the full test suite and a build, and report the results honestly. Nothing will be published.
+## 4. Checking the public build for leaks
 
-## Technical details
+- **Scan the build.** After a production build, a script scans every file in the browser output (JavaScript, CSS, HTML, JSON, the service-worker files and any `.map` files). It searches for each of the 80 restricted questions' question text, all four option texts and all feedback. It also searches for the master file's checksum.
+  - **Expected:** 0 restricted matches. All 20 public questions are present.
+- **Look for source maps.** If any `.map` files exist in the browser output, they get the same scan.
+- **Check the import chain.** The browser code must never import `quiz.json` or `quiz-full.server.ts`. The build's own server-file blocking enforces this too.
 
-- **Copy the question file unchanged.** `quiz_questions.json` is copied unchanged to `src/data/quiz.json`, which is server-only. That raw file is never imported in browser code.
-- **Generated public file.** A script, `scripts/build-quiz-public.ts`, generates `src/data/quiz.public.json`. It holds all verb questions plus Easy subjunctive questions. Medium and Hard subjunctive questions never ship to the browser.
-  - A paid-only server function returns them only for a server-verified purchase pass, the same way paid subjunctive content works now.
-- **Access rules.** The rules go in `src/lib/content-access.ts`: `quizQuestionAllowed(q, { paid, inTrial })` and a fixed `FREE_QUIZ_IDS_AFTER_TRIAL` list. The page uses `useAccess()` for trial and paid status, as before.
-- **Question order.** A pure helper, `src/lib/quiz-session.ts`, handles filtering and shuffling. It reuses `random-sequence.ts`.
-- **New and changed files:**
-  - New: `src/routes/quiz.tsx`, rewritten as the playable page
-  - New: a `QuizPlayer` component under `src/components/app/`
-  - Updated: `nav-items.ts` gets the Quiz tab with the Brain icon
-  - Updated: `src/routes/index.tsx` gets the NEW card, the Random Subjunctive button, the Quiz box, and the "Jump back in" Quiz tile text
-- **Records.** Save the quiz access rule to memory, and the structure rule for the quiz files to `AGENTS.md`.
+## 5. Tests I'll run
+
+**Automated tests (vitest):**
+- Exactly 20 fixed after-trial IDs, Easy only, from both categories, matching the file order.
+- Tier filtering:
+  - purchase or creator gives 100
+  - in-trial gives the 50 Verb questions plus 15 Easy Subjunctive questions
+  - expired or none gives only the 20
+- Mix never exceeds the pool for its tier.
+- The public JSON holds exactly the 20 permitted questions and none of the other 80.
+- The master file's checksum equals the uploaded file's.
+- `getQuizQuestions` handler logic, with fake checks:
+  - **refused:** no pass, a tampered pass, an expired trial, a missing cookie, and a forged "paid" or "trial" value in the request body
+  - **accepted:** a valid purchase pass and an active trial
+- Session tests:
+  - no repeats until the round is used up
+  - changing tab or level starts a new round
+  - an empty pool shows the message
+- The full existing suite (currently 98 tests), to show that purchase, Restore by email, creator mode, trial, analytics, flashcards and sayings still pass.
+
+**Real checks:**
+- The production build plus the leak scan above.
+- Browser checks at 390px, 820px and 1280px on the workspace copy:
+  - **unpaid, after the trial:** only the 20 questions, with locked levels showing the prompt
+  - **in the trial**
+  - **creator mode**
+  - also the nav tab, the NEW card, Random Subjunctive, answering, feedback, score, Next and Restart
+- **Direct requests:** call the question function with no pass and with a forged pass, and confirm nothing restricted comes back.
+
+**Limitations (I'll report them honestly):**
+- The live site can only be checked after you publish.
+- I'll test the in-trial level using a temporary trial record on the workspace copy, then delete it. The workspace copy no longer records Funnel visits.
+- I'll test the purchase level with a test purchase pass, as in earlier audits, unless you prefer creator mode only.
+
+## Not changing
+
+- the question bank
+- prices, Stripe and purchases
+- trial length and trial logic
+- Restore by email and creator mode
+- analytics
+- the verb, subjunctive and sayings content and their rules
+
+Nothing will be published.
