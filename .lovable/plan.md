@@ -106,3 +106,12 @@ Medium and Hard Subjunctive questions would have stayed protected. Medium and Ha
 - the verb, subjunctive and sayings content and their rules
 
 Nothing will be published.
+
+## Addendum: final build instructions folded in
+
+- **The server checks the trial itself.** `getQuizQuestions` reads the `vw_vid` cookie and the matching `trial_grants` record on the server, compared against the existing 7-day setting. The pass checks reuse the existing signed-pass rules: signature, expiry and role. A purchase pass is re-checked in the database. Creator and preview passes follow the current rules. If anything goes wrong, the visitor gets only the public 20.
+- **Responses are never cached.** The function's reply is marked `Cache-Control: private, no-store`, so one visitor's questions can't be served to another.
+- **Tests run against the real server function.** They use mocked checks and database to call the actual function, including requests with forged `paid`, `trial` or tier values.
+- **Two small conflicts I'll report rather than change silently:**
+  - The question IDs in your file are lowercase (`q001`–`q100`). The tests will check those exact IDs.
+  - The brief says Random Subjunctive should link to "the existing Subjunctive page". I'll point it at the existing **Random Subjunctive** page, which matches how Random Verbs works.
