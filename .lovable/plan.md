@@ -115,3 +115,4 @@ Nothing will be published.
 - **Two small conflicts I'll report rather than change silently:**
   - The question IDs in your file are lowercase (`q001`–`q100`). The tests will check those exact IDs.
   - The brief says Random Subjunctive should link to "the existing Subjunctive page". I'll point it at the existing **Random Subjunctive** page, which matches how Random Verbs works.
+- **How the fixed public 20 are chosen:** the generator first keeps only the Easy questions from the master file, then takes the first 20 in the original order. It does not take the first 20 rows of the whole file. Checked against your file: that gives exactly 15 Verb and 5 Subjunctive questions. Tests confirm those exact lowercase IDs and their order against the master file. The generator stops with an error if the split is ever anything other than 15 and 5.
