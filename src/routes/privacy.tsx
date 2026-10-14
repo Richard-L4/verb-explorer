@@ -53,9 +53,11 @@ function Privacy() {
             access, send your purchase confirmation email and support Restore by email.
           </p>
           <p>
-            If you use Restore by email, we check the email address you enter against our purchase records and send a
-            one-time code to it. We do not store that email address or the code in readable form — only a one-way
-            scrambled version, used to check the code.
+            If you use Restore by email, we check the address you enter against our existing customer purchase records
+            and send a single-use 6-digit verification code that expires after 10 minutes. Your customer email address
+            is stored in our customer database to manage your purchase and access. Separately, our Restore verification
+            logs store one-way cryptographic hashes of the email address and verification code, rather than those values
+            in readable form. Verification codes cannot be reused and are subject to a limit of five failed attempts.
           </p>
           <p>There is no third-party advertising in Verb Wise, and no advertising or tracking profiles are built.</p>
         </LegalSection>
@@ -166,9 +168,22 @@ function Privacy() {
             meet any legal obligations that apply.
           </p>
           <p>
-            Purchase and customer records are kept so that your access continues to work, so you can restore it, and
-            to meet accounting and tax requirements. Operational data, such as one-time Restore codes and free-trial
-            checks, is short-lived and kept only as long as it serves that purpose.
+            Purchase and customer records are retained so that your access continues to work, so you can restore your
+            purchase, and to meet applicable accounting and tax requirements.
+          </p>
+          <p>
+            Hashed free-trial records are retained to help prevent the 7-day free trial from being repeatedly
+            restarted. Anonymous usage records are retained to support aggregate usage reporting.
+          </p>
+          <p>
+            Restore verification codes expire after 10 minutes and cannot be reused. However, the associated hashed
+            verification records are not automatically deleted when a code expires or is used; they remain in the
+            database until manually removed.
+          </p>
+          <p>
+            These records are retained for the purposes described above. Our data retention practices are reviewed
+            periodically and updated where necessary to reflect applicable data protection law, legal obligations, and
+            our operational requirements.
           </p>
           <p>Progress data stays in your browser until you clear it.</p>
         </LegalSection>
