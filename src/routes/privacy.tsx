@@ -48,8 +48,14 @@ function Privacy() {
             browser. It never leaves your device unless you tell us otherwise.
           </p>
           <p>
-            If a sign-in feature is added, we would collect your account email address so you can log back in and so we
-            can link your purchase to you.
+            When you buy Verb Wise, Stripe Checkout collects your email address and may collect your name. We record
+            your purchase details and customer details in our database so we can manage your purchase, give you
+            access, send your purchase confirmation email and support Restore by email.
+          </p>
+          <p>
+            If you use Restore by email, we check the email address you enter against our purchase records and send a
+            one-time code to it. We do not store that email address or the code in readable form — only a one-way
+            scrambled version, used to check the code.
           </p>
           <p>There is no third-party advertising in Verb Wise, and no advertising or tracking profiles are built.</p>
         </LegalSection>
@@ -73,14 +79,46 @@ function Privacy() {
         </LegalSection>
 
 
+        <LegalSection title="Service providers">
+          <p>We use a small number of trusted providers to run Verb Wise:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li><strong>Stripe</strong> — payment processing and checkout.</li>
+            <li><strong>Supabase</strong> — database hosting and storage of purchase records.</li>
+            <li><strong>Resend</strong> — delivery of transactional emails, such as purchase confirmations and Restore codes.</li>
+            <li><strong>Cloudflare</strong> — hosting, delivery and the servers that run the app.</li>
+          </ul>
+        </LegalSection>
+
         <LegalSection title="What we never do">
           <p>We do not sell your personal data to third parties. We do not share it for marketing purposes.</p>
         </LegalSection>
 
         <LegalSection title="Our lawful basis (UK GDPR)">
           <p>
-            Where we process personal data, we rely on performance of a contract — giving you the app and the content
-            you paid for — and on our legitimate interest in running and improving a small, reliable service.
+            <strong>Contract</strong> — to process your purchase, give you access to the content you paid for, send
+            your purchase confirmation and let you restore your access.
+          </p>
+          <p>
+            <strong>Legal obligation</strong> — to keep the transaction records we are required to keep.
+          </p>
+          <p>
+            <strong>Legitimate interests</strong> — to run, secure and improve the service, and to stop the free trial
+            from being restarted repeatedly.
+          </p>
+          <p>
+            <strong>Consent</strong> — only for the optional marketing checkbox described below.
+          </p>
+        </LegalSection>
+
+        <LegalSection title="Marketing preferences">
+          <p>
+            At checkout there is an optional box to say you would like to hear about product updates. It is unticked
+            by default, and you do not need to tick it to buy or use Verb Wise. We record your choice with your
+            purchase. Verb Wise does not currently send marketing emails.
+          </p>
+          <p>
+            You can withdraw your consent at any time by contacting us via the enquiry form at{" "}
+            <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a>.
           </p>
         </LegalSection>
 
@@ -107,7 +145,13 @@ function Privacy() {
 
         <LegalSection title="Your rights">
           <p>
-            You have the right to ask for a copy of your personal data, to have it corrected, and to have it erased.
+            Under UK data protection law you have the right to access the personal data we hold about you, to have it
+            corrected, and to have it erased. Where applicable, you can also ask us to restrict how we use it, object
+            to our use of it, and receive a copy in a portable format. Where we rely on your consent, you can withdraw
+            it at any time.
+          </p>
+          <p>
+            Some rights have limits — for example, we may need to keep purchase records to meet legal obligations.
             You can reach us via the enquiry form at <a href="https://richard-wells.com" target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80">richard-wells.com</a> and we will respond as quickly as we reasonably
             can.
           </p>
@@ -118,9 +162,15 @@ function Privacy() {
 
         <LegalSection title="How long we keep things">
           <p>
-            Progress data stays in your browser until you clear it. We do not keep server-side personal data beyond
-            what is needed for your account and your purchase record.
+            We keep personal information only for as long as it is needed for the purpose it was collected for and to
+            meet any legal obligations that apply.
           </p>
+          <p>
+            Purchase and customer records are kept so that your access continues to work, so you can restore it, and
+            to meet accounting and tax requirements. Operational data, such as one-time Restore codes and free-trial
+            checks, is short-lived and kept only as long as it serves that purpose.
+          </p>
+          <p>Progress data stays in your browser until you clear it.</p>
         </LegalSection>
 
         <LegalSection title="Complaints">
