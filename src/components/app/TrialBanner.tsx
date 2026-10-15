@@ -61,14 +61,26 @@ export function TrialBanner() {
   return (
     <div className="mx-auto mb-8 w-full max-w-6xl sm:mb-12">
       <div className="surface-card flex flex-col items-start justify-between gap-3 border border-primary/25 bg-primary/5 p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5">
-        <p className="text-sm font-semibold text-foreground sm:text-base">
-          {isPreview ? (
-            <span className="mr-2 rounded-full border border-border bg-background/40 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Preview
-            </span>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-foreground sm:text-base">
+            {isPreview ? (
+              <span className="mr-2 rounded-full border border-border bg-background/40 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                Preview
+              </span>
+            ) : null}
+            {message}
+          </p>
+          {message === reminderFor(0, false) ? (
+            <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="rounded-full border border-primary/30 bg-primary/15 px-2.5 py-0.5 text-sm font-bold text-primary">
+                Less than a coffee
+              </span>
+              <span className="text-xs text-muted-foreground sm:text-sm">
+                £4.99 once. Lifetime access. No subscription.
+              </span>
+            </div>
           ) : null}
-          {message}
-        </p>
+        </div>
         <Link
           to="/unlock"
           className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
