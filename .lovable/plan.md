@@ -16,5 +16,9 @@
 ## Unchanged
 Price, trial length, Stripe checkout, access rules, analytics events, popup timing/dismissal.
 
-## Checks
-Run existing tests (including TrialBanner tests) and check both at 390px and 1280px in the browser.
+## Acceptance checks
+- Existing test suite passes, including TrialBanner tests.
+- Expired-trial banner shows the new message; 5/3/2/1-day countdown banners unchanged.
+- Popup shows the price message once, without the redundant footnote.
+- At 390px: price message and button fit with no horizontal scrolling. At 1280px: trial banner stays a single row.
+- Stripe checkout, access rules, analytics and popup timing unchanged.
