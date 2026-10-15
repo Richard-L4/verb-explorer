@@ -97,15 +97,14 @@ export function PromoPopup() {
                 Try full access to Verb Wise for 7 days.
               </p>
 
-              <p className="mt-2 text-sm leading-relaxed text-black/80">
-                Then{" "}
-                <span className="font-bold text-black">£4.99</span> for{" "}
-                <span className="font-bold text-black">unlimited lifetime access</span>.
-              </p>
-
-              <p className="mt-4 text-xs text-black/50">
-                No subscription. No recurring charges.
-              </p>
+              <div className="mt-4 rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3">
+                <p className="text-sm font-bold leading-snug text-black">
+                  Then just £4.99 — less than a coffee
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-black/70">
+                  Unlimited lifetime access. No subscription.
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>
