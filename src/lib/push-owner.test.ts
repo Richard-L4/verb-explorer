@@ -10,7 +10,7 @@ const storedA = { p256dh: A.p256dh, auth: A.auth };
 
 describe("reminder ownership", () => {
   it("lets anyone register a brand-new address", async () => {
-    expect(await maySave(SECRET, null, { endpoint: A.endpoint, cookieToken: null, ...A })).toBe(true);
+    expect(await maySave(SECRET, null, { ...A, cookieToken: null })).toBe(true);
   });
 
   it("stops another browser replacing an existing subscription", async () => {
@@ -39,7 +39,7 @@ describe("reminder ownership", () => {
   });
 
   it("lets older subscriptions prove ownership with their own delivery keys", async () => {
-    expect(await maySave(SECRET, storedA, { endpoint: A.endpoint, cookieToken: null, ...A })).toBe(true);
+    expect(await maySave(SECRET, storedA, { ...A, cookieToken: null })).toBe(true);
     expect(await mayCancel(SECRET, storedA, { endpoint: A.endpoint, cookieToken: null, p256dh: A.p256dh, auth: A.auth })).toBe(true);
   });
 
@@ -141,7 +141,7 @@ function fakeStore(initial: Record<string, StoredSubscription & { active: boolea
     rows, calls,
     async find(endpoint: string) { calls.push("find"); const r = rows[endpoint]; return { row: r ? { p256dh: r.p256dh, auth: r.auth } : null, error: false }; },
     async upsert(row: { endpoint: string; p256dh: string; auth: string }) { calls.push("upsert"); rows[row.endpoint] = { p256dh: row.p256dh, auth: row.auth, active: true }; return true; },
-    async deactivate(endpoint: string) { calls.push("deactivate"); rows[endpoint].active = false; return true; },
+    async deactivate(endpoint: string) { calls.push("deactivate"); rows[endpoint]!.active = false; return true; },
   };
 }
 
@@ -152,9 +152,9 @@ describe("reminder flows with the dedicated secret", () => {
     expect(created.ok).toBe(true);
     const newKeys = { ...A, p256dh: "C".repeat(20), auth: "c".repeat(10) };
     expect((await handleSave(SECRET, store, newKeys, created.token)).ok).toBe(true);
-    expect(store.rows[A.endpoint].p256dh).toBe("C".repeat(20));
+    expect(store.rows[A.endpoint]!.p256dh).toBe("C".repeat(20));
     expect((await handleCancel(SECRET, store, { endpoint: A.endpoint }, created.token)).ok).toBe(true);
-    expect(store.rows[A.endpoint].active).toBe(false);
+    expect(store.rows[A.endpoint]!.active).toBe(false);
   });
 
   it("another browser cannot modify or cancel", async () => {

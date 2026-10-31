@@ -26,8 +26,8 @@ export function redact(value: unknown): string {
 
 export interface SafeErrorSummary {
   type: string;
-  code?: string;
-  status?: number;
+  code?: string | undefined;
+  status?: number | undefined;
   message: string;
 }
 
@@ -36,13 +36,13 @@ export function safeError(error: unknown): SafeErrorSummary {
   if (error && typeof error === "object") {
     const e = error as Record<string, unknown>;
     const type =
-      (typeof e.type === "string" && e.type) ||
-      (typeof e.name === "string" && e.name) ||
+      (typeof e["type"] === "string" && e["type"]) ||
+      (typeof e["name"] === "string" && e["name"]) ||
       (error instanceof Error ? error.constructor.name : "object");
-    const code = typeof e.code === "string" || typeof e.code === "number" ? redact(String(e.code)) : undefined;
-    const rawStatus = e.statusCode ?? e.status;
+    const code = typeof e["code"] === "string" || typeof e["code"] === "number" ? redact(String(e["code"])) : undefined;
+    const rawStatus = e["statusCode"] ?? e["status"];
     const status = typeof rawStatus === "number" ? rawStatus : undefined;
-    return { type: redact(type), code, status, message: redact(e.message) };
+    return { type: redact(type), code, status, message: redact(e["message"]) };
   }
   return { type: typeof error, message: redact(error) };
 }
