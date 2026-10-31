@@ -42,7 +42,8 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
         }
 
         if (!event) {
-          console.error(`[stripe-webhook] signature verification failed: ${lastError}`);
+          const { redact } = await import("@/lib/log-safety.server");
+          console.error("[stripe-webhook] signature verification failed:", redact(lastError));
           return new Response("Invalid signature", { status: 400 });
         }
 
@@ -56,7 +57,8 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
             await markPaymentIntentPaid(event.data.object.id);
           }
         } catch (error) {
-          console.error("[stripe-webhook] processing error", error);
+          const { safeError } = await import("@/lib/log-safety.server");
+          console.error("[stripe-webhook] processing error", safeError(error));
         }
 
         return new Response(JSON.stringify({ received: true }), {

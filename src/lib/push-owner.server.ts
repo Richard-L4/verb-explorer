@@ -12,6 +12,16 @@
  * which only that browser and our database know.
  */
 import { hmacHex, safeEqual } from "./content-pass.server";
+import { readEnv } from "./env.server";
+
+/**
+ * The dedicated reminder secret. Deliberately has NO fallback to the
+ * purchase/creator pass secret: if missing, reminder writes fail closed.
+ */
+export function reminderSecret(): string | null {
+  const s = readEnv("REMINDER_OWNER_SECRET");
+  return s && s.length >= 32 ? s : null;
+}
 
 export const PUSH_OWNER_COOKIE = "vw_push_owner";
 const LABEL = "push-owner:v1:";
@@ -28,8 +38,8 @@ export interface StoredSubscription {
 export interface OwnershipClaim {
   endpoint: string;
   cookieToken: string | null | undefined;
-  p256dh?: string;
-  auth?: string;
+  p256dh?: string | undefined;
+  auth?: string | undefined;
 }
 
 /** True when the caller proves it owns the stored subscription. */
@@ -72,12 +82,40 @@ export async function mayCancel(
   return provesOwnership(secret, stored, claim);
 }
 
-/** Masks an email for logs: "richard@example.com" → "r•••@e•••.com". */
-export function maskEmail(email: string | null | undefined): string {
-  if (!email || !email.includes("@")) return "[redacted]";
-  const [local, domain] = email.split("@");
-  const dot = domain.lastIndexOf(".");
-  const host = dot > 0 ? domain.slice(0, dot) : domain;
-  const tld = dot > 0 ? domain.slice(dot) : "";
-  return `${local.slice(0, 1)}•••@${host.slice(0, 1)}•••${tld}`;
+/** Minimal database surface used by the reminder handlers (easy to fake in tests). */
+export interface ReminderStore {
+  find(endpoint: string): Promise<{ row: StoredSubscription | null; error: boolean }>;
+  upsert(row: { endpoint: string; p256dh: string; auth: string }): Promise<boolean>;
+  deactivate(endpoint: string): Promise<boolean>;
+}
+
+export interface SaveInput { endpoint: string; p256dh: string; auth: string }
+
+/** Save flow. Returns the owner token to set as a cookie on success. */
+export async function handleSave(
+  secret: string | null,
+  store: ReminderStore,
+  input: SaveInput,
+  cookieToken: string | null | undefined,
+): Promise<{ ok: boolean; token?: string }> {
+  if (!secret) return { ok: false };
+  const { row, error } = await store.find(input.endpoint);
+  if (error) return { ok: false };
+  if (!(await maySave(secret, row, { ...input, cookieToken }))) return { ok: false };
+  if (!(await store.upsert(input))) return { ok: false };
+  return { ok: true, token: await ownerToken(secret, input.endpoint) };
+}
+
+/** Cancel flow; only the proven owner may deactivate. */
+export async function handleCancel(
+  secret: string | null,
+  store: ReminderStore,
+  input: { endpoint: string; p256dh?: string | undefined; auth?: string | undefined },
+  cookieToken: string | null | undefined,
+): Promise<{ ok: boolean }> {
+  if (!secret) return { ok: false };
+  const { row, error } = await store.find(input.endpoint);
+  if (error) return { ok: false };
+  if (!(await mayCancel(secret, row, { endpoint: input.endpoint, cookieToken, p256dh: input.p256dh, auth: input.auth }))) return { ok: false };
+  return { ok: await store.deactivate(input.endpoint) };
 }

@@ -65,11 +65,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       const message =
         error instanceof Error ? error.message : String(error);
 
-      console.error(
-        "[checkout] failed to create session:",
-        message,
-        error,
-      );
+      const { safeError } = await import("./log-safety.server");
+      console.error("[checkout] failed to create session:", safeError(error));
 
       throw new Error(`[checkout] ${message}`);
     }
