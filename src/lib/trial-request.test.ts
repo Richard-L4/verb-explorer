@@ -4,7 +4,7 @@ import { boundTrialRequest, TRIAL_BODY_MAX_BYTES } from "./trial-request.server"
 
 const trialUrl = "/_serverFn/current-compiler-id";
 const url = `https://example.test${trialUrl}`;
-const post = (body: string, headers?: Record<string, string>) => new Request(url, { method: "POST", body, headers });
+const post = (body: string, headers?: Record<string, string>) => new Request(url, { method: "POST", body, ...(headers ? { headers } : {}) });
 
 describe("trial-only pre-decoding byte cap", () => {
   it("allows a normal body and preserves its bytes and headers", async () => {

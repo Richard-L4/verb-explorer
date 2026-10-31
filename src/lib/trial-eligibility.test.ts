@@ -58,7 +58,7 @@ describe("trial eligibility remains unchanged with bounded device input", () => 
     expect(result.claim.available).toBe(true);
     expect(result.claim.isNew).toBe(true);
     expect(result.claim.repeat).toBe(false);
-    expect(result.issueToken).toMatch(/^[a-f0-9]{64}$/);
+    expect(result.issueToken).toMatch(/^[A-Za-z0-9_-]{43}$/);
   });
 
   it("preserves trial inheritance at the existing eight-grant velocity threshold", async () => {
