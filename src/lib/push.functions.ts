@@ -3,7 +3,8 @@ import { z } from "zod";
 
 /** The browser needs the public half of the signing key to register. */
 export const getPushPublicKey = createServerFn({ method: "GET" }).handler(async () => {
-    return { publicKey: readEnv("VAPID_PUBLIC_KEY") ?? null };
+  const { readEnv } = await import("./env.server");
+  return { publicKey: readEnv("VAPID_PUBLIC_KEY") ?? null };
 });
 
 const subscriptionSchema = z.object({
