@@ -5,7 +5,7 @@
  * Secrets are read via readEnv() (process.env + Worker bindings).
  */
 
-import { maskEmail } from "./push-owner.server";
+import { maskEmail, redact, safeError } from "./log-safety.server";
 import Stripe from "stripe";
 import {
   createClient,
@@ -101,8 +101,12 @@ export async function sendConfirmationEmail(
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    console.error("[email] Failed to send confirmation email:", error);
+    // Provider replies can echo the recipient, so log only status + sanitised text.
+    const body = await response.text().catch(() => "");
+    console.error("[email] Failed to send confirmation email:", {
+      status: response.status,
+      message: redact(body),
+    });
   } else {
     console.log("[email] Confirmation email sent to", maskEmail(email));
   }
@@ -159,7 +163,7 @@ async function findPriceRowId(
   if (error) {
     console.error(
       "[stripe] Failed to find price row:",
-      error.message,
+      safeError(error),
     );
 
     return null;
@@ -240,7 +244,7 @@ async function upsertCustomer(
   if (error) {
     console.error(
       "[stripe] Failed to create customer:",
-      error.message,
+      safeError(error),
     );
 
     return null;
@@ -340,7 +344,7 @@ export async function recordPurchase(
   if (purchaseError) {
     console.error(
       "[stripe] Failed to record purchase:",
-      purchaseError.message,
+      safeError(purchaseError),
     );
 
     throw purchaseError;
@@ -390,7 +394,7 @@ export async function recordPurchase(
     if (preferenceError) {
       console.error(
         "[stripe] Failed to update communication preferences:",
-        preferenceError.message,
+        safeError(preferenceError),
       );
     }
   }
@@ -418,7 +422,7 @@ export async function markPaymentIntentPaid(
   if (error) {
     console.error(
       "[stripe] Failed to mark payment intent paid:",
-      error.message,
+      safeError(error),
     );
 
     throw error;
