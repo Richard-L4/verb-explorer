@@ -2,7 +2,6 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
-import { boundTrialRequest } from "./lib/trial-request.server";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -55,14 +54,6 @@ export default {
         g.__env__ = { ...(g.__env__ ?? {}), ...(env as Record<string, unknown>) };
       }
       const handler = await getServerEntry();
-      if (request.method === "POST" && new URL(request.url).pathname.startsWith("/_serverFn/")) {
-        const { claimTrialSession } = await import("./lib/trial.functions");
-        const trialUrl: unknown = Reflect.get(claimTrialSession, "url");
-        if (typeof trialUrl !== "string") throw new Error("Trial request URL unavailable");
-        const bounded = await boundTrialRequest(request, trialUrl);
-        if (bounded instanceof Response) return bounded;
-        request = bounded;
-      }
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
