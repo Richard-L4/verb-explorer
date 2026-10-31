@@ -68,7 +68,7 @@ export function getStripe(): Stripe {
 /**
  * Send a purchase confirmation email via Resend.
  */
-async function sendConfirmationEmail(
+export async function sendConfirmationEmail(
   email: string,
   name: string | null,
 ): Promise<void> {
