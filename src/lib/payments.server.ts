@@ -5,6 +5,7 @@
  * Secrets are read via readEnv() (process.env + Worker bindings).
  */
 
+import { maskEmail } from "./push-owner.server";
 import Stripe from "stripe";
 import {
   createClient,
@@ -67,7 +68,7 @@ export function getStripe(): Stripe {
 /**
  * Send a purchase confirmation email via Resend.
  */
-async function sendConfirmationEmail(
+export async function sendConfirmationEmail(
   email: string,
   name: string | null,
 ): Promise<void> {
@@ -103,7 +104,7 @@ async function sendConfirmationEmail(
     const error = await response.text();
     console.error("[email] Failed to send confirmation email:", error);
   } else {
-    console.log("[email] Confirmation email sent to", email);
+    console.log("[email] Confirmation email sent to", maskEmail(email));
   }
 }
 
