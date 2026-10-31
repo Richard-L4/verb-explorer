@@ -16,6 +16,7 @@ export function useIsMobile() {
     };
     mql.addEventListener("change", onChange);
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    // Effect cleanup removes the listener when this component stops using the hook.
     return () => mql.removeEventListener("change", onChange);
   }, []);
 

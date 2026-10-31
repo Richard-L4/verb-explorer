@@ -22,6 +22,7 @@ export function useQuiz() {
 
   useEffect(() => {
     if (sub.status === "checking") return;
+    // Cleanup marks this request stale so a late reply cannot overwrite a newer effect's state.
     let live = true;
     getQuizQuestions({ data: { pass: readContentPass() } })
       .then((res) => {

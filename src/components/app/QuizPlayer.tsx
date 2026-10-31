@@ -45,6 +45,8 @@ export function QuizPlayer({
   const [category, setCategory] = useState<QuizCategory>(initialCategory);
   const [tense, setTense] = useState<Tense>(initialTense);
   const [difficulty, setDifficulty] = useState<QuizDifficulty>("easy");
+  // useMemo reuses a derived question pool until its inputs change.
+  // It is a calculation cache, not a place to store the player's answers.
   const pool = useMemo(
     () => quizPool(questions, category, difficulty, tense),
     [questions, category, difficulty, tense],
@@ -57,6 +59,8 @@ export function QuizPlayer({
     setRound(newRound(pool));
   }, [pool]);
 
+  // Ask the shared policy about the UI; useQuiz separately obtains the question
+  // tier on the server so restricted questions are not merely hidden in JSX.
   const locked = quizLevelLocked(category, difficulty, tier);
   const finished = round.order.length > 0 && isFinished(round);
   const current = !finished ? byId.get(round.order[round.index] ?? "") : undefined;
@@ -126,6 +130,7 @@ export function QuizPlayer({
       </div>
 
       <div className="mt-6">
+        {/* These ternaries choose one view: paywall, loading/empty, results or a question. */}
         {locked && !checking ? (
           <Paywall title="Unlock every quiz level" />
         ) : pool.length === 0 ? (
@@ -168,6 +173,8 @@ export function QuizPlayer({
             <h2 className="mt-4 text-lg font-bold leading-snug sm:text-xl">{current.question}</h2>
             <ul className="mt-5 grid gap-3">
               {current.options.map((o, i) => {
+                // map creates one answer button per option. A click updates the round;
+                // answered then disables every option and reveals feedback before Next advances.
                 const chosen = round.answered === i;
                 const reveal = round.answered !== null;
                 return (
@@ -196,6 +203,7 @@ export function QuizPlayer({
                 );
               })}
             </ul>
+            {/* Optional chaining (?.) safely reads feedback if the selected option exists. */}
             {round.answered !== null ? (
               <div className="mt-5" role="status">
                 <p

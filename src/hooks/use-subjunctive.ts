@@ -28,6 +28,7 @@ interface Snapshot {
 }
 
 const initial: Snapshot = { status: "checking", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: false };
+// Module-level state is shared by hook users, avoiding a separate content request for every component.
 let snap: Snapshot = initial;
 let started = false;
 const listeners = new Set<() => void>();

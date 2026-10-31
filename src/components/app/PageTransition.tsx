@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 export function PageTransition({ children }: { children: ReactNode }) {
   return (
+    {/* Framer Motion declares starting and target values; transition controls the timing. */}
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}

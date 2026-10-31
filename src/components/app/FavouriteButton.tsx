@@ -21,6 +21,8 @@ export function FavouriteButton({
       aria-pressed={active}
       aria-label={active ? `Remove ${label} from favourites` : `Add ${label} to favourites`}
       onClick={(e) => {
+        // The button can sit inside a card link: stop the click opening that card
+        // before asking the parent to update the favourite.
         e.preventDefault();
         e.stopPropagation();
         onToggle();

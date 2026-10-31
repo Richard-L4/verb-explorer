@@ -15,6 +15,7 @@ export function SubjunctiveEntryLink({
   className?: string;
   children: ReactNode;
 }) {
+  // A ternary chooses one of two typed routes; children supplies the visible link content.
   return tense === "imperfect" ? (
     <Link to="/subjunctive/imperfect/$entryId" params={{ entryId }} className={className}>
       {children}

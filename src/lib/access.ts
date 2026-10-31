@@ -27,6 +27,7 @@ export const UNLOCK_PRICE = "£4.99";
 export const emptyAccess: AccessState = { trialStart: null, unlocked: false, creator: false };
 
 const listeners = new Set<() => void>();
+// Keep the same snapshot object between updates so React does not mistake reads for new state.
 let cache: AccessState = emptyAccess;
 let hydrated = false;
 

@@ -11,11 +11,15 @@ export function ReminderSettings() {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
 
+  // An effect runs after rendering: check browser support and synchronise the
+  // subscription instead of assuming this browser's permission means it is subscribed.
   useEffect(() => {
     setSupported(pushSupported());
     void syncReminderState().then(setOn);
   }, []);
 
+  // onClick calls this handler. Await the browser/server operation before updating
+  // the displayed setting; busy disables the button while that work is pending.
   const toggle = async () => {
     setBusy(true);
     setNote(null);

@@ -6,6 +6,7 @@
  */
 export function shuffle<T>(list: readonly T[], rand: () => number = Math.random): T[] {
   const out = [...list];
+  // Fisher-Yates swaps each position with a remaining choice, avoiding the bias of random sorting.
   for (let i = out.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand() * (i + 1));
     const a = out[i]!;

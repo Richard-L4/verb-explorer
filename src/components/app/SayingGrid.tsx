@@ -10,6 +10,7 @@ export function SayingGrid({ sayings }: { sayings: SayingCard[] }) {
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Props pass data down; callbacks let each tile request a parent-managed favourite update. */}
       {sayings.map((saying, i) => (
         <SayingCardTile
           key={saying.id}

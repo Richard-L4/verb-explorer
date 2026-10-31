@@ -18,9 +18,12 @@ import { cn } from "@/lib/utils";
 const linkBase =
   "relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 min-h-11 sm:min-h-0 lg:max-2xl:px-3 lg:max-2xl:[&>svg:first-child]:hidden";
 
+// Destructuring takes named props from the parent's object.
+// onNavigate lets mobile links ask AppShell to close its menu.
 function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
   return (
     <>
+      {/* map turns navigation data into elements; stable keys help React match them across renders. */}
       {navItems.map(({ to, label, icon: Icon }) => (
         <Fragment key={to}>
         <Link
@@ -87,6 +90,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </div>
 
+        {/* State controls whether the menu exists; AnimatePresence lets its exit animation finish. */}
         <AnimatePresence initial={false}>
           {open && (
             <motion.nav

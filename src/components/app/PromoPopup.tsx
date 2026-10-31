@@ -48,6 +48,7 @@ export function PromoPopup() {
       }
     }, SHOW_DELAY_MS);
 
+    // Effect cleanup cancels the pending popup when the route changes or this unmounts.
     return () => window.clearTimeout(showTimer);
   }, [isLanding, pathname]);
 

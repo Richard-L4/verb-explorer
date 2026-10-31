@@ -25,6 +25,8 @@ export function RestorePurchase() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  // An event handler responds to submission. preventDefault keeps this React form
+  // on the page while the server sends a code; busy blocks repeated requests.
   async function handleEmail(e: React.FormEvent) {
     e.preventDefault();
     if (busy || !email.trim()) return;
@@ -45,6 +47,8 @@ export function RestorePurchase() {
     }
   }
 
+  // Only successful server verification can return the signed pass.
+  // unlock updates local UI state; it cannot authorise protected content by itself.
   async function handleCode(e: React.FormEvent) {
     e.preventDefault();
     if (busy || !code.trim()) return;
@@ -74,8 +78,10 @@ export function RestorePurchase() {
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
         Enter the email you used at checkout. We'll email you a one-time code to restore access on this device.
       </p>
+      {/* Conditional rendering chooses the email form or code form from state. */}
       {step === "email" ? (
         <form onSubmit={handleEmail} className="mt-4 flex flex-col gap-3 sm:flex-row">
+          {/* This controlled input displays state; onChange updates it as the user types. */}
           <input
             type="email"
             required
@@ -91,6 +97,7 @@ export function RestorePurchase() {
         </form>
       ) : (
         <form onSubmit={handleCode} className="mt-4 flex flex-col gap-3 sm:flex-row">
+          {/* This controlled input displays state; onChange updates it as the user types. */}
           <input
             inputMode="numeric"
             autoComplete="one-time-code"

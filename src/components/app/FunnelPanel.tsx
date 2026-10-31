@@ -93,6 +93,8 @@ export function FunnelPanel() {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
+    // Cleanup marks this request as stale so a late reply cannot update a panel
+    // that has unmounted. The server, not this visibility check, validates creator access.
     let cancelled = false;
     (async () => {
       try {

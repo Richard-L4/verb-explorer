@@ -22,6 +22,8 @@ export function Paywall({ title }: { title?: string }) {
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Clicking checkout calls this handler after consent. The server creates a
+  // Stripe session; access is granted later only after verified payment processing.
   async function handlePay() {
     if (!agreed || paying) return;
     setPaying(true);

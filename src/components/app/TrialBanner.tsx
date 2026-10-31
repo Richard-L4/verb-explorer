@@ -9,7 +9,7 @@ import { logEvent } from "@/lib/analytics";
  * Renders only when:
  *  - creator mode is off, and
  *  - the user has not purchased, and
- *  - either the trial is active with 7/3/2/1 days left, or the trial has expired.
+ *  - either the trial is active with 5/3/2/1 days left, or the trial has expired.
  * Returns null otherwise.
  */
 function reminderFor(daysLeft: number, trialActive: boolean): string | null {
@@ -24,6 +24,8 @@ function reminderFor(daysLeft: number, trialActive: boolean): string | null {
 export function TrialBanner() {
   const { creator, unlocked, inTrial, trialDaysLeft, price, bannerPreview } = useAccess();
 
+  // null means no banner. Purchases hide it; creator previews can select a
+  // reminder, while ordinary visitors see expiry or the selected countdown days.
   let message: string | null = null;
   const isPreview = bannerPreview !== null;
 

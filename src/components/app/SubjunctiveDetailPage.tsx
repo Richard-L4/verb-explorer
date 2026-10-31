@@ -29,6 +29,7 @@ export function SubjunctiveDetailPage({ tense, id, title }: { tense: Tense; id: 
         Back to {tenseLabel[tense].toLowerCase()} subjunctive
       </SubjunctiveTenseLink>
 
+      {/* ?. safely checks an entry that may be absent; render examples only when the hook supplied triggers. */}
       {entry?.triggers ? (
         <SubjunctiveEntryView
           key={entry.id + status}

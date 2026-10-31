@@ -31,6 +31,8 @@ export function RandomMenu({
   const { pathname } = useLocation();
   const active = options.some((o) => pathname === o.to);
 
+  // Mobile navigation uses plain links; the desktop version uses the shared
+  // dropdown primitives without changing their third-party implementation.
   if (vertical) {
     return (
       <>

@@ -13,6 +13,7 @@ export function useLearner() {
     store.hydrate();
   }, []);
 
+  // Subscribe to the shared store so every mounted screen sees the same progress snapshot.
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
 
   const known = (id: string) => cards.some((c) => c.id === id);

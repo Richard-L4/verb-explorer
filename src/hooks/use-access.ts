@@ -14,6 +14,7 @@ export function useAccess() {
     store.hydrate();
   }, []);
 
+  // useSyncExternalStore connects React to a store outside React; its server snapshot keeps initial rendering predictable.
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
   const rawPreview = useSyncExternalStore(
     store.subscribe,
