@@ -65,14 +65,14 @@ describe("access tiers (real server decision path)", () => {
     const r = await resolveQuiz({ pass: "p" }, deps({ passRole: async () => "creator" }));
     expect(r.questions).toHaveLength(150);
   });
-  it("active trial: 50 verbs + 15 Easy present + 10 Easy imperfect = 75", async () => {
+  it("active trial: 50 verbs + 15 Easy present + 15 Easy imperfect = 80", async () => {
     const r = await resolveQuiz({}, deps({ trialStart: async () => new Date(NOW - 3 * DAY).toISOString() }));
     expect(r.tier).toBe("trial");
-    expect(r.questions).toHaveLength(75);
+    expect(r.questions).toHaveLength(80);
     expect(r.questions.filter((q) => q.category === "verbs")).toHaveLength(50);
     const subj = r.questions.filter((q) => q.category === "subjunctive");
     expect(subj.filter((q) => quizTense(q) === "present")).toHaveLength(15);
-    expect(subj.filter((q) => quizTense(q) === "imperfect")).toHaveLength(10);
+    expect(subj.filter((q) => quizTense(q) === "imperfect")).toHaveLength(15);
     expect(subj.every((q) => q.difficulty === "easy")).toBe(true);
   });
   it.each([
@@ -146,7 +146,7 @@ describe("imperfect subjunctive classification", () => {
     const imp = bank.filter((q) => quizTense(q) === "imperfect");
     expect(ids(imp)).toEqual([...IMPERFECT_QUIZ_IDS]);
     expect(imp.every((q) => q.category === "subjunctive")).toBe(true);
-    expect(imp.filter((q) => q.difficulty === "easy")).toHaveLength(10);
+    expect(imp.filter((q) => q.difficulty === "easy")).toHaveLength(15);
   });
   it("every other subjunctive question is present; verbs have no tense", () => {
     expect(bank.filter((q) => quizTense(q) === "present")).toHaveLength(50);
@@ -161,7 +161,7 @@ describe("imperfect subjunctive classification", () => {
     expect((pub as QuizQuestion[]).some((q) => quizTense(q) === "imperfect")).toBe(false);
   });
   it("subjunctive tab splits by tense; mix includes all three", () => {
-    expect(quizPool(bank, "subjunctive", "easy", "imperfect")).toHaveLength(10);
+    expect(quizPool(bank, "subjunctive", "easy", "imperfect")).toHaveLength(15);
     expect(quizPool(bank, "subjunctive", "easy", "present")).toHaveLength(15);
     const mix = quizPool(bank, "mix", "easy");
     expect(new Set(mix.map((q) => quizTense(q) ?? "verbs"))).toEqual(new Set(["verbs", "present", "imperfect"]));
