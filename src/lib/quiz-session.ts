@@ -1,6 +1,8 @@
 /** Pure quiz-round helpers. No React, no storage. */
 import { shuffle } from "./random-sequence";
 import type { QuizQuestion } from "./quiz-public-build";
+import { quizTense } from "./quiz-tense";
+import type { Tense } from "@/data/subjunctive-tense";
 
 export type QuizCategory = "verbs" | "subjunctive" | "mix";
 export type QuizDifficulty = "easy" | "medium" | "hard";
@@ -10,10 +12,18 @@ export function quizPool(
   authorised: readonly QuizQuestion[],
   category: QuizCategory,
   difficulty: QuizDifficulty,
+  /** Subjunctive tab only: which tense. Mix always includes both. */
+  tense?: Tense,
 ): QuizQuestion[] {
-  return authorised.filter(
-    (q) => q.difficulty === difficulty && (category === "mix" || q.category === category),
-  );
+  const seen = new Set<string>();
+  return authorised.filter((q) => {
+    if (seen.has(q.id)) return false; // never the same question twice
+    seen.add(q.id);
+    if (q.difficulty !== difficulty) return false;
+    if (category === "mix") return true;
+    if (q.category !== category) return false;
+    return category !== "subjunctive" || !tense || quizTense(q) === tense;
+  });
 }
 
 export interface Round {

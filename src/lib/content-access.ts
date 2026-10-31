@@ -87,8 +87,8 @@ export function randomSubjunctivePool(allIds: readonly string[], paid: boolean):
 
 /**
  * Quiz tiers. Decided by the server only (signed pass / server trial record).
- * - full:   purchase or creator — all 100 questions.
- * - trial:  active 7-day trial — all Verb questions + Easy Subjunctive.
+ * - full:   purchase or creator — every question.
+ * - trial:  active 7-day trial — all Verb questions + Easy Subjunctive (present and imperfect).
  * - public: everyone else — the fixed 20 below.
  */
 export type QuizTier = "full" | "trial" | "public";
