@@ -81,6 +81,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      // Never send page addresses (e.g. payment references) to other sites.
+      { name: "referrer", content: "same-origin" },
       { title: "Verbs — Spanish verb cards" },
       {
         name: "description",

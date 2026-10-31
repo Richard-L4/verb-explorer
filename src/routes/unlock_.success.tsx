@@ -25,10 +25,35 @@ export const Route = createFileRoute("/unlock_/success")({
   component: SuccessRoute,
 });
 
-type Status = "checking" | "done" | "pending" | "error";
+type Status = "checking" | "done" | "pending" | "error" | "restore";
+
+const PENDING_KEY = "vw_pending_checkout";
+
+/**
+ * Takes the payment reference out of the address bar immediately and keeps it
+ * only for this tab (sessionStorage) so a reload can retry within the window.
+ */
+function takeSessionId(fromUrl: string): string {
+  if (typeof window === "undefined") return fromUrl;
+  try {
+    if (fromUrl) window.sessionStorage.setItem(PENDING_KEY, fromUrl);
+    if (window.location.search) window.history.replaceState(window.history.state, "", window.location.pathname);
+    return fromUrl || window.sessionStorage.getItem(PENDING_KEY) || "";
+  } catch {
+    return fromUrl;
+  }
+}
+
+function forgetSessionId() {
+  try {
+    window.sessionStorage.removeItem(PENDING_KEY);
+  } catch {
+    /* ignore */
+  }
+}
 
 function SuccessRoute() {
-  const { session_id: sessionId } = Route.useSearch();
+  const { session_id: urlSessionId } = Route.useSearch();
   const confirm = useServerFn(confirmCheckout);
   const { unlock } = useAccess();
   const navigate = useNavigate();
@@ -38,6 +63,7 @@ function SuccessRoute() {
   useEffect(() => {
     if (started.current) return;
     started.current = true;
+    const sessionId = takeSessionId(urlSessionId);
 
     if (!sessionId) {
       setStatus("error");
@@ -58,7 +84,13 @@ function SuccessRoute() {
           if (result.paid) {
             unlock();
             void saveContentPass(result.pass);
+            forgetSessionId();
             setStatus("done");
+            return;
+          }
+          if (result.status === "restore") {
+            forgetSessionId();
+            setStatus("restore");
             return;
           }
         } catch {
@@ -71,7 +103,7 @@ function SuccessRoute() {
     return () => {
       cancelled = true;
     };
-  }, [sessionId, confirm, unlock]);
+  }, [urlSessionId, confirm, unlock]);
 
   return (
     <PageTransition>
@@ -119,6 +151,17 @@ function SuccessRoute() {
                 unlock page
               </Link>
               .
+            </p>
+          ) : null}
+
+          {status === "restore" ? (
+            <p className="max-w-2xl text-base text-foreground">
+              This payment link has already been used. To open Verb Wise on this device, use{" "}
+              <span className="font-semibold">Restore by email</span> on the{" "}
+              <Link to="/unlock" className="font-semibold text-primary hover:underline">
+                unlock page
+              </Link>{" "}
+              with the email address you paid with.
             </p>
           ) : null}
 

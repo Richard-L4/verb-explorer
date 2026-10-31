@@ -25,3 +25,4 @@
 - Payment and email code logs errors only through `log-safety.server.ts` (`safeError`/`redact`/`maskEmail`), never raw provider bodies or error objects, so customer emails stay out of logs.
 - A purchase is recorded or unlocked only after `fetchVerifiedVerbWiseSession` re-fetches the session from Stripe and confirms exactly one Verb Wise price, GBP, paid and complete, so other paid sessions in the account never grant access.
 - Browser analytics events are accepted only with a valid server-issued `vw_vid` trial cookie and a today/yesterday date; checkout and purchase events are server-recorded only, so anonymous callers cannot add funnel activity.
+- A Stripe payment reference grants a new pass only through the atomic `claim_purchase` database function (`purchase-claim.server.ts`), bound to an HttpOnly checkout marker with a short same-browser retry window; other devices use Restore by email, so a leaked success link cannot unlock other browsers.
