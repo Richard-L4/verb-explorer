@@ -176,3 +176,18 @@ describe("reminder flows with the dedicated secret", () => {
     expect(regained.token).toBe(await ownerToken(SECRET, A.endpoint));
   });
 });
+
+describe("payment and email log calls stay sanitised", () => {
+  it("no console call logs a raw error object, .message or provider response", async () => {
+    const { readFileSync } = await import("node:fs");
+    const files = ["src/lib/payments.server.ts", "src/lib/checkout.functions.ts", "src/routes/api/public/stripe-webhook.ts"];
+    for (const f of files) {
+      const src = readFileSync(f, "utf8");
+      const calls = src.match(/console\.(log|error|warn|info)\([\s\S]*?\);/g) ?? [];
+      expect(calls.length).toBeGreaterThan(0);
+      for (const c of calls) {
+        expect(c, `${f}: ${c}`).not.toMatch(/\.message\b|,\s*(error|err|e|body|lastError|email)\s*[,)]/);
+      }
+    }
+  });
+});
