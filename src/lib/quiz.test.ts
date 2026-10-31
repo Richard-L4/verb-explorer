@@ -138,9 +138,9 @@ describe("mix and session", () => {
 });
 
 describe("imperfect subjunctive classification", () => {
-  const old = JSON.parse(readFileSync("src/data/quiz.json", "utf8")) as QuizQuestion[];
   it("the central list is exactly q101–q150", () => {
     expect([...IMPERFECT_QUIZ_IDS]).toEqual(Array.from({ length: 50 }, (_, i) => `q${101 + i}`));
+    expect(new Set(IMPERFECT_QUIZ_IDS).size).toBe(50);
   });
   it("all 50 are subjunctive questions classified as imperfect", () => {
     const imp = bank.filter((q) => quizTense(q) === "imperfect");
@@ -152,10 +152,10 @@ describe("imperfect subjunctive classification", () => {
     expect(bank.filter((q) => quizTense(q) === "present")).toHaveLength(50);
     expect(bank.filter((q) => q.category === "verbs").every((q) => quizTense(q) === null)).toBe(true);
   });
-  it("the original 100 questions are unchanged from the earlier bank", () => {
-    expect(old.slice(0, 100)).toEqual(bank.slice(0, 100));
+  it("the original 100 questions are unchanged from the earlier approved bank", () => {
+    // Hash of the original 100-question bank (q001–q100) before the imperfect set was added.
     const h = createHash("sha256").update(JSON.stringify(bank.slice(0, 100))).digest("hex");
-    expect(h).toBe(createHash("sha256").update(JSON.stringify(old.slice(0, 100))).digest("hex"));
+    expect(h).toBe("700f1286f4421ff9d472849c319d13fac36507e7038122a1541b0ecfe5a85c41");
   });
   it("public 20 contain no imperfect questions", () => {
     expect((pub as QuizQuestion[]).some((q) => quizTense(q) === "imperfect")).toBe(false);
