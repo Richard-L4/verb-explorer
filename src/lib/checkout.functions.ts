@@ -17,10 +17,25 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       "./payments.server"
     );
 
-    const { getRequest } = await import("@tanstack/react-start/server");
+    const { getCookie, getRequest, setCookie } = await import("@tanstack/react-start/server");
+    const { CLAIM_COOKIE, CLAIM_COOKIE_MAX_AGE, isClaimMarker, markerHash, newClaimMarker } = await import(
+      "./purchase-claim.server"
+    );
 
     try {
       const origin = new URL(getRequest().url).origin;
+
+      // Browser-specific claim marker (HttpOnly); only its hash goes to Stripe.
+      const existingMarker = getCookie(CLAIM_COOKIE);
+      const marker = isClaimMarker(existingMarker) ? existingMarker : newClaimMarker();
+      setCookie(CLAIM_COOKIE, marker, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: CLAIM_COOKIE_MAX_AGE,
+      });
+      const claimHash = await markerHash(marker);
 
       const stripe = getStripe();
 
@@ -37,6 +52,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         success_url: `${origin}/unlock/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/unlock?cancelled=1`,
         metadata: {
+          claim_hash: claimHash,
           marketing_consent: data.marketingConsent ? "true" : "false",
           ...(data.deviceId ? { device_id: data.deviceId } : {}),
         },
@@ -52,7 +68,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         throw new Error("Stripe returned a session without a URL");
       }
 
-      console.log("[checkout] session created", session.id, origin);
+      console.log("[checkout] session created");
 
       // Analytics only: after the session was successfully created.
       if (data.deviceId) {
@@ -91,39 +107,38 @@ export const confirmCheckout = createServerFn({
       .parse(input),
   )
   .handler(async ({ data }) => {
-    const { fetchVerifiedVerbWiseSession, recordPurchase, purchaseExists } = await import(
-      "./payments.server"
-    );
-
+    const { getCookie } = await import("@tanstack/react-start/server");
+    const payments = await import("./payments.server");
+    const { CLAIM_COOKIE, confirmAndClaim } = await import("./purchase-claim.server");
     const { signPass } = await import("./content-pass.server");
 
-    // Only a purchase already recorded from a verified session, or a session
-    // re-verified with Stripe right now as a genuine Verb Wise unlock, counts.
-    if (await purchaseExists(data.sessionId)) {
-      return {
-        paid: true,
-        recorded: true,
-        pass: await signPass("cs", data.sessionId),
-      };
+    const status = await confirmAndClaim(
+      {
+        verifiedSession: (id) => payments.fetchVerifiedVerbWiseSession(id),
+        purchaseExists: (id) => payments.purchaseExists(id),
+        recordPurchase: (session) =>
+          payments.recordPurchase(session as import("stripe").Stripe.Checkout.Session),
+        claim: async (id, ownerHash, minutes) => {
+          const { data: ok, error } = await payments
+            .getSupabaseAdmin()
+            .rpc("claim_purchase" as never, {
+              p_session_id: id,
+              p_owner_hash: ownerHash,
+              p_window_minutes: minutes,
+            } as never);
+          if (error) throw new Error("claim failed");
+          return ok === true;
+        },
+      },
+      data.sessionId,
+      getCookie(CLAIM_COOKIE),
+    );
+
+    if (status !== "done") {
+      return { status, paid: false, recorded: false, pass: null };
     }
-
-    const session = await fetchVerifiedVerbWiseSession(data.sessionId);
-
-    if (!session) {
-      return {
-        paid: false,
-        recorded: false,
-        pass: null,
-      };
-    }
-
-    await recordPurchase(session);
-
-    if (!(await purchaseExists(data.sessionId))) {
-      return { paid: false, recorded: false, pass: null };
-    }
-
     return {
+      status,
       paid: true,
       recorded: true,
       pass: await signPass("cs", data.sessionId),
