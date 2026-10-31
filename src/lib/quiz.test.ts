@@ -6,6 +6,7 @@ import pub from "@/data/quiz.public.json";
 import { FREE_QUIZ_IDS_AFTER_TRIAL, quizLevelLocked } from "./content-access";
 import { buildPublicQuiz, type QuizQuestion } from "./quiz-public-build";
 import { resolveQuiz, type QuizDeps } from "./quiz.server";
+import { IMPERFECT_QUIZ_IDS, quizTense } from "./quiz-tense";
 import { answer, isFinished, newRound, next, quizPool, QUIZ_STORAGE_KEY } from "./quiz-session";
 
 const bank = full as QuizQuestion[];
@@ -27,10 +28,10 @@ function deps(over: Partial<QuizDeps> = {}): QuizDeps {
 describe("question bank integrity", () => {
   it("master file is byte-identical to the supplied bank", () => {
     const h = createHash("sha256").update(readFileSync("src/data/quiz.json")).digest("hex");
-    expect(h).toBe("2539ae181ad81f02a1b991167c0d8708e4eccacd52a03acbac8616b6f91211f4");
+    expect(h).toBe("9608904c09e72c15bf822186fa37756808abf67047069e011eaf3230b1569280");
   });
-  it("has 100 unique ids q001–q100, valid fields, one correct option each", () => {
-    expect(ids(bank)).toEqual(Array.from({ length: 100 }, (_, i) => `q${String(i + 1).padStart(3, "0")}`));
+  it("has 150 unique ids q001–q150, valid fields, one correct option each", () => {
+    expect(ids(bank)).toEqual(Array.from({ length: 150 }, (_, i) => `q${String(i + 1).padStart(3, "0")}`));
     for (const q of bank) {
       expect(["verbs", "subjunctive"]).toContain(q.category);
       expect(["easy", "medium", "hard"]).toContain(q.difficulty);
@@ -49,27 +50,29 @@ describe("question bank integrity", () => {
   it("no restricted question text appears in the public file", () => {
     const text = JSON.stringify(pub);
     const restricted = bank.filter((q) => !(FREE_QUIZ_IDS_AFTER_TRIAL as readonly string[]).includes(q.id));
-    expect(restricted).toHaveLength(80);
+    expect(restricted).toHaveLength(130);
     for (const q of restricted) expect(text.includes(q.question)).toBe(false);
   });
 });
 
 describe("access tiers (real server decision path)", () => {
-  it("purchase pass: all 100", async () => {
+  it("purchase pass: all 150", async () => {
     const r = await resolveQuiz({ pass: "p" }, deps({ passRole: async () => "purchase" }));
     expect(r.tier).toBe("full");
-    expect(r.questions).toHaveLength(100);
+    expect(r.questions).toHaveLength(150);
   });
-  it("creator pass: all 100", async () => {
+  it("creator pass: all 150", async () => {
     const r = await resolveQuiz({ pass: "p" }, deps({ passRole: async () => "creator" }));
-    expect(r.questions).toHaveLength(100);
+    expect(r.questions).toHaveLength(150);
   });
-  it("active trial: 50 verbs + 15 Easy subjunctive", async () => {
+  it("active trial: 50 verbs + 15 Easy present + 10 Easy imperfect = 75", async () => {
     const r = await resolveQuiz({}, deps({ trialStart: async () => new Date(NOW - 3 * DAY).toISOString() }));
     expect(r.tier).toBe("trial");
+    expect(r.questions).toHaveLength(75);
     expect(r.questions.filter((q) => q.category === "verbs")).toHaveLength(50);
     const subj = r.questions.filter((q) => q.category === "subjunctive");
-    expect(subj).toHaveLength(15);
+    expect(subj.filter((q) => quizTense(q) === "present")).toHaveLength(15);
+    expect(subj.filter((q) => quizTense(q) === "imperfect")).toHaveLength(10);
     expect(subj.every((q) => q.difficulty === "easy")).toBe(true);
   });
   it.each([
@@ -118,7 +121,7 @@ describe("mix and session", () => {
     expect(r.score).toBe(1);
   });
   it("restart / new choice gives a fresh round", () => {
-    const r = newRound(quizPool(bank, "subjunctive", "hard"));
+    const r = newRound(quizPool(bank, "subjunctive", "hard", "present"));
     expect(r.index).toBe(0);
     expect(r.score).toBe(0);
     expect(r.order).toHaveLength(15);
@@ -131,5 +134,41 @@ describe("mix and session", () => {
   });
   it("quiz storage is separate from flashcard/trial keys", () => {
     expect(QUIZ_STORAGE_KEY).toBe("vw_quiz_best_v1");
+  });
+});
+
+describe("imperfect subjunctive classification", () => {
+  const old = JSON.parse(readFileSync("src/data/quiz.json", "utf8")) as QuizQuestion[];
+  it("the central list is exactly q101–q150", () => {
+    expect([...IMPERFECT_QUIZ_IDS]).toEqual(Array.from({ length: 50 }, (_, i) => `q${101 + i}`));
+  });
+  it("all 50 are subjunctive questions classified as imperfect", () => {
+    const imp = bank.filter((q) => quizTense(q) === "imperfect");
+    expect(ids(imp)).toEqual([...IMPERFECT_QUIZ_IDS]);
+    expect(imp.every((q) => q.category === "subjunctive")).toBe(true);
+    expect(imp.filter((q) => q.difficulty === "easy")).toHaveLength(10);
+  });
+  it("every other subjunctive question is present; verbs have no tense", () => {
+    expect(bank.filter((q) => quizTense(q) === "present")).toHaveLength(50);
+    expect(bank.filter((q) => q.category === "verbs").every((q) => quizTense(q) === null)).toBe(true);
+  });
+  it("the original 100 questions are unchanged from the earlier bank", () => {
+    expect(old.slice(0, 100)).toEqual(bank.slice(0, 100));
+    const h = createHash("sha256").update(JSON.stringify(bank.slice(0, 100))).digest("hex");
+    expect(h).toBe(createHash("sha256").update(JSON.stringify(old.slice(0, 100))).digest("hex"));
+  });
+  it("public 20 contain no imperfect questions", () => {
+    expect((pub as QuizQuestion[]).some((q) => quizTense(q) === "imperfect")).toBe(false);
+  });
+  it("subjunctive tab splits by tense; mix includes all three", () => {
+    expect(quizPool(bank, "subjunctive", "easy", "imperfect")).toHaveLength(10);
+    expect(quizPool(bank, "subjunctive", "easy", "present")).toHaveLength(15);
+    const mix = quizPool(bank, "mix", "easy");
+    expect(new Set(mix.map((q) => quizTense(q) ?? "verbs"))).toEqual(new Set(["verbs", "present", "imperfect"]));
+    expect(new Set(ids(mix)).size).toBe(mix.length);
+  });
+  it("trial unlocks Easy imperfect only", () => {
+    expect(quizLevelLocked("subjunctive", "easy", "trial")).toBe(false);
+    expect(quizLevelLocked("subjunctive", "hard", "trial")).toBe(true);
   });
 });
