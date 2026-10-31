@@ -9,7 +9,7 @@
 
 ## B. Supplied data
 - `imperfect-subjunctive.corrected.json`: PASS. Exactly 100 entries, ids identical (same order) to the present file and verb deck, no duplicates, 3 triggers x 3 examples each (300 easy/medium/hard), same fields as present. Copied byte-for-byte, not edited.
-- `quiz_questions_final.json`: 150 questions. q001–q100 are byte-identical to the current bank. q101–q150 are new, all labelled only `category: "subjunctive"` (no tense field); every one reads as imperfect (past triggers, -ra forms). Split: 10 easy, 20 medium, 20 hard. Gap: the file itself does not mark tense — see J.
+- `quiz_questions_final.json`: 150 questions. q001–q100 are byte-identical to the current bank. q101–q150 are new, all labelled only `category: "subjunctive"` (no tense field); every one reads as imperfect (past triggers, -ra forms). Split: 15 easy, 20 medium, 15 hard. Gap: the file itself does not mark tense — see J.
 
 ## C. Navigation / UI
 - Nav item "Subjunctive" stays (same route `/subjunctive`) but becomes a tense chooser hub: two equal cards, "Present" and "Imperfect", each with Easy/Medium/Hard chips and a Quiz shortcut.
@@ -34,11 +34,11 @@
 
 ## G. Access (same rules as Present)
 - Imperfect teaching: same 20 free ids at Easy only; rest locked; trial does not unlock; paid/creator full. Server enforces via the same signed pass; locked examples never in browser files; direct URLs show the paywall.
-- Quiz: public pool stays the same fixed 20 (q101+ come after it, so unchanged). Trial = all Verbs + Easy Subjunctive of both tenses (65 → 75). Paid/creator = all 150. No pricing, Stripe, trial-length or database changes.
+- Quiz: public pool stays the same fixed 20 (q101+ come after it, so unchanged). Trial = all Verbs + Easy Subjunctive of both tenses (65 → 80). Paid/creator = all 150. No pricing, Stripe, trial-length or database changes.
 
 ## H. Tests
 - Data: 100 imperfect ids = verb ids; byte-identical copy; public file has no locked examples; q001–q100 unchanged; imperfect id list = q101–q150.
-- Access: each tier (none, trial, expired, paid, creator) for teaching + quiz counts (20 / 75 / 150); forged fields ignored; build scan finds no restricted imperfect content or questions.
+- Access: each tier (none, trial, expired, paid, creator) for teaching + quiz counts (20 / 80 / 150); forged fields ignored; build scan finds no restricted imperfect content or questions.
 - UI: hub, both lists, detail toggle, old-URL redirect, card-page links, quiz toggles and Mix at 390 / 820 / 1280px.
 - Regression: full test suite, typecheck, production build.
 
@@ -47,7 +47,7 @@
 
 ## J. Decisions (approved)
 1. q101–q150 are the Imperfect set, classified in one central list in code; tests check all 50 stay classified. Wording, answers, explanations and IDs are unchanged.
-2. Trial quiz = 75 questions: 50 Verb, 15 Easy Present and 10 Easy Imperfect. This does not unlock Imperfect teaching material.
+2. Trial quiz = 80 questions: 50 Verb, 15 Easy Present and 15 Easy Imperfect (approved 31 Oct; the bank has 15 Easy Imperfect, not 10). This does not unlock Imperfect teaching material.
 3. Imperfect teaching uses the same 20 free verb IDs as Present, Easy examples only.
 4. The public 20-question quiz pool stays exactly as it is. A test compares it with today's file, and a build scan checks that no new questions or locked teaching content reach browser files.
 
