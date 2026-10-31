@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { mayCancel, maySave, ownerToken, reminderSecret } from "./push-owner.server";
+import { handleCancel, handleSave, mayCancel, maySave, ownerToken, reminderSecret, type StoredSubscription } from "./push-owner.server";
 import { maskEmail, redact, safeError } from "./log-safety.server";
 import { signPass, verifyPass } from "./content-pass.server";
 
@@ -62,24 +62,11 @@ describe("dedicated reminder secret", () => {
     vi.unstubAllEnvs();
   });
 
-  it("missing secret makes reminder saves and cancels fail safely", async () => {
-    vi.resetModules();
-    vi.stubEnv("REMINDER_OWNER_SECRET", "");
-    vi.doMock("@tanstack/react-start/server", () => ({ getCookie: () => undefined, setCookie: vi.fn() }));
-    const db = vi.fn();
-    vi.doMock("./payments.server", () => ({ getSupabaseAdmin: db }));
-    const { savePushSubscription, removePushSubscription } = await import("./push.functions");
-    const save = (savePushSubscription as unknown as { __executeServer?: unknown }) && null;
-    void save;
-    // Call the handlers through the module's server implementation.
-    const s = await (savePushSubscription as unknown as (o: { data: typeof A }) => Promise<{ ok: boolean }>)({ data: A }).catch(() => ({ ok: false }));
-    const r = await (removePushSubscription as unknown as (o: { data: { endpoint: string } }) => Promise<{ ok: boolean }>)({ data: { endpoint: A.endpoint } }).catch(() => ({ ok: false }));
-    expect(s.ok).toBe(false);
-    expect(r.ok).toBe(false);
-    expect(db).not.toHaveBeenCalled();
-    vi.doUnmock("@tanstack/react-start/server");
-    vi.doUnmock("./payments.server");
-    vi.unstubAllEnvs();
+  it("missing secret makes reminder saves and cancels fail safely without touching the database", async () => {
+    const store = fakeStore();
+    expect(await handleSave(null, store, A, null)).toEqual({ ok: false });
+    expect(await handleCancel(null, store, { endpoint: A.endpoint }, null)).toEqual({ ok: false });
+    expect(store.calls).toEqual([]);
   });
 
   it("a reminder token is not accepted as a purchase or creator pass", async () => {
@@ -144,5 +131,48 @@ describe("customer email in logs", () => {
     expect(logs).not.toContain(ADDR);
     f.mockRestore();
     vi.unstubAllEnvs();
+  });
+});
+
+function fakeStore(initial: Record<string, StoredSubscription & { active: boolean }> = {}) {
+  const rows = { ...initial };
+  const calls: string[] = [];
+  return {
+    rows, calls,
+    async find(endpoint: string) { calls.push("find"); const r = rows[endpoint]; return { row: r ? { p256dh: r.p256dh, auth: r.auth } : null, error: false }; },
+    async upsert(row: { endpoint: string; p256dh: string; auth: string }) { calls.push("upsert"); rows[row.endpoint] = { p256dh: row.p256dh, auth: row.auth, active: true }; return true; },
+    async deactivate(endpoint: string) { calls.push("deactivate"); rows[endpoint].active = false; return true; },
+  };
+}
+
+describe("reminder flows with the dedicated secret", () => {
+  it("create, modify and cancel by the owner", async () => {
+    const store = fakeStore();
+    const created = await handleSave(SECRET, store, A, null);
+    expect(created.ok).toBe(true);
+    const newKeys = { ...A, p256dh: "C".repeat(20), auth: "c".repeat(10) };
+    expect((await handleSave(SECRET, store, newKeys, created.token)).ok).toBe(true);
+    expect(store.rows[A.endpoint].p256dh).toBe("C".repeat(20));
+    expect((await handleCancel(SECRET, store, { endpoint: A.endpoint }, created.token)).ok).toBe(true);
+    expect(store.rows[A.endpoint].active).toBe(false);
+  });
+
+  it("another browser cannot modify or cancel", async () => {
+    const store = fakeStore({ [A.endpoint]: { ...storedA, active: true } });
+    const other = await handleSave(SECRET, store, B, null);
+    const hijack = { endpoint: A.endpoint, p256dh: B.p256dh, auth: B.auth };
+    expect((await handleSave(SECRET, store, hijack, other.token)).ok).toBe(false);
+    expect((await handleCancel(SECRET, store, { endpoint: A.endpoint }, other.token)).ok).toBe(false);
+    expect(store.rows[A.endpoint]).toEqual({ ...storedA, active: true });
+  });
+
+  it("tokens made with the old shared secret no longer work, but owners regain access with their delivery keys", async () => {
+    const OLD = "pass-secret-0123456789abcdef0123456789";
+    const store = fakeStore({ [A.endpoint]: { ...storedA, active: true } });
+    const oldToken = await ownerToken(OLD, A.endpoint);
+    expect((await handleCancel(SECRET, store, { endpoint: A.endpoint }, oldToken)).ok).toBe(false);
+    const regained = await handleSave(SECRET, store, A, oldToken);
+    expect(regained.ok).toBe(true);
+    expect(regained.token).toBe(await ownerToken(SECRET, A.endpoint));
   });
 });

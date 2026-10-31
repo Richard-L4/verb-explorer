@@ -15,6 +15,34 @@ const subscriptionSchema = z.object({
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
+async function reminderStore() {
+  const { getSupabaseAdmin } = await import("./payments.server");
+  const db = getSupabaseAdmin();
+  return {
+    async find(endpoint: string) {
+      const { data, error } = await db
+        .from("push_subscriptions")
+        .select("p256dh, auth")
+        .eq("endpoint", endpoint)
+        .maybeSingle();
+      return { row: data ?? null, error: !!error };
+    },
+    async upsert(row: { endpoint: string; p256dh: string; auth: string }) {
+      const { error } = await db
+        .from("push_subscriptions")
+        .upsert({ ...row, active: true, last_seen_at: new Date().toISOString() }, { onConflict: "endpoint" });
+      return !error;
+    },
+    async deactivate(endpoint: string) {
+      const { error } = await db
+        .from("push_subscriptions")
+        .update({ active: false, last_seen_at: new Date().toISOString() })
+        .eq("endpoint", endpoint);
+      return !error;
+    },
+  };
+}
+
 /**
  * Stores (or refreshes) this browser's delivery target. No personal data.
  * An existing target can only be replaced by the browser that owns it.
@@ -24,40 +52,12 @@ export const savePushSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     try {
       const { getCookie, setCookie } = await import("@tanstack/react-start/server");
-            const { PUSH_OWNER_COOKIE, maySave, ownerToken, reminderSecret } = await import("./push-owner.server");
-      const { getSupabaseAdmin } = await import("./payments.server");
+      const { PUSH_OWNER_COOKIE, handleSave, reminderSecret } = await import("./push-owner.server");
       const secret = reminderSecret();
       if (!secret) return { ok: false };
-      const db = getSupabaseAdmin();
-
-      const { data: stored, error: readError } = await db
-        .from("push_subscriptions")
-        .select("p256dh, auth")
-        .eq("endpoint", data.endpoint)
-        .maybeSingle();
-      if (readError) return { ok: false };
-
-      const allowed = await maySave(secret, stored ?? null, {
-        endpoint: data.endpoint,
-        cookieToken: getCookie(PUSH_OWNER_COOKIE),
-        p256dh: data.p256dh,
-        auth: data.auth,
-      });
-      if (!allowed) return { ok: false };
-
-      const { error } = await db.from("push_subscriptions").upsert(
-        {
-          endpoint: data.endpoint,
-          p256dh: data.p256dh,
-          auth: data.auth,
-          active: true,
-          last_seen_at: new Date().toISOString(),
-        },
-        { onConflict: "endpoint" },
-      );
-      if (error) return { ok: false };
-
-      setCookie(PUSH_OWNER_COOKIE, await ownerToken(secret, data.endpoint), {
+      const result = await handleSave(secret, await reminderStore(), data, getCookie(PUSH_OWNER_COOKIE));
+      if (!result.ok || !result.token) return { ok: false };
+      setCookie(PUSH_OWNER_COOKIE, result.token, {
         httpOnly: true,
         secure: true,
         sameSite: "lax",
@@ -84,32 +84,10 @@ export const removePushSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     try {
       const { getCookie } = await import("@tanstack/react-start/server");
-            const { PUSH_OWNER_COOKIE, mayCancel, reminderSecret } = await import("./push-owner.server");
-      const { getSupabaseAdmin } = await import("./payments.server");
+      const { PUSH_OWNER_COOKIE, handleCancel, reminderSecret } = await import("./push-owner.server");
       const secret = reminderSecret();
       if (!secret) return { ok: false };
-      const db = getSupabaseAdmin();
-
-      const { data: stored, error: readError } = await db
-        .from("push_subscriptions")
-        .select("p256dh, auth")
-        .eq("endpoint", data.endpoint)
-        .maybeSingle();
-      if (readError) return { ok: false };
-
-      const allowed = await mayCancel(secret, stored ?? null, {
-        endpoint: data.endpoint,
-        cookieToken: getCookie(PUSH_OWNER_COOKIE),
-        p256dh: data.p256dh,
-        auth: data.auth,
-      });
-      if (!allowed) return { ok: false };
-
-      const { error } = await db
-        .from("push_subscriptions")
-        .update({ active: false, last_seen_at: new Date().toISOString() })
-        .eq("endpoint", data.endpoint);
-      return { ok: !error };
+      return await handleCancel(secret, await reminderStore(), data, getCookie(PUSH_OWNER_COOKIE));
     } catch {
       return { ok: false };
     }

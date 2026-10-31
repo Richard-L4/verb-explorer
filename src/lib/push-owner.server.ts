@@ -81,3 +81,41 @@ export async function mayCancel(
   if (!stored) return false;
   return provesOwnership(secret, stored, claim);
 }
+
+/** Minimal database surface used by the reminder handlers (easy to fake in tests). */
+export interface ReminderStore {
+  find(endpoint: string): Promise<{ row: StoredSubscription | null; error: boolean }>;
+  upsert(row: { endpoint: string; p256dh: string; auth: string }): Promise<boolean>;
+  deactivate(endpoint: string): Promise<boolean>;
+}
+
+export interface SaveInput { endpoint: string; p256dh: string; auth: string }
+
+/** Save flow. Returns the owner token to set as a cookie on success. */
+export async function handleSave(
+  secret: string | null,
+  store: ReminderStore,
+  input: SaveInput,
+  cookieToken: string | null | undefined,
+): Promise<{ ok: boolean; token?: string }> {
+  if (!secret) return { ok: false };
+  const { row, error } = await store.find(input.endpoint);
+  if (error) return { ok: false };
+  if (!(await maySave(secret, row, { endpoint: input.endpoint, cookieToken, ...input }))) return { ok: false };
+  if (!(await store.upsert(input))) return { ok: false };
+  return { ok: true, token: await ownerToken(secret, input.endpoint) };
+}
+
+/** Cancel flow; only the proven owner may deactivate. */
+export async function handleCancel(
+  secret: string | null,
+  store: ReminderStore,
+  input: { endpoint: string; p256dh?: string; auth?: string },
+  cookieToken: string | null | undefined,
+): Promise<{ ok: boolean }> {
+  if (!secret) return { ok: false };
+  const { row, error } = await store.find(input.endpoint);
+  if (error) return { ok: false };
+  if (!(await mayCancel(secret, row, { endpoint: input.endpoint, cookieToken, p256dh: input.p256dh, auth: input.auth }))) return { ok: false };
+  return { ok: await store.deactivate(input.endpoint) };
+}
