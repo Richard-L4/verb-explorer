@@ -3,8 +3,7 @@ import { z } from "zod";
 
 /** The browser needs the public half of the signing key to register. */
 export const getPushPublicKey = createServerFn({ method: "GET" }).handler(async () => {
-  const { readEnv } = await import("./env.server");
-  return { publicKey: readEnv("VAPID_PUBLIC_KEY") ?? null };
+    return { publicKey: readEnv("VAPID_PUBLIC_KEY") ?? null };
 });
 
 const subscriptionSchema = z.object({
@@ -24,10 +23,9 @@ export const savePushSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     try {
       const { getCookie, setCookie } = await import("@tanstack/react-start/server");
-      const { readEnv } = await import("./env.server");
-      const { PUSH_OWNER_COOKIE, maySave, ownerToken } = await import("./push-owner.server");
+            const { PUSH_OWNER_COOKIE, maySave, ownerToken, reminderSecret } = await import("./push-owner.server");
       const { getSupabaseAdmin } = await import("./payments.server");
-      const secret = readEnv("CONTENT_PASS_SECRET");
+      const secret = reminderSecret();
       if (!secret) return { ok: false };
       const db = getSupabaseAdmin();
 
@@ -85,10 +83,9 @@ export const removePushSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     try {
       const { getCookie } = await import("@tanstack/react-start/server");
-      const { readEnv } = await import("./env.server");
-      const { PUSH_OWNER_COOKIE, mayCancel } = await import("./push-owner.server");
+            const { PUSH_OWNER_COOKIE, mayCancel, reminderSecret } = await import("./push-owner.server");
       const { getSupabaseAdmin } = await import("./payments.server");
-      const secret = readEnv("CONTENT_PASS_SECRET");
+      const secret = reminderSecret();
       if (!secret) return { ok: false };
       const db = getSupabaseAdmin();
 

@@ -12,6 +12,16 @@
  * which only that browser and our database know.
  */
 import { hmacHex, safeEqual } from "./content-pass.server";
+import { readEnv } from "./env.server";
+
+/**
+ * The dedicated reminder secret. Deliberately has NO fallback to the
+ * purchase/creator pass secret: if missing, reminder writes fail closed.
+ */
+export function reminderSecret(): string | null {
+  const s = readEnv("REMINDER_OWNER_SECRET");
+  return s && s.length >= 32 ? s : null;
+}
 
 export const PUSH_OWNER_COOKIE = "vw_push_owner";
 const LABEL = "push-owner:v1:";
@@ -70,14 +80,4 @@ export async function mayCancel(
 ): Promise<boolean> {
   if (!stored) return false;
   return provesOwnership(secret, stored, claim);
-}
-
-/** Masks an email for logs: "richard@example.com" → "r•••@e•••.com". */
-export function maskEmail(email: string | null | undefined): string {
-  if (!email || !email.includes("@")) return "[redacted]";
-  const [local, domain] = email.split("@");
-  const dot = domain.lastIndexOf(".");
-  const host = dot > 0 ? domain.slice(0, dot) : domain;
-  const tld = dot > 0 ? domain.slice(dot) : "";
-  return `${local.slice(0, 1)}•••@${host.slice(0, 1)}•••${tld}`;
 }
