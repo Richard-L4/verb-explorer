@@ -1,5 +1,6 @@
 import { useEffect, useSyncExternalStore } from "react";
-import { publicSubjunctive } from "@/data/subjunctive-public";
+import { publicSubjunctive, publicImperfectSubjunctive } from "@/data/subjunctive-public";
+import type { Tense } from "@/data/subjunctive-tense";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { getProtectedSubjunctive, requestAutomaticPass } from "@/lib/subjunctive-content.functions";
 import { readContentPass, setPassSaver, writeContentPass } from "@/lib/content-pass-store";
@@ -15,11 +16,13 @@ interface Snapshot {
   status: Status;
   role: "purchase" | "creator" | null;
   entries: PublicSubjunctiveEntry[];
+  /** Imperfect subjunctive, same access rules as `entries`. */
+  imperfect: PublicSubjunctiveEntry[];
   /** Browser says it bought, but the server hasn't confirmed it yet. */
   needsConfirm: boolean;
 }
 
-const initial: Snapshot = { status: "checking", role: null, entries: publicSubjunctive, needsConfirm: false };
+const initial: Snapshot = { status: "checking", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: false };
 let snap: Snapshot = initial;
 let started = false;
 const listeners = new Set<() => void>();
@@ -31,8 +34,8 @@ const set = (next: Partial<Snapshot>) => {
 async function loadWithPass(pass: string): Promise<boolean> {
   try {
     const res = await getProtectedSubjunctive({ data: { pass } });
-    if (res.paid && res.entries) {
-      set({ status: "paid", role: res.role, entries: res.entries, needsConfirm: false });
+    if (res.paid && res.entries && res.imperfect) {
+      set({ status: "paid", role: res.role, entries: res.entries, imperfect: res.imperfect, needsConfirm: false });
       return true;
     }
   } catch {
@@ -42,7 +45,7 @@ async function loadWithPass(pass: string): Promise<boolean> {
 }
 
 function settleUnpaid() {
-  set({ status: "unpaid", role: null, entries: publicSubjunctive, needsConfirm: access.getSnapshot().unlocked });
+  set({ status: "unpaid", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: access.getSnapshot().unlocked });
 }
 
 async function resolve() {
@@ -89,4 +92,10 @@ export function useSubjunctive() {
     () => initial,
   );
   return { ...s, paid: s.status === "paid" };
+}
+
+/** Same as useSubjunctive, with `entries` set to the chosen tense. */
+export function useSubjunctiveTense(tense: Tense) {
+  const s = useSubjunctive();
+  return { ...s, entries: tense === "imperfect" ? s.imperfect : s.entries };
 }
