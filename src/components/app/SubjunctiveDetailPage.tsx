@@ -56,7 +56,7 @@ export function SubjunctiveDetailPage({ tense, id, title }: { tense: Tense; id: 
             </p>
             <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{title}</h1>
           </section>
-          {needsConfirm ? <ConfirmPurchase /> : <Paywall title={title ?? undefined} />}
+          {needsConfirm ? <ConfirmPurchase /> : title ? <Paywall title={title} /> : <Paywall />}
         </div>
       )}
 

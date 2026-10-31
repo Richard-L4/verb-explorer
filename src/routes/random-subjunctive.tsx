@@ -11,7 +11,7 @@ import { SubjunctiveEntryView } from "@/components/app/SubjunctiveEntryView";
 
 export const Route = createFileRoute("/random-subjunctive")({
   validateSearch: (s: Record<string, unknown>): { tense?: "present" | "imperfect" } =>
-    isTense(s.tense) ? { tense: s.tense } : {},
+    isTense(s['tense']) ? { tense: s['tense'] } : {},
   component: RandomSubjunctive,
   head: () => ({
     meta: [

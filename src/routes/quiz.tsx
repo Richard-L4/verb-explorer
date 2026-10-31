@@ -6,7 +6,7 @@ import { isTense } from "@/data/subjunctive-tense";
 
 export const Route = createFileRoute("/quiz")({
   validateSearch: (s: Record<string, unknown>): { tense?: "present" | "imperfect" } =>
-    isTense(s.tense) ? { tense: s.tense } : {},
+    isTense(s['tense']) ? { tense: s['tense'] } : {},
   component: Quiz,
   head: () => ({
     meta: [
