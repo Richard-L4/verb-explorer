@@ -37,5 +37,11 @@ export async function boundTrialRequest(request: Request, trialUrl: string): Pro
     offset += chunk.byteLength;
   }
   // Rebuild only the trial request, before the framework's JSON/Seroval decoder.
-  return new Request(request, { body: body.buffer });
+  return new Request(request.url, {
+    method: request.method,
+    headers: request.headers,
+    signal: request.signal,
+    redirect: request.redirect,
+    body: body.buffer,
+  });
 }
