@@ -45,10 +45,11 @@
 ## I. Phases
 1. Data copy + public generators + tests. 2. Server content/access by tense. 3. Routes, hub, redirect, detail toggle. 4. Entry points (Home, Random, card page). 5. Quiz bank + tense split + Mix. 6. Full test/browser/bundle checks. No publishing.
 
-## J. Questions needing your approval
-1. OK to treat q101–q150 as the Imperfect set (they all are by content, but the file doesn't say so)? Only 10 are Easy, so the Easy Imperfect quiz is short.
-2. OK for trial users to also get the 10 Easy Imperfect quiz questions (trial total 75)? Alternative: keep trial at 65.
-3. Imperfect free allowance = the same 20 verbs at Easy as Present — confirm.
+## J. Decisions (approved)
+1. q101–q150 are the Imperfect set, classified in one central list in code; tests check all 50 stay classified. Wording, answers, explanations and IDs are unchanged.
+2. Trial quiz = 75 questions: 50 Verb, 15 Easy Present and 10 Easy Imperfect. This does not unlock Imperfect teaching material.
+3. Imperfect teaching uses the same 20 free verb IDs as Present, Easy examples only.
+4. The public 20-question quiz pool stays exactly as it is. A test compares it with today's file, and a build scan checks that no new questions or locked teaching content reach browser files.
 
 ## K. Scope
 Changes: subjunctive pages/routes, nav hub, Home subjunctive/quiz blocks and announcement, Random menu, card page links, quiz bank and tabs, access helpers, tests.
