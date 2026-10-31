@@ -103,7 +103,7 @@ async function sendConfirmationEmail(
     const error = await response.text();
     console.error("[email] Failed to send confirmation email:", error);
   } else {
-    console.log("[email] Confirmation email sent to", email);
+    console.log("[email] Confirmation email sent to", maskEmail(email));
   }
 }
 

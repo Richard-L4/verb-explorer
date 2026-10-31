@@ -115,7 +115,9 @@ export async function disableReminders(): Promise<void> {
     const registration = await readyRegistration();
     const subscription = await registration?.pushManager.getSubscription();
     if (!subscription) return;
-    await removePushSubscription({ data: { endpoint: subscription.endpoint } });
+    const p256dh = keyToBase64(subscription.getKey("p256dh")) ?? undefined;
+    const auth = keyToBase64(subscription.getKey("auth")) ?? undefined;
+    await removePushSubscription({ data: { endpoint: subscription.endpoint, p256dh, auth } });
     await subscription.unsubscribe().catch(() => false);
   } catch {
     /* nothing further to do */
