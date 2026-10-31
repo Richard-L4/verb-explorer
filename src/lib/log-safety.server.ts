@@ -10,7 +10,7 @@ const MAX_LEN = 300;
 /** Masks an email for logs: "richard@example.com" → "r•••@e•••.com". */
 export function maskEmail(email: string | null | undefined): string {
   if (!email || !email.includes("@")) return "[redacted]";
-  const [local, domain] = email.split("@");
+  const [local = "", domain = ""] = email.split("@");
   const dot = domain.lastIndexOf(".");
   const host = dot > 0 ? domain.slice(0, dot) : domain;
   const tld = dot > 0 ? domain.slice(dot) : "";
