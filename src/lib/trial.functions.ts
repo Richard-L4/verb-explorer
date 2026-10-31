@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getCookie, setCookie } from "@tanstack/react-start/server";
-import { z } from "zod";
+import { parseTrialInput } from "./trial-input";
 
 /**
  * Resolves (and, on a genuine first visit, creates) this visitor's trial
@@ -9,14 +9,7 @@ import { z } from "zod";
  * devices are ignored entirely.
  */
 export const claimTrialSession = createServerFn({ method: "POST" })
-  .inputValidator((input) =>
-    z
-      .object({
-        testDevice: z.boolean().optional(),
-        device: z.record(z.string(), z.string()).nullable().optional(),
-      })
-      .parse(input),
-  )
+  .inputValidator(parseTrialInput)
   .handler(async ({ data }) => {
     if (data.testDevice === true) {
       return { available: false, trialStart: null, isNew: false, repeat: false };
