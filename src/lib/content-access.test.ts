@@ -108,6 +108,8 @@ describe("full dataset never reaches browser code", () => {
     const fns = readFileSync("src/lib/subjunctive-content.functions.ts", "utf8");
     expect(fns).not.toMatch(/^import .*subjunctive-full/m);
     expect(fns).toMatch(/await import\("\.\/subjunctive-full\.server"\)/);
+    expect(fns).not.toMatch(/^import .*imperfect-subjunctive-full/m);
+    expect(fns).toMatch(/await import\("\.\/imperfect-subjunctive-full\.server"\)/);
   });
 });
 
