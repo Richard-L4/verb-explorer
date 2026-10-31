@@ -7,6 +7,7 @@ import { verbCardLocked } from "@/lib/content-access";
 import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
+import { SubjunctiveEntryLink } from "@/components/app/SubjunctiveEntryLink";
 
 export const Route = createFileRoute("/card/$cardId")({
   loader: ({ params }) => {
@@ -68,6 +69,23 @@ function CardDetail() {
     return (
       <>
       <VerbCardBody card={card} meta={`Card ${position} of ${cardCount}`} />
+      <nav aria-label="Subjunctive for this verb" className="mt-6 flex flex-wrap items-center gap-2 text-sm">
+        <span className="font-semibold text-muted-foreground">Subjunctive:</span>
+        <SubjunctiveEntryLink
+          tense="present"
+          entryId={card.id}
+          className="inline-flex min-h-11 items-center rounded-full border border-primary/40 bg-primary/10 px-4 font-semibold text-primary transition-colors hover:bg-primary/15"
+        >
+          Present
+        </SubjunctiveEntryLink>
+        <SubjunctiveEntryLink
+          tense="imperfect"
+          entryId={card.id}
+          className="inline-flex min-h-11 items-center rounded-full border border-primary/40 bg-primary/10 px-4 font-semibold text-primary transition-colors hover:bg-primary/15"
+        >
+          Imperfect
+        </SubjunctiveEntryLink>
+      </nav>
 
 
       <nav aria-label="Card navigation" className="mt-8 grid gap-3 sm:grid-cols-2">
