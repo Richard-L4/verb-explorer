@@ -91,7 +91,7 @@ describe("public subjunctive file", () => {
 });
 
 describe("full dataset never reaches browser code", () => {
-  const allowed = new Set(["src/lib/subjunctive-full.server.ts"]);
+  const allowed = new Set(["src/lib/subjunctive-full.server.ts", "src/lib/imperfect-subjunctive-full.server.ts"]);
   function walk(dir: string): string[] {
     return readdirSync(dir).flatMap((n) => {
       const p = join(dir, n);
