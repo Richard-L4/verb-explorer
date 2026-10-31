@@ -37,6 +37,8 @@ export interface ClaimDeps {
   recordPurchase(session: unknown): Promise<void>;
   /** Atomic database claim; throws on database failure. */
   claim(sessionId: string, ownerHash: string, windowMinutes: number): Promise<boolean>;
+  /** Rate limit checked after the marker and before any Stripe lookup; false = try later. */
+  allowLookup?(ownerHash: string): Promise<boolean>;
 }
 
 export type ConfirmStatus = "done" | "restore" | "pending";
@@ -53,6 +55,8 @@ export async function confirmAndClaim(
 ): Promise<ConfirmStatus> {
   if (!isClaimMarker(marker)) return "restore";
   const ownerHash = await markerHash(marker);
+
+  if (deps.allowLookup && !(await deps.allowLookup(ownerHash))) return "pending";
 
   let session;
   try {

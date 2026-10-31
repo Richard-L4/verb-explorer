@@ -98,6 +98,32 @@ export function getStripe(): Stripe {
 }
 
 /**
+ * Buyer-typed first name, made safe for display: drops control and invisible
+ * formatting characters, keeps letters (any script, accents), apostrophes,
+ * hyphens, dots and spaces, and caps the length. Falls back to "there".
+ */
+export function cleanBuyerFirstName(name: string | null | undefined): string {
+  const first = (name ?? "")
+    .normalize("NFC")
+    .replace(/[\p{Cc}\p{Cf}\p{Co}\p{Cs}]/gu, "")
+    .replace(/[^\p{L}\p{M}'’.\- ]/gu, "")
+    .trim()
+    .split(/\s+/)[0] ?? "";
+  const capped = Array.from(first).slice(0, 40).join("").replace(/^[-.']+|[-.']+$/g, "");
+  return capped || "there";
+}
+
+/** Escapes text for an HTML text/attribute context. */
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
  * Send a purchase confirmation email via Resend.
  */
 export async function sendConfirmationEmail(
@@ -111,7 +137,7 @@ export async function sendConfirmationEmail(
     return;
   }
 
-  const firstName = name?.split(" ")[0] ?? "there";
+  const firstName = escapeHtml(cleanBuyerFirstName(name));
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
