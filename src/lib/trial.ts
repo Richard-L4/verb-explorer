@@ -21,6 +21,7 @@ export async function syncServerTrial(firstVisit: boolean): Promise<void> {
     const claim = await claimTrialSession({ data: { device } });
 
     if (!claim.available) {
+      markServerSessionReady();
       // Server or table unavailable — preserve the previous local behaviour.
       if (firstVisit) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
       return;
@@ -30,6 +31,7 @@ export async function syncServerTrial(firstVisit: boolean): Promise<void> {
     if (claim.trialStart) applyServerTrialStart(claim.trialStart);
     if (claim.isNew) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
   } catch {
+    markServerSessionReady();
     if (firstVisit) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
   }
 }
