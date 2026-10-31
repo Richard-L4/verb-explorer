@@ -97,12 +97,12 @@ function Home() {
             to="/subjunctive"
             className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
           >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Subjunctive</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Imperfect Subjunctive</p>
             <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
               Master the Spanish subjunctive
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Explore tricky triggers and real examples across three difficulty levels.
+              Present and imperfect: tricky triggers and real examples across three difficulty levels.
             </p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
               Explore the subjunctive
@@ -118,7 +118,7 @@ function Home() {
               Test what you've learned
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Multiple-choice questions on verbs and the subjunctive, at three levels, with feedback on every answer.
+              Multiple-choice questions on verbs and the present and imperfect subjunctive, at three levels, with feedback on every answer.
             </p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
               Take the quiz
@@ -144,15 +144,22 @@ function Home() {
           <span className="gradient-text">Subjunctive</span>
         </h2>
         <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {completeEntryCount} verb pairs, each with three subjunctive triggers and nine graded examples from A2 to
-          B2 — so you know exactly when "que" changes the verb.
+          {completeEntryCount} verb pairs in the present and the imperfect subjunctive, each with three triggers and
+          nine graded examples from A2 to B2 — so you know exactly when "que" changes the verb.
         </p>
         <div className="relative mt-8 flex flex-wrap gap-3">
           <Link
-            to="/subjunctive"
+            to="/subjunctive/present"
             className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
           >
-            Explore the subjunctive
+            Present
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/subjunctive/imperfect"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            Imperfect
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
           <Link
@@ -176,7 +183,7 @@ function Home() {
           <span className="gradient-text">Quiz</span>
         </h2>
         <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Verbs, Subjunctive or a Mix of both — Easy, Medium and Hard questions with feedback on every answer.
+          Verbs, Present or Imperfect Subjunctive, or a Mix of all three — Easy, Medium and Hard questions with feedback on every answer.
         </p>
         <div className="relative mt-8 flex flex-wrap gap-3">
           <Link

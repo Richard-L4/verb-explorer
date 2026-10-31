@@ -4,10 +4,17 @@
  * Paid content arrives from the server (see use-subjunctive.ts).
  */
 import publicEntries from "./subjunctive.public.json";
+import publicImperfectEntries from "./imperfect-subjunctive.public.json";
+import type { Tense } from "./subjunctive-tense";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 
 export const publicSubjunctive = publicEntries as PublicSubjunctiveEntry[];
 export const SUBJUNCTIVE_TOTAL = publicSubjunctive.length;
+export const publicImperfectSubjunctive = publicImperfectEntries as PublicSubjunctiveEntry[];
+export const publicByTense: Record<Tense, PublicSubjunctiveEntry[]> = {
+  present: publicSubjunctive,
+  imperfect: publicImperfectSubjunctive,
+};
 export const subjunctiveIds = publicSubjunctive.map((e) => e.id);
 
 export function neighbours<T extends { id: string }>(list: T[], id: string) {

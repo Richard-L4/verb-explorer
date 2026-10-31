@@ -16,6 +16,8 @@ import {
   type Round,
 } from "@/lib/quiz-session";
 import { cn } from "@/lib/utils";
+import { quizTense } from "@/lib/quiz-tense";
+import { TENSES, tenseLabel, type Tense } from "@/data/subjunctive-tense";
 
 const CATEGORIES: { id: QuizCategory; label: string }[] = [
   { id: "verbs", label: "Verbs" },
@@ -31,11 +33,21 @@ const difficultyTone: Record<QuizDifficulty, string> = {
   hard: "border-border bg-secondary text-foreground",
 };
 
-export function QuizPlayer() {
+export function QuizPlayer({
+  initialCategory = "verbs",
+  initialTense = "present",
+}: {
+  initialCategory?: QuizCategory;
+  initialTense?: Tense;
+}) {
   const { tier, questions, checking } = useQuiz();
-  const [category, setCategory] = useState<QuizCategory>("verbs");
+  const [category, setCategory] = useState<QuizCategory>(initialCategory);
+  const [tense, setTense] = useState<Tense>(initialTense);
   const [difficulty, setDifficulty] = useState<QuizDifficulty>("easy");
-  const pool = useMemo(() => quizPool(questions, category, difficulty), [questions, category, difficulty]);
+  const pool = useMemo(
+    () => quizPool(questions, category, difficulty, tense),
+    [questions, category, difficulty, tense],
+  );
   const byId = useMemo(() => new Map(questions.map((q) => [q.id, q])), [questions]);
   const [round, setRound] = useState<Round>(() => ({ order: [], index: 0, score: 0, answered: null }));
 
@@ -49,8 +61,8 @@ export function QuizPlayer() {
   const current = !finished ? byId.get(round.order[round.index] ?? "") : undefined;
 
   useEffect(() => {
-    if (finished) saveBest(`${category}:${difficulty}`, round.score, round.order.length);
-  }, [finished, category, difficulty, round.score, round.order.length]);
+    if (finished) saveBest(category === "subjunctive" && tense === "imperfect" ? `subjunctive-imperfect:${difficulty}` : `${category}:${difficulty}`, round.score, round.order.length);
+  }, [finished, category, tense, difficulty, round.score, round.order.length]);
 
   return (
     <div>
@@ -72,6 +84,27 @@ export function QuizPlayer() {
           </button>
         ))}
       </div>
+
+      {category === "subjunctive" ? (
+        <div role="radiogroup" aria-label="Subjunctive tense" className="mt-4 flex flex-wrap gap-2">
+          {TENSES.map((t) => (
+            <button
+              key={t}
+              role="radio"
+              aria-checked={tense === t}
+              onClick={() => setTense(t)}
+              className={cn(
+                "min-h-10 rounded-full border px-4 text-sm font-semibold transition-colors",
+                tense === t
+                  ? "border-primary bg-primary/15 text-primary"
+                  : "border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground",
+              )}
+            >
+              {tenseLabel[t]}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div role="radiogroup" aria-label="Difficulty" className="mt-4 flex flex-wrap gap-2">
         {DIFFICULTIES.map((d) => (
@@ -124,6 +157,11 @@ export function QuizPlayer() {
               <span>
                 Question {round.index + 1} of {round.order.length}
               </span>
+              {quizTense(current) ? (
+                <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+                  {tenseLabel[quizTense(current)!]} subjunctive
+                </span>
+              ) : null}
               <span>Score {round.score}</span>
             </div>
             <h2 className="mt-4 text-lg font-bold leading-snug sm:text-xl">{current.question}</h2>

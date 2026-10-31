@@ -31,6 +31,10 @@ import { Route as UnlockSuccessRouteImport } from './routes/unlock_.success'
 import { Route as ApiPublicEnvCheckRouteImport } from './routes/api/public/env-check'
 import { Route as ApiPublicSendDailyRemindersRouteImport } from './routes/api/public/send-daily-reminders'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
+import { Route as SubjunctiveImperfectIndexRouteImport } from './routes/subjunctive.imperfect.index'
+import { Route as SubjunctiveImperfectEntryIdRouteImport } from './routes/subjunctive.imperfect.$entryId'
+import { Route as SubjunctivePresentIndexRouteImport } from './routes/subjunctive.present.index'
+import { Route as SubjunctivePresentEntryIdRouteImport } from './routes/subjunctive.present.$entryId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -143,6 +147,29 @@ const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   path: '/api/public/stripe-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubjunctiveImperfectIndexRoute =
+  SubjunctiveImperfectIndexRouteImport.update({
+    id: '/subjunctive/imperfect/',
+    path: '/subjunctive/imperfect/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SubjunctiveImperfectEntryIdRoute =
+  SubjunctiveImperfectEntryIdRouteImport.update({
+    id: '/subjunctive/imperfect/$entryId',
+    path: '/subjunctive/imperfect/$entryId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SubjunctivePresentIndexRoute = SubjunctivePresentIndexRouteImport.update({
+  id: '/subjunctive/present/',
+  path: '/subjunctive/present/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjunctivePresentEntryIdRoute =
+  SubjunctivePresentEntryIdRouteImport.update({
+    id: '/subjunctive/present/$entryId',
+    path: '/subjunctive/present/$entryId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -167,6 +194,10 @@ export interface FileRoutesByFullPath {
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/subjunctive/imperfect/$entryId': typeof SubjunctiveImperfectEntryIdRoute
+  '/subjunctive/present/$entryId': typeof SubjunctivePresentEntryIdRoute
+  '/subjunctive/imperfect/': typeof SubjunctiveImperfectIndexRoute
+  '/subjunctive/present/': typeof SubjunctivePresentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -191,6 +222,10 @@ export interface FileRoutesByTo {
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/subjunctive/imperfect/$entryId': typeof SubjunctiveImperfectEntryIdRoute
+  '/subjunctive/present/$entryId': typeof SubjunctivePresentEntryIdRoute
+  '/subjunctive/imperfect': typeof SubjunctiveImperfectIndexRoute
+  '/subjunctive/present': typeof SubjunctivePresentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -216,6 +251,10 @@ export interface FileRoutesById {
   '/api/public/env-check': typeof ApiPublicEnvCheckRoute
   '/api/public/send-daily-reminders': typeof ApiPublicSendDailyRemindersRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/subjunctive/imperfect/$entryId': typeof SubjunctiveImperfectEntryIdRoute
+  '/subjunctive/present/$entryId': typeof SubjunctivePresentEntryIdRoute
+  '/subjunctive/imperfect/': typeof SubjunctiveImperfectIndexRoute
+  '/subjunctive/present/': typeof SubjunctivePresentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -242,6 +281,10 @@ export interface FileRouteTypes {
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
+    | '/subjunctive/imperfect/$entryId'
+    | '/subjunctive/present/$entryId'
+    | '/subjunctive/imperfect/'
+    | '/subjunctive/present/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -266,6 +309,10 @@ export interface FileRouteTypes {
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
+    | '/subjunctive/imperfect/$entryId'
+    | '/subjunctive/present/$entryId'
+    | '/subjunctive/imperfect'
+    | '/subjunctive/present'
   id:
     | '__root__'
     | '/'
@@ -290,6 +337,10 @@ export interface FileRouteTypes {
     | '/api/public/env-check'
     | '/api/public/send-daily-reminders'
     | '/api/public/stripe-webhook'
+    | '/subjunctive/imperfect/$entryId'
+    | '/subjunctive/present/$entryId'
+    | '/subjunctive/imperfect/'
+    | '/subjunctive/present/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -315,6 +366,10 @@ export interface RootRouteChildren {
   ApiPublicEnvCheckRoute: typeof ApiPublicEnvCheckRoute
   ApiPublicSendDailyRemindersRoute: typeof ApiPublicSendDailyRemindersRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
+  SubjunctiveImperfectEntryIdRoute: typeof SubjunctiveImperfectEntryIdRoute
+  SubjunctivePresentEntryIdRoute: typeof SubjunctivePresentEntryIdRoute
+  SubjunctiveImperfectIndexRoute: typeof SubjunctiveImperfectIndexRoute
+  SubjunctivePresentIndexRoute: typeof SubjunctivePresentIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -473,6 +528,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/subjunctive/imperfect/': {
+      id: '/subjunctive/imperfect/'
+      path: '/subjunctive/imperfect'
+      fullPath: '/subjunctive/imperfect/'
+      preLoaderRoute: typeof SubjunctiveImperfectIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subjunctive/imperfect/$entryId': {
+      id: '/subjunctive/imperfect/$entryId'
+      path: '/subjunctive/imperfect/$entryId'
+      fullPath: '/subjunctive/imperfect/$entryId'
+      preLoaderRoute: typeof SubjunctiveImperfectEntryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subjunctive/present/': {
+      id: '/subjunctive/present/'
+      path: '/subjunctive/present'
+      fullPath: '/subjunctive/present/'
+      preLoaderRoute: typeof SubjunctivePresentIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subjunctive/present/$entryId': {
+      id: '/subjunctive/present/$entryId'
+      path: '/subjunctive/present/$entryId'
+      fullPath: '/subjunctive/present/$entryId'
+      preLoaderRoute: typeof SubjunctivePresentEntryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -499,6 +582,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicEnvCheckRoute: ApiPublicEnvCheckRoute,
   ApiPublicSendDailyRemindersRoute: ApiPublicSendDailyRemindersRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
+  SubjunctiveImperfectEntryIdRoute: SubjunctiveImperfectEntryIdRoute,
+  SubjunctivePresentEntryIdRoute: SubjunctivePresentEntryIdRoute,
+  SubjunctiveImperfectIndexRoute: SubjunctiveImperfectIndexRoute,
+  SubjunctivePresentIndexRoute: SubjunctivePresentIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

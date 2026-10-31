@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 /**
- * Returns the full subjunctive dataset only for a valid, unexpired signed pass
+ * Returns the full present and imperfect subjunctive datasets only for a valid, unexpired signed pass
  * whose entitlement (purchase or creator) the server re-confirms.
  */
 export const getProtectedSubjunctive = createServerFn({ method: "POST" })
@@ -16,9 +16,10 @@ export const getProtectedSubjunctive = createServerFn({ method: "POST" })
     } catch {
       console.error("[subjunctive] pass check failed");
     }
-    if (!role) return { paid: false as const, role: null, entries: null };
+    if (!role) return { paid: false as const, role: null, entries: null, imperfect: null };
     const { fullSubjunctive } = await import("./subjunctive-full.server");
-    return { paid: true as const, role, entries: fullSubjunctive };
+    const { fullImperfectSubjunctive } = await import("./imperfect-subjunctive-full.server");
+    return { paid: true as const, role, entries: fullSubjunctive, imperfect: fullImperfectSubjunctive };
   });
 
 /**

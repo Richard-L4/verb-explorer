@@ -1,30 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ArrowRight, Lock, Search as SearchIcon } from "lucide-react";
-import { SUBJUNCTIVE_TOTAL, searchSubjunctive } from "@/data/subjunctive-public";
-import { isFreeSubjunctive } from "@/lib/content-access";
-import { useSubjunctive } from "@/hooks/use-subjunctive";
+import { ArrowRight, Brain, Shuffle } from "lucide-react";
+import { SUBJUNCTIVE_TOTAL } from "@/data/subjunctive-public";
+import { TENSES, tenseLabel, type Tense } from "@/data/subjunctive-tense";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
-
-const PAGE = 24;
+import { SubjunctiveTenseLink } from "@/components/app/SubjunctiveEntryLink";
 
 export const Route = createFileRoute("/subjunctive/")({
-  component: SubjunctiveList,
+  component: SubjunctiveHub,
   head: () => ({
     meta: [
-      { title: "Spanish subjunctive by verb | Verb Wise" },
+      { title: "Spanish subjunctive: present and imperfect | Verb Wise" },
       {
         name: "description",
         content:
-          "Learn when Spanish needs the subjunctive: three triggers and nine graded examples for every verb pair.",
+          "Learn the Spanish present and imperfect subjunctive: triggers and graded Easy, Medium and Hard examples for every verb pair.",
       },
-      { property: "og:title", content: "Spanish subjunctive by verb | Verb Wise" },
+      { property: "og:title", content: "Spanish subjunctive: present and imperfect | Verb Wise" },
       {
         property: "og:description",
-        content:
-          "Wish, doubt, emotion and more — the subjunctive triggers explained with real examples.",
+        content: "Choose a tense, then study wish, doubt, emotion and more with real examples.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -32,141 +27,91 @@ export const Route = createFileRoute("/subjunctive/")({
   }),
 });
 
-function SubjunctiveList() {
-  const { entries, paid } = useSubjunctive();
-  const [query, setQuery] = useState("");
-  const [debounced, setDebounced] = useState("");
-  const [shown, setShown] = useState(PAGE);
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(query), 150);
-    return () => clearTimeout(t);
-  }, [query]);
-  useEffect(() => setShown(PAGE), [debounced]);
+const info: Record<Tense, { eyebrow: string; title: string; text: string; example: string; isNew?: boolean }> = {
+  present: {
+    eyebrow: "Present subjunctive",
+    title: "Quiero que vengas",
+    text: "Wishes, doubts and feelings about now and the future.",
+    example: "quiero que · ojalá · es posible que",
+  },
+  imperfect: {
+    eyebrow: "Imperfect subjunctive",
+    title: "Quería que vinieras",
+    text: "The same triggers in the past, plus 'si' clauses and 'como si'.",
+    example: "quería que · si fuera · como si",
+    isNew: true,
+  },
+};
 
-  const results = searchSubjunctive(entries, debounced);
-  const visible = results.slice(0, shown);
+const levels = [
+  { id: "easy", label: "Easy", tone: "border-primary/30 bg-primary/10 text-primary" },
+  { id: "medium", label: "Medium", tone: "border-accent/35 bg-accent/12 text-accent" },
+  { id: "hard", label: "Hard", tone: "border-border bg-secondary text-foreground" },
+];
 
+function SubjunctiveHub() {
   return (
     <PageTransition>
       <PageHeader
         eyebrow="Subjunctive"
-        title="When Spanish needs the subjunctive"
-        description={
-          paid
-            ? `${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and nine graded examples.`
-            : `${SUBJUNCTIVE_TOTAL} verb pairs. The first 20 are free with Easy examples; Medium, Hard and the full set come with full access.`
-        }
+        title="Choose a tense"
+        description={`Both tenses cover the same ${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and Easy, Medium and Hard examples. The first 20 are free with Easy examples.`}
       />
-
-      <div className="relative mb-7">
-        <SearchIcon
-          className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary"
-          aria-hidden="true"
-        />
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Search subjunctive entries"
-          placeholder="Try 'quiero que', 'ojalá', 'seas'…"
-          className="h-14 w-full rounded-2xl border border-border bg-card/80 pl-12 pr-4 text-base shadow-[var(--shadow-card)] outline-none backdrop-blur transition-all duration-200 placeholder:text-muted-foreground hover:border-primary/35 focus:border-primary focus:shadow-[var(--shadow-glow)]"
-        />
-      </div>
-
-      {visible.length ? (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((entry, i) => {
-            const triggers = entry.triggers;
-            const locked = !triggers;
-            const easyOnly = !paid && isFreeSubjunctive(entry.id);
-            return (
-              <motion.div
-                key={entry.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: Math.min(i * 0.045, 0.28),
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{ y: -6 }}
-                className="h-full"
-              >
-                <Link
-                  to="/subjunctive/$entryId"
-                  params={{ entryId: entry.id }}
-                  className="surface-card hairline-top group flex h-full flex-col gap-4 overflow-hidden p-5 transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-lift)] sm:p-6"
+      <div className="grid gap-5 md:grid-cols-2">
+        {TENSES.map((t) => {
+          const c = info[t];
+          return (
+            <section key={t} className="surface-card gradient-soft hairline-top flex min-w-0 flex-col p-6 sm:p-8">
+              <p className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+                {c.eyebrow}
+                {c.isNew ? (
+                  <span className="rounded-full bg-primary px-2 py-0.5 text-primary-foreground">New</span>
+                ) : null}
+              </p>
+              <h2 lang="es" className="mt-3 font-display text-3xl font-bold leading-tight">
+                {c.title}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+              <p lang="es" className="mt-2 text-sm font-semibold text-secondary-foreground">
+                {c.example}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2" aria-label="Levels">
+                {levels.map((l) => (
+                  <span
+                    key={l.id}
+                    className={`rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${l.tone}`}
+                  >
+                    {l.label}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3 pt-2 md:mt-auto">
+                <SubjunctiveTenseLink
+                  tense={t}
+                  className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5"
                 >
-                  <div className="flex flex-wrap items-center gap-2">
-                    {locked ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
-                        <Lock className="size-3" aria-hidden="true" /> Locked
-                      </span>
-                    ) : easyOnly ? (
-                      <span className="rounded-full border border-border/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                        Free · Easy
-                      </span>
-                    ) : null}
-                  </div>
-                  <h3 className="font-display text-[1.6rem] font-bold leading-tight tracking-tight">
-                    {entry.title}
-                  </h3>
-                  {triggers ? (
-                    <div className="flex flex-wrap gap-2">
-                      {triggers.map((t) => (
-                        <span
-                          key={t.trigger}
-                          lang="es"
-                          className="rounded-lg border border-border/70 bg-secondary/70 px-2.5 py-1 text-sm font-semibold text-secondary-foreground"
-                        >
-                          {t.trigger}
-                        </span>
-                      ))}
-                    </div>
-                  ) : null}
-                  <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
-                    <span className="capitalize">
-                      {triggers
-                        ? triggers.map((t) => t.category).join(" · ")
-                        : "Requires full access"}
-                    </span>
-                    <span className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-primary">
-                      {locked ? "Unlock" : "Study"}
-                      <ArrowRight
-                        className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </div>
+                  Study {tenseLabel[t].toLowerCase()}
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                </SubjunctiveTenseLink>
+                <Link
+                  to="/quiz"
+                  search={{ tense: t }}
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-secondary"
+                >
+                  <Brain className="size-4 text-primary" aria-hidden="true" /> Quiz
                 </Link>
-              </motion.div>
-            );
-          })}
-        </div>
-      ) : (
-        <p className="surface-card p-12 text-center text-sm text-muted-foreground">
-          No entries match “{debounced.trim()}”.
-        </p>
-      )}
-
-      {visible.length ? (
-        <>
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Showing {visible.length} of {results.length}
-          </p>
-          {visible.length < results.length ? (
-            <div className="mt-3 flex justify-center">
-              <button
-                type="button"
-                onClick={() => setShown((n) => n + PAGE)}
-                className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-6 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-secondary"
-              >
-                Load more
-              </button>
-            </div>
-          ) : null}
-        </>
-      ) : null}
+                <Link
+                  to="/random-subjunctive"
+                  search={{ tense: t }}
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-secondary"
+                >
+                  <Shuffle className="size-4 text-primary" aria-hidden="true" /> Random
+                </Link>
+              </div>
+            </section>
+          );
+        })}
+      </div>
     </PageTransition>
   );
 }

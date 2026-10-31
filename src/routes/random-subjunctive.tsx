@@ -1,13 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles } from "lucide-react";
-import { useSubjunctive } from "@/hooks/use-subjunctive";
+import { useSubjunctiveTense } from "@/hooks/use-subjunctive";
+import { isTense, TENSES, tenseLabel } from "@/data/subjunctive-tense";
+import { cn } from "@/lib/utils";
 import { randomSubjunctivePool } from "@/lib/content-access";
 import { advance, shuffle } from "@/lib/random-sequence";
 import { PageTransition } from "@/components/app/PageTransition";
 import { SubjunctiveEntryView } from "@/components/app/SubjunctiveEntryView";
 
 export const Route = createFileRoute("/random-subjunctive")({
+  validateSearch: (s: Record<string, unknown>): { tense?: "present" | "imperfect" } =>
+    isTense(s['tense']) ? { tense: s['tense'] } : {},
   component: RandomSubjunctive,
   head: () => ({
     meta: [
@@ -33,7 +37,8 @@ export const Route = createFileRoute("/random-subjunctive")({
 });
 
 function RandomSubjunctive() {
-  const { entries, paid, status } = useSubjunctive();
+  const tense = Route.useSearch().tense ?? "present";
+  const { entries, paid, status } = useSubjunctiveTense(tense);
 
   // Pool = only entries this browser may open. Unpaid: the 20 free entries.
   const pool = useMemo(() => {
@@ -53,12 +58,12 @@ function RandomSubjunctive() {
   // Shuffle once per session, and once more only if access changes (e.g. purchase confirmed).
   useEffect(() => {
     if (status === "checking") return;
-    const key = paid ? "paid" : "free";
+    const key = `${tense}:${paid ? "paid" : "free"}`;
     if (seededFor === key || !pool.length) return;
     setSeededFor(key);
     setQueue(shuffle(pool.map((e) => e.id)));
     setIndex(0);
-  }, [status, paid, pool, seededFor]);
+  }, [status, paid, pool, seededFor, tense]);
 
   const ids = useMemo(() => pool.map((e) => e.id), [pool]);
   const byId = useMemo(() => new Map(pool.map((e) => [e.id, e])), [pool]);
@@ -86,15 +91,36 @@ function RandomSubjunctive() {
         </Link>
       </div>
 
+      <div role="radiogroup" aria-label="Subjunctive tense" className="mt-4 flex flex-wrap gap-2">
+        {TENSES.map((t) => (
+          <Link
+            key={t}
+            to="/random-subjunctive"
+            search={{ tense: t }}
+            role="radio"
+            aria-checked={tense === t}
+            className={cn(
+              "inline-flex min-h-10 items-center rounded-full border px-4 text-sm font-semibold transition-colors",
+              tense === t
+                ? "border-primary bg-primary/15 text-primary"
+                : "border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground",
+            )}
+          >
+            {tenseLabel[t]}
+          </Link>
+        ))}
+      </div>
+
       {!current ? (
         <section className="surface-card mt-4 flex items-center justify-center gap-3 p-10 text-muted-foreground">
           <Loader2 className="size-5 animate-spin" aria-hidden="true" /> Shuffling…
         </section>
       ) : (
         <SubjunctiveEntryView
-          key={`${index}-${current.id}`}
+          key={`${tense}-${index}-${current.id}`}
           entry={{ ...current, triggers: current.triggers! }}
           meta={`Entry ${(index % ids.length) + 1} of ${ids.length}${paid ? "" : " free"}`}
+          tense={tense}
         />
       )}
 
