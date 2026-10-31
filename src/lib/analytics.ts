@@ -201,7 +201,22 @@ export function setAnalyticsTransport(next: Transport | null) {
   transport = next;
 }
 
+/**
+ * The server only accepts events from a browser holding its HttpOnly trial
+ * cookie, so wait (briefly) until the trial check has run and set it.
+ */
+let releaseSession: (() => void) | null = null;
+const sessionReady = new Promise<void>((resolve) => {
+  releaseSession = resolve;
+});
+export function markServerSessionReady() {
+  releaseSession?.();
+}
+
 async function send(payload: EventPayload) {
+  if (!transport) {
+    await Promise.race([sessionReady, new Promise((r) => setTimeout(r, 8000))]);
+  }
   if (transport) {
     await transport(payload);
     return;

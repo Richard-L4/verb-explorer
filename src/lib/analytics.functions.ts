@@ -2,6 +2,17 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { ANALYTICS_EVENTS } from "./analytics";
 
+/** Events that only the server records (checkout / payment); browsers may never submit them. */
+const SERVER_ONLY_EVENTS = new Set(["checkout_started", "purchase_completed"]);
+
+/** Browser-submitted dates must be the server's today or yesterday (UTC). */
+export function plausibleEventDate(date: string | undefined, now = new Date()): boolean {
+  if (!date) return true;
+  const today = now.toISOString().slice(0, 10);
+  const yesterday = new Date(now.getTime() - 86_400_000).toISOString().slice(0, 10);
+  return date === today || date === yesterday;
+}
+
 const eventSchema = z.object({
   deviceId: z.string().min(8).max(128),
   event: z.enum(ANALYTICS_EVENTS),
@@ -18,8 +29,13 @@ const eventSchema = z.object({
 export const logTrialEvent = createServerFn({ method: "POST" })
   .inputValidator((input) => eventSchema.parse(input))
   .handler(async ({ data }) => {
+    if (SERVER_ONLY_EVENTS.has(data.event)) return { recorded: false };
+    if (!plausibleEventDate(data.occurredOn)) return { recorded: false };
+    const { getCookie, getRequest } = await import("@tanstack/react-start/server");
+    // Credential: the HttpOnly trial cookie the server issued to this browser.
+    const { TRIAL_COOKIE, hasTrialGrant } = await import("./trial.server");
+    if (!(await hasTrialGrant(getCookie(TRIAL_COOKIE)))) return { recorded: false };
     const { recordTrialEvent } = await import("./analytics.server");
-    const { getRequest } = await import("@tanstack/react-start/server");
     let host: string | null = null;
     try {
       host = new URL(getRequest().url).hostname;
