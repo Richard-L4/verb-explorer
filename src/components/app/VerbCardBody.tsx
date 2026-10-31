@@ -45,7 +45,7 @@ export function VerbCardBody({ card, meta }: { card: VerbCard; meta?: string }) 
       {card.sides?.length ? (
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           {card.sides.map((side, i) => (
-            {/* Framer Motion declares starting and target values; transition controls the timing. */}
+            // Framer Motion declares starting and target values; transition controls the timing.
             <motion.section
               key={side.word}
               initial={{ opacity: 0, y: 14 }}

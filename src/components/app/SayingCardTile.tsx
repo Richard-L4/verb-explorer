@@ -28,7 +28,7 @@ export function SayingCardTile({
   const preview = saying.examples?.slice(0, 2) ?? [];
 
   return (
-    {/* Framer Motion declares starting and target values; transition controls the timing. */}
+    // Framer Motion declares starting and target values; transition controls the timing.
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
