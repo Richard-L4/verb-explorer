@@ -1,28 +1,79 @@
--- One-time claiming of Stripe payment references. Run manually in the
--- Supabase SQL Editor BEFORE publishing the matching app version.
---
--- Adds two columns to public.purchases and one function. Does not delete or
--- alter any existing purchase data other than marking existing rows claimed.
---
--- Existing purchases are marked claimed with no owner, so their old success
--- links stop granting new passes. Their buyers keep every valid pass they
--- already hold, and can always restore on any device by email
--- (Restore checks purchases by verified email, not by claim state).
+-- One-time claiming of Stripe payment references.
+-- Run once in the Supabase SQL Editor BEFORE publishing the matching app version.
+-- All-or-nothing: any error rolls back every statement.
 
+begin;
+
+-- Fail fast instead of queueing behind live traffic; rerun if it times out.
+set local lock_timeout = '5s';
+
+-- Hold the table exclusively until COMMIT: no inserts or updates can slip in
+-- between the duplicate check and the end of the migration.
+lock table public.purchases in access exclusive mode;
+
+-- 1. Safety check (runs under the lock): stop if any payment reference repeats.
+do $$
+begin
+  if exists (
+    select 1 from public.purchases
+    where stripe_checkout_session_id is not null
+    group by stripe_checkout_session_id
+    having count(*) > 1
+  ) then
+    raise exception 'Duplicate stripe_checkout_session_id values found; migration aborted, nothing changed.';
+  end if;
+end $$;
+
+-- 2. Guarantee one row per payment reference (multiple NULLs allowed).
+do $$
+begin
+  -- Accept existing protection only if it is a valid, ready, plain,
+  -- single-column unique index on stripe_checkout_session_id.
+  if exists (
+    select 1
+    from pg_index i
+    join pg_attribute a on a.attrelid = i.indrelid and a.attnum = i.indkey[0]
+    where i.indrelid = 'public.purchases'::regclass
+      and i.indisunique
+      and i.indisvalid
+      and i.indisready
+      and i.indnatts = 1
+      and i.indpred is null
+      and i.indexprs is null
+      and a.attname = 'stripe_checkout_session_id'
+  ) then
+    return;
+  end if;
+
+  -- The name is taken by something that is not the required index:
+  -- stop safely; never drop or replace without approval.
+  if exists (
+    select 1
+    from pg_class c
+    join pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'public'
+      and c.relname = 'purchases_stripe_checkout_session_id_uniq'
+  ) then
+    raise exception 'public.purchases_stripe_checkout_session_id_uniq exists but is not a valid single-column unique index on purchases.stripe_checkout_session_id; migration aborted, nothing changed.';
+  end if;
+
+  create unique index purchases_stripe_checkout_session_id_uniq
+    on public.purchases (stripe_checkout_session_id);
+end $$;
+
+-- 3. Claim columns.
 alter table public.purchases
   add column if not exists claimed_at timestamptz,
   add column if not exists claim_owner_hash text;
 
+-- 4. Existing rows are all paid purchases: mark them claimed with no owner.
+--    Old success links stop issuing new passes; current passes and
+--    Restore by email keep working.
 update public.purchases
    set claimed_at = coalesce(claimed_at, now())
  where claimed_at is null;
 
--- Atomic claim. A single UPDATE takes the row lock, so two simultaneous
--- requests cannot both succeed: the second re-evaluates the WHERE clause
--- against the first one's committed values and matches nothing.
---   * unclaimed row            -> claimed by this owner, returns true
---   * same owner, within window -> returns true (retry), claimed_at unchanged
---   * anything else            -> returns false
+-- 5. Atomic one-time claim with a same-browser retry window.
 create or replace function public.claim_purchase(
   p_session_id text,
   p_owner_hash text,
@@ -30,7 +81,7 @@ create or replace function public.claim_purchase(
 ) returns boolean
 language sql
 security definer
-set search_path = public
+set search_path = ''
 as $$
   with claimed as (
     update public.purchases
@@ -48,5 +99,8 @@ as $$
   select exists (select 1 from claimed);
 $$;
 
+-- 6. Server role only.
 revoke all on function public.claim_purchase(text, text, integer) from public, anon, authenticated;
 grant execute on function public.claim_purchase(text, text, integer) to service_role;
+
+commit;
