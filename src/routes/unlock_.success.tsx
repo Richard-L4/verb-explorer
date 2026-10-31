@@ -1,3 +1,10 @@
+/*
+ * Stripe return page at /unlock/success: the trailing underscore in unlock_
+ * keeps this route outside the /unlock parent layout while preserving its URL.
+ * Browser UI calls confirmCheckout on the server, which verifies the Stripe session
+ * and claims the database purchase before returning a signed content pass.
+ * Checkout-marker binding prevents a copied success link from unlocking other devices.
+ */
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -8,10 +15,13 @@ import { confirmCheckout } from "@/lib/checkout.functions";
 import { useAccess } from "@/hooks/use-access";
 import { saveContentPass } from "@/hooks/use-subjunctive";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/unlock_/success")({
+  // Query strings are untrusted input; keep only recognised values before the UI uses them.
   validateSearch: (search: Record<string, unknown>) => ({
     session_id: typeof search["session_id"] === "string" ? search["session_id"] : "",
   }),
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Payment confirmed — Verb Wise" },
@@ -54,9 +64,11 @@ function forgetSessionId() {
 
 function SuccessRoute() {
   const { session_id: urlSessionId } = Route.useSearch();
+  // useServerFn creates a browser-callable wrapper; payment secrets and checks stay server-side.
   const confirm = useServerFn(confirmCheckout);
   const { unlock } = useAccess();
   const navigate = useNavigate();
+  // State controls the visible message; a ref remembers a value without triggering a render.
   const [status, setStatus] = useState<Status>("checking");
   const started = useRef(false);
 
@@ -82,6 +94,7 @@ function SuccessRoute() {
           const result = await confirm({ data: { sessionId } });
           if (cancelled) return;
           if (result.paid) {
+            // Update the local display only after server confirmation; protected requests use the pass.
             unlock();
             void saveContentPass(result.pass);
             forgetSessionId();
@@ -100,6 +113,7 @@ function SuccessRoute() {
       if (!cancelled) setStatus("pending");
     })();
 
+    // Cleanup prevents an in-flight response updating a page the user has left.
     return () => {
       cancelled = true;
     };

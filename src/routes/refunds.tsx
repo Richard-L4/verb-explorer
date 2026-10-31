@@ -1,9 +1,16 @@
+/*
+ * Refund policy at /refunds, presented through the shared page components.
+ * Uses LegalSection to organise the policy text; checkout confirmation
+ * lives in unlock_.success.tsx, not in this informational document.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { LegalSection } from "@/components/app/LegalSection";
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/refunds")({
   component: Refunds,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Refund Policy | Verb Wise" },

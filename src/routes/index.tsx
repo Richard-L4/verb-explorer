@@ -1,3 +1,8 @@
+/*
+ * Home page at /: index.tsx names the default page for its directory.
+ * Combines public deck summaries with useLearner browser progress and links to study
+ * routes; CardGrid and StatCard receive props (values passed from parent to child).
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Quote, Search, Wand2, Shuffle, Sparkles, GraduationCap, BookOpen } from "lucide-react";
@@ -11,8 +16,10 @@ import { StatCard } from "@/components/app/StatCard";
 import { ProgressBar } from "@/components/app/ProgressBar";
 import { HomeScreenHint } from "@/components/app/HomeScreenHint";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/")({
   component: Home,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Verbs — Learn Spanish verb contrasts with cards" },
@@ -39,6 +46,8 @@ const quickLinks = [
 ] as const;
 
 function Home() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { studiedCount, learnedCount, progressPercent, recentCards, state } = useLearner();
 
   return (

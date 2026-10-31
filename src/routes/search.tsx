@@ -1,3 +1,8 @@
+/*
+ * Verb search at /search, filtering the browser-safe cards.ts dataset locally.
+ * A short delay avoids searching on every keystroke; CardGrid and EmptyState
+ * present results inside the shared root layout, without a server request per search.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search as SearchIcon, SearchX } from "lucide-react";
@@ -7,8 +12,10 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { CardGrid } from "@/components/app/CardGrid";
 import { EmptyState } from "@/components/app/EmptyState";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/search")({
   component: SearchPage,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Search Spanish verbs | Verbs" },
@@ -22,6 +29,7 @@ export const Route = createFileRoute("/search")({
 function SearchPage() {
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
+  // An effect schedules the delayed search; cleanup cancels the old timer on typing or leaving.
   useEffect(() => {
     const t = setTimeout(() => setDebounced(query), 150);
     return () => clearTimeout(t);

@@ -1,3 +1,9 @@
+/*
+ * Purchase entry page at /unlock, combining useAccess status with Paywall.
+ * Paywall starts checkout; RestorePurchase uses a one-time emailed code for restore.
+ * The local unlocked display is not authority to release protected subjunctive data;
+ * that requires a server-signed pass and a database purchase re-check.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Paywall } from "@/components/app/Paywall";
@@ -6,7 +12,9 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { useAccess } from "@/hooks/use-access";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/unlock")({
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Unlock Verb Wise — £4.99" },

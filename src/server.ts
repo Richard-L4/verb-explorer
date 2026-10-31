@@ -1,3 +1,8 @@
+/*
+ * Cloudflare server entry point: receives HTTP requests and passes them to TanStack Start.
+ * start.ts configures middleware; error-capture.ts and error-page.ts help turn
+ * catastrophic server-side rendering (SSR) failures into a readable HTML response.
+ */
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
@@ -7,6 +12,8 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
+// Cache the import promise so concurrent requests share the same module load.
+// Promise<ServerEntry> describes the eventual value; undefined means not loaded yet.
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {

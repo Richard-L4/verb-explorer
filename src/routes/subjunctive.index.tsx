@@ -1,3 +1,8 @@
+/*
+ * Subjunctive hub at /subjunctive: index names the directory landing page.
+ * Uses public totals and tense definitions to link to present/imperfect lists, quiz
+ * and random practice; the shared detail components handle protected content.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Brain, Shuffle } from "lucide-react";
 import { SUBJUNCTIVE_TOTAL } from "@/data/subjunctive-public";
@@ -6,8 +11,10 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { SubjunctiveTenseLink } from "@/components/app/SubjunctiveEntryLink";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/subjunctive/")({
   component: SubjunctiveHub,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Spanish subjunctive: present and imperfect | Verb Wise" },

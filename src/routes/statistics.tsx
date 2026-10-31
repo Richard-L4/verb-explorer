@@ -1,3 +1,8 @@
+/*
+ * Learning summary at /statistics, derived from useLearner browser progress.
+ * StatCard and ProgressBar display those totals; this is separate from production
+ * funnel analytics stored on the server.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, GraduationCap, Heart, Brain } from "lucide-react";
 import { useLearner } from "@/hooks/use-learner";
@@ -6,8 +11,10 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { StatCard } from "@/components/app/StatCard";
 import { ProgressBar } from "@/components/app/ProgressBar";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/statistics")({
   component: Statistics,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Your learning statistics | Verbs" },
@@ -19,6 +26,8 @@ export const Route = createFileRoute("/statistics")({
 });
 
 function Statistics() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { studiedCount, learnedCount, state, totalCards, progressPercent, studiedPercent } = useLearner();
 
   return (

@@ -1,3 +1,8 @@
+/*
+ * Random verb practice at /random, using cards.ts and browser learning history.
+ * useLearner records views; VerbCardBody displays the chosen card. The shared
+ * content-access.ts policy keeps standard verbs free rather than applying trial rules here.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
@@ -8,8 +13,10 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
 import { armPostStudyPanel, markRandomStudied } from "@/lib/random-session";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/random")({
   component: RandomCards,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Random Verbs — Spanish verb cards at random | Verb Wise" },
@@ -28,6 +35,8 @@ export const Route = createFileRoute("/random")({
 });
 
 function RandomCards() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { markViewed } = useLearner();
   // Every verb card is free, so the pool is always the full deck.
   const available = cards;

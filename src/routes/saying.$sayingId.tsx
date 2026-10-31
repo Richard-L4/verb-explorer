@@ -1,3 +1,8 @@
+/*
+ * Saying detail at /saying/<sayingId>: the loader looks up data in sayings.ts.
+ * useAccess supplies the existing sayings trial/free-card gate, displayed as Paywall;
+ * useLearner records progress only for open sayings. This is not the signed-pass subjunctive flow.
+ */
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
@@ -10,12 +15,16 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { FavouriteButton } from "@/components/app/FavouriteButton";
 import { LearnedButton } from "@/components/app/LearnedButton";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/saying/$sayingId")({
+  // A loader prepares route data before rendering; useLoaderData reads its result below.
+  // Loaders can also run during browser navigation: they are not a server-only boundary.
   loader: ({ params }) => {
     const saying = getSaying(params.sayingId);
     if (!saying) throw notFound();
     return { saying };
   },
+  // head supplies document titles and metadata, not visible page content.
   head: ({ loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "Saying not found | Verbs" }, { name: "robots", content: "noindex" }] };
@@ -38,12 +47,15 @@ export const Route = createFileRoute("/saying/$sayingId")({
 
 function SayingDetail() {
   const { saying } = Route.useLoaderData();
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { isFavourite, isLearned, toggleFavourite, toggleLearned, markViewed } = useLearner();
   const { isLocked } = useAccess();
   const locked = isLocked(saying.id);
   const { prev, next } = getSayingNeighbours(saying.id);
   const position = getSayingIndex(saying.id) + 1;
 
+  // Effects run after rendering; do not count a paywall view as studying the content.
   useEffect(() => {
     if (locked) return;
     markViewed(saying.id);
