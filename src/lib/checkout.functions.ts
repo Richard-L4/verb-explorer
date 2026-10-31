@@ -114,6 +114,19 @@ export const confirmCheckout = createServerFn({
 
     const status = await confirmAndClaim(
       {
+        allowLookup: async (ownerHash) => {
+          const { readEnv } = await import("./env.server");
+          const secret = readEnv("CONTENT_PASS_SECRET");
+          if (!secret) return true;
+          try {
+            const { checkoutLookupAllowed, supabaseCodeStore } = await import("./restore.server");
+            const { requestAddress } = await import("./content-checks.server");
+            return await checkoutLookupAllowed(await supabaseCodeStore(), secret, ownerHash, await requestAddress());
+          } catch {
+            // Limit storage unavailable: still marker-gated; never block a real buyer.
+            return true;
+          }
+        },
         verifiedSession: (id) => payments.fetchVerifiedVerbWiseSession(id),
         purchaseExists: (id) => payments.purchaseExists(id),
         recordPurchase: (session) =>

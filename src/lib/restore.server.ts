@@ -117,6 +117,36 @@ export async function creatorAttemptAllowed(store: CodeStore, secret: string, ad
   return true;
 }
 
+export const CHECKOUT_LOOKUPS_PER_BROWSER_HOUR = 30;
+export const CHECKOUT_LOOKUPS_PER_NETWORK_HOUR = 120;
+
+/**
+ * Checkout confirmation lookups: true when this browser (claim marker hash)
+ * and network may ask Stripe again (records the attempt). The per-browser
+ * budget covers several success-page reloads; the network budget is generous
+ * so households sharing one address are not blocked. Rows reuse the existing
+ * "creator" purpose with prefixed keys, so they never collide with creator or
+ * Restore counts and can never be verified as codes.
+ */
+export async function checkoutLookupAllowed(
+  store: CodeStore,
+  secret: string,
+  ownerHash: string,
+  address: string | null,
+  now = Date.now(),
+) {
+  const since = new Date(now - HOUR).toISOString();
+  const browserKey = `checkout-b:${await hmacHex(secret, `checkout-browser:${ownerHash}`)}`;
+  const networkKey = `checkout-n:${(await hashNetworkValue(secret, address)) ?? "no-network"}`;
+  if ((await store.countSince({ purpose: "creator", network_hash: browserKey }, since)) >= CHECKOUT_LOOKUPS_PER_BROWSER_HOUR) return false;
+  if ((await store.countSince({ purpose: "creator", network_hash: networkKey }, since)) >= CHECKOUT_LOOKUPS_PER_NETWORK_HOUR) return false;
+  const expires_at = new Date(now + HOUR).toISOString();
+  for (const network_hash of [browserKey, networkKey]) {
+    await store.insert({ purpose: "creator", email_hash: null, code_hash: null, network_hash, expires_at });
+  }
+  return true;
+}
+
 /** Supabase-backed store (service role, server only). */
 export async function supabaseCodeStore(): Promise<CodeStore> {
   const { getSupabaseAdmin } = await import("./payments.server");

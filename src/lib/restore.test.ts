@@ -133,3 +133,26 @@ describe("creator attempt rate limit", () => {
     expect(results.filter(Boolean)).toHaveLength(10);
   });
 });
+
+describe("checkout lookup limit", () => {
+  it("allows the normal success-page retries and several reloads from one browser", async () => {
+    const { checkoutLookupAllowed } = await import("./restore.server");
+    const store = memoryStore();
+    for (let i = 0; i < 30; i++) expect(await checkoutLookupAllowed(store, SECRET, "a".repeat(64), "1.2.3.4")).toBe(true);
+    expect(await checkoutLookupAllowed(store, SECRET, "a".repeat(64), "1.2.3.4")).toBe(false);
+  });
+
+  it("does not block other browsers on the same network", async () => {
+    const { checkoutLookupAllowed } = await import("./restore.server");
+    const store = memoryStore();
+    for (let i = 0; i < 30; i++) await checkoutLookupAllowed(store, SECRET, "a".repeat(64), "1.2.3.4");
+    expect(await checkoutLookupAllowed(store, SECRET, "b".repeat(64), "1.2.3.4")).toBe(true);
+  });
+
+  it("does not consume creator attempts", async () => {
+    const { checkoutLookupAllowed } = await import("./restore.server");
+    const store = memoryStore();
+    for (let i = 0; i < 30; i++) await checkoutLookupAllowed(store, SECRET, "a".repeat(64), "1.2.3.4");
+    expect(await creatorAttemptAllowed(store, SECRET, "1.2.3.4")).toBe(true);
+  });
+});
