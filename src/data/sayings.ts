@@ -1,3 +1,7 @@
+/**
+ * Shared saying-card types and lookups for browser and server callers.
+ * Depends on sayings.json, keeping content edits separate from application logic.
+ */
 import rawSayings from "./sayings.json";
 
 export interface SayingExample {

@@ -1,3 +1,4 @@
+/** Verb preview rendered by CardGrid. Props carry content, progress and lock indicators; favourites call back to the parent, while the router opens the detail page and Framer Motion animates the preview. */
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";

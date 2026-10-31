@@ -1,3 +1,4 @@
+/** Shared heading layout for app pages. Props supply page-specific text and optional content, while this component keeps their presentation consistent. */
 import type { ReactNode } from "react";
 
 export function PageHeader({

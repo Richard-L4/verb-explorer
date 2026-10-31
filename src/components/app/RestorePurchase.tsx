@@ -1,3 +1,4 @@
+/** Email-code restore form used for purchase recovery and confirmation. React state controls the fields and form step; TanStack server functions verify ownership before returning a signed content pass. */
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, RotateCcw } from "lucide-react";

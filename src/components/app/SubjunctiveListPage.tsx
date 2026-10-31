@@ -1,3 +1,4 @@
+/** Shared list screen for both subjunctive tenses. Uses the subjunctive hook and shared access policy with reusable page and link components; restricted examples are supplied only through authorised server loading. */
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";

@@ -1,3 +1,4 @@
+/** Displays an authorised subjunctive entry on detail and study screens. Props provide content and header controls; local state selects a trigger, and missing examples remain placeholders rather than hidden protected data. */
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { ArrowRight, GitCompare, Lock, Quote } from "lucide-react";

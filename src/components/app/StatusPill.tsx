@@ -1,3 +1,4 @@
+/** Small progress badge used by card tiles. The tone prop selects a label and appearance; this component displays status rather than changing learner records. */
 import { cn } from "@/lib/utils";
 
 type Tone = "learned" | "studied" | "new";

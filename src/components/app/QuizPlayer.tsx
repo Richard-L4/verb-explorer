@@ -1,3 +1,4 @@
+/** Interactive quiz shared by quiz screens. useQuiz supplies server-authorised questions; React state tracks choices and the round, while quiz-session helpers handle answers, scoring and progression. */
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Check, RotateCcw, X } from "lucide-react";
 import { motion } from "framer-motion";

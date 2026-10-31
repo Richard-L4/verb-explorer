@@ -1,3 +1,4 @@
+/** AppShell trial reminder using useAccess and an analytics effect. Purchase and creator-preview state control visibility; this message does not authorise content or replace the shared access policy. */
 import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAccess } from "@/hooks/use-access";

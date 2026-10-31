@@ -1,3 +1,4 @@
+/** Shared favourite control for cards and detail views. The parent supplies its active value and callback; Framer Motion adds press and selection feedback without owning the saved favourite state. */
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";

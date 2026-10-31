@@ -1,3 +1,4 @@
+/** Settings control for daily push reminders. React hooks track support, subscription status and pending work; push-client helpers communicate with browser APIs and ownership-protected server operations. */
 import { useEffect, useState } from "react";
 import { Bell, BellOff } from "lucide-react";
 import { disableReminders, enableReminders, permissionState, pushSupported, syncReminderState } from "@/lib/push-client";

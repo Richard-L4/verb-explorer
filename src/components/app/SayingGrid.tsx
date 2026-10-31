@@ -1,3 +1,4 @@
+/** Displays saying tiles on collection screens. Props supply sayings; learner and access hooks provide each tile's progress, favourite callback and lock indicator. */
 import type { SayingCard } from "@/data/sayings";
 import { SayingCardTile } from "./SayingCardTile";
 import { useLearner } from "@/hooks/use-learner";

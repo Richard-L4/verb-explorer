@@ -1,3 +1,8 @@
+/**
+ * Connects React screens to the browser's saved learning progress.
+ * Depends on the progress store and public verb deck; initial server rendering
+ * uses an empty snapshot until browser storage can be read.
+ */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import * as store from "@/lib/progress";
 import { cards, cardCount } from "@/data/cards";

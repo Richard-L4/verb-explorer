@@ -1,3 +1,8 @@
+/**
+ * Shares server-confirmed subjunctive content between browser components.
+ * Depends on generated public data, the pass store and server calls.
+ * A signed pass is a token the server checks; a local purchase flag is not proof.
+ */
 import { useEffect, useSyncExternalStore } from "react";
 import { publicSubjunctive, publicImperfectSubjunctive } from "@/data/subjunctive-public";
 import type { Tense } from "@/data/subjunctive-tense";

@@ -1,3 +1,8 @@
+/**
+ * Shared trial-request validation, depending on Zod, a runtime shape checker.
+ * Reject unknown device keys before schema parsing so oversized malformed records
+ * cannot produce an unbounded list of validation issues. Keep all eight fields.
+ */
 import { z } from "zod";
 
 // All eight fields are always emitted by collectDeviceSignal(). Empty strings

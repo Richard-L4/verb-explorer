@@ -1,3 +1,4 @@
+/** Shared verb detail content for card pages and Random Cards. Props supply the card; useLearner connects favourite and learned controls to saved progress, and Framer Motion animates the verb sections. */
 import { motion } from "framer-motion";
 import { AlertTriangle, Quote } from "lucide-react";
 import type { VerbCard } from "@/data/cards";

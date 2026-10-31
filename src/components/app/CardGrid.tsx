@@ -1,3 +1,4 @@
+/** Displays verb tiles on collection pages. Props supply the cards; useLearner supplies progress and favourites, while the shared content-access policy supplies lock indicators. */
 import type { VerbCard } from "@/data/cards";
 import { VerbCardTile } from "./VerbCardTile";
 import { useLearner } from "@/hooks/use-learner";

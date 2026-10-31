@@ -1,3 +1,4 @@
+/** Landing-page promotion included by AppShell. Router and React hooks delay the popup for new visitors; local storage remembers entry into the app, and Framer Motion animates opening and closing. */
 import { useEffect, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";

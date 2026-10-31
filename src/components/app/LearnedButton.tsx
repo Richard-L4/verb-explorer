@@ -1,3 +1,4 @@
+/** Reusable learned-status control for study views. Props provide the current status and a callback so the parent keeps responsibility for updating learner progress. */
 import { motion } from "framer-motion";
 import { Check, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";

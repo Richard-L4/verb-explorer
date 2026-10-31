@@ -1,3 +1,4 @@
+/** Preview tile rendered by SayingGrid. Props provide the saying, progress and lock display; a callback delegates favourites to the parent, while Framer Motion animates the tile. */
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";

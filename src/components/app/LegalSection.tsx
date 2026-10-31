@@ -1,3 +1,4 @@
+/** Shared section layout for legal pages. Props supply the heading and nested content, keeping document styling consistent without storing any state here. */
 import type { ReactNode } from "react";
 
 export function LegalSection({ title, children }: { title: string; children: ReactNode }) {

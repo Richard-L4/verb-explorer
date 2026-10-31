@@ -1,3 +1,4 @@
+/** AppShell prompt that offers installation before daily reminders. Router, session and browser helpers determine eligibility; React state selects the current step and Framer Motion animates visibility changes. */
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";

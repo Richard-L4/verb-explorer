@@ -1,3 +1,4 @@
+/** Random-practice navigation used by AppShell. Props select mobile links or a desktop dropdown; the router supplies the current path, and existing UI primitives handle dropdown behaviour. */
 import { Link, useLocation } from "@tanstack/react-router";
 import { ChevronDown, Shuffle, Sparkles } from "lucide-react";
 import {

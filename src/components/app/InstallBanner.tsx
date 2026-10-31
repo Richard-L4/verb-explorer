@@ -1,3 +1,4 @@
+/** AppShell installation reminder for eligible routes. Router and React hooks choose browser-specific instructions; install-prompt helpers manage the browser prompt and one-time reminder flag. */
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";

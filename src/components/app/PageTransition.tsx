@@ -1,3 +1,4 @@
+/** Animation wrapper used around page content. The children prop carries nested React content; Framer Motion describes how that content enters rather than moving it manually. */
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 

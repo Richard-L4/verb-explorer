@@ -1,3 +1,4 @@
+/** Shows a small installation hint wherever a parent includes it. React hooks check the browser after rendering, avoiding browser-only APIs during server rendering. */
 import { useEffect, useState } from "react";
 import { isIos, isStandalone } from "@/lib/install-prompt";
 

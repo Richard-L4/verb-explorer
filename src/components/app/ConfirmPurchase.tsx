@@ -1,3 +1,4 @@
+/** Explains why an earlier purchase needs confirmation on subjunctive pages. RestorePurchase handles email verification: a local unlocked flag cannot authorise protected examples. */
 import { RestorePurchase } from "./RestorePurchase";
 
 /** Earlier buyers whose purchase couldn't be matched automatically confirm once by email. */

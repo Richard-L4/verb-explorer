@@ -1,3 +1,8 @@
+/**
+ * Custom hook (a reusable React state helper) for access-related UI.
+ * Runs in the browser, with a safe server snapshot for initial rendering.
+ * Depends on the access store and card IDs; local flags never authorise protected content.
+ */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import * as store from "@/lib/access";
 import { cards } from "@/data/cards";

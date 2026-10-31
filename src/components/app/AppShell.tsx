@@ -1,3 +1,4 @@
+/** Shared app layout: wraps page children with navigation, prompts and the footer. React hooks manage the mobile menu and visit tracking; smaller components handle their own messages. */
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";

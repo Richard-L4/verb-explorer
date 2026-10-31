@@ -1,3 +1,4 @@
+/** Purchase prompt used when a caller decides content is locked. useAccess supplies pricing; local state tracks consent and checkout progress, and a server function creates checkout without granting access itself. */
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
