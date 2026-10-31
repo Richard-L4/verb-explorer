@@ -2898,5 +2898,1455 @@
         "feedback": "Gocen is the ellos form. With te, the sentence is about tú."
       }
     ]
+  },
+  {
+    "id": "q101",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "ser-vs-estar",
+    "question": "Complete the sentence: «Si ___ aquí, sería más fácil.» (If you were here, it would be easier.)",
+    "options": [
+      {
+        "text": "estuvieras",
+        "correct": true,
+        "feedback": "Correct. Si + imperfect subjunctive describes a hypothetical situation, and the result is in the conditional (sería). Estar is irregular here: estuvieron → estuvieras."
+      },
+      {
+        "text": "estarías",
+        "correct": false,
+        "feedback": "Estarías is the conditional. It belongs in the result clause («sería»). In a hypothetical si clause the conditional is avoided; it follows si only in indirect questions, as in «No me dijo si iría o no a la fiesta»."
+      },
+      {
+        "text": "estés",
+        "correct": false,
+        "feedback": "The present subjunctive can't follow si in a hypothetical sentence. Here si takes the imperfect subjunctive."
+      },
+      {
+        "text": "estaras",
+        "correct": false,
+        "feedback": "This form doesn't exist. Estar is irregular in this tense and takes the stem of estuvieron, so the form is estuvieras."
+      }
+    ]
+  },
+  {
+    "id": "q102",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "por-vs-para",
+    "question": "You wrote to a friend because you wanted her to know you were thinking of her. Which sentence says that?",
+    "options": [
+      {
+        "text": "Te escribí para que supieras que pensaba en ti.",
+        "correct": true,
+        "feedback": "Correct. The subjects differ (I write, you find out), so para que + subjunctive. The past main verb gives the imperfect subjunctive (supieras, from supieron). Pensaba stays indicative because it states a fact."
+      },
+      {
+        "text": "Te escribí para saber que pensaba en ti.",
+        "correct": false,
+        "feedback": "Para + infinitive needs the same subject, so this would mean you wrote in order to find out that you were thinking of her, which makes no sense."
+      },
+      {
+        "text": "Te escribí para que sabías que pensaba en ti.",
+        "correct": false,
+        "feedback": "Para que always takes the subjunctive. The indicative «sabías» is wrong."
+      },
+      {
+        "text": "Te escribí para que supiste que pensaba en ti.",
+        "correct": false,
+        "feedback": "Supiste is the preterite indicative. Para que needs the subjunctive: supieras."
+      }
+    ]
+  },
+  {
+    "id": "q103",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "salir-vs-quedar",
+    "question": "Complete the sentence: «Esperaba que ___ con nosotros esa noche.» (I hoped you would go out with us that night.)",
+    "options": [
+      {
+        "text": "salgieras",
+        "correct": false,
+        "feedback": "The -g- of the present (salgas) doesn't carry over into the imperfect subjunctive: salieras."
+      },
+      {
+        "text": "salías",
+        "correct": false,
+        "feedback": "Salías is imperfect indicative. After «esperaba que» you need the subjunctive."
+      },
+      {
+        "text": "salieras",
+        "correct": true,
+        "feedback": "Correct. Hoping for something is a wish, so the subjunctive. Salir is regular in this tense: salieras."
+      },
+      {
+        "text": "saldrías",
+        "correct": false,
+        "feedback": "Saldrías is the conditional, which isn't used after «esperaba que»."
+      }
+    ]
+  },
+  {
+    "id": "q104",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "pedir-vs-preguntar",
+    "question": "You gave a friend an instruction: «Pide un café con leche». Reporting it, complete: «Le dije que ___ un café con leche.»",
+    "options": [
+      {
+        "text": "pediera",
+        "correct": false,
+        "feedback": "Pedir changes e→i in the preterite (pidieron), so the subjunctive is pidiera. 'Pediera' doesn't exist."
+      },
+      {
+        "text": "pedía",
+        "correct": false,
+        "feedback": "Pedía is indicative, so it would report a statement (that he was ordering one), not an instruction."
+      },
+      {
+        "text": "preguntara",
+        "correct": false,
+        "feedback": "Preguntar means to ask a question. To order or ask for something you use pedir."
+      },
+      {
+        "text": "pidiera",
+        "correct": true,
+        "feedback": "Correct. A reported instruction takes the subjunctive, and pedir keeps its e→i change in the imperfect subjunctive (pidieron → pidiera)."
+      }
+    ]
+  },
+  {
+    "id": "q105",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "deber-vs-tener-que",
+    "question": "Which sentence says 'I was afraid they would have to cancel the trip' (a fear, not something you knew)?",
+    "options": [
+      {
+        "text": "Sabía que tenían que cancelar el viaje.",
+        "correct": false,
+        "feedback": "Grammatical, but it means 'I knew they had to cancel the trip': a fact, not a fear."
+      },
+      {
+        "text": "Temía que tenían que cancelar el viaje.",
+        "correct": false,
+        "feedback": "With the indicative, temer expresses suspicion rather than fear. To say you were afraid they would have to cancel, use the subjunctive: tuvieran."
+      },
+      {
+        "text": "Temía que tuvieran cancelar el viaje.",
+        "correct": false,
+        "feedback": "Tener needs que before the infinitive to mean 'have to': tuvieran que cancelar."
+      },
+      {
+        "text": "Temía que tuvieran que cancelar el viaje.",
+        "correct": true,
+        "feedback": "Correct. Fear is an emotion about something that hasn't happened, so the subjunctive. Tener que keeps its infinitive: tuvieran que cancelar."
+      }
+    ]
+  },
+  {
+    "id": "q106",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "traer-vs-llevar",
+    "question": "Complete the sentence: «Necesitaba que me ___ los documentos.» (I needed you to bring me the documents.)",
+    "options": [
+      {
+        "text": "trajieras",
+        "correct": false,
+        "feedback": "After a j the i of -ieras is dropped (trajeron → trajeras), so 'trajieras' is wrong."
+      },
+      {
+        "text": "traías",
+        "correct": false,
+        "feedback": "Traías is imperfect indicative. After «necesitaba que» you need the subjunctive."
+      },
+      {
+        "text": "trajeras",
+        "correct": true,
+        "feedback": "Correct. Needing someone else to act takes the subjunctive. Traer's preterite is trajeron, so the form is trajeras."
+      },
+      {
+        "text": "traerías",
+        "correct": false,
+        "feedback": "Traerías is the conditional, which isn't used after «necesitaba que»."
+      }
+    ]
+  },
+  {
+    "id": "q107",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "mirar-vs-ver",
+    "question": "Complete the sentence: «Era probable que nosotros ___ a tus primos al día siguiente.» (We would probably see your cousins the next day.)",
+    "options": [
+      {
+        "text": "veíamos",
+        "correct": false,
+        "feedback": "Veíamos is imperfect indicative. Likelihood takes the subjunctive, not the indicative."
+      },
+      {
+        "text": "vimos",
+        "correct": false,
+        "feedback": "Vimos is the preterite indicative. After «era probable que» you need the subjunctive."
+      },
+      {
+        "text": "veríamos",
+        "correct": false,
+        "feedback": "Veríamos is the conditional, which isn't used after «era probable que»."
+      },
+      {
+        "text": "viéramos",
+        "correct": true,
+        "feedback": "Correct. Era probable que expresses likelihood, not certainty, so the subjunctive. Ver is regular here (vieron → viéramos), and the nosotros form carries a written accent."
+      }
+    ]
+  },
+  {
+    "id": "q108",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "acordarse-vs-recordar",
+    "question": "Complete the sentence: «Era increíble que te ___ de todo.» (It was incredible that you remembered everything.)",
+    "options": [
+      {
+        "text": "acuerdaras",
+        "correct": false,
+        "feedback": "The o→ue change of the present (acuerdes) doesn't carry over into the imperfect subjunctive: acordaras."
+      },
+      {
+        "text": "acordabas",
+        "correct": false,
+        "feedback": "Acordabas is imperfect indicative. After a reaction like «era increíble que» you need the subjunctive."
+      },
+      {
+        "text": "acordarías",
+        "correct": false,
+        "feedback": "Acordarías is the conditional, which isn't used after «era increíble que»."
+      },
+      {
+        "text": "acordaras",
+        "correct": true,
+        "feedback": "Correct. A reaction of amazement takes the subjunctive. The o→ue stem change of the present is gone: acordaras."
+      }
+    ]
+  },
+  {
+    "id": "q109",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "pensar-vs-creer",
+    "question": "Which sentence says 'I was afraid they would think I was lying'?",
+    "options": [
+      {
+        "text": "Me daba miedo que pensaran que mintiera.",
+        "correct": false,
+        "feedback": "Pensar que (affirmative) takes the indicative, so the second verb should be «mentía», not the subjunctive."
+      },
+      {
+        "text": "Me daba miedo que pensaron que mentía.",
+        "correct": false,
+        "feedback": "Pensaron is the preterite indicative. A fear takes the subjunctive: pensaran."
+      },
+      {
+        "text": "Me daba miedo que pensaran que mentía.",
+        "correct": true,
+        "feedback": "Correct. Fear takes the subjunctive (pensaran). The clause after pensar que reports what they would think, so «mentía» stays indicative."
+      },
+      {
+        "text": "Me daba miedo que pensarían que mentía.",
+        "correct": false,
+        "feedback": "The conditional isn't used after «me daba miedo que». You need the imperfect subjunctive: pensaran."
+      }
+    ]
+  },
+  {
+    "id": "q110",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "hablar-vs-decir",
+    "question": "Complete the sentence: «Se lo dije antes de que lo ___ otra persona.» (I told her before someone else said it.)",
+    "options": [
+      {
+        "text": "dijera",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive. Decir's preterite is dijeron, so the form is dijera."
+      },
+      {
+        "text": "dijiera",
+        "correct": false,
+        "feedback": "After a j the i is dropped (dijeron → dijera), so 'dijiera' is wrong."
+      },
+      {
+        "text": "decía",
+        "correct": false,
+        "feedback": "Decía is indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "dijo",
+        "correct": false,
+        "feedback": "Dijo is the preterite indicative. Antes de que always takes the subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q111",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "perder-vs-faltar",
+    "question": "Complete the sentence: «No quería que ___ el tren.» (I didn't want you to miss the train.)",
+    "options": [
+      {
+        "text": "pierdieras",
+        "correct": false,
+        "feedback": "The e→ie change of the present (pierdas) doesn't carry over: perdieras."
+      },
+      {
+        "text": "perdieras",
+        "correct": true,
+        "feedback": "Correct. Not wanting something to happen is a wish, so the subjunctive. The e→ie of the present is gone: perdieras."
+      },
+      {
+        "text": "perdías",
+        "correct": false,
+        "feedback": "Perdías is imperfect indicative. After «no quería que» you need the subjunctive."
+      },
+      {
+        "text": "perderías",
+        "correct": false,
+        "feedback": "Perderías is the conditional, which isn't used after «no quería que»."
+      }
+    ]
+  },
+  {
+    "id": "q112",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "volver-vs-regresar",
+    "question": "Which sentence is correct? (I was worried he wouldn't get home before dark.)",
+    "options": [
+      {
+        "text": "Me preocupaba que él no volviera a casa antes de que anochecía.",
+        "correct": false,
+        "feedback": "Antes de que always takes the subjunctive, so «anochecía» is wrong: anocheciera."
+      },
+      {
+        "text": "Me preocupaba que él no volviera a casa antes de que anocheciera.",
+        "correct": true,
+        "feedback": "Correct. Both triggers need the subjunctive: me preocupaba que (worry) and antes de que (time not yet reached). Volver has no stem change here (volvieran → volviera)."
+      },
+      {
+        "text": "Me preocupaba que él no volvía a casa antes de que anocheciera.",
+        "correct": false,
+        "feedback": "A worry takes the subjunctive, so the indicative «volvía» is wrong: volviera."
+      },
+      {
+        "text": "Me preocupaba que él no vuelviera a casa antes de que anocheciera.",
+        "correct": false,
+        "feedback": "The o→ue of the present (vuelva) doesn't carry over. The form is volviera."
+      }
+    ]
+  },
+  {
+    "id": "q113",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "ser-vs-parecer",
+    "question": "Complete the sentence: «No me parecía que ___ buena idea.» (I didn't think it was a good idea.)",
+    "options": [
+      {
+        "text": "fuera",
+        "correct": true,
+        "feedback": "Correct. Not thinking something is true is a doubt, so the subjunctive. Ser's imperfect subjunctive comes from fueron: fuera."
+      },
+      {
+        "text": "era",
+        "correct": false,
+        "feedback": "Era is imperfect indicative. After «no me parecía que» the standard form is the subjunctive."
+      },
+      {
+        "text": "fue",
+        "correct": false,
+        "feedback": "Fue is the preterite indicative. After «no me parecía que» the standard form is the subjunctive."
+      },
+      {
+        "text": "sería",
+        "correct": false,
+        "feedback": "Sería is the conditional, which isn't used after «no me parecía que»."
+      }
+    ]
+  },
+  {
+    "id": "q114",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "tener-solo",
+    "question": "You were looking for a babysitter, without knowing whether such a person existed. Complete: «Necesitaba a alguien que ___ paciencia.»",
+    "options": [
+      {
+        "text": "tenía",
+        "correct": false,
+        "feedback": "Tenía is indicative and points to a particular person you already know. Here nobody is identified yet."
+      },
+      {
+        "text": "tuvo",
+        "correct": false,
+        "feedback": "Tuvo is the preterite indicative. An unidentified person needs the subjunctive."
+      },
+      {
+        "text": "tuviera",
+        "correct": true,
+        "feedback": "Correct. When the person described is unidentified, the relative clause takes the subjunctive. Tener's preterite stem is tuv-: tuviera."
+      },
+      {
+        "text": "tendría",
+        "correct": false,
+        "feedback": "Tendría is the conditional, which isn't used here. An unidentified person takes the imperfect subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q115",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "dar-solo",
+    "question": "Complete the sentence: «Me daba igual que me ___ el puesto.» (I didn't care whether they gave me the job.)",
+    "options": [
+      {
+        "text": "dieran",
+        "correct": true,
+        "feedback": "Correct. Indifference about what someone else does takes the subjunctive. Dar's preterite is dieron, so dieran (no accent)."
+      },
+      {
+        "text": "daban",
+        "correct": false,
+        "feedback": "Daban is imperfect indicative. After «me daba igual que» you need the subjunctive."
+      },
+      {
+        "text": "dieron",
+        "correct": false,
+        "feedback": "Dieron is the preterite indicative. After «me daba igual que» you need the subjunctive."
+      },
+      {
+        "text": "daran",
+        "correct": false,
+        "feedback": "Dar takes -ier- endings in this tense (dieron → dieran), so 'daran' doesn't exist."
+      }
+    ]
+  },
+  {
+    "id": "q116",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "gustar-solo",
+    "question": "Which sentence says 'I was looking for something my children would like' (nothing specific in mind)?",
+    "options": [
+      {
+        "text": "Buscaba algo que les gustaba a mis hijos.",
+        "correct": false,
+        "feedback": "Gustaba is indicative and describes a thing already known to please them. It doesn't say 'would like'."
+      },
+      {
+        "text": "Buscaba algo que les gustaran a mis hijos.",
+        "correct": false,
+        "feedback": "Gustar agrees with the thing liked (algo, singular), not with the children: gustara."
+      },
+      {
+        "text": "Buscaba algo que les gustó a mis hijos.",
+        "correct": false,
+        "feedback": "Gustó is the preterite indicative and refers to a completed event. An unidentified thing needs the subjunctive."
+      },
+      {
+        "text": "Buscaba algo que les gustara a mis hijos.",
+        "correct": true,
+        "feedback": "Correct. For something not yet identified, the relative clause takes the subjunctive. Gustar agrees with the thing liked (algo, singular): gustara."
+      }
+    ]
+  },
+  {
+    "id": "q117",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "coger-solo",
+    "question": "Complete the sentence: «Era posible que nosotros ___ el último tren.» (It was possible that we would catch the last train.)",
+    "options": [
+      {
+        "text": "cogiéramos",
+        "correct": true,
+        "feedback": "Correct. A possibility takes the subjunctive. Coger keeps its g in this tense, and the nosotros form carries an accent: cogiéramos. (Coger el tren is neutral in Spain; in several Latin American countries, such as Mexico and Argentina, coger has a vulgar meaning and tomar el tren is used instead.)"
+      },
+      {
+        "text": "cogíamos",
+        "correct": false,
+        "feedback": "Cogíamos is imperfect indicative. A possibility takes the subjunctive."
+      },
+      {
+        "text": "cojiéramos",
+        "correct": false,
+        "feedback": "The g→j change of the present (cojo, coja, cojamos) happens only before a/o. Before -ie- the g already sounds like j, so it stays: cogiéramos."
+      },
+      {
+        "text": "cogeríamos",
+        "correct": false,
+        "feedback": "Cogeríamos is the conditional, which isn't used after «era posible que»."
+      }
+    ]
+  },
+  {
+    "id": "q118",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "subir-vs-bajar",
+    "question": "Complete the sentence: «No hacía falta que tú ___ la maleta al tercer piso.» (You didn't need to carry the suitcase up to the third floor.)",
+    "options": [
+      {
+        "text": "subías",
+        "correct": false,
+        "feedback": "Subías is imperfect indicative. After «no hacía falta que» you need the subjunctive."
+      },
+      {
+        "text": "subieras",
+        "correct": true,
+        "feedback": "Correct. Saying something was unnecessary is an evaluation, so the subjunctive. Subir takes -ier- endings: subieras."
+      },
+      {
+        "text": "subirías",
+        "correct": false,
+        "feedback": "Subirías is the conditional, which isn't used after «no hacía falta que»."
+      },
+      {
+        "text": "subiaras",
+        "correct": false,
+        "feedback": "Subir is an -ir verb, so it takes -ier- endings (subieron → subieras), never -ar endings."
+      }
+    ]
+  },
+  {
+    "id": "q119",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "echar-solo",
+    "question": "Complete the sentence: «Te di el informe para que le ___ un vistazo.» (I gave you the report so you could have a look at it.)",
+    "options": [
+      {
+        "text": "echabas",
+        "correct": false,
+        "feedback": "Echabas is imperfect indicative. Para que always takes the subjunctive."
+      },
+      {
+        "text": "echaras",
+        "correct": true,
+        "feedback": "Correct. Different subjects (yo / tú), so para que + subjunctive. Echar un vistazo = to have a look."
+      },
+      {
+        "text": "echarías",
+        "correct": false,
+        "feedback": "Echarías is the conditional, which isn't used after «para que»."
+      },
+      {
+        "text": "echaste",
+        "correct": false,
+        "feedback": "Echaste is the preterite indicative. Para que always takes the subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q120",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "sentarse-solo",
+    "question": "Complete the sentence: «Quería que se ___ en silencio.» (I wanted them to sit down in silence.)",
+    "options": [
+      {
+        "text": "sientasen",
+        "correct": false,
+        "feedback": "The e→ie change of the present (se sienten) doesn't carry over: sentasen."
+      },
+      {
+        "text": "sentaban",
+        "correct": false,
+        "feedback": "Sentaban is imperfect indicative. After «quería que» you need the subjunctive."
+      },
+      {
+        "text": "sentarían",
+        "correct": false,
+        "feedback": "Sentarían is the conditional, which isn't used after «quería que»."
+      },
+      {
+        "text": "sentasen",
+        "correct": true,
+        "feedback": "Correct. Wanting others to act takes the subjunctive. This is the -se form, equivalent to sentaran, and the e→ie of the present is gone."
+      }
+    ]
+  },
+  {
+    "id": "q121",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "esperar-solo",
+    "question": "A friend told you that life will change completely once you are expecting a baby, which hasn't happened yet. Complete: «Me dijo que cuando ___ un hijo, todo cambiaría.»",
+    "options": [
+      {
+        "text": "esperaba",
+        "correct": false,
+        "feedback": "Esperaba would describe a time that already happened. The expecting is still in the future, so the subjunctive is needed."
+      },
+      {
+        "text": "esperé",
+        "correct": false,
+        "feedback": "Esperé is the preterite and refers to a completed event, but the baby was still ahead."
+      },
+      {
+        "text": "esperaría",
+        "correct": false,
+        "feedback": "The conditional isn't used after cuando. It stays in the main clause («cambiaría»)."
+      },
+      {
+        "text": "esperara",
+        "correct": true,
+        "feedback": "Correct. Cuando about a moment still to come, seen from the past, takes the imperfect subjunctive. Esperar un hijo = to be expecting a baby."
+      }
+    ]
+  },
+  {
+    "id": "q122",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "crear-vs-creer",
+    "question": "Which sentence says 'It was essential that they believed in themselves'?",
+    "options": [
+      {
+        "text": "Era fundamental que creyeran en sí mismos.",
+        "correct": true,
+        "feedback": "Correct. Calling something essential is an evaluation, so the subjunctive. Creer takes a y (creyeron → creyeran)."
+      },
+      {
+        "text": "Era fundamental que crearan en sí mismos.",
+        "correct": false,
+        "feedback": "Crear means to create, so this says 'they created in themselves'. To believe in something you use creer en."
+      },
+      {
+        "text": "Era fundamental que creieran en sí mismos.",
+        "correct": false,
+        "feedback": "Spelling error: between vowels the i becomes y, so the form is creyeran."
+      },
+      {
+        "text": "Era fundamental que creían en sí mismos.",
+        "correct": false,
+        "feedback": "An evaluation like «era fundamental que» takes the subjunctive. The indicative «creían» is wrong."
+      }
+    ]
+  },
+  {
+    "id": "q123",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "volverse-vs-hacerse",
+    "question": "Complete the sentence: «Aunque me ___ rico, seguiría aquí.» (Even if I got rich, I'd stay here.)",
+    "options": [
+      {
+        "text": "hiciera",
+        "correct": true,
+        "feedback": "Correct. Aunque + imperfect subjunctive means 'even if', for a hypothetical situation, and the result is in the conditional (seguiría). Hacerse's stem is hic-."
+      },
+      {
+        "text": "hizo",
+        "correct": false,
+        "feedback": "Hizo is the preterite indicative: it would present getting rich as a real, completed fact. It also clashes with the conditional «seguiría»."
+      },
+      {
+        "text": "hacía",
+        "correct": false,
+        "feedback": "Hacía is imperfect indicative. A hypothetical 'even if' needs the subjunctive."
+      },
+      {
+        "text": "haría",
+        "correct": false,
+        "feedback": "The conditional isn't used after aunque in a hypothetical clause. It belongs in the main clause («seguiría»)."
+      }
+    ]
+  },
+  {
+    "id": "q124",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "acabar-vs-terminar",
+    "question": "Complete the sentence: «Salimos antes de que ___ la película.» (We left before the film ended.)",
+    "options": [
+      {
+        "text": "terminara",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive, because the event hadn't happened yet. After a past main verb, it is the imperfect subjunctive."
+      },
+      {
+        "text": "terminó",
+        "correct": false,
+        "feedback": "Terminó is the preterite indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "terminaba",
+        "correct": false,
+        "feedback": "Terminaba is imperfect indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "terminaría",
+        "correct": false,
+        "feedback": "Terminaría is the conditional, which isn't used after «antes de que»."
+      }
+    ]
+  },
+  {
+    "id": "q125",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "darse-cuenta-vs-realizar",
+    "question": "You think it is very unlikely that you and your colleagues will ever see your mistake, but you wish you would. Complete: «Ojalá nos ___ cuenta de nuestro error.»",
+    "options": [
+      {
+        "text": "dábamos",
+        "correct": false,
+        "feedback": "Dábamos is imperfect indicative. Ojalá always takes the subjunctive."
+      },
+      {
+        "text": "dimos",
+        "correct": false,
+        "feedback": "Dimos is the preterite indicative. Ojalá always takes the subjunctive."
+      },
+      {
+        "text": "diéramos",
+        "correct": true,
+        "feedback": "Correct. Ojalá + imperfect subjunctive expresses a wish that is unlikely. Darse cuenta uses dar (dieron → diéramos), and the nosotros form carries an accent."
+      },
+      {
+        "text": "daríamos",
+        "correct": false,
+        "feedback": "Daríamos is the conditional, which can't follow ojalá."
+      }
+    ]
+  },
+  {
+    "id": "q126",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "soportar-vs-apoyar",
+    "question": "Which sentence says 'I didn't understand why you put up with so much noise'?",
+    "options": [
+      {
+        "text": "No entendía que apoyaras tanto ruido.",
+        "correct": false,
+        "feedback": "Apoyar means to support (a person or an idea), or to lean something. It can't mean to put up with."
+      },
+      {
+        "text": "No entendía que soportaste tanto ruido.",
+        "correct": false,
+        "feedback": "Soportaste is the preterite indicative. With the indicative, entender que means to grasp that something is the case. To say you couldn't make sense of someone's behaviour, use the subjunctive: soportaras."
+      },
+      {
+        "text": "No entendía que soportaras tanto ruido.",
+        "correct": true,
+        "feedback": "Correct. Not understanding someone's behaviour is an emotional reaction, so the subjunctive. Soportar = to put up with, to bear."
+      },
+      {
+        "text": "No entendía que soportarías tanto ruido.",
+        "correct": false,
+        "feedback": "The conditional isn't used after «no entendía que». The imperfect subjunctive is needed: soportaras."
+      }
+    ]
+  },
+  {
+    "id": "q127",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "pretender-vs-fingir",
+    "question": "Which sentence says 'It was ridiculous that he pretended to be ill' (he faked an illness)?",
+    "options": [
+      {
+        "text": "Era ridículo que pretendiera estar enfermo.",
+        "correct": false,
+        "feedback": "Pretender means to aim or intend to. It's a false friend of 'to pretend', so this says he aimed to be ill."
+      },
+      {
+        "text": "Era ridículo que fingiera estar enfermo.",
+        "correct": true,
+        "feedback": "Correct. Fingir = to pretend, and an emotional judgement takes the subjunctive. The g→j of the present (finja) doesn't carry over: fingiera."
+      },
+      {
+        "text": "Era ridículo que finjiera estar enfermo.",
+        "correct": false,
+        "feedback": "The g→j change of the present (finjas) doesn't carry over. Before -ie- the g stays: fingiera."
+      },
+      {
+        "text": "Era ridículo que fingía estar enfermo.",
+        "correct": false,
+        "feedback": "A judgement like «era ridículo que» takes the subjunctive. The indicative «fingía» is wrong."
+      }
+    ]
+  },
+  {
+    "id": "q128",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "conducir-vs-manejar",
+    "question": "Complete the sentence: «Era peligroso que tú ___ cansado.» (It was dangerous for you to drive tired.)",
+    "options": [
+      {
+        "text": "condujieras",
+        "correct": false,
+        "feedback": "After a j the i is dropped (condujeron → condujeras), so 'condujieras' is wrong."
+      },
+      {
+        "text": "conducías",
+        "correct": false,
+        "feedback": "Conducías is imperfect indicative. After «era peligroso que» you need the subjunctive."
+      },
+      {
+        "text": "conducirías",
+        "correct": false,
+        "feedback": "Conducirías is the conditional, which isn't used after «era peligroso que»."
+      },
+      {
+        "text": "condujeras",
+        "correct": true,
+        "feedback": "Correct. Calling something dangerous is an evaluation, so the subjunctive. Conducir's preterite is condujeron, so condujeras."
+      }
+    ]
+  },
+  {
+    "id": "q129",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "mover-vs-mudarse",
+    "question": "Complete the sentence: «Te pedí que me avisaras antes de que te ___.» (I asked you to let me know before you moved house.)",
+    "options": [
+      {
+        "text": "mudabas",
+        "correct": false,
+        "feedback": "Mudabas is imperfect indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "mudaras",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive, and the past request calls for the imperfect. Mudarse = to move house."
+      },
+      {
+        "text": "mudaste",
+        "correct": false,
+        "feedback": "Mudaste is the preterite indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "mudarías",
+        "correct": false,
+        "feedback": "Mudarías is the conditional, which isn't used after «antes de que»."
+      }
+    ]
+  },
+  {
+    "id": "q130",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "dar-vs-regalar",
+    "question": "Someone advised you to write a dedication whenever you give a book as a present in the future. Complete: «Me aconsejó que cuando ___ un libro, escribiera una dedicatoria.»",
+    "options": [
+      {
+        "text": "regalaba",
+        "correct": false,
+        "feedback": "Regalaba is imperfect indicative and describes a habit that already existed. Here the giving is still ahead, so the subjunctive."
+      },
+      {
+        "text": "regalara",
+        "correct": true,
+        "feedback": "Correct. Cuando about a future moment seen from the past takes the imperfect subjunctive, and the reported advice (escribiera) does too. Regalar = to give as a present."
+      },
+      {
+        "text": "regalé",
+        "correct": false,
+        "feedback": "Regalé is the preterite and refers to a completed event. The giving hasn't happened yet."
+      },
+      {
+        "text": "regalaría",
+        "correct": false,
+        "feedback": "The conditional isn't used after cuando. It belongs in a main clause."
+      }
+    ]
+  },
+  {
+    "id": "q131",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "llamar-vs-llamarse",
+    "question": "Complete the sentence: «No había nadie que se ___ Pancracio en el pueblo.» (There was nobody called Pancracio in the village.)",
+    "options": [
+      {
+        "text": "llamaba",
+        "correct": false,
+        "feedback": "Llamaba is indicative and would assert that such a person existed. «No había nadie que» takes the subjunctive."
+      },
+      {
+        "text": "llamó",
+        "correct": false,
+        "feedback": "Llamó is the preterite indicative. After «no había nadie que» you need the subjunctive."
+      },
+      {
+        "text": "llamara",
+        "correct": true,
+        "feedback": "Correct. When the person described doesn't exist, the relative clause takes the subjunctive. Llamarse = to be called."
+      },
+      {
+        "text": "llamaría",
+        "correct": false,
+        "feedback": "Llamaría is the conditional, which isn't used in this relative clause."
+      }
+    ]
+  },
+  {
+    "id": "q132",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "ir-vs-irse",
+    "question": "Complete the sentence: «No quería que te ___ sin despedirte.» (I didn't want you to leave without saying goodbye.)",
+    "options": [
+      {
+        "text": "fueras",
+        "correct": true,
+        "feedback": "Correct. Not wanting something to happen is a wish, so the subjunctive. Irse takes the same imperfect subjunctive as ser, from fueron: fueras."
+      },
+      {
+        "text": "fuiste",
+        "correct": false,
+        "feedback": "Fuiste is the preterite indicative. After «no quería que» you need the subjunctive."
+      },
+      {
+        "text": "ibas",
+        "correct": false,
+        "feedback": "Ibas is imperfect indicative. After «no quería que» you need the subjunctive."
+      },
+      {
+        "text": "irías",
+        "correct": false,
+        "feedback": "Irías is the conditional, which isn't used after «no quería que»."
+      }
+    ]
+  },
+  {
+    "id": "q133",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "estar-de-acuerdo-vs-acordar",
+    "question": "Which sentence says 'I didn't think they agreed with the plan'?",
+    "options": [
+      {
+        "text": "No creía que se acordaran del plan.",
+        "correct": false,
+        "feedback": "Grammatical, but acordarse de means to remember: 'I didn't think they remembered the plan'. To say they agree with it, use estar de acuerdo con."
+      },
+      {
+        "text": "No creía que estuvieran de acuerdo con el plan.",
+        "correct": true,
+        "feedback": "Correct. Not believing something is a doubt, so the subjunctive. Estar de acuerdo con = to agree with, and estar's stem is estuv-."
+      },
+      {
+        "text": "No creía que estuvieron de acuerdo con el plan.",
+        "correct": false,
+        "feedback": "Estuvieron is the preterite indicative. After «no creía que» the standard form is the imperfect subjunctive."
+      },
+      {
+        "text": "No creía que estuviéramos de acuerdo con el plan.",
+        "correct": false,
+        "feedback": "Grammatical, but estuviéramos is the nosotros form ('we'). The sentence says 'they', so you need estuvieran."
+      }
+    ]
+  },
+  {
+    "id": "q134",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "importar-vs-interesar",
+    "question": "Complete the sentence: «Dudaba que les ___ las noticias.» (I doubted they were interested in the news.)",
+    "options": [
+      {
+        "text": "interesara",
+        "correct": false,
+        "feedback": "Interesar agrees with the thing that interests, not with the person. Las noticias is plural, so interesaran."
+      },
+      {
+        "text": "interesaban",
+        "correct": false,
+        "feedback": "Interesaban is imperfect indicative. After «dudaba que» you need the subjunctive."
+      },
+      {
+        "text": "interesaran",
+        "correct": true,
+        "feedback": "Correct. Doubt takes the subjunctive. Interesar works like gustar: the verb agrees with the thing, and las noticias is plural."
+      },
+      {
+        "text": "interesarían",
+        "correct": false,
+        "feedback": "Interesarían is the conditional, which isn't used after «dudaba que»."
+      }
+    ]
+  },
+  {
+    "id": "q135",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "cumplir-solo",
+    "question": "Complete the sentence: «Te exigí que ___ con el plazo.» (I demanded that you meet the deadline.)",
+    "options": [
+      {
+        "text": "cumpliste",
+        "correct": false,
+        "feedback": "Cumpliste is the preterite indicative. After «te exigí que» you need the subjunctive."
+      },
+      {
+        "text": "cumplías",
+        "correct": false,
+        "feedback": "Cumplías is imperfect indicative. After «te exigí que» you need the subjunctive."
+      },
+      {
+        "text": "cumplieras",
+        "correct": true,
+        "feedback": "Correct. Demanding that someone act takes the subjunctive. Cumplir con el plazo = to meet the deadline."
+      },
+      {
+        "text": "cumplirías",
+        "correct": false,
+        "feedback": "Cumplirías is the conditional, which isn't used after «te exigí que»."
+      }
+    ]
+  },
+  {
+    "id": "q136",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "quitar-vs-quitarse",
+    "question": "Complete the sentence: «Era mejor que te ___ los zapatos.» (It was better that you took your shoes off.)",
+    "options": [
+      {
+        "text": "quitabas",
+        "correct": false,
+        "feedback": "Quitabas is imperfect indicative. After «era mejor que» you need the subjunctive."
+      },
+      {
+        "text": "quitaras",
+        "correct": true,
+        "feedback": "Correct. Saying what would be better is an evaluation, so the subjunctive. Quitarse = to take off your own clothes."
+      },
+      {
+        "text": "quitaste",
+        "correct": false,
+        "feedback": "Quitaste is the preterite indicative. After «era mejor que» you need the subjunctive."
+      },
+      {
+        "text": "quitarías",
+        "correct": false,
+        "feedback": "Quitarías is the conditional, which isn't used after «era mejor que»."
+      }
+    ]
+  },
+  {
+    "id": "q137",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "ganar-vs-ganarse",
+    "question": "My father kept saying you'd understand once you earned your own living, which hadn't happened yet. Complete: «Mi padre decía que cuando te ___ la vida, lo entenderías.»",
+    "options": [
+      {
+        "text": "ganaras",
+        "correct": true,
+        "feedback": "Correct. Cuando about a moment still to come, seen from the past, takes the imperfect subjunctive. Ganarse la vida = to earn a living."
+      },
+      {
+        "text": "ganabas",
+        "correct": false,
+        "feedback": "Ganabas would describe something you were already doing. Here it was still ahead, so the subjunctive."
+      },
+      {
+        "text": "ganaste",
+        "correct": false,
+        "feedback": "Ganaste is the preterite and refers to a completed event, but the earning hadn't happened yet."
+      },
+      {
+        "text": "ganarías",
+        "correct": false,
+        "feedback": "The conditional isn't used after cuando. It belongs in the main clause («entenderías»)."
+      }
+    ]
+  },
+  {
+    "id": "q138",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "olvidar-vs-olvidarse",
+    "question": "Complete the sentence: «Lo apunté antes de que se me ___.» (I wrote it down before I forgot it.)",
+    "options": [
+      {
+        "text": "olvidara",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive. In «se me olvida», the thing forgotten is the subject: olvidara."
+      },
+      {
+        "text": "olvidaba",
+        "correct": false,
+        "feedback": "Olvidaba is imperfect indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "olvidó",
+        "correct": false,
+        "feedback": "Olvidó is the preterite indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "olvidaría",
+        "correct": false,
+        "feedback": "Olvidaría is the conditional, which isn't used after «antes de que»."
+      }
+    ]
+  },
+  {
+    "id": "q139",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "preocupar-vs-preocuparse",
+    "question": "Which sentence says 'My mother phoned so that I wouldn't worry'?",
+    "options": [
+      {
+        "text": "Mi madre llamó para que yo no me preocupaba.",
+        "correct": false,
+        "feedback": "Para que always takes the subjunctive, so the indicative «preocupaba» is wrong."
+      },
+      {
+        "text": "Mi madre llamó para que yo no me preocupara.",
+        "correct": true,
+        "feedback": "Correct. The subjects differ (my mother / I), so para que + subjunctive. Preocuparse is reflexive, and yo is the one worrying, so me preocupara."
+      },
+      {
+        "text": "Mi madre llamó para que yo no me preocuparía.",
+        "correct": false,
+        "feedback": "The conditional isn't used after para que. You need the imperfect subjunctive."
+      },
+      {
+        "text": "Mi madre llamó para que yo no me preocupé.",
+        "correct": false,
+        "feedback": "Preocupé is the preterite indicative. Para que needs the subjunctive: preocupara."
+      }
+    ]
+  },
+  {
+    "id": "q140",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "sobrar-vs-bastar",
+    "question": "Complete the sentence: «Era posible que nos ___ entradas.» (It was possible that we would have spare tickets.)",
+    "options": [
+      {
+        "text": "sobrara",
+        "correct": false,
+        "feedback": "Sobrar agrees with the thing left over, not with the person. Entradas is plural, so sobraran."
+      },
+      {
+        "text": "sobraban",
+        "correct": false,
+        "feedback": "Sobraban is imperfect indicative. A possibility takes the subjunctive."
+      },
+      {
+        "text": "sobraran",
+        "correct": true,
+        "feedback": "Correct. A possibility takes the subjunctive. Sobrar works like gustar: the verb agrees with the thing left over, and entradas is plural."
+      },
+      {
+        "text": "sobrarían",
+        "correct": false,
+        "feedback": "Sobrarían is the conditional, which isn't used after «era posible que»."
+      }
+    ]
+  },
+  {
+    "id": "q141",
+    "category": "subjunctive",
+    "difficulty": "easy",
+    "sourceId": "durar-vs-tardar",
+    "question": "Complete the sentence: «Lo cuidé para que ___ mucho tiempo.» (I looked after it so that it would last a long time.)",
+    "options": [
+      {
+        "text": "durará",
+        "correct": false,
+        "feedback": "Durará is the future indicative. Para que always takes the subjunctive, and after a past verb it is the imperfect."
+      },
+      {
+        "text": "duraba",
+        "correct": false,
+        "feedback": "Duraba is imperfect indicative. Para que always takes the subjunctive."
+      },
+      {
+        "text": "duraría",
+        "correct": false,
+        "feedback": "Duraría is the conditional, which isn't used after «para que»."
+      },
+      {
+        "text": "durara",
+        "correct": true,
+        "feedback": "Correct. Different subjects (yo / lo), so para que + subjunctive. Durar = to last."
+      }
+    ]
+  },
+  {
+    "id": "q142",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "mandar-vs-enviar",
+    "question": "Complete the sentence: «Dije que en cuanto ___ el correo, te avisaría.» (I said that as soon as I sent the email, I'd let you know.)",
+    "options": [
+      {
+        "text": "mandé",
+        "correct": false,
+        "feedback": "Mandé is the preterite and refers to a completed event. The sending was still in the future when you spoke."
+      },
+      {
+        "text": "mandaba",
+        "correct": false,
+        "feedback": "Mandaba is imperfect indicative. A future event seen from the past needs the subjunctive."
+      },
+      {
+        "text": "mandaría",
+        "correct": false,
+        "feedback": "The conditional isn't used after en cuanto. It belongs in the main clause («avisaría»)."
+      },
+      {
+        "text": "mandara",
+        "correct": true,
+        "feedback": "Correct. En cuanto about a moment still to come, seen from the past, takes the imperfect subjunctive. Mandar = to send."
+      }
+    ]
+  },
+  {
+    "id": "q143",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "despedir-vs-despedirse",
+    "question": "Complete the sentence: «Le avisé antes de que lo ___.» (I warned him before they fired him.)",
+    "options": [
+      {
+        "text": "despedieran",
+        "correct": false,
+        "feedback": "Despedir changes e→i (despidieron), so 'despedieran' doesn't exist. The form is despidieran."
+      },
+      {
+        "text": "despidieran",
+        "correct": true,
+        "feedback": "Correct. Antes de que always takes the subjunctive. Despedir changes e→i in the preterite (despidieron), and that carries into the subjunctive."
+      },
+      {
+        "text": "despedían",
+        "correct": false,
+        "feedback": "Despedían is imperfect indicative. Antes de que always takes the subjunctive."
+      },
+      {
+        "text": "despidieron",
+        "correct": false,
+        "feedback": "Despidieron is the preterite indicative. Antes de que always takes the subjunctive."
+      }
+    ]
+  },
+  {
+    "id": "q144",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "oler-vs-saber-a",
+    "question": "Which sentence says 'I added vanilla so that it would taste like ice cream'?",
+    "options": [
+      {
+        "text": "Añadí vainilla para que oliera a helado.",
+        "correct": false,
+        "feedback": "Oler a means to smell of. The sentence says it should taste like ice cream."
+      },
+      {
+        "text": "Añadí vainilla para que supiera a helado.",
+        "correct": true,
+        "feedback": "Correct. Para que + imperfect subjunctive, with different subjects (I / it). Saber a = to taste of, and saber's preterite stem is sup-."
+      },
+      {
+        "text": "Añadí vainilla para que sabía a helado.",
+        "correct": false,
+        "feedback": "Para que always takes the subjunctive, so the indicative «sabía» is wrong."
+      },
+      {
+        "text": "Añadí vainilla para que supo a helado.",
+        "correct": false,
+        "feedback": "Supo is the preterite indicative. Para que needs the imperfect subjunctive: supiera."
+      }
+    ]
+  },
+  {
+    "id": "q145",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "arreglar-vs-arreglarse",
+    "question": "Complete the sentence: «Necesitaba que te ___ rápido.» (I needed you to get ready quickly.)",
+    "options": [
+      {
+        "text": "arreglabas",
+        "correct": false,
+        "feedback": "Arreglabas is imperfect indicative. After «necesitaba que» you need the subjunctive."
+      },
+      {
+        "text": "arreglaste",
+        "correct": false,
+        "feedback": "Arreglaste is the preterite indicative. After «necesitaba que» you need the subjunctive."
+      },
+      {
+        "text": "arreglaras",
+        "correct": true,
+        "feedback": "Correct. Needing someone else to act takes the subjunctive. Arreglarse = to get ready (to smarten up)."
+      },
+      {
+        "text": "arreglarías",
+        "correct": false,
+        "feedback": "Arreglarías is the conditional, which isn't used after «necesitaba que»."
+      }
+    ]
+  },
+  {
+    "id": "q146",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "meter-vs-poner",
+    "question": "Complete the sentence: «Prefería que ___ la ropa en la maleta.» (I preferred that you put the clothes in the suitcase.)",
+    "options": [
+      {
+        "text": "meteras",
+        "correct": false,
+        "feedback": "Meter is an -er verb, so the imperfect subjunctive uses -ier- endings (metieron → metieras), never -ar endings."
+      },
+      {
+        "text": "metieras",
+        "correct": true,
+        "feedback": "Correct. A preference about someone else's action takes the subjunctive. Meter is an -er verb, so it takes -ier- endings: metieras."
+      },
+      {
+        "text": "metías",
+        "correct": false,
+        "feedback": "Metías is imperfect indicative. After «prefería que» you need the subjunctive."
+      },
+      {
+        "text": "meterías",
+        "correct": false,
+        "feedback": "Meterías is the conditional, which isn't used after «prefería que»."
+      }
+    ]
+  },
+  {
+    "id": "q147",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "comprender-vs-entender",
+    "question": "Complete the sentence: «Era difícil que nosotros ___ todo.» (It was unlikely that we would understand everything.)",
+    "options": [
+      {
+        "text": "entiendiéramos",
+        "correct": false,
+        "feedback": "The e→ie stem change of the present (entiendo, entienda) doesn't carry over: entendiéramos."
+      },
+      {
+        "text": "entendíamos",
+        "correct": false,
+        "feedback": "Entendíamos is imperfect indicative. After «era difícil que» you need the subjunctive."
+      },
+      {
+        "text": "entendiéramos",
+        "correct": true,
+        "feedback": "Correct. Era difícil que means 'it was unlikely that' (compare era improbable que): a judgement about likelihood, not a statement of fact, so the subjunctive. The e→ie of the present is gone, and the nosotros form carries an accent."
+      },
+      {
+        "text": "entenderíamos",
+        "correct": false,
+        "feedback": "Entenderíamos is the conditional, which isn't used after «era difícil que»."
+      }
+    ]
+  },
+  {
+    "id": "q148",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "tratar-vs-tratarse",
+    "question": "Which sentence says 'I doubted he was trying to help us'?",
+    "options": [
+      {
+        "text": "Dudaba que tratara de ayudarnos.",
+        "correct": true,
+        "feedback": "Correct. Doubt takes the subjunctive. Tratar de + infinitive = to try to do something."
+      },
+      {
+        "text": "Dudaba que tratara ayudarnos.",
+        "correct": false,
+        "feedback": "Tratar needs de before the infinitive to mean 'to try to': tratara de ayudarnos."
+      },
+      {
+        "text": "Dudaba que trataba de ayudarnos.",
+        "correct": false,
+        "feedback": "After «dudaba que» the standard form is the subjunctive: tratara."
+      },
+      {
+        "text": "Dudaba que se tratara de ayudarnos.",
+        "correct": false,
+        "feedback": "Tratarse de means 'to be about', and it is impersonal. It can't say that a person was trying to do something."
+      }
+    ]
+  },
+  {
+    "id": "q149",
+    "category": "subjunctive",
+    "difficulty": "hard",
+    "sourceId": "haber-que-vs-tener-que",
+    "question": "Complete the sentence: «No creía que ___ que pagar.» (I didn't think it was necessary to pay.)",
+    "options": [
+      {
+        "text": "hubieran",
+        "correct": false,
+        "feedback": "Hay que is impersonal and never takes a plural form. It stays singular: hubiera."
+      },
+      {
+        "text": "habiera",
+        "correct": false,
+        "feedback": "Haber is irregular in this tense (hubieron → hubiera). 'Habiera' doesn't exist."
+      },
+      {
+        "text": "hubo",
+        "correct": false,
+        "feedback": "Hubo is the preterite indicative. After «no creía que» the standard form is the imperfect subjunctive."
+      },
+      {
+        "text": "hubiera",
+        "correct": true,
+        "feedback": "Correct. Hay que is impersonal, so it stays singular with no subject. After «no creía que» it becomes hubiera que (hubieron → hubiera)."
+      }
+    ]
+  },
+  {
+    "id": "q150",
+    "category": "subjunctive",
+    "difficulty": "medium",
+    "sourceId": "caber-solo",
+    "question": "Complete the sentence: «Temía que no ___ todos en el coche.» (I was afraid we wouldn't all fit in the car.)",
+    "options": [
+      {
+        "text": "cabiéramos",
+        "correct": false,
+        "feedback": "Caber is irregular in this tense. The form is built on cupieron, so 'cabiéramos' doesn't exist."
+      },
+      {
+        "text": "cabíamos",
+        "correct": false,
+        "feedback": "Cabíamos is imperfect indicative. With the indicative, temer expresses suspicion rather than fear. To express fear, use the subjunctive."
+      },
+      {
+        "text": "cabríamos",
+        "correct": false,
+        "feedback": "Cabríamos is the conditional. After temer, an indicative form expresses suspicion rather than fear. To express fear, use the imperfect subjunctive."
+      },
+      {
+        "text": "cupiéramos",
+        "correct": true,
+        "feedback": "Correct. Fear takes the subjunctive. Caber's preterite stem is cup- (cupieron), and the nosotros form carries an accent."
+      }
+    ]
   }
 ]
