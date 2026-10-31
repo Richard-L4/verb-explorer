@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture rules
+- Trial input validation lives in `trial-input.ts`: preserve the collector's eight string fields and reject unknown keys before Zod parsing, so malformed device records cannot accumulate unbounded validation issues.
 - Content access policy lives only in `src/lib/content-access.ts`; pages call it instead of writing their own rules, so the policy stays consistent.
 - `src/data/subjunctive.json` is imported only by `src/lib/subjunctive-full.server.ts`, which is loaded dynamically inside server handlers; the browser uses the generated `subjunctive.public.json` (regenerate with `bun ./scripts/build-subjunctive-public.ts`), so locked examples never ship to the client.
 - Paid subjunctive content is released only for a server-signed purchase pass (`content-pass.server.ts`) whose purchase is re-checked in the database; the local `unlocked` flag never authorises protected content.
