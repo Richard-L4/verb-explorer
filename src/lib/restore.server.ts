@@ -1,4 +1,10 @@
 /**
+ * Server-only restore and request-throttling logic used by restore, creator and checkout functions.
+ * Uses Supabase restore_codes and injected purchase/email helpers (Resend in production).
+ * RestorePurchase calls the server functions; a rate limit caps attempts within a time window.
+ * HMAC is a secret-key digest: stored restore identifiers cannot be guessed with a public hash list.
+ */
+/**
  * Server-only: verified Restore by email and creator-attempt rate limiting.
  * Codes are never stored or logged in clear: only HMACs. Emails are stored as
  * HMACs too. Storage is injected so the logic can be unit-tested.
@@ -44,6 +50,8 @@ export interface RestoreDeps {
 }
 
 export const normaliseEmail = (e: string) => e.trim().toLowerCase();
+// Only restore_codes identifiers are HMACs: customer records may still hold billing emails.
+// A keyed digest reduces email guessing if the restore table leaks; never store the raw code.
 export const hashEmail = (secret: string, email: string) => hmacHex(secret, `email:${normaliseEmail(email)}`);
 export const hashNetworkValue = async (secret: string, address: string | null) =>
   address ? hmacHex(secret, `net:${address}`) : null;
@@ -61,6 +69,7 @@ export async function requestRestoreCode(deps: RestoreDeps, email: string, addre
   const emailHash = await hashEmail(deps.secret, email);
   const networkHash = await hashNetworkValue(deps.secret, address);
 
+  // await waits for storage before deciding; per-email and per-network limits slow code abuse.
   const perEmail = await deps.store.countSince({ purpose: "restore", email_hash: emailHash }, since);
   const perNet = networkHash
     ? await deps.store.countSince({ purpose: "restore", network_hash: networkHash }, since)
@@ -95,6 +104,7 @@ export async function verifyRestoreCode(deps: RestoreDeps, email: string, code: 
   await deps.store.bumpAttempts(row.id, row.attempts + 1);
   const ok = await safeEqual(row.code_hash, await hashCode(deps.secret, emailHash, code), deps.secret);
   if (!ok) return false;
+  // Consume only if still unused: concurrent requests must not reuse this one-time code.
   if (!(await deps.store.consume(row.id, nowIso))) return false;
   return deps.hasPurchase(normaliseEmail(email));
 }

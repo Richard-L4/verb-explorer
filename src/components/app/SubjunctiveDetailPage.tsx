@@ -1,3 +1,4 @@
+/** Shared present and imperfect subjunctive detail screen. useSubjunctiveTense supplies authorised entries and access status; child components show content, confirmation or checkout without exposing locked examples. */
 import { ArrowLeft, ArrowRight, Loader2, Repeat } from "lucide-react";
 import { neighbours } from "@/data/subjunctive-public";
 import { useSubjunctiveTense } from "@/hooks/use-subjunctive";
@@ -28,6 +29,7 @@ export function SubjunctiveDetailPage({ tense, id, title }: { tense: Tense; id: 
         Back to {tenseLabel[tense].toLowerCase()} subjunctive
       </SubjunctiveTenseLink>
 
+      {/* ?. safely checks an entry that may be absent; render examples only when the hook supplied triggers. */}
       {entry?.triggers ? (
         <SubjunctiveEntryView
           key={entry.id + status}

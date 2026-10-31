@@ -1,3 +1,8 @@
+/*
+ * Detail page at /card/<cardId>: $cardId captures a changing URL segment.
+ * The loader reads cards.ts; VerbCardBody renders it and useLearner records viewing.
+ * Access comes from content-access.ts: standard verb cards are currently always free.
+ */
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -9,12 +14,16 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
 import { SubjunctiveEntryLink } from "@/components/app/SubjunctiveEntryLink";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/card/$cardId")({
+  // A loader prepares route data before rendering; useLoaderData reads its result below.
+  // Loaders can also run during browser navigation: they are not a server-only boundary.
   loader: ({ params }) => {
     const card = getCard(params.cardId);
     if (!card) throw notFound();
     return { card };
   },
+  // head supplies document titles and metadata, not visible page content.
   head: ({ loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "Card not found | Verbs" }, { name: "robots", content: "noindex" }] };
@@ -35,12 +44,15 @@ export const Route = createFileRoute("/card/$cardId")({
 
 function CardDetail() {
   const { card } = Route.useLoaderData();
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { markViewed } = useLearner();
   const isLocked = verbCardLocked;
   const locked = isLocked(card.id);
   const { prev, next } = getNeighbours(card.id);
   const position = getCardIndex(card.id) + 1;
 
+  // Effects run after rendering; do not count a paywall view as studying the content.
   useEffect(() => {
     if (locked) return;
     markViewed(card.id);

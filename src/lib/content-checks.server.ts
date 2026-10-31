@@ -1,3 +1,7 @@
+/**
+ * Builds server-only entitlement checks for content and creator server functions.
+ * Uses Supabase purchase helpers and request context; browser hooks call those functions.
+ */
 /** Server-only: real entitlement checks used by every protected endpoint. */
 import type { EntitlementChecks } from "./content-pass.server";
 

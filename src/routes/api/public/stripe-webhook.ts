@@ -1,3 +1,7 @@
+/**
+ * Server-only HTTP route receiving Stripe payment notifications, called by Stripe, not the browser.
+ * A webhook is a service-to-service notification; verified events use Supabase and Resend helpers.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 
 // Public, unauthenticated endpoint: Stripe posts here cross-origin with no
@@ -34,6 +38,8 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
         let lastError = "";
         for (const secret of secrets) {
           try {
+            // await verifies authenticity before processing; the surrounding try/catch tries the
+            // other configured secret on failure, never accepts an unverified event.
             event = await stripe.webhooks.constructEventAsync(body, signature, secret);
             break;
           } catch (error) {
@@ -47,6 +53,8 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           return new Response("Invalid signature", { status: 400 });
         }
 
+        // Processing below is awaited before the 200 response; caught errors are logged safely.
+        // The acknowledgement does not by itself mean every storage/email action succeeded.
         // Acknowledge immediately; processing failures must not 4xx to Stripe.
         try {
           if (event.type === "checkout.session.completed") {

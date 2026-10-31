@@ -1,3 +1,8 @@
+/**
+ * Shares server-confirmed subjunctive content between browser components.
+ * Depends on generated public data, the pass store and server calls.
+ * A signed pass is a token the server checks; a local purchase flag is not proof.
+ */
 import { useEffect, useSyncExternalStore } from "react";
 import { publicSubjunctive, publicImperfectSubjunctive } from "@/data/subjunctive-public";
 import type { Tense } from "@/data/subjunctive-tense";
@@ -23,6 +28,7 @@ interface Snapshot {
 }
 
 const initial: Snapshot = { status: "checking", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: false };
+// Module-level state is shared by hook users, avoiding a separate content request for every component.
 let snap: Snapshot = initial;
 let started = false;
 const listeners = new Set<() => void>();

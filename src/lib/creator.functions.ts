@@ -1,3 +1,8 @@
+/**
+ * Server-function handlers for claiming and checking creator access from browser creator tools.
+ * Run on the server; use Supabase attempt storage and server-only signing, never a client creator key.
+ * A server function is a callable server endpoint; a URL parameter is input, not proof of access.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -7,12 +12,15 @@ import { z } from "zod";
  */
 export const claimCreator = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({ value: z.string().min(1).max(256) }).parse(input))
+  // The validator above parses untrusted input first; only its result reaches data.
+  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
     const { readEnv } = await import("./env.server");
     const { safeEqual, signPass, creatorFingerprint } = await import("./content-pass.server");
     const configured = readEnv("CREATOR_ACCESS_KEY");
     const secret = readEnv("CONTENT_PASS_SECRET");
     if (!configured || !secret) return { pass: null };
+    // A rate limit caps guesses per time window; try/catch denies access if its storage fails.
     try {
       const { creatorAttemptAllowed, supabaseCodeStore } = await import("./restore.server");
       const { requestAddress } = await import("./content-checks.server");

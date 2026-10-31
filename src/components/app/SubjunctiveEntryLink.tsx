@@ -1,3 +1,4 @@
+/** Shared router links for subjunctive lists and entries. Props provide the tense, destination and nested link content so callers do not repeat tense-specific route choices. */
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import type { Tense } from "@/data/subjunctive-tense";
@@ -14,6 +15,7 @@ export function SubjunctiveEntryLink({
   className?: string;
   children: ReactNode;
 }) {
+  // A ternary chooses one of two typed routes; children supplies the visible link content.
   return tense === "imperfect" ? (
     <Link to="/subjunctive/imperfect/$entryId" params={{ entryId }} className={className}>
       {children}

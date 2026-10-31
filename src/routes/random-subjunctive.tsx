@@ -1,3 +1,9 @@
+/*
+ * Random subjunctive practice at /random-subjunctive, optionally filtered by tense.
+ * Public metadata supplies candidate IDs; content-access.ts and useSubjunctiveTense
+ * provide the allowed entries and permitted examples.
+ * Full tense data stays in the server-only full-data modules, not this browser route.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles } from "lucide-react";
@@ -9,10 +15,13 @@ import { advance, shuffle } from "@/lib/random-sequence";
 import { PageTransition } from "@/components/app/PageTransition";
 import { SubjunctiveEntryView } from "@/components/app/SubjunctiveEntryView";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/random-subjunctive")({
+  // Query strings are untrusted input; keep only recognised values before the UI uses them.
   validateSearch: (s: Record<string, unknown>): { tense?: "present" | "imperfect" } =>
     isTense(s['tense']) ? { tense: s['tense'] } : {},
   component: RandomSubjunctive,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Random Subjunctive — Spanish subjunctive at random | Verb Wise" },
@@ -38,6 +47,7 @@ export const Route = createFileRoute("/random-subjunctive")({
 
 function RandomSubjunctive() {
   const tense = Route.useSearch().tense ?? "present";
+  // Only verified paid access expands this pool: a trial does not unlock study examples.
   const { entries, paid, status } = useSubjunctiveTense(tense);
 
   // Pool = only entries this browser may open. Unpaid: the 20 free entries.

@@ -1,3 +1,8 @@
+/*
+ * Shared document and layout for every route, rather than a page with its own URL.
+ * router.tsx supplies the query cache; AppShell wraps the active child page in Outlet.
+ * HeadContent and Scripts connect route metadata and browser startup to the SSR document.
+ */
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
@@ -76,7 +81,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
+// The generic <...> describes the context shape TypeScript expects from router.tsx.
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -125,6 +132,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+// children is a prop: React content supplied by the parent, placed inside this document.
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
@@ -143,6 +151,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
+    // An effect runs browser-only setup after rendering, not during server rendering.
     initInstallPromptCapture();
     registerServiceWorker();
   }, []);

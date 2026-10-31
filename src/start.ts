@@ -1,7 +1,13 @@
+/*
+ * Configures request middleware: functions that wrap server request handling.
+ * TanStack Start runs these before route/server-function responses; error-page.ts
+ * provides a friendly fallback, while CSRF checks protect browser server-function calls.
+ */
 import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 
+// async/await lets this wrapper wait for downstream work and catch rejected requests.
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     return await next();

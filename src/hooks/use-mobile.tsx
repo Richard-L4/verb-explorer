@@ -1,3 +1,7 @@
+/**
+ * React hook for browser viewport changes, using the matchMedia browser API.
+ * Browser measurements happen after rendering so server rendering needs no window.
+ */
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
@@ -12,6 +16,7 @@ export function useIsMobile() {
     };
     mql.addEventListener("change", onChange);
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    // Effect cleanup removes the listener when this component stops using the hook.
     return () => mql.removeEventListener("change", onChange);
   }, []);
 

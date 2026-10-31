@@ -1,4 +1,8 @@
 /**
+ * Server-only network-address helper for trial, restore and creator handlers.
+ * Reads Cloudflare request headers, not a database; browsers cannot choose this identity.
+ */
+/**
  * Server-only: the one trusted source of the visitor's network address.
  *
  * Production runs behind Cloudflare, which sets `cf-connecting-ip` itself and

@@ -15,6 +15,7 @@ export const STORAGE_KEY = "verbo.learner-state.v1";
 export const emptyState: LearnerState = { favourites: [], learned: [], viewed: {}, recent: [] };
 
 const listeners = new Set<() => void>();
+// React subscribers need a stable object until an actual store update replaces it.
 let cache: LearnerState = emptyState;
 let hydrated = false;
 

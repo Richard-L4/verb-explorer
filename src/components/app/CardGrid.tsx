@@ -1,3 +1,4 @@
+/** Displays verb tiles on collection pages. Props supply the cards; useLearner supplies progress and favourites, while the shared content-access policy supplies lock indicators. */
 import type { VerbCard } from "@/data/cards";
 import { VerbCardTile } from "./VerbCardTile";
 import { useLearner } from "@/hooks/use-learner";
@@ -9,6 +10,7 @@ export function CardGrid({ cards }: { cards: VerbCard[] }) {
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Props pass data down; callbacks let each tile request a parent-managed favourite update. */}
       {cards.map((card, i) => (
         <VerbCardTile
           key={card.id}

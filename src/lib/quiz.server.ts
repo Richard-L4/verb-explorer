@@ -1,4 +1,8 @@
 /**
+ * Server-only quiz selection used by quiz.functions.ts and the use-quiz browser hook.
+ * Reads Supabase trial records and the private bank; content-access.ts owns the access policy.
+ */
+/**
  * Server-only: decides which quiz questions a visitor may receive.
  * Every check fails closed to the public tier. Dependencies are injected so
  * the real decision path can be unit-tested.
@@ -50,6 +54,8 @@ export async function resolveQuiz(
     }
   }
 
+  // Keep access policy in content-access.ts, not duplicated in React pages.
+  // Filtering on the server prevents restricted questions from reaching the browser at all.
   const tier = quizTier({ role, trialActive });
   const bank = await deps.bank();
   return { tier, questions: bank.filter((q) => quizQuestionAllowed(q, tier)) };

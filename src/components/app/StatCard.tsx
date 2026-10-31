@@ -1,3 +1,4 @@
+/** Reusable summary tile for statistics screens. Props supply its displayed information, leaving data collection and progress calculations to the parent. */
 import type { LucideIcon } from "lucide-react";
 
 export function StatCard({

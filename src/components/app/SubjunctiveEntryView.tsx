@@ -1,3 +1,4 @@
+/** Displays an authorised subjunctive entry on detail and study screens. Props provide content and header controls; local state selects a trigger, and missing examples remain placeholders rather than hidden protected data. */
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { ArrowRight, GitCompare, Lock, Quote } from "lucide-react";
@@ -29,6 +30,8 @@ export function SubjunctiveEntryView({
   /** Optional extra control in the header, e.g. a tense switch. */
   aside?: ReactNode;
 }) {
+  // State remembers the selected trigger tab. Clicking a tab updates active,
+  // causing React to render that trigger's examples from the supplied entry.
   const [active, setActive] = useState(0);
   const card = getCard(entry.id);
   const { price } = useAccess();

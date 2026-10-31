@@ -1,3 +1,4 @@
+/** Reusable component for screens with nothing to display. Props (values passed by a parent) provide the icon, explanation and optional action without tying this layout to one page. */
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 

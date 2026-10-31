@@ -1,3 +1,4 @@
+/** Navigation data shared by AppShell's desktop and mobile menus. Keeping destinations, labels and icon components together prevents the two menus from drifting apart. */
 import { Home, LayoutGrid, Search, Heart, BarChart3, Settings, MessagesSquare, Sparkles, Brain } from "lucide-react";
 
 export const navItems = [

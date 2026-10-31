@@ -1,3 +1,8 @@
+/*
+ * Saved-card page at /favourites, using useLearner rather than a server loader.
+ * The hook derives cards from browser-saved favourites; CardGrid renders them and
+ * EmptyState links back to browse when there are none.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useLearner } from "@/hooks/use-learner";
@@ -6,8 +11,10 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { CardGrid } from "@/components/app/CardGrid";
 import { EmptyState } from "@/components/app/EmptyState";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/favourites")({
   component: Favourites,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Your favourite verb cards | Verbs" },
@@ -19,6 +26,8 @@ export const Route = createFileRoute("/favourites")({
 });
 
 function Favourites() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { favouriteCards } = useLearner();
 
   return (

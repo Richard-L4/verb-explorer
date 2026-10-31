@@ -1,3 +1,8 @@
+/**
+ * Custom hook (a reusable React state helper) for access-related UI.
+ * Runs in the browser, with a safe server snapshot for initial rendering.
+ * Depends on the access store and card IDs; local flags never authorise protected content.
+ */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import * as store from "@/lib/access";
 import { cards } from "@/data/cards";
@@ -9,6 +14,7 @@ export function useAccess() {
     store.hydrate();
   }, []);
 
+  // useSyncExternalStore connects React to a store outside React; its server snapshot keeps initial rendering predictable.
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
   const rawPreview = useSyncExternalStore(
     store.subscribe,

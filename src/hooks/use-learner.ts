@@ -1,3 +1,8 @@
+/**
+ * Connects React screens to the browser's saved learning progress.
+ * Depends on the progress store and public verb deck; initial server rendering
+ * uses an empty snapshot until browser storage can be read.
+ */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import * as store from "@/lib/progress";
 import { cards, cardCount } from "@/data/cards";
@@ -8,6 +13,7 @@ export function useLearner() {
     store.hydrate();
   }, []);
 
+  // Subscribe to the shared store so every mounted screen sees the same progress snapshot.
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
 
   const known = (id: string) => cards.some((c) => c.id === id);

@@ -1,3 +1,8 @@
+/*
+ * Saying catalogue at /sayings, with search supplied by sayings.ts.
+ * useLearner supplies saved progress for filtering; SayingGrid links to the detail
+ * route, where the sayings access gate and Paywall are applied.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search } from "lucide-react";
@@ -8,8 +13,10 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { SayingGrid } from "@/components/app/SayingGrid";
 import { cn } from "@/lib/utils";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/sayings")({
   component: Sayings,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Sayings — British phrases in natural Spanish | Verbs" },
@@ -39,6 +46,8 @@ const filters: { key: Filter; label: string }[] = [
 ];
 
 function Sayings() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { isLearned, isFavourite } = useLearner();
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");

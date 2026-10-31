@@ -1,3 +1,4 @@
+/** Purchase prompt used when a caller decides content is locked. useAccess supplies pricing; local state tracks consent and checkout progress, and a server function creates checkout without granting access itself. */
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -21,6 +22,8 @@ export function Paywall({ title }: { title?: string }) {
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Clicking checkout calls this handler after consent. The server creates a
+  // Stripe session; access is granted later only after verified payment processing.
   async function handlePay() {
     if (!agreed || paying) return;
     setPaying(true);

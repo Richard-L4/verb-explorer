@@ -1,3 +1,8 @@
+/*
+ * Browser preferences and progress tools at /settings, backed by useLearner.
+ * Reset controls clear local progress; ReminderSettings handles reminder setup,
+ * with subscription ownership enforced on the server. FunnelPanel shows analytics.
+ */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,8 +18,10 @@ import { ReminderSettings } from "@/components/app/ReminderSettings";
 
 
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/settings")({
   component: Settings,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Settings | Verbs" },
@@ -26,7 +33,10 @@ export const Route = createFileRoute("/settings")({
 });
 
 function Settings() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { reset, studiedCount, learnedCount, state } = useLearner();
+  // State remembers whether the reset confirmation is open, avoiding accidental data loss.
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
   const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, price, bannerPreview, setBannerPreview } =

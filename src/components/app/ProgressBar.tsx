@@ -1,3 +1,4 @@
+/** Reusable progress display for learning screens. Props supply the progress values, keeping calculation and presentation separate from the code that records study activity. */
 import { motion } from "framer-motion";
 
 export function ProgressBar({ value, label }: { value: number; label?: string }) {

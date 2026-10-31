@@ -1,3 +1,8 @@
+/*
+ * Browse page at /browse: combines cards.ts with saved useLearner progress.
+ * Local filter and paging choices produce the cards passed to CardGrid; this page
+ * does not fetch protected subjunctive examples or invent its own access policy.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
@@ -9,8 +14,10 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { CardGrid } from "@/components/app/CardGrid";
 import { cn } from "@/lib/utils";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/browse")({
   component: Browse,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Browse Spanish verb cards | Verbs" },
@@ -31,13 +38,17 @@ const filters: { key: Filter; label: string }[] = [
 ];
 
 function Browse() {
+  // This custom hook (a reusable React function) subscribes to browser-saved learner
+  // state, so progress changes update this page without a manual refresh.
   const { isLearned, isFavourite } = useLearner();
+  // useState keeps a choice between renders; <Filter> restricts it to the allowed labels.
   const [filter, setFilter] = useState<Filter>("all");
   const [category, setCategory] = useState<string>("all");
   const categories = useMemo(() => getCategories(), []);
 
   const [sort, setSort] = useState<"dataset" | "az">("dataset");
   const [shown, setShown] = useState(PAGE);
+  // Reset paging when the selection changes so a previous large list is not carried over.
   useEffect(() => setShown(PAGE), [filter, category, sort]);
 
   const filtered = cards.filter((c) => {

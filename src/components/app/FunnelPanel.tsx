@@ -1,3 +1,4 @@
+/** Creator analytics panel using a TanStack server function. React hooks track loading and table expansion; the server validates the pass and supplies read-time-corrected counts without changing raw events. */
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { BarChart3, Loader2 } from "lucide-react";
@@ -92,6 +93,8 @@ export function FunnelPanel() {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
+    // Cleanup marks this request as stale so a late reply cannot update a panel
+    // that has unmounted. The server, not this visibility check, validates creator access.
     let cancelled = false;
     (async () => {
       try {

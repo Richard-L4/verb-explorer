@@ -1,4 +1,8 @@
 /**
+ * Server-only log sanitising shared by payment, email and webhook handlers.
+ * Handles Stripe, Resend and Supabase error text locally; no browser calls this helper directly.
+ */
+/**
  * Log hygiene for payment and email code. Never pass raw provider responses or
  * full error objects to console.*; pass them through safeError()/redact() so
  * customer email addresses cannot reach server logs.

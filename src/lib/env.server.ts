@@ -1,4 +1,8 @@
 /**
+ * Reads runtime configuration only on the server for API routes and server functions.
+ * Talks to host bindings, not external services; browser code must use safe server responses.
+ */
+/**
  * Single, server-only mechanism for reading runtime secrets.
  *
  * Different hosts expose Worker bindings differently:
@@ -17,6 +21,8 @@ function globalEnv(): EnvBag | undefined {
 }
 
 export function readEnv(name: string): string | undefined {
+  // Read during server calls rather than capturing secrets at module load: Worker bindings
+  // may be attached at request time. Keep process.env and binding values out of client bundles.
   const fromProcess =
     typeof process !== "undefined" && process.env
       ? (process.env as unknown as EnvBag)[name]

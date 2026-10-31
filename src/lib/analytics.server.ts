@@ -1,4 +1,8 @@
 /**
+ * Records and reads funnel activity on the server using Supabase.
+ * Called through analytics.functions.ts by browser analytics and creator tools.
+ */
+/**
  * Server-only funnel analytics writer/reader.
  *
  * Uses the existing Supabase service-role admin client. The `trial_events`
@@ -40,6 +44,7 @@ export async function recordTrialEvent(
   // it can reach production analytics. Existing rows are never touched.
   if (isTestEvent(input)) return false;
 
+  // await waits for Supabase; try/catch makes analytics failure non-fatal to the learning flow.
   try {
     const db = getSupabaseAdmin();
     const occurredOn = input.occurredOn ?? new Date().toISOString().slice(0, 10);

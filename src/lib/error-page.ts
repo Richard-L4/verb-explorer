@@ -1,3 +1,7 @@
+/**
+ * Builds the server's fallback HTML without depending on React or browser APIs.
+ * Keeping the page self-contained lets recovery links work when app rendering fails.
+ */
 export function renderErrorPage(): string {
   return `<!doctype html>
 <html lang="en">

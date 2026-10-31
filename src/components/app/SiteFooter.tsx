@@ -1,3 +1,4 @@
+/** Shared footer rendered by AppShell. Keeps site-wide footer content in one component so individual pages do not need to repeat it. */
 import { Link } from "@tanstack/react-router";
 
 const legalLinks = [

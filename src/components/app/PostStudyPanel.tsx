@@ -1,3 +1,4 @@
+/** AppShell prompt that offers installation before daily reminders. Router, session and browser helpers determine eligibility; React state selects the current step and Framer Motion animates visibility changes. */
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
@@ -42,6 +43,8 @@ export function PostStudyPanel() {
   const [reminderNote, setReminderNote] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
 
+  // Subscribe to changes outside React; incrementing state asks React to re-check
+  // eligibility. Cleanup removes both listeners when the component unmounts.
   useEffect(() => {
     const unsubscribePrompt = subscribeInstallPrompt(() => setTick((t) => t + 1));
     const unsubscribeRandom = subscribeRandom(() => setTick((t) => t + 1));

@@ -1,3 +1,8 @@
+/**
+ * Browser adapter for optional Lovable error-reporting hooks.
+ * Depends on preview-injected window helpers; optional calls tolerate their absence.
+ * Type declarations describe those helpers without creating them at runtime.
+ */
 type LovableErrorOptions = {
   mechanism?: "manual" | "onerror" | "unhandledrejection" | "react_error_boundary";
   handled?: boolean;

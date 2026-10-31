@@ -1,3 +1,4 @@
+/** Verb preview rendered by CardGrid. Props carry content, progress and lock indicators; favourites call back to the parent, while the router opens the detail page and Framer Motion animates the preview. */
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";
@@ -27,6 +28,7 @@ export function VerbCardTile({
   const examples = exampleCount(card);
 
   return (
+    // Framer Motion declares starting and target values; transition controls the timing.
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}

@@ -1,3 +1,7 @@
+/**
+ * Shared verb-deck types and lookups, usable in the browser and on the server.
+ * Depends on the public verbs JSON; development checks help catch editing mistakes.
+ */
 import rawCards from "./verbs.json";
 
 export interface CardExample {

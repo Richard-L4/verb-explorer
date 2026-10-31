@@ -1,3 +1,8 @@
+/**
+ * Server-function endpoint for browser trial claims, backed by Supabase trial_grants.
+ * The handler runs only on the server; the browser receives a result and an HttpOnly identity cookie.
+ * A server function accepts a request, not a trusted browser entitlement.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { getCookie, setCookie } from "@tanstack/react-start/server";
 import { parseTrialInput } from "./trial-input";
@@ -9,7 +14,10 @@ import { parseTrialInput } from "./trial-input";
  * devices are ignored entirely.
  */
 export const claimTrialSession = createServerFn({ method: "POST" })
+  // Keep validation in trial-input.ts: reject unknown keys before parsing the eight device strings.
+  // This bounds validation work as well as preserving the collector contract.
   .inputValidator(parseTrialInput)
+  // data has passed parseTrialInput; async/await lets database work finish before replying.
   .handler(async ({ data }) => {
     if (data.testDevice === true) {
       return { available: false, trialStart: null, isNew: false, repeat: false };

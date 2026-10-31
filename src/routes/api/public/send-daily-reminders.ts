@@ -1,3 +1,7 @@
+/**
+ * Server-only HTTP route called by the database scheduler, not browser reminder settings.
+ * Reads Supabase subscriptions and sends encrypted notifications to browser push services.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 
 /**
@@ -16,6 +20,8 @@ export const Route = createFileRoute("/api/public/send-daily-reminders")({
         const expected = readEnv("REMINDER_CRON_SECRET");
         const provided = request.headers.get("x-reminder-secret") ?? "";
 
+        // A public route name is not authorisation: reject missing or incorrect scheduler secrets
+        // before reading subscriptions or sending anything.
         if (!expected || provided.length !== expected.length || provided !== expected) {
           return new Response("Unauthorized", { status: 401 });
         }

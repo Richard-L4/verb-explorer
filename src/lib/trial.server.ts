@@ -1,4 +1,8 @@
 /**
+ * Server-only trial identity and entitlement storage in Supabase trial_grants.
+ * Called by trial.functions.ts for browser trial claims and by server quiz/analytics checks.
+ */
+/**
  * Server-side trial entitlement (server-only).
  *
  * The browser is no longer the authority for "has this visitor already had a
@@ -107,6 +111,7 @@ interface GrantRow {
 /** True when the HttpOnly trial cookie maps to a real server-issued trial record. */
 export async function hasTrialGrant(token: string | null | undefined): Promise<boolean> {
   if (!token || token.length > 256) return false;
+  // await waits for Supabase; try/catch prevents a failed lookup from granting an entitlement.
   try {
     const { data, error } = await getSupabaseAdmin()
       .from("trial_grants")

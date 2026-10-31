@@ -1,3 +1,4 @@
+/** Preview tile rendered by SayingGrid. Props provide the saying, progress and lock display; a callback delegates favourites to the parent, while Framer Motion animates the tile. */
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";
@@ -27,6 +28,7 @@ export function SayingCardTile({
   const preview = saying.examples?.slice(0, 2) ?? [];
 
   return (
+    // Framer Motion declares starting and target values; transition controls the timing.
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}

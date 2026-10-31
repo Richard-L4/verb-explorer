@@ -1,3 +1,4 @@
+/** Shared verb detail content for card pages and Random Cards. Props supply the card; useLearner connects favourite and learned controls to saved progress, and Framer Motion animates the verb sections. */
 import { motion } from "framer-motion";
 import { AlertTriangle, Quote } from "lucide-react";
 import type { VerbCard } from "@/data/cards";
@@ -44,6 +45,7 @@ export function VerbCardBody({ card, meta }: { card: VerbCard; meta?: string }) 
       {card.sides?.length ? (
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           {card.sides.map((side, i) => (
+            // Framer Motion declares starting and target values; transition controls the timing.
             <motion.section
               key={side.word}
               initial={{ opacity: 0, y: 14 }}

@@ -1,3 +1,4 @@
+/** Shared favourite control for cards and detail views. The parent supplies its active value and callback; Framer Motion adds press and selection feedback without owning the saved favourite state. */
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,8 @@ export function FavouriteButton({
       aria-pressed={active}
       aria-label={active ? `Remove ${label} from favourites` : `Add ${label} to favourites`}
       onClick={(e) => {
+        // The button can sit inside a card link: stop the click opening that card
+        // before asking the parent to update the favourite.
         e.preventDefault();
         e.stopPropagation();
         onToggle();

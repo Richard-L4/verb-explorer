@@ -1,3 +1,8 @@
+/**
+ * Browser hook that loads the quiz questions authorised by the server.
+ * Depends on generated public questions, the signed-pass store and server calls;
+ * importing the full quiz bank here would expose restricted questions.
+ */
 import { useEffect, useState } from "react";
 import publicQuiz from "@/data/quiz.public.json";
 import type { QuizQuestion } from "@/lib/quiz-public-build";
@@ -17,6 +22,7 @@ export function useQuiz() {
 
   useEffect(() => {
     if (sub.status === "checking") return;
+    // Cleanup marks this request stale so a late reply cannot overwrite a newer effect's state.
     let live = true;
     getQuizQuestions({ data: { pass: readContentPass() } })
       .then((res) => {

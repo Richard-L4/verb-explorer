@@ -1,10 +1,17 @@
+/*
+ * Privacy document at /privacy, rendered inside the shared root layout.
+ * Uses the app page components and LegalSection; related terms.tsx
+ * and refunds.tsx provide the other legal pages. This route does not collect data.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { LegalSection } from "@/components/app/LegalSection";
 
+// createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/privacy")({
   component: Privacy,
+  // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
       { title: "Privacy Policy | Verb Wise" },
