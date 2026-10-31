@@ -92,3 +92,33 @@ describe("one-time purchase claim", () => {
     expect(src).toContain("history.replaceState");
   });
 });
+
+describe("checkout lookup gate", () => {
+  it("never asks Stripe without the browser marker", async () => {
+    const { deps } = await setup({ recorded: true });
+    let lookups = 0;
+    const gated = { ...deps, verifiedSession: async (id: string) => (lookups++, deps.verifiedSession(id)) };
+    expect(await confirmAndClaim(gated, "cs_test_abcdefghijk", undefined)).toBe("restore");
+    expect(lookups).toBe(0);
+  });
+
+  it("never asks Stripe when the limit is reached, and returns pending", async () => {
+    const { deps, buyer } = await setup({ recorded: true });
+    let lookups = 0;
+    const gated = {
+      ...deps,
+      allowLookup: async () => false,
+      verifiedSession: async (id: string) => (lookups++, deps.verifiedSession(id)),
+    };
+    expect(await confirmAndClaim(gated, "cs_test_abcdefghijk", buyer)).toBe("pending");
+    expect(lookups).toBe(0);
+  });
+
+  it("the buying browser can still retry within the window while allowed", async () => {
+    const { deps, buyer, advance } = await setup({ recorded: true });
+    const gated = { ...deps, allowLookup: async () => true };
+    expect(await confirmAndClaim(gated, "cs_test_abcdefghijk", buyer)).toBe("done");
+    advance(20 * 60_000);
+    expect(await confirmAndClaim(gated, "cs_test_abcdefghijk", buyer)).toBe("done");
+  });
+});
