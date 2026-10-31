@@ -6,6 +6,7 @@ import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import type { SubjunctiveExample } from "@/data/subjunctive";
 import { useAccess } from "@/hooks/use-access";
 import { cn } from "@/lib/utils";
+import { tenseLabel, type Tense } from "@/data/subjunctive-tense";
 
 const DIFFICULTIES = ["easy", "medium", "hard"] as const;
 
@@ -19,9 +20,14 @@ const difficultyTone: Record<string, string> = {
 export function SubjunctiveEntryView({
   entry,
   meta,
+  tense = "present",
+  aside,
 }: {
   entry: PublicSubjunctiveEntry & { triggers: NonNullable<PublicSubjunctiveEntry["triggers"]> };
   meta: ReactNode;
+  tense?: Tense;
+  /** Optional extra control in the header, e.g. a tense switch. */
+  aside?: ReactNode;
 }) {
   const [active, setActive] = useState(0);
   const card = getCard(entry.id);
@@ -36,7 +42,7 @@ export function SubjunctiveEntryView({
           className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-primary/12 blur-3xl"
         />
         <div className="relative flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-          <span className="text-primary">Subjunctive</span>
+          <span className="text-primary">{tenseLabel[tense]} subjunctive</span>
           <span className="tabular-nums">{meta}</span>
         </div>
         <h1 className="relative mt-4 text-balance text-4xl font-bold leading-[1.02] sm:text-5xl">
@@ -65,6 +71,7 @@ export function SubjunctiveEntryView({
             Open the verb card <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         ) : null}
+        {aside ? <div className="relative mt-3">{aside}</div> : null}
       </header>
 
       <div
