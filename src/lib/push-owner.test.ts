@@ -111,7 +111,7 @@ describe("customer email in logs", () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
     const f = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 200 }));
     const { sendConfirmationEmail } = await import("./payments.server");
-    const logs = await captureLogs(() => sendConfirmationEmail(ADDR));
+    const logs = await captureLogs(() => sendConfirmationEmail(ADDR, null));
     expect(f).toHaveBeenCalled();
     expect(logs).toContain("Confirmation email sent");
     expect(logs).not.toContain(ADDR);
@@ -126,7 +126,7 @@ describe("customer email in logs", () => {
       new Response(JSON.stringify({ message: `The ${ADDR} address is invalid`, to: ADDR }), { status: 422 }),
     );
     const { sendConfirmationEmail } = await import("./payments.server");
-    const logs = await captureLogs(() => sendConfirmationEmail(ADDR));
+    const logs = await captureLogs(() => sendConfirmationEmail(ADDR, null));
     expect(logs).toContain("422");
     expect(logs).not.toContain(ADDR);
     f.mockRestore();
