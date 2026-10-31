@@ -1,3 +1,8 @@
+/**
+ * Server-function endpoints called by RestorePurchase for emailed-code recovery.
+ * Handlers run on the server and use Supabase purchases/codes and Resend email helpers.
+ * A server function is a browser-callable server endpoint, so all submitted fields need validation.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -18,6 +23,8 @@ async function deps() {
 /** Step 1: always the same answer, whether or not the email has a purchase. */
 export const requestRestoreCode = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({ email: z.string().email().max(320) }).parse(input))
+  // The validator above parses untrusted input first; only its result reaches data.
+  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
     const { requestRestoreCode: run } = await import("./restore.server");
     const { requestAddress } = await import("./content-checks.server");

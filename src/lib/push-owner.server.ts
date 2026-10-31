@@ -1,4 +1,9 @@
 /**
+ * Server-only ownership checks used by push.functions.ts for browser reminder settings.
+ * Uses WebCrypto and an injected Supabase store; delivery-address knowledge alone is not ownership.
+ * HMAC is a secret-key signature, so knowing the address cannot recreate its owner token.
+ */
+/**
  * Ownership proof for reminder subscriptions.
  *
  * Each browser that registers for reminders receives an HttpOnly cookie

@@ -1,3 +1,8 @@
+/**
+ * Server-function handlers for browser funnel events and creator analytics panels.
+ * Run on the server and use Supabase via analytics.server.ts; clients receive callable proxies.
+ * A server function is a browser-callable server endpoint, not permission to trust browser input.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { ANALYTICS_EVENTS } from "./analytics";
@@ -28,6 +33,8 @@ const eventSchema = z.object({
 /** Records one anonymous funnel event. Always resolves, never throws. */
 export const logTrialEvent = createServerFn({ method: "POST" })
   .inputValidator((input) => eventSchema.parse(input))
+  // The validator above parses untrusted input first; only its result reaches data.
+  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
     if (SERVER_ONLY_EVENTS.has(data.event)) return { recorded: false };
     if (!plausibleEventDate(data.occurredOn)) return { recorded: false };

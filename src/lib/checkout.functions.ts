@@ -1,3 +1,8 @@
+/**
+ * Server-function handlers called by Paywall and the checkout success page.
+ * Run on the server and coordinate Stripe, Supabase and confirmation email helpers.
+ * A server function exposes a callable endpoint while keeping its handler and secrets on the server.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -12,6 +17,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       })
       .parse(input),
   )
+  // The validator above parses untrusted input first; only its result reaches data.
+  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
     const { getStripe, getVerbWisePriceId } = await import(
       "./payments.server"

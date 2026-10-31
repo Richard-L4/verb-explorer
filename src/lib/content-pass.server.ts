@@ -1,4 +1,9 @@
 /**
+ * Signs and verifies access passes only on the server for checkout, restore and content handlers.
+ * Uses WebCrypto and injected Supabase entitlement checks, never a browser unlock flag.
+ * HMAC means a secret-key signature: it detects changes, but does not hide the payload.
+ */
+/**
  * Server-only signed passes. The browser stores the opaque token; the server
  * verifies the HMAC signature and expiry AND re-checks the entitlement before
  * returning protected content. Local browser flags are never trusted.
@@ -93,6 +98,7 @@ export async function verifyPass(
   if (typeof token !== "string" || token.length > 2048) return null;
   const [body, sig, extra] = token.split(".");
   if (!body || !sig || extra !== undefined) return null;
+  // await waits for signature verification; try/catch treats malformed tokens as no access.
   try {
     const ok = await crypto.subtle.verify("HMAC", await key(getSecret(secret)), fromB64url(sig), enc.encode(body));
     if (!ok) return null;
@@ -120,6 +126,8 @@ export async function passRole(
   secret?: string,
   now = Date.now(),
 ): Promise<PassRole | null> {
+  // A valid signature is not enough: re-check purchases or creator context below.
+  // The local unlocked flag is only UI state and never authorises protected content.
   const p = await verifyPass(token, secret, now);
   if (!p) return null;
   switch (p.k) {

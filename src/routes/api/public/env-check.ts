@@ -1,3 +1,7 @@
+/**
+ * Server-only diagnostic HTTP route for deployment checks, not normal browser app flows.
+ * Reads runtime bindings locally; does not contact Stripe or Supabase or return their secret values.
+ */
 import { createFileRoute } from "@tanstack/react-router";
 
 const NAMES = [

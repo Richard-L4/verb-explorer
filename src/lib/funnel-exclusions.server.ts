@@ -1,4 +1,8 @@
 /**
+ * Server-only display corrections used by analytics.server.ts for creator funnel tools.
+ * These constants filter Supabase read results, never edit or delete the stored event history.
+ */
+/**
  * Server-only: one-time Funnel display correction (9 Oct 2026).
  *
  * The 117 anonymous device IDs below were first seen on 9 Oct 2026 between

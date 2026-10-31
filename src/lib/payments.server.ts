@@ -1,4 +1,8 @@
 /**
+ * Server-only payment storage and email helpers used by checkout, restore and Stripe API handlers.
+ * Talks to Stripe, Supabase and Resend; Paywall and RestorePurchase call server functions, not this module.
+ */
+/**
  * Server-only Stripe + Supabase helpers.
  *
  * This file must only be imported by server-side code.
@@ -84,6 +88,7 @@ export async function fetchVerifiedVerbWiseSession(
   sessionId: string,
 ): Promise<Stripe.Checkout.Session | null> {
   if (!CHECKOUT_SESSION_ID_RE.test(sessionId)) return null;
+  // await waits for Stripe itself: a success URL or browser-supplied session is not payment proof.
   const session = await getStripe().checkout.sessions.retrieve(sessionId, {
     expand: ["line_items"],
   });
@@ -190,6 +195,8 @@ export function getSupabaseAdmin(): SupabaseClient {
     );
   }
 
+  // RLS (Row Level Security) normally restricts accessible rows. The service role bypasses
+  // those rules, so server handlers must enforce ownership and never expose this key.
   return createClient(url, key, {
     auth: {
       persistSession: false,
@@ -346,6 +353,8 @@ export async function recordPurchase(
       )
       .maybeSingle();
 
+  // Idempotency means repeating a request should not repeat its effect; this skips known sessions.
+  // The database also handles duplicate-session inserts when concurrent requests race.
   if (existing) {
     return;
   }

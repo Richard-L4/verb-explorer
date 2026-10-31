@@ -1,4 +1,8 @@
 /**
+ * Server-only notification encryption and delivery for the daily-reminders API route.
+ * Talks to browser push services, not Supabase directly; no browser calls this sender.
+ */
+/**
  * Server-only Web Push sender.
  *
  * The Node `web-push` package cannot run on the Cloudflare Worker runtime, so
@@ -44,6 +48,7 @@ function concat(...parts: Uint8Array[]): Uint8Array {
   return out;
 }
 
+// HMAC is a secret-key digest; Web Push uses it here to derive payload-encryption keys.
 async function hmac(key: Uint8Array, data: Uint8Array): Promise<Uint8Array> {
   const cryptoKey = await crypto.subtle.importKey(
     "raw",
@@ -161,6 +166,8 @@ async function encryptPayload(target: PushTarget, plaintext: string): Promise<Ui
 
 /** Delivers one notification. Never throws. */
 export async function sendPush(target: PushTarget, payload: unknown): Promise<PushResult> {
+  // await waits for signing, encryption and delivery; try/catch converts failures to a result
+  // so one unavailable push service need not abort the daily batch.
   try {
     const authorization = await vapidHeader(target.endpoint);
     if (!authorization) return "failed";

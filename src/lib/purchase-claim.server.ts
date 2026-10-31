@@ -1,4 +1,8 @@
 /**
+ * Server-only checkout claim flow called by checkout.functions.ts from the success page.
+ * Uses injected Stripe verification and Supabase claim operations, not browser payment claims.
+ */
+/**
  * One-time claiming of a Stripe payment reference from the success page.
  *
  * The browser that starts checkout gets an HttpOnly random marker cookie; its
@@ -58,6 +62,8 @@ export async function confirmAndClaim(
 
   if (deps.allowLookup && !(await deps.allowLookup(ownerHash))) return "pending";
 
+  // async/await waits for verification before claiming; try/catch keeps provider failures
+  // retryable instead of treating an outage as either proof of payment or a final refusal.
   let session;
   try {
     session = await deps.verifiedSession(sessionId);
@@ -75,6 +81,8 @@ export async function confirmAndClaim(
       await deps.recordPurchase(session);
       if (!(await deps.purchaseExists(sessionId))) return "pending";
     }
+    // claim_purchase is atomic: the database checks and assigns ownership as one operation,
+    // so two concurrent browsers cannot both win a separate check-then-write race.
     return (await deps.claim(sessionId, ownerHash, CLAIM_WINDOW_MINUTES)) ? "done" : "restore";
   } catch {
     return "pending";

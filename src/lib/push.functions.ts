@@ -1,3 +1,8 @@
+/**
+ * Server-function handlers for browser reminder registration and cancellation.
+ * Run on the server and store subscriptions in Supabase; private push keys stay server-side.
+ * A server function lets browser code request work without receiving the server implementation.
+ */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -49,7 +54,10 @@ async function reminderStore() {
  */
 export const savePushSubscription = createServerFn({ method: "POST" })
   .inputValidator((input) => subscriptionSchema.parse(input))
+  // The validator above parses untrusted input first; only its result reaches data.
+  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
+    // try/catch reports storage or signing failure without granting an unproven ownership change.
     try {
       const { getCookie, setCookie } = await import("@tanstack/react-start/server");
       const { PUSH_OWNER_COOKIE, handleSave, reminderSecret } = await import("./push-owner.server");
