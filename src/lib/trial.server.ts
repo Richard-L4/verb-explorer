@@ -104,6 +104,21 @@ interface GrantRow {
   repeat_suspected: boolean;
 }
 
+/** True when the HttpOnly trial cookie maps to a real server-issued trial record. */
+export async function hasTrialGrant(token: string | null | undefined): Promise<boolean> {
+  if (!token || token.length > 256) return false;
+  try {
+    const { data, error } = await getSupabaseAdmin()
+      .from("trial_grants")
+      .select("token_hash")
+      .eq("token_hash", hashToken(token))
+      .maybeSingle();
+    return !error && !!data;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Resolves the visitor's trial entitlement, creating one on a genuine first
  * visit. Never throws: any failure degrades to `available: false`.

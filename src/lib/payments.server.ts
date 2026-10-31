@@ -58,6 +58,38 @@ export function getVerbWisePriceId(): string {
     : VERB_WISE_LIVE_PRICE_ID;
 }
 
+/** Shape of a Stripe Checkout Session ID; anything else is rejected before any lookup. */
+export const CHECKOUT_SESSION_ID_RE = /^cs_(test|live)_[A-Za-z0-9]{10,200}$/;
+
+/**
+ * True only for a completed, paid, one-off Checkout Session for exactly one
+ * Verb Wise unlock at the configured price. Any other paid session in the same
+ * Stripe account (other products, other prices, wrong mode) never grants access.
+ */
+export function isVerbWiseSession(session: Stripe.Checkout.Session, priceId: string): boolean {
+  if (session.mode !== "payment") return false;
+  if (session.status !== "complete" || session.payment_status !== "paid") return false;
+  if ((session.currency ?? "").toLowerCase() !== "gbp") return false;
+  const items = session.line_items?.data ?? [];
+  if (items.length !== 1) return false;
+  const item = items[0]!;
+  return item.price?.id === priceId && item.quantity === 1;
+}
+
+/**
+ * Fetches the session directly from Stripe (server secret key) with its line
+ * items and returns it only when it is a genuine Verb Wise purchase.
+ */
+export async function fetchVerifiedVerbWiseSession(
+  sessionId: string,
+): Promise<Stripe.Checkout.Session | null> {
+  if (!CHECKOUT_SESSION_ID_RE.test(sessionId)) return null;
+  const session = await getStripe().checkout.sessions.retrieve(sessionId, {
+    expand: ["line_items"],
+  });
+  return isVerbWiseSession(session, getVerbWisePriceId()) ? session : null;
+}
+
 /** Create the server-side Stripe client. */
 export function getStripe(): Stripe {
   return new Stripe(getStripeSecretKey(), {
@@ -266,6 +298,15 @@ export async function recordPurchase(
   if (session.payment_status !== "paid") {
     return;
   }
+
+  // Never trust the caller's copy: re-fetch from Stripe and require a genuine
+  // Verb Wise unlock (correct price, quantity, currency, completed payment).
+  const verified = await fetchVerifiedVerbWiseSession(session.id);
+  if (!verified) {
+    console.warn("[stripe] session is not a Verb Wise purchase; not recorded");
+    return;
+  }
+  session = verified;
 
   const db = getSupabaseAdmin();
 

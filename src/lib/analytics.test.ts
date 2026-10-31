@@ -6,6 +6,7 @@ import {
   isCreatorDevice,
   logAppVisit,
   logEvent,
+  markServerSessionReady,
   setAnalyticsTransport,
   todayStamp,
   type EventPayload,
@@ -105,6 +106,7 @@ describe("failure handling", () => {
   });
 
   it("never throws when localStorage is unavailable", async () => {
+    markServerSessionReady();
     const spy = vi.spyOn(window.localStorage, "getItem").mockImplementation(() => {
       throw new Error("blocked");
     });

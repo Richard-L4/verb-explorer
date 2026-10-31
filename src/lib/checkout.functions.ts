@@ -86,17 +86,19 @@ export const confirmCheckout = createServerFn({
   .inputValidator((input) =>
     z
       .object({
-        sessionId: z.string().min(1),
+        sessionId: z.string().regex(/^cs_(test|live)_[A-Za-z0-9]{10,200}$/),
       })
       .parse(input),
   )
   .handler(async ({ data }) => {
-    const { getStripe, recordPurchase, purchaseExists } = await import(
+    const { fetchVerifiedVerbWiseSession, recordPurchase, purchaseExists } = await import(
       "./payments.server"
     );
 
     const { signPass } = await import("./content-pass.server");
 
+    // Only a purchase already recorded from a verified session, or a session
+    // re-verified with Stripe right now as a genuine Verb Wise unlock, counts.
     if (await purchaseExists(data.sessionId)) {
       return {
         paid: true,
@@ -105,11 +107,9 @@ export const confirmCheckout = createServerFn({
       };
     }
 
-    const session = await getStripe().checkout.sessions.retrieve(
-      data.sessionId,
-    );
+    const session = await fetchVerifiedVerbWiseSession(data.sessionId);
 
-    if (session.payment_status !== "paid") {
+    if (!session) {
       return {
         paid: false,
         recorded: false,
@@ -118,6 +118,10 @@ export const confirmCheckout = createServerFn({
     }
 
     await recordPurchase(session);
+
+    if (!(await purchaseExists(data.sessionId))) {
+      return { paid: false, recorded: false, pass: null };
+    }
 
     return {
       paid: true,

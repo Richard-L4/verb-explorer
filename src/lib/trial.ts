@@ -6,7 +6,7 @@
  * the local one (so clearing storage cannot restart the clock), and logs
  * `trial_started` only when the server accepted a genuinely first trial.
  */
-import { isTestDevice, logEvent } from "./analytics";
+import { isTestDevice, logEvent, markServerSessionReady } from "./analytics";
 import { applyServerTrialStart, TRIAL_DAYS } from "./access";
 import { collectDeviceSignal } from "./device-signal";
 
@@ -21,14 +21,17 @@ export async function syncServerTrial(firstVisit: boolean): Promise<void> {
     const claim = await claimTrialSession({ data: { device } });
 
     if (!claim.available) {
+      markServerSessionReady();
       // Server or table unavailable — preserve the previous local behaviour.
       if (firstVisit) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
       return;
     }
 
+    markServerSessionReady();
     if (claim.trialStart) applyServerTrialStart(claim.trialStart);
     if (claim.isNew) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
   } catch {
+    markServerSessionReady();
     if (firstVisit) void logEvent("trial_started", { trialDay: TRIAL_DAYS });
   }
 }

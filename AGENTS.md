@@ -23,3 +23,5 @@
 - Which subjunctive quiz questions are imperfect is decided only by `IMPERFECT_QUIZ_IDS` in `src/lib/quiz-tense.ts`, because the bank itself carries no tense field.
 - Reminder subscriptions can be changed or cancelled only by their owner: an HttpOnly cookie holds an HMAC of the address under the dedicated `REMINDER_OWNER_SECRET` (`push-owner.server.ts`, no fallback secret), and older rows prove ownership with their stored delivery keys.
 - Payment and email code logs errors only through `log-safety.server.ts` (`safeError`/`redact`/`maskEmail`), never raw provider bodies or error objects, so customer emails stay out of logs.
+- A purchase is recorded or unlocked only after `fetchVerifiedVerbWiseSession` re-fetches the session from Stripe and confirms exactly one Verb Wise price, GBP, paid and complete, so other paid sessions in the account never grant access.
+- Browser analytics events are accepted only with a valid server-issued `vw_vid` trial cookie and a today/yesterday date; checkout and purchase events are server-recorded only, so anonymous callers cannot add funnel activity.
