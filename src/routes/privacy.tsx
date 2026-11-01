@@ -88,6 +88,15 @@ function Privacy() {
         </LegalSection>
 
 
+        <LegalSection title="Voice questions">
+          <p>
+            The optional microphone on the Search page uses your browser's built-in speech recognition. Verb Wise never
+            receives, records or stores audio. Depending on your browser, the provider (for example Google in Chrome or
+            Apple in Safari) may process the audio on its own servers to turn it into text. Questions are answered inside
+            your browser and are not sent to or stored by Verb Wise.
+          </p>
+        </LegalSection>
+
         <LegalSection title="Service providers">
           <p>We use a small number of trusted providers to run Verb Wise:</p>
           <ul className="list-disc space-y-1 pl-5">

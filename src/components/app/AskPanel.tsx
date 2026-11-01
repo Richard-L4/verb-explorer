@@ -5,7 +5,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, HelpCircle, Mic, MicOff, Send, Square, X } from "lucide-react";
+import { ArrowRight, HelpCircle, Mic, Send, Square, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cards } from "@/data/cards";
 import { useSubjunctive } from "@/hooks/use-subjunctive";
@@ -160,7 +160,7 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
   if (result.kind === "fallback")
     return (
       <div className="mt-5 rounded-2xl border border-border p-4" aria-live="polite">
-        <p className="flex items-center gap-2 font-medium"><MicOff className="hidden" />{result.title}</p>
+        <p className="flex items-center gap-2 font-medium">{result.title}</p>
         <p className="mt-1 text-sm text-muted-foreground">{result.message}</p>
       </div>
     );
