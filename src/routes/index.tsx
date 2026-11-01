@@ -40,7 +40,7 @@ export const Route = createFileRoute("/")({
 
 const quickLinks = [
   { to: "/browse", label: "Browse cards", description: "Every verb contrast in the deck", icon: LayoutGrid },
-  { to: "/search", label: "Search", description: "Find a verb, meaning or example", icon: Search },
+  { to: "/search", label: "Search", description: "Ask a question, or find a verb or example", icon: Search },
   { to: "/favourites", label: "Favourites", description: "Your saved cards", icon: Heart },
   { to: "/quiz", label: "Quiz", description: "Test yourself", icon: Brain },
 ] as const;
