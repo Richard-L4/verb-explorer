@@ -27,8 +27,8 @@ export type AskResult =
       kind: "answer";
       area: "verbs" | "present" | "imperfect" | "indicative";
       headline: string;
-      es?: string;
-      en?: string;
+      es?: string | undefined;
+      en?: string | undefined;
       why: string;
       link: LessonLink;
     }

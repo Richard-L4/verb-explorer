@@ -77,7 +77,7 @@ describe("links and access", () => {
       const r = run(q);
       if (r.kind !== "answer") continue;
       const p = r.link.params as Record<string, string>;
-      const id = p.cardId ?? p.entryId;
+      const id = p["cardId"] ?? p["entryId"];
       const list = r.link.to === "/card/$cardId" ? cards : r.link.to.includes("imperfect") ? publicImperfectSubjunctive : publicSubjunctive;
       expect(list.some((e) => e.id === id)).toBe(true);
     }
