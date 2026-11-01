@@ -11,6 +11,7 @@ import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
 import { CardGrid } from "@/components/app/CardGrid";
 import { EmptyState } from "@/components/app/EmptyState";
+import { AskPanel } from "@/components/app/AskPanel";
 
 // createFileRoute connects this filename to its URL in the generated route tree.
 export const Route = createFileRoute("/search")({
@@ -18,9 +19,9 @@ export const Route = createFileRoute("/search")({
   // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
-      { title: "Search Spanish verbs | Verbs" },
+      { title: "Ask a question or search Spanish verbs | Verb Wise" },
       { name: "description", content: "Search Spanish verbs, English meanings, examples and usage notes as you type." },
-      { property: "og:title", content: "Search Spanish verbs | Verbs" },
+      { property: "og:title", content: "Ask a question or search Spanish verbs | Verb Wise" },
       { property: "og:description", content: "Instant search across every verb card, example and note." },
     ],
   }),
@@ -44,6 +45,8 @@ function SearchPage() {
         title="Find a verb"
         description="Search Spanish words, English meanings, examples and usage notes across all cards."
       />
+
+      <AskPanel />
 
       <div className="relative mb-8">
         <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary" aria-hidden="true" />
