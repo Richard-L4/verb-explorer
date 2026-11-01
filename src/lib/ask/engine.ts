@@ -115,6 +115,8 @@ const NOT_VERBS = new Set(["mujer", "lugar", "ayer", "hogar", "primer", "tercer"
 
 /* -------------------------------------------------------------- index --- */
 
+const STOP = new Set(["que", "de", "con", "se", "la", "el", "a", "en"]);
+
 interface Index {
   deckWords: Set<string>;
   cardsByWord: Map<string, Set<string>>;
@@ -131,7 +133,7 @@ function buildIndex(cards: VerbCard[]): Index {
     const words = new Set<string>();
     for (const s of c.sides ?? []) {
       const base = stripAccents(s.word.toLowerCase()).replace(/\(.*?\)/g, " ");
-      for (const w of base.split(/[\s/]+/)) if (w.length >= 2 && /^[a-zñ]+$/.test(w)) words.add(w);
+      for (const w of base.split(/[\s/]+/)) if (w.length >= 2 && !STOP.has(w) && /^[a-zñ]+$/.test(w)) words.add(w);
     }
     for (const w of words) {
       deckWords.add(w);
@@ -261,21 +263,18 @@ export function ask(question: string, data: AskData): AskResult {
   }
 
   // 3. Verb-pair cards: Spanish words named in the question.
-  const mentioned = q.split(" ").filter((w) => idx.deckWords.has(w));
-  if (mentioned.length) {
+  const mentioned = new Set(q.split(" ").filter((w) => idx.deckWords.has(w)));
+  if (mentioned.size) {
     const counts = new Map<string, number>();
-    for (const w of new Set(mentioned)) for (const id of idx.cardsByWord.get(w) ?? []) counts.set(id, (counts.get(id) ?? 0) + 1);
+    for (const w of mentioned) for (const id of idx.cardsByWord.get(w) ?? []) counts.set(id, (counts.get(id) ?? 0) + 1);
     const ranked = [...counts].sort((a, b) => b[1] - a[1]);
-    const top = ranked[0]!;
-    const tied = ranked.filter(([, n]) => n === top[1]);
-    if (tied.length === 1 && (top[1] >= 2 || /\b(?:or|vs|versus|difference|between|o)\b/.test(q) || mentioned.length === 1)) {
-      if (tied.length === 1 && (top[1] >= 2 || ranked.length === 1)) return cardAnswer(cardById.get(top[0])!, qTokens);
-    }
-    if (tied.length > 1 || ranked.length > 1) {
-      const options = tied.slice(0, 3).map(([id]) => ({ label: cardById.get(id)!.title, query: cardById.get(id)!.title }));
-      if (options.length > 1) return { kind: "clarify", question: "That word appears in more than one lesson. Which contrast do you mean?", options };
-      return cardAnswer(cardById.get(top[0])!, qTokens);
-    }
+    const tied = ranked.filter(([, n]) => n === ranked[0]![1]);
+    if (tied.length === 1) return cardAnswer(cardById.get(tied[0]![0])!, qTokens);
+    return {
+      kind: "clarify",
+      question: "That word appears in more than one lesson. Which contrast do you mean?",
+      options: tied.slice(0, 3).map(([id]) => ({ label: cardById.get(id)!.title, query: cardById.get(id)!.title })),
+    };
   }
 
   // 4. English meanings ("how do I say to know").
@@ -285,7 +284,8 @@ export function ask(question: string, data: AskData): AskResult {
   }
 
   // 5. Unknown Spanish verb.
-  const unknownVerb = q.split(" ").find((w) => w.length >= 4 && /(?:ar|er|ir)$/.test(w) && !idx.deckWords.has(w) && !NOT_VERBS.has(w));
+  const asksAboutVerb = /\b(?:verb|verbo|vs|versus|conjugate|conjugar|use|usar|mean|means|significa|difference|diferencia)\b/.test(q);
+  const unknownVerb = asksAboutVerb && q.split(" ").find((w) => w.length >= 4 && /(?:ar|er|ir)$/.test(w) && !idx.deckWords.has(w) && !NOT_VERBS.has(w));
   if (unknownVerb) {
     return {
       kind: "fallback",
