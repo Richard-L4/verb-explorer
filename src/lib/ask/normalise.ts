@@ -5,8 +5,8 @@
  */
 
 const FILLERS = new Set([
-  "um", "umm", "uh", "uhh", "er", "erm", "ah", "ahh", "eh", "hmm", "mm", "well", "like",
-  "basically", "actually", "so", "okay", "ok", "right", "pues", "este", "bueno", "vale",
+  "um", "umm", "uh", "uhh", "er", "erm", "ah", "ahh", "eh", "hmm", "mm", "well",
+  "basically", "okay", "pues", "vale",
 ]);
 
 const CONTRACTIONS: [RegExp, string][] = [
