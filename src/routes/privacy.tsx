@@ -88,6 +88,7 @@ function Privacy() {
         </LegalSection>
 
 
+        {/* Explains that dictation is processed by the browser vendor, not Verb Wise. */}
         <LegalSection title="Voice questions">
           <p>
             The optional microphone on the Search page uses your browser's built-in speech recognition. Verb Wise never

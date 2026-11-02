@@ -46,6 +46,7 @@ function SearchPage() {
         description="Search Spanish words, English meanings, examples and usage notes across all cards."
       />
 
+      {/* Natural-language questions sit above the keyword search; see lib/ask/engine. */}
       <AskPanel />
 
       <div className="relative mb-8">

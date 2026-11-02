@@ -4,11 +4,13 @@
  * Words that change grammatical meaning (not, never, would, wish, think, know…) are kept.
  */
 
+/** Hesitation words removed from the question. Meaningful words are deliberately absent. */
 const FILLERS = new Set([
   "um", "umm", "uh", "uhh", "er", "erm", "ah", "ahh", "eh", "hmm", "mm", "well",
   "basically", "okay", "pues", "vale",
 ]);
 
+/** English contractions expanded so patterns like "do not think" match one form only. */
 const CONTRACTIONS: [RegExp, string][] = [
   [/\b(do|does|did|is|was|were|are|could|would|should|have|has|had)n'?t\b/g, "$1 not"],
   [/\bcan'?t\b/g, "can not"],
@@ -24,6 +26,7 @@ const CONTRACTIONS: [RegExp, string][] = [
 /** Phrases speakers use to restart a sentence; only what follows is kept. */
 const CORRECTIONS = /\b(?:i mean|sorry|no wait|wait no|let me rephrase|o sea|perdon|quiero decir)\b/g;
 
+/** Removes diacritics via Unicode decomposition (NFD), so "creía" matches "creia". */
 export function stripAccents(s: string): string {
   return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }

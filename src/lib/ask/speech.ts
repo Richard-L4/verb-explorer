@@ -6,8 +6,10 @@
  * keeping every final phrase so earlier text is never lost.
  */
 
+/** Microphone status shown in the UI; "denied" means the user refused permission. */
 export type DictationState = "idle" | "listening" | "denied" | "error" | "unsupported";
 
+/** The small part of the Web Speech API we use; tests supply a fake with this shape. */
 interface RecognitionLike {
   lang: string;
   continuous: boolean;
@@ -21,14 +23,22 @@ interface RecognitionLike {
 }
 export type RecognitionCtor = new () => RecognitionLike;
 
+/** Returns the browser's recognition class (standard or webkit-prefixed), or null during SSR or when unsupported. */
 export function getRecognitionCtor(): RecognitionCtor | null {
   if (typeof window === "undefined") return null;
   const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor };
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+/** Hard stop after two minutes, so a forgotten microphone does not keep listening. */
 export const MAX_DICTATION_MS = 120_000;
 
+/**
+ * Starts dictation and returns a controller with `stop()`.
+ * `committed` holds finished phrases; interim words are shown but only kept once final.
+ * On `onend` (browser silence timeout) a new session starts until Stop or the time limit.
+ * `now` is injectable so tests can simulate the time limit.
+ */
 export function createDictation(opts: {
   Ctor: RecognitionCtor;
   lang: string;
