@@ -9,6 +9,10 @@ import type { VerbCard } from "@/data/cards";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { normalise, stripAccents } from "./normalise";
 
+/**
+ * Everything the interpreter may search. Callers build this from data the user is
+ * already entitled to (public JSON or a pass-unlocked copy), never from locked files.
+ */
 export interface AskData {
   cards: VerbCard[];
   /** Present subjunctive entries visible to this user (public or full). */
@@ -16,11 +20,17 @@ export interface AskData {
   imperfect: PublicSubjunctiveEntry[];
 }
 
+/** A typed TanStack Router destination, so every answer links to a real lesson page. */
 export type LessonLink =
   | { to: "/card/$cardId"; params: { cardId: string }; label: string }
   | { to: "/subjunctive/present/$entryId"; params: { entryId: string }; label: string }
   | { to: "/subjunctive/imperfect/$entryId"; params: { entryId: string }; label: string };
 
+/**
+ * Discriminated union returned by `ask`. The UI switches on `kind`:
+ * empty (nothing typed), answer (both checks passed), clarify (several readings),
+ * fallback (no supporting entry, so we say so rather than guess).
+ */
 export type AskResult =
   | { kind: "empty" }
   | {
@@ -35,6 +45,7 @@ export type AskResult =
   | { kind: "clarify"; question: string; options: { label: string; query: string }[] }
   | { kind: "fallback"; title: string; message: string; related?: LessonLink };
 
+/** Character cap shared by the text box and the engine, bounding regex work per question. */
 export const MAX_QUESTION_LENGTH = 1200;
 
 /* ------------------------------------------------------------ intents --- */
@@ -46,6 +57,12 @@ const SUBJ = "(?:he|she|you|they|we|it|my \\w+|the \\w+|his \\w+|her \\w+|\\w+)"
 /** Signals that the thing being doubted/wished about lies in the past. */
 const PAST_CLAUSE = /\b(?:was|were|had|did|went|came|said|yesterday|last (?:night|week|year|time)|ago)\b/;
 
+/**
+ * Check A: detect which mood/tense the question needs. Spanish trigger phrases are
+ * tested first because they are explicit; English is inferred from wording such as
+ * "did not think" or a past-tense clause. Order matters: past forms precede present ones.
+ * Returns a target, "indicative", "ambiguous-know" (needs clarifying) or null.
+ */
 function moodIntent(q: string): MoodTarget | "indicative" | "ambiguous-know" | null {
   const es = q;
   // Spanish input first: the trigger phrase is explicit.
@@ -111,10 +128,12 @@ const MEANING_HINTS: [RegExp, string][] = [
   [/\b(?:have to|must)\b/, "deber-vs-tener-que"],
 ];
 
+/** Words ending in -ar/-er/-ir that are not Spanish verbs, so they never trigger "verb not listed". */
 const NOT_VERBS = new Set(["mujer", "lugar", "ayer", "hogar", "primer", "tercer", "mar", "bar", "azucar", "cancer", "placer", "deber", "poder", "taller", "collar", "dolar", "altar", "familiar", "popular", "regular", "similar", "par", "ver", "ir", "car", "her", "under", "never", "after", "other", "water", "either", "over", "dinner", "better", "letter", "weather", "rather", "whether", "together", "her", "summer", "mother", "father", "brother", "sister", "number", "matter", "paper", "power", "remember", "answer", "order", "computer", "finger", "chair", "hair", "fair", "pair", "air", "stair", "their", "for", "or", "your", "four", "door", "floor", "poor", "hour", "our", "sir", "stir", "fir", "superior", "interior", "exterior", "anterior", "posterior", "dear", "near", "year", "clear", "hear", "fear", "bear", "wear", "tear", "gear", "rear", "year", "star", "far", "jar", "war", "car", "scar", "radar", "cigar", "solar", "polar", "dollar", "cellar", "pillar", "collar", "sugar", "vinegar", "grammar", "calendar", "cedar", "nectar", "liar", "peculiar", "particular", "spectacular", "molecular", "circular", "muscular", "vehicular"]);
 
 /* -------------------------------------------------------------- index --- */
 
+/** Short connector words ignored when indexing card headwords. */
 const STOP = new Set(["que", "de", "con", "se", "la", "el", "a", "en"]);
 
 interface Index {
@@ -122,8 +141,10 @@ interface Index {
   cardsByWord: Map<string, Set<string>>;
 }
 
+/** Cached per cards array (WeakMap), so the index is built once and freed with the data. */
 const indexCache = new WeakMap<VerbCard[], Index>();
 
+/** Maps each accent-free Spanish headword on the cards to the card ids that contain it. */
 function buildIndex(cards: VerbCard[]): Index {
   const cached = indexCache.get(cards);
   if (cached) return cached;
@@ -150,12 +171,18 @@ function buildIndex(cards: VerbCard[]): Index {
 
 const tokens = (s: string) => new Set(normalise(s).split(" ").filter((w) => w.length > 2));
 
+/** Counts shared words; a simple relevance score for picking the closest example. */
 function overlap(a: Set<string>, text: string): number {
   let n = 0;
   for (const w of tokens(text)) if (a.has(w)) n++;
   return n;
 }
 
+/**
+ * Check B for mood questions: find a real entry whose trigger matches, preferring the
+ * example that shares most words with the question (easy examples get a small bonus).
+ * Returns null when the user cannot see any supporting entry.
+ */
 function findMoodSupport(target: MoodTarget, data: AskData, qTokens: Set<string>) {
   const list = target.tense === "present" ? data.present : data.imperfect;
   const want = stripAccents(target.trigger);
@@ -176,6 +203,7 @@ function cardLink(card: VerbCard): LessonLink {
   return { to: "/card/$cardId", params: { cardId: card.id }, label: `Open “${card.title}”` };
 }
 
+/** Builds a verb-pair answer from one card, choosing its example closest to the question. */
 function cardAnswer(card: VerbCard, qTokens: Set<string>): AskResult {
   let es: string | undefined;
   let en: string | undefined;
@@ -203,6 +231,12 @@ function cardAnswer(card: VerbCard, qTokens: Set<string>): AskResult {
 
 /* --------------------------------------------------------------- main --- */
 
+/**
+ * Entry point: interpret one question against the supplied data.
+ * Pipeline: normalise -> mood intent -> ambiguous "I was" -> Spanish words on cards
+ * -> English meaning hints -> unknown-verb fallback -> generic fallback.
+ * Pure and synchronous, so it is easy to test and costs no network calls.
+ */
 export function ask(question: string, data: AskData): AskResult {
   const q = normalise(question.slice(0, MAX_QUESTION_LENGTH));
   if (q.replace(/\s/g, "").length < 2) return { kind: "empty" };
@@ -296,6 +330,7 @@ export function ask(question: string, data: AskData): AskResult {
   return outOfScope();
 }
 
+/** Shared fallback when no recognised intent is backed by a real entry. */
 function outOfScope(): AskResult {
   return {
     kind: "fallback",

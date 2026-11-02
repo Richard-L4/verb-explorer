@@ -1,3 +1,7 @@
+/**
+ * Tests for the Ask engine: brief examples, verb pairs, clarification, fallbacks,
+ * that every link points to a real entry, and that locked content is never used.
+ */
 import { describe, expect, it } from "vitest";
 import { ask, type AskData } from "./engine";
 import { normalise } from "./normalise";

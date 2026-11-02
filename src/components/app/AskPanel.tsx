@@ -12,6 +12,7 @@ import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { ask, MAX_QUESTION_LENGTH, type AskResult } from "@/lib/ask/engine";
 import { createDictation, getRecognitionCtor, type DictationState } from "@/lib/ask/speech";
 
+/** Badge text for each answer area returned by the engine. */
 const AREA_LABEL = {
   verbs: "Verb pair",
   present: "Present subjunctive",
@@ -19,6 +20,11 @@ const AREA_LABEL = {
   indicative: "Indicative",
 } as const;
 
+/**
+ * Mounted on the Search page. Holds the question text, last result, dictation language
+ * and microphone state. `useSubjunctive` supplies public or pass-unlocked entries, so the
+ * engine never sees content this visitor is not entitled to.
+ */
 export function AskPanel() {
   const { entries, imperfect } = useSubjunctive();
   const data = useMemo(() => ({ cards, present: entries, imperfect }), [entries, imperfect]);
@@ -40,11 +46,13 @@ export function AskPanel() {
     el.style.height = `${Math.min(el.scrollHeight, 420)}px`;
   }, [text]);
 
+  /** Stops any dictation, then runs the local engine on the current text. */
   const submit = (q = text) => {
     dictation.current?.stop();
     setResult(ask(q, data));
   };
 
+  /** Starts or stops dictation; new speech is appended to whatever is already typed. */
   const toggleMic = () => {
     if (mic === "listening") {
       dictation.current?.stop();

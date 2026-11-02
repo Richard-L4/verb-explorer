@@ -1,3 +1,7 @@
+/**
+ * Tests for dictation using a fake recogniser: restarts keep text, interim display,
+ * appending to typed text, permission denial and stopping.
+ */
 import { describe, expect, it } from "vitest";
 import { createDictation, type RecognitionCtor } from "./speech";
 
