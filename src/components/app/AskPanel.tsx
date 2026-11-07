@@ -183,6 +183,12 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
         </p>
       ) : null}
       <p className="mt-3 text-sm text-muted-foreground">{result.why}</p>
+          {result.extra && (
+            <p className="mt-3 rounded-md border border-border bg-muted/40 p-3 text-sm">
+              <span className="font-semibold">Additional explanation (not an original Verb Wise example): </span>
+              {result.extra}
+            </p>
+          )}
       <Button asChild className="mt-4" size="sm">
         <Link to={result.link.to} params={result.link.params as never}>
           {result.link.label} <ArrowRight className="size-4" />

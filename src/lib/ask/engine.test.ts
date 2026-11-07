@@ -96,3 +96,40 @@ describe("links and access", () => {
     }
   });
 });
+
+describe("verb recognition against the real deck", () => {
+  const cardId = (q: string) => {
+    const r = run(q);
+    return r.kind === "answer" && r.link.to === "/card/$cardId" ? r.link.params.cardId : r.kind;
+  };
+  const notListed = (q: string) => {
+    const r = run(q);
+    return r.kind === "fallback" && r.title.startsWith("Sorry, that verb");
+  };
+  it("A: desperdicio maps to desperdiciar, which is not in the deck", () => {
+    expect(cards.some((c) => c.sides?.some((s) => s.word.includes("desperdiciar")))).toBe(false);
+    expect(notListed("desperdicio de agua")).toBe(true);
+  });
+  it("B: pérdida de tiempo opens the perder card with a labelled extra note", () => {
+    const r = run("pérdida de tiempo");
+    expect(r.kind === "answer" && r.link.to === "/card/$cardId" && r.link.params.cardId).toBe("perder-vs-faltar");
+    expect(r.kind === "answer" && r.extra).toMatch(/waste of time/);
+  });
+  it("C: conjugated pierdo opens the perder card", () => {
+    expect(cardId("pierdo las llaves")).toBe("perder-vs-faltar");
+  });
+  it("D: a deck verb with no matching lesson still shows its card", () => {
+    expect(cardId("siempre pierde el autobús")).toBe("perder-vs-faltar");
+    expect(notListed("siempre pierde el autobús")).toBe(false);
+  });
+  it("E: one listed verb plus an unlisted one shows the listed card", () => {
+    expect(cardId("pierdo o desperdicio el dinero")).toBe("perder-vs-faltar");
+  });
+  it("F: a made-up verb gives the not-listed message", () => {
+    expect(notListed("what does zorbular mean")).toBe(true);
+  });
+  it("does not accept an ending guess that is not a real headword", () => {
+    expect(notListed("la casa es grande")).toBe(false);
+    expect(cardId("caminamos mucho")).not.toBe("perder-vs-faltar");
+  });
+});
