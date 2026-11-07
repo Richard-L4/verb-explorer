@@ -5,6 +5,7 @@
  *  B. a real Verb Wise card/entry the caller can see supports it (else: fallback).
  * The caller passes only data it is allowed to see, so locked content cannot leak.
  */
+import { verbCandidates, EXTRA_NOTES } from "./verb-forms";
 import type { VerbCard } from "@/data/cards";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { normalise, stripAccents } from "./normalise";
@@ -40,6 +41,8 @@ export type AskResult =
       es?: string | undefined;
       en?: string | undefined;
       why: string;
+      /** Extra explanation written by the engine, not an original Verb Wise example. */
+      extra?: string | undefined;
       link: LessonLink;
     }
   | { kind: "clarify"; question: string; options: { label: string; query: string }[] }
@@ -297,19 +300,40 @@ export function ask(question: string, data: AskData): AskResult {
   }
 
   // 3. Verb-pair cards: Spanish words named in the question.
-  const mentioned = new Set(q.split(" ").filter((w) => idx.deckWords.has(w)));
+  // Words map to headwords directly, through an explicit form, or through an ending
+  // guess that is accepted only when it is a real headword on a card.
+  const mentioned = new Set<string>();
+  let missingVerb: string | undefined;
+  for (const w of q.split(" ")) {
+    if (idx.deckWords.has(w)) { mentioned.add(w); continue; }
+    const { explicit, guesses } = verbCandidates(w);
+    if (explicit) {
+      if (idx.deckWords.has(explicit)) mentioned.add(explicit);
+      else missingVerb ??= explicit;
+      continue;
+    }
+    const hit = guesses.find((g) => idx.deckWords.has(g));
+    if (hit) mentioned.add(hit);
+  }
   if (mentioned.size) {
     const counts = new Map<string, number>();
     for (const w of mentioned) for (const id of idx.cardsByWord.get(w) ?? []) counts.set(id, (counts.get(id) ?? 0) + 1);
     const ranked = [...counts].sort((a, b) => b[1] - a[1]);
     const tied = ranked.filter(([, n]) => n === ranked[0]![1]);
-    if (tied.length === 1) return cardAnswer(cardById.get(tied[0]![0])!, qTokens);
+    if (tied.length === 1) {
+      const r = cardAnswer(cardById.get(tied[0]![0])!, qTokens);
+      const note = EXTRA_NOTES.find(([re]) => re.test(q));
+      return note && r.kind === "answer" ? { ...r, extra: note[1] } : r;
+    }
     return {
       kind: "clarify",
       question: "That word appears in more than one lesson. Which contrast do you mean?",
       options: tied.slice(0, 3).map(([id]) => ({ label: cardById.get(id)!.title, query: cardById.get(id)!.title })),
     };
   }
+
+  // A trusted form whose verb is on no card: that verb genuinely isn't listed.
+  if (missingVerb) return notListed();
 
   // 4. English meanings ("how do I say to know").
   for (const [re, id] of MEANING_HINTS) {
@@ -320,14 +344,17 @@ export function ask(question: string, data: AskData): AskResult {
   // 5. Unknown Spanish verb.
   const asksAboutVerb = /\b(?:verb|verbo|vs|versus|conjugate|conjugar|use|usar|mean|means|significa|difference|diferencia)\b/.test(q);
   const unknownVerb = asksAboutVerb && q.split(" ").find((w) => w.length >= 4 && /(?:ar|er|ir)$/.test(w) && !idx.deckWords.has(w) && !NOT_VERBS.has(w));
-  if (unknownVerb) {
-    return {
-      kind: "fallback",
-      title: "Sorry, that verb isn't currently listed in Verb Wise.",
-      message: "Try another verb or phrase, or search for a related grammatical topic.",
-    };
-  }
+  if (unknownVerb) return notListed();
   return outOfScope();
+}
+
+/** Shown only when the underlying verb is not a headword on any card. */
+function notListed(): AskResult {
+  return {
+    kind: "fallback",
+    title: "Sorry, that verb isn't currently listed in Verb Wise.",
+    message: "Try another verb or phrase, or search for a related grammatical topic.",
+  };
 }
 
 /** Shared fallback when no recognised intent is backed by a real entry. */
