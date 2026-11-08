@@ -26,6 +26,17 @@ export const EXPLICIT_FORMS: Record<string, string> = {
   falta: "faltar", faltan: "faltar",
 };
 
+/**
+ * Verified derived nouns used for word-role explanations and root-checked learner
+ * corrections. This is intentionally small: a morphological relationship must be
+ * linguistically real, not merely the result of stripping similar-looking letters.
+ */
+export const DERIVED_NOUNS: Record<string, { verb: string; meaning: string; display: string }> = {
+  perdida: { verb: "perder", meaning: "loss", display: "pérdida" },
+  perdidas: { verb: "perder", meaning: "losses", display: "pérdidas" },
+  conocimiento: { verb: "conocer", meaning: "knowledge / familiarity", display: "conocimiento" },
+};
+
 /** Conservative regular endings → possible infinitive endings. Guesses only. */
 const ENDINGS: [string, string[]][] = [
   ["amos", ["ar"]], ["emos", ["er"]], ["imos", ["ir"]],

@@ -1,7 +1,7 @@
 /** Tests for generalised form recognition, learner errors, fuzzy matching and homographs. */
 import { describe, expect, it } from "vitest";
 import { ask, type AskData } from "./engine";
-import { editDistance } from "./match";
+import { editDistance, parseQuestionFrame, verifiedPrefixCoinage } from "./match";
 import { cards } from "@/data/cards";
 import { publicSubjunctive, publicImperfectSubjunctive } from "@/data/subjunctive-public";
 
@@ -19,6 +19,35 @@ const cardsWith = (verb: string) => cards.filter((c) => (c.sides ?? []).some((s)
 
 describe("edit distance", () => {
   it("counts transpositions as one edit", () => expect(editDistance("hbalar", "hablar", 2)).toBe(1));
+});
+
+describe("question frames", () => {
+  it("suppresses por only as inquiry carrier syntax", () => {
+    const carrier = parseQuestionFrame("por que decimos desperdicio de agua y no desperdida");
+    expect(carrier.suppressed.has(0)).toBe(true);
+    expect(carrier.contrast).toBe(true);
+    const topic = parseQuestionFrame("when do I use por and para");
+    expect(topic.suppressed.size).toBe(0);
+  });
+  it("suppresses es in a Spanish difference frame but not ser or estar", () => {
+    const frame = parseQuestionFrame("cual es la diferencia entre ser y estar");
+    expect(frame.suppressed.has(1)).toBe(true);
+    expect(frame.focuses.has(5)).toBe(true);
+    expect(frame.focuses.has(7)).toBe(true);
+  });
+});
+
+describe("verified morphology", () => {
+  it("recognises desperdida as a contrasted coinage with perdida as its root", () => {
+    expect(verifiedPrefixCoinage("desperdida", true)).toEqual({
+      original: "desperdida", corrected: "pérdida", verb: "perder", meaning: "loss",
+    });
+  });
+  it("does not flag an unknown word without contrast and root evidence", () => {
+    expect(verifiedPrefixCoinage("desperdida", false)).toBeNull();
+    expect(verifiedPrefixCoinage("desconocido", true)).toBeNull();
+    expect(verifiedPrefixCoinage("zorbular", true)).toBeNull();
+  });
 });
 
 describe("regular forms from card infinitives", () => {

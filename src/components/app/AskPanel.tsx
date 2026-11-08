@@ -176,6 +176,7 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
     return (
       <div className="mt-5 rounded-2xl border border-border p-4" aria-live="polite">
         <p className="flex items-center gap-2 font-medium"><HelpCircle className="size-4 text-primary" /> {result.title}</p>
+        <ResolutionNotes result={result} />
         <ul className="mt-3 space-y-3">
           {result.options.map((o) => (
             <li key={o.link.label}>
@@ -199,6 +200,7 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
         </p>
       ) : null}
       <p className="mt-3 text-sm text-muted-foreground">{result.why}</p>
+      <ResolutionNotes result={result} />
           {result.extra && (
             <p className="mt-3 rounded-md border border-border bg-muted/40 p-3 text-sm">
               <span className="font-semibold">Additional explanation (not an original Verb Wise example): </span>
@@ -211,5 +213,30 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
         </Link>
       </Button>
     </div>
+  );
+}
+
+/** Structured engine notes sit beside, never inside, the deck's own lesson copy. */
+function ResolutionNotes({ result }: { result: Extract<AskResult, { kind: "answer" | "nearest" }> }) {
+  return (
+    <>
+      {result.corrections?.map((correction) => (
+        <div key={correction.original} className="mt-3 rounded-md border border-primary/30 bg-primary/5 p-3 text-sm">
+          <p className="font-semibold">Did you mean “{correction.corrected}”?</p>
+          <p className="mt-1 text-muted-foreground">{correction.explanation}</p>
+        </div>
+      ))}
+      {result.unlisted?.map((item) => (
+        <p key={`${item.term}-${item.verb}`} className="mt-3 rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
+          <span className="font-semibold text-foreground">Not covered in the lesson pack: </span>
+          {item.note}
+        </p>
+      ))}
+      {result.distinction ? (
+        <p className="mt-3 rounded-md border border-border bg-muted/40 p-3 text-sm">
+          <span className="font-semibold">Verb or noun? </span>{result.distinction}
+        </p>
+      ) : null}
+    </>
   );
 }
