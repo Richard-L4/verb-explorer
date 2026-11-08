@@ -86,6 +86,8 @@ const VERBS: [string, string][] = [
 /** Derived nouns with a clear, standard relationship to their verb. */
 const NOUNS: [string, string, string, string?][] = [
   ["desperdicio", "desperdiciar", "waste / squandering"],
+  ["desconocimiento", "desconocer", "lack of knowledge / unfamiliarity"],
+  ["reconocimiento", "reconocer", "recognition"],
   ["comida", "comer", "food / meal"], ["bebida", "beber", "drink"],
   ["lectura", "leer", "reading"], ["escritura", "escribir", "writing / handwriting"],
   ["cocina", "cocinar", "kitchen / cooking"], ["natacion", "nadar", "swimming", "natación"],

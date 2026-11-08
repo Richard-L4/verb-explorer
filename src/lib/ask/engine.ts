@@ -543,12 +543,14 @@ export function ask(question: string, data: AskData): AskResult {
   return outOfScope();
 }
 
-/** Shown only when the underlying verb is not a headword on any card. */
-function notListed(): AskResult {
+/** Shown only after every term has failed to support an accessible lesson. */
+function notListed(unlisted: AskUnlisted[] = []): AskResult {
   return {
     kind: "fallback",
     title: "Sorry, that verb isn't currently listed in Verb Wise.",
-    message: "Try another verb or phrase, or search for a related grammatical topic.",
+    message: unlisted.length
+      ? `${unlisted.map((item) => item.note).join(" ")} Try another verb or a related grammatical topic.`
+      : "Try another verb or phrase, or search for a related grammatical topic.",
   };
 }
 
