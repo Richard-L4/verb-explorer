@@ -49,7 +49,7 @@ export type AskResult =
   | { kind: "clarify"; question: string; options: { label: string; query: string }[] }
   | { kind: "fallback"; title: string; message: string; related?: LessonLink }
   /** Probable but not certain: a spelling slip, learner error or ambiguous word. */
-  | { kind: "nearest"; title: string; note?: string; options: { link: LessonLink; reason: string }[] };
+  | { kind: "nearest"; title: string; note?: string | undefined; options: { link: LessonLink; reason: string }[] };
 
 /** Character cap shared by the text box and the engine, bounding regex work per question. */
 export const MAX_QUESTION_LENGTH = 1200;

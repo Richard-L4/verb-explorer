@@ -53,7 +53,7 @@ const ENDS: Record<"ar" | "er" | "ir", { present: string[]; stemSafe: string[]; 
 export type FormSource = "lesson" | "regular";
 export interface FormIndex {
   forms: Map<string, { verbs: Set<string>; source: FormSource }>;
-  wrong: Map<string, { verb: string; correct?: string }>;
+  wrong: Map<string, { verb: string; correct?: string | undefined }>;
 }
 
 const cache = new WeakMap<object, FormIndex>();
