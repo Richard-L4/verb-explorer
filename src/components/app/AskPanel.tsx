@@ -172,6 +172,22 @@ function AskAnswer({ result, onPick }: { result: AskResult; onPick: (q: string) 
         <p className="mt-1 text-sm text-muted-foreground">{result.message}</p>
       </div>
     );
+  if (result.kind === "nearest")
+    return (
+      <div className="mt-5 rounded-2xl border border-border p-4" aria-live="polite">
+        <p className="flex items-center gap-2 font-medium"><HelpCircle className="size-4 text-primary" /> {result.title}</p>
+        <ul className="mt-3 space-y-3">
+          {result.options.map((o) => (
+            <li key={o.link.label}>
+              <p className="text-sm text-muted-foreground">{o.reason}</p>
+              <Button asChild variant="outline" size="sm" className="mt-1">
+                <Link to={o.link.to} params={o.link.params as never}>{o.link.label} <ArrowRight className="size-4" /></Link>
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   return (
     <div className="mt-5 rounded-2xl border border-primary/40 bg-primary/5 p-5" aria-live="polite">
       <p className="text-xs font-semibold uppercase tracking-wide text-primary">{AREA_LABEL[result.area]}</p>
