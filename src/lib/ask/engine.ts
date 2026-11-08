@@ -374,6 +374,10 @@ export function ask(question: string, data: AskData): AskResult {
   const unlisted: AskUnlisted[] = [];
   const roles: WordRole[] = [];
   const words = q.split(" ");
+  // Quote the learner's own spelling and capitalisation in messages; matching
+  // keeps using the normalised form, so search behaviour is unchanged.
+  const typed = question.slice(0, MAX_QUESTION_LENGTH).split(/\s+/).map((t) => t.replace(/^[^\p{L}]+|[^\p{L}]+$/gu, ""));
+  const asTyped = (w: string) => typed.find((t) => t && normalise(t) === w) ?? w;
   const asksAboutWord = /\b(?:verb|verbo|vs|versus|conjugate|conjugar|use|usar|mean|means|significa|difference|diferencia|decimos|dices|or|o)\b/.test(q);
 
   // Fuzzy candidates are built once, not once per token. They remain supporting
@@ -431,7 +435,7 @@ export function ask(question: string, data: AskData): AskResult {
       if (headwords.has(verb)) {
         nearest.push({ verb, reason: `“${w}” isn't standard Spanish${bad.correct ? ` — the correct form is “${bad.correct}”` : ""} (${verb}).` });
         if (bad.correct && !corrections.some((item) => item.original === w)) {
-          corrections.push({ original: w, corrected: bad.correct, explanation: `“${w}” is a common over-regularisation. Use “${bad.correct}” from ${verb}; the nearest lesson is only a suggestion.` });
+          corrections.push({ original: w, corrected: bad.correct, explanation: `“${asTyped(w)}” is a common mistake: Spanish uses “${bad.correct}” from ${verb}; the nearest lesson is only a suggestion.` });
         }
       }
       continue;
@@ -452,10 +456,10 @@ export function ask(question: string, data: AskData): AskResult {
         corrections.push({
           original: w,
           corrected: coinage.corrected,
-          explanation: `“${w}” is a learner coinage formed on “${coinage.corrected}”. Did you mean “${coinage.corrected}” (${coinage.meaning}) from ${coinage.verb}?`,
+          explanation: `The word “${asTyped(w)}” looks like a word formed by mistake, possibly from “${coinage.corrected}”. Did you mean “${coinage.corrected}” (${coinage.meaning}), from ${coinage.verb}?`,
         });
       }
-      nearest.push({ verb: coinage.verb, reason: `“${w}” may be a learner coinage. The verified related word is “${coinage.corrected}” (${coinage.verb}).` });
+      nearest.push({ verb: coinage.verb, reason: `“${asTyped(w)}” looks closest to “${coinage.corrected}” (${coinage.meaning}), from ${coinage.verb}. This is a spelling suggestion only, not a word with the same meaning.` });
       roles.push({ word: w, display: coinage.corrected, verb: coinage.verb, kind: "noun", meaning: coinage.meaning });
       continue;
     }
