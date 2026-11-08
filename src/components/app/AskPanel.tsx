@@ -131,7 +131,7 @@ export function AskPanel({ onAnswerChange }: { onAnswerChange?: (shown: boolean)
                     disabled={listening}
                     onClick={() => setLang(l)}
                     aria-pressed={lang === l}
-                    className={`px-3 py-1.5 ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+                    className={`px-3 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
                   >
                     {l === "en-GB" ? "English" : "Español"}
                   </button>
