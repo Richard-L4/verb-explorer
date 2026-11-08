@@ -24,3 +24,15 @@ Layout and scrolling only. Search matching, wording, lessons, access and payment
 ## Files
 - src/components/app/AskPanel.tsx (placeholder, subtitle, scroll to answer, language label)
 - src/routes/search.tsx (tighter title spacing, hide the empty panel while an answer shows)
+
+## Final audit (run straight after the layout change, same session)
+The audit brief assumes the layout change above is already in place. It isn't yet, so the audit runs right after it is built:
+- First visit: is it obvious where to type, is the placeholder clear, are Ask, Speak and the language switch understandable, and is the box visible without scrolling.
+- Asking: a plain verb question, a misspelling, an off-pack word, a question with several words, and a simulated spoken question. Each answer must land in view.
+- Repeated use: a second question, Clear, a "Did you mean" option, switching English/Español, the ordinary word search, and when the empty panel shows or hides.
+- At 1280px and 390px: no sideways scrolling, nothing hidden under the top bar, keyboard focus visible, reduced motion respected.
+- Tests, TypeScript, preview build log and console errors. Trial, purchases, subjunctive access and lesson links stay unchanged.
+- Only real defects are fixed. Other suggestions are listed, not built.
+- The report gives pass/fail per section and ends with READY TO PUBLISH or NOT READY TO PUBLISH. Nothing is published.
+
+Total estimate for the layout change and the audit: about 2-3 credits.
