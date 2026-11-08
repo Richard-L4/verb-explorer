@@ -36,3 +36,14 @@ The audit brief assumes the layout change above is already in place. It isn't ye
 - The report gives pass/fail per section and ends with READY TO PUBLISH or NOT READY TO PUBLISH. Nothing is published.
 
 Total estimate for the layout change and the audit: about 2-3 credits.
+
+## Whole-app release check (last step, after the audit)
+Read-only, unless a genuine release blocker is found; any fix is explained.
+- Core: landing page, navigation, all 100 cards (examples, translations, tricky notes), Browse and load more, Random, British sayings, Search and Ask.
+- Subjunctive: what is locked for visitors and trial users, lifetime access through a test pass only, present and imperfect lessons, quiz categories, question counts and results. Locked content must not be sent to the browser.
+- Trial and payments: 7-day trial, the £4.99 checkout opening correctly (no real purchase), restore by email up to sending the code, creator access, and server-side checks of all of these. No customer records are changed.
+- Technical: tests, TypeScript, preview build log, console, desktop and mobile, and broken links.
+- Security: confirm no secret keys appear in the browser code, access is checked on the server, and trial or purchase records can't be changed from the browser. Database rules and settings are read only, never changed.
+- Report: pass/fail per section, blockers, files changed, what could not be verified, credits spent and remaining. Ends with READY TO PUBLISH or NOT READY TO PUBLISH. Nothing is published.
+
+Revised total estimate (layout change, audit and release check): about 4-6 credits, kept well above the 25.1 floor.
