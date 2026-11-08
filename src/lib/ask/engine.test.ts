@@ -97,6 +97,62 @@ describe("links and access", () => {
   });
 });
 
+describe("generalised composite question resolution", () => {
+  it("handles a misspelling and a coinage in one complete English question", () => {
+    const r = run("is it desperdida or desperjucio");
+    expect(r.kind).toBe("nearest");
+    if (r.kind !== "nearest") return;
+    expect(r.corrections?.[0]).toMatchObject({ original: "desperdida", corrected: "pérdida" });
+    expect(r.unlisted?.[0]).toMatchObject({ term: "desperjucio", verb: "desperdiciar" });
+    expect(r.unlisted?.[0]?.note).toContain("desperdicio");
+    expect(r.options.some((o) => (o.link.params as { cardId: string }).cardId === "perder-vs-faltar")).toBe(true);
+  });
+
+  it("handles the same comparison in a full Spanish carrier frame without choosing por", () => {
+    const r = run("por qué decimos desperdicio de agua y no desperdida");
+    expect(r.kind).toBe("nearest");
+    if (r.kind !== "nearest") return;
+    expect(r.corrections?.[0]?.corrected).toBe("pérdida");
+    expect(r.unlisted?.[0]?.verb).toBe("desperdiciar");
+    expect(r.options.some((o) => (o.link.params as { cardId: string }).cardId === "perder-vs-faltar")).toBe(true);
+    expect(r.options.some((o) => (o.link.params as { cardId: string }).cardId === "por-vs-para")).toBe(false);
+  });
+
+  it("explains a same-root verb versus noun contrast using the perder lesson", () => {
+    const r = run("pierdo o pérdida");
+    expect(r.kind).toBe("answer");
+    if (r.kind !== "answer") return;
+    expect(r.link.params).toEqual({ cardId: "perder-vs-faltar" });
+    expect(r.distinction).toContain("verb form");
+    expect(r.distinction).toContain("noun");
+  });
+
+  it("keeps an off-pack notice alongside a directly recognised lesson", () => {
+    const r = run("pierdo o desperdicio el dinero");
+    expect(r.kind).toBe("answer");
+    if (r.kind !== "answer") return;
+    expect(r.link.params).toEqual({ cardId: "perder-vs-faltar" });
+    expect(r.unlisted?.[0]?.verb).toBe("desperdiciar");
+  });
+
+  it("reports a real off-pack verb without declaring unknown words incorrect", () => {
+    const known = run("what does cocinar mean");
+    expect(known.kind).toBe("fallback");
+    if (known.kind === "fallback") expect(known.message).toContain("to cook");
+    const unknown = run("what does zorbular mean");
+    expect(unknown.kind).toBe("fallback");
+    if (unknown.kind === "fallback") expect(unknown.message).not.toContain("does not exist");
+  });
+
+  it("does not coin corrections without contrast and verified root evidence", () => {
+    const alone = run("desperdida");
+    expect(alone.kind).not.toBe("answer");
+    if (alone.kind === "nearest" || alone.kind === "answer") expect(alone.corrections).toBeUndefined();
+    const realWord = run("desconocido o conocido");
+    if (realWord.kind === "nearest" || realWord.kind === "answer") expect(realWord.corrections).toBeUndefined();
+  });
+});
+
 describe("verb recognition against the real deck", () => {
   const cardId = (q: string) => {
     const r = run(q);

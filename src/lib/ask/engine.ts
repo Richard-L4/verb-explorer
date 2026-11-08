@@ -5,8 +5,9 @@
  *  B. a real Verb Wise card/entry the caller can see supports it (else: fallback).
  * The caller passes only data it is allowed to see, so locked content cannot leak.
  */
-import { verbCandidates, EXTRA_NOTES, EXPLICIT_FORMS } from "./verb-forms";
-import { buildFormIndex, fuzzyVerb, HOMOGRAPHS, VERB_CONTEXT } from "./match";
+import { verbCandidates, EXTRA_NOTES, EXPLICIT_FORMS, DERIVED_NOUNS } from "./verb-forms";
+import { buildFormIndex, fuzzyVerb, HOMOGRAPHS, VERB_CONTEXT, parseQuestionFrame, verifiedPrefixCoinage } from "./match";
+import { OFF_PACK_WORDS, OFF_PACK_POOL, displayOffPack, type OffPackWord } from "./off-pack";
 import type { VerbCard } from "@/data/cards";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { normalise, stripAccents } from "./normalise";
@@ -28,6 +29,25 @@ export type LessonLink =
   | { to: "/subjunctive/present/$entryId"; params: { entryId: string }; label: string }
   | { to: "/subjunctive/imperfect/$entryId"; params: { entryId: string }; label: string };
 
+export interface AskCorrection {
+  original: string;
+  corrected: string;
+  explanation: string;
+}
+
+export interface AskUnlisted {
+  term: string;
+  verb: string;
+  note: string;
+}
+
+/** Extra context that can accompany either a lesson answer or nearest-card options. */
+interface ResolutionNotes {
+  corrections?: AskCorrection[];
+  unlisted?: AskUnlisted[];
+  distinction?: string;
+}
+
 /**
  * Discriminated union returned by `ask`. The UI switches on `kind`:
  * empty (nothing typed), answer (both checks passed), clarify (several readings),
@@ -44,12 +64,15 @@ export type AskResult =
       why: string;
       /** Extra explanation written by the engine, not an original Verb Wise example. */
       extra?: string | undefined;
+      corrections?: AskCorrection[];
+      unlisted?: AskUnlisted[];
+      distinction?: string;
       link: LessonLink;
     }
   | { kind: "clarify"; question: string; options: { label: string; query: string }[] }
   | { kind: "fallback"; title: string; message: string; related?: LessonLink }
   /** Probable but not certain: a spelling slip, learner error or ambiguous word. */
-  | { kind: "nearest"; title: string; note?: string | undefined; options: { link: LessonLink; reason: string }[] };
+  | { kind: "nearest"; title: string; note?: string | undefined; corrections?: AskCorrection[]; unlisted?: AskUnlisted[]; distinction?: string; options: { link: LessonLink; reason: string }[] };
 
 /** Character cap shared by the text box and the engine, bounding regex work per question. */
 export const MAX_QUESTION_LENGTH = 1200;
