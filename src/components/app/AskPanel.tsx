@@ -121,6 +121,7 @@ export function AskPanel({ onAnswerChange }: { onAnswerChange?: (shown: boolean)
                 {listening ? <Square className="size-4" /> : <Mic className="size-4" />}
                 {listening ? "Stop" : "Speak"}
               </Button>
+              <span className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground" aria-hidden="true">Speech language:</span>
               <div className="flex overflow-hidden rounded-full border border-border text-xs" role="group" aria-label="Speech language">
                 {(["en-GB", "es-ES"] as const).map((l) => (
@@ -136,6 +137,7 @@ export function AskPanel({ onAnswerChange }: { onAnswerChange?: (shown: boolean)
                   </button>
                 ))}
               </div>
+              </span>
             </>
           ) : null}
           {text ? (
