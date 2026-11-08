@@ -7,6 +7,8 @@
  */
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { stripAccents } from "./normalise";
+import { DERIVED_NOUNS, EXPLICIT_FORMS } from "./verb-forms";
+import { OFF_PACK_WORDS } from "./off-pack";
 
 /** One adjustable place for the match thresholds described in the plan. */
 export const THRESHOLDS = { minFuzzyLength: 5, longWord: 8 } as const;
@@ -133,7 +135,7 @@ const phon = (w: string) => w.replace(/k/g, "qu").replace(/[zs]/g, "c").replace(
  * Fuzzy lookup: returns the single verb whose nearest form is strictly closer than any
  * other verb's, or null. Words under 5 letters never match; 5–7 allow 1 edit, 8+ allow 2.
  */
-export function fuzzyVerb(word: string, candidates: Iterable<[string, string]>): { verb: string; form: string } | null {
+export function fuzzyVerb(word: string, candidates: Iterable<[string, string]>): { verb: string; form: string; distance: number } | null {
   if (word.length < THRESHOLDS.minFuzzyLength || STOPWORDS.has(word)) return null;
   const max = word.length >= THRESHOLDS.longWord ? 2 : 1;
   const pw = phon(word);
@@ -147,5 +149,93 @@ export function fuzzyVerb(word: string, candidates: Iterable<[string, string]>):
   const ranked = [...best].sort((a, b) => a[1].d - b[1].d);
   if (!ranked.length) return null;
   if (ranked.length > 1 && ranked[1]![1].d === ranked[0]![1].d) return null;
-  return { verb: ranked[0]![0], form: ranked[0]![1].form };
+  return { verb: ranked[0]![0], form: ranked[0]![1].form, distance: ranked[0]![1].d };
+}
+
+/* ------------------------------------------------------- question frames --- */
+
+export interface QuestionFrame {
+  /** Token indexes that belong to inquiry syntax, not to the topic being asked about. */
+  suppressed: Set<number>;
+  /** Non-carrier tokens; recognition and corrections are limited to this topic area. */
+  focuses: Set<number>;
+  /** Whether the question explicitly contrasts two alternatives. */
+  contrast: boolean;
+}
+
+/**
+ * Reusable bilingual inquiry frames. A word such as "por" or "es" is suppressed
+ * only when it occupies one of these exact carrier positions. The same word remains
+ * a focus in "por or para" or "ser or estar", so suppression is context-dependent.
+ */
+const CARRIER_PREFIXES: string[][] = [
+  ["por", "que", "decimos"], ["por", "que", "dices"], ["por", "que", "dice"],
+  ["por", "que", "usamos"], ["por", "que", "usas"], ["por", "que", "usa"],
+  ["para", "que", "usamos"], ["para", "que", "usas"],
+  ["por", "que", "se", "dice"], ["como", "se", "dice"],
+  ["como", "uso"], ["como", "usas"], ["como", "usamos"],
+  ["cuando", "uso"], ["cuando", "usas"], ["cuando", "usamos"],
+  ["cual", "es", "la", "diferencia", "entre"],
+  ["que", "diferencia", "hay", "entre"],
+];
+
+const CONTRAST_MARKERS = new Set(["or", "vs", "versus", "o"]);
+const CONTRAST_PHRASES = ["and not", "y no", "instead of", "en vez de"];
+
+/** Segment a normalised question into carrier syntax, focus tokens and contrast. */
+export function parseQuestionFrame(q: string): QuestionFrame {
+  const words = q.split(" ");
+  const suppressed = new Set<number>();
+  for (let start = 0; start < words.length; start++) {
+    for (const prefix of CARRIER_PREFIXES) {
+      if (prefix.every((word, offset) => words[start + offset] === word)) {
+        for (let offset = 0; offset < prefix.length; offset++) suppressed.add(start + offset);
+      }
+    }
+  }
+  const contrast = words.some((word) => CONTRAST_MARKERS.has(word)) || CONTRAST_PHRASES.some((phrase) => ` ${q} `.includes(` ${phrase} `));
+  const separators = new Set<number>();
+  for (let i = 0; i < words.length; i++) {
+    if (CONTRAST_MARKERS.has(words[i]!)) separators.add(i);
+    if ((words[i] === "and" || words[i] === "y") && words[i + 1] === "not" || words[i] === "y" && words[i + 1] === "no") {
+      separators.add(i);
+      separators.add(i + 1);
+    }
+    if (words[i] === "instead" && words[i + 1] === "of" || words[i] === "en" && words[i + 1] === "vez" && words[i + 2] === "de") {
+      separators.add(i);
+      separators.add(i + 1);
+      if (words[i] === "en") separators.add(i + 2);
+    }
+  }
+  const focuses = new Set<number>();
+  for (let i = 0; i < words.length; i++) if (!suppressed.has(i) && !separators.has(i)) focuses.add(i);
+  return { suppressed, focuses, contrast };
+}
+
+/* ------------------------------------------------------ verified morphology --- */
+
+export interface PrefixCoinage {
+  original: string;
+  corrected: string;
+  verb: string;
+  meaning: string;
+}
+
+/**
+ * Detect a learner coinage only with positive evidence: an explicit contrast, a
+ * productive prefix, and a remaining stem that is a verified derived noun. Known
+ * words are never flagged. This does not claim that arbitrary unknown words are bad
+ * Spanish, and it never creates a definite card match on its own.
+ */
+export function verifiedPrefixCoinage(word: string, contrast: boolean): PrefixCoinage | null {
+  if (!contrast || OFF_PACK_WORDS[word] || DERIVED_NOUNS[word] || EXPLICIT_FORMS[word]) return null;
+  for (const prefix of ["des", "re"]) {
+    if (!word.startsWith(prefix)) continue;
+    const stem = word.slice(prefix.length);
+    if (stem.length < 4) continue;
+    const root = DERIVED_NOUNS[stem];
+    if (!root) continue;
+    return { original: word, corrected: root.display, verb: root.verb, meaning: root.meaning };
+  }
+  return null;
 }
