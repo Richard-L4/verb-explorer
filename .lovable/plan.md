@@ -39,3 +39,10 @@ Screenshots on desktop (1280px) and mobile (390px). No publishing.
 - src/lib/ask/engine.test.ts (new wording assertions)
 
 Estimated cost: about 1 credit.
+
+## Additions from the final brief
+- If the search lower-cases words before matching, the messages will quote the learner's original typed word (e.g. "Desperdida") while matching itself stays on the lower-case form, so search behaviour is unchanged.
+- Test added: the common-mistake message shows the real form and verb, never literal "X" or "Y".
+- Credits checked before starting; stop rather than go near the 25.1 floor.
+- TypeScript and the automatic build result are reported from the preview's own build log (I can't start a separate production build myself).
+- Desktop and mobile check also confirms the correction, "Not covered" note, "Verb or noun?" note and lesson link appear together, with no console errors or sideways scrolling.
