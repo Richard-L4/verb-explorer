@@ -140,7 +140,7 @@ export function fuzzyVerb(word: string, candidates: Iterable<[string, string]>):
   const best = new Map<string, { d: number; form: string }>();
   for (const [form, verb] of candidates) {
     const d = Math.min(editDistance(word, form, max), editDistance(pw, phon(form), max));
-    if (d > max || d === 0) continue;
+    if (d > max || form === word) continue;
     const cur = best.get(verb);
     if (!cur || d < cur.d) best.set(verb, { d, form });
   }
