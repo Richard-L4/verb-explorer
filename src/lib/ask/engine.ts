@@ -258,6 +258,43 @@ function cardAnswer(card: VerbCard, qTokens: Set<string>): AskResult {
   };
 }
 
+interface WordRole {
+  word: string;
+  display: string;
+  verb: string;
+  kind: "verb" | "noun";
+  meaning?: string | undefined;
+}
+
+/** Dictionary-status wording only; it never supplies lesson examples or card evidence. */
+function makeUnlisted(term: string, reference: string, entry: OffPackWord): AskUnlisted {
+  const display = displayOffPack(reference);
+  const suggestion = term === reference ? "" : `“${term}” looks like “${display}”. `;
+  const relation = entry.kind === "noun"
+    ? `“${display}” is a noun meaning “${entry.meaning}”, associated with ${entry.verb}.`
+    : `“${display}” means “${entry.meaning}”.`;
+  return {
+    term,
+    verb: entry.verb,
+    note: `${suggestion}${relation} ${entry.verb} isn't currently covered by a Verb Wise lesson.`,
+  };
+}
+
+/** Explain only a directly recognised, same-root verb/noun comparison. */
+function makeDistinction(roles: WordRole[]): string | undefined {
+  for (let i = 0; i < roles.length; i++) {
+    for (let j = i + 1; j < roles.length; j++) {
+      const a = roles[i]!;
+      const b = roles[j]!;
+      if (a.verb !== b.verb || a.kind === b.kind) continue;
+      const noun = a.kind === "noun" ? a : b;
+      const verb = a.kind === "verb" ? a : b;
+      return `“${verb.display}” is a verb form of ${a.verb}, while “${noun.display}” is a noun meaning “${noun.meaning ?? "the related idea"}”. They come from the same verb but do different jobs in a sentence.`;
+    }
+  }
+  return undefined;
+}
+
 /* --------------------------------------------------------------- main --- */
 
 /**
