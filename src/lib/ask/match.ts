@@ -27,7 +27,7 @@ const STEM_CHANGE = new Set([
 /** Known correct forms for common learner over-regularisations. */
 const CORRECTIONS: Record<string, string> = {
   sabo: "sé", ponido: "puesto", hacido: "hecho", decido: "dicho", escribido: "escrito", volvido: "vuelto",
-  morido: "muerto", vido: "visto", abrido: "abierto", tenio: "tuvo", estoy: "estoy", cabo: "quepo",
+  morido: "muerto", vido: "visto", abrido: "abierto", tenio: "tuvo", cabo: "quepo",
   hazo: "hago", pono: "pongo", teno: "tengo", veno: "vengo", salo: "salgo", trao: "traigo", conoco: "conozco",
 };
 

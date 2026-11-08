@@ -5,7 +5,8 @@
  *  B. a real Verb Wise card/entry the caller can see supports it (else: fallback).
  * The caller passes only data it is allowed to see, so locked content cannot leak.
  */
-import { verbCandidates, EXTRA_NOTES } from "./verb-forms";
+import { verbCandidates, EXTRA_NOTES, EXPLICIT_FORMS } from "./verb-forms";
+import { buildFormIndex, fuzzyVerb, HOMOGRAPHS, VERB_CONTEXT } from "./match";
 import type { VerbCard } from "@/data/cards";
 import type { PublicSubjunctiveEntry } from "@/lib/content-access";
 import { normalise, stripAccents } from "./normalise";
@@ -46,7 +47,9 @@ export type AskResult =
       link: LessonLink;
     }
   | { kind: "clarify"; question: string; options: { label: string; query: string }[] }
-  | { kind: "fallback"; title: string; message: string; related?: LessonLink };
+  | { kind: "fallback"; title: string; message: string; related?: LessonLink }
+  /** Probable but not certain: a spelling slip, learner error or ambiguous word. */
+  | { kind: "nearest"; title: string; note?: string; options: { link: LessonLink; reason: string }[] };
 
 /** Character cap shared by the text box and the engine, bounding regex work per question. */
 export const MAX_QUESTION_LENGTH = 1200;
@@ -304,8 +307,31 @@ export function ask(question: string, data: AskData): AskResult {
   // guess that is accepted only when it is a real headword on a card.
   const mentioned = new Set<string>();
   let missingVerb: string | undefined;
-  for (const w of q.split(" ")) {
+  const headwords = new Set([...idx.deckWords].filter((w) => /(?:ar|er|ir)(?:se)?$/.test(w)));
+  const forms = buildFormIndex(headwords, [data.present, data.imperfect], data);
+  const nearest: { verb: string; reason: string }[] = [];
+  const words = q.split(" ");
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i]!;
     if (idx.deckWords.has(w)) { mentioned.add(w); continue; }
+    const homo = HOMOGRAPHS[w];
+    if (homo) {
+      const prev = words[i - 1];
+      if (homo.verb && headwords.has(homo.verb) && prev && VERB_CONTEXT.has(prev)) mentioned.add(homo.verb);
+      else if (homo.verb && headwords.has(homo.verb)) nearest.push({ verb: homo.verb, reason: `“${w}” can be a form of ${homo.verb}, but it can also be ${homo.other}.` });
+      continue;
+    }
+    const form = forms.forms.get(w);
+    if (form) {
+      for (const v of form.verbs) if (idx.deckWords.has(v)) mentioned.add(v);
+      continue;
+    }
+    const bad = forms.wrong.get(w);
+    if (bad) {
+      const verb = bad.verb || EXPLICIT_FORMS[stripAccents(bad.correct ?? "")] || "";
+      if (headwords.has(verb)) nearest.push({ verb, reason: `“${w}” isn't standard Spanish${bad.correct ? ` — the correct form is “${bad.correct}”` : ""} (${verb}).` });
+      continue;
+    }
     const { explicit, guesses } = verbCandidates(w);
     if (explicit) {
       if (idx.deckWords.has(explicit)) mentioned.add(explicit);
@@ -313,7 +339,13 @@ export function ask(question: string, data: AskData): AskResult {
       continue;
     }
     const hit = guesses.find((g) => idx.deckWords.has(g));
-    if (hit) mentioned.add(hit);
+    if (hit) { mentioned.add(hit); continue; }
+    const pool: [string, string][] = [];
+    for (const [f, v] of forms.forms) for (const verb of v.verbs) pool.push([f, verb]);
+    for (const h of headwords) pool.push([h, h]);
+    for (const [f, v] of Object.entries(EXPLICIT_FORMS)) if (headwords.has(v) && f.length >= 4) pool.push([f, v]);
+    const fz = fuzzyVerb(w, pool);
+    if (fz) nearest.push({ verb: fz.verb, reason: `“${w}” looks like a misspelling of “${fz.form}” (${fz.verb}).` });
   }
   if (mentioned.size) {
     const counts = new Map<string, number>();
@@ -330,6 +362,16 @@ export function ask(question: string, data: AskData): AskResult {
       question: "That word appears in more than one lesson. Which contrast do you mean?",
       options: tied.slice(0, 3).map(([id]) => ({ label: cardById.get(id)!.title, query: cardById.get(id)!.title })),
     };
+  }
+
+  // Probable but unconfirmed readings: offer the nearest cards, never a definite answer.
+  if (nearest.length) {
+    const options: { link: LessonLink; reason: string }[] = [];
+    const seen = new Set<string>();
+    for (const n of nearest)
+      for (const id of idx.cardsByWord.get(n.verb) ?? [])
+        if (!seen.has(id) && options.length < 3) { seen.add(id); options.push({ link: cardLink(cardById.get(id)!), reason: n.reason }); }
+    if (options.length) return { kind: "nearest", title: "This is probably what you mean:", options };
   }
 
   // A trusted form whose verb is on no card: that verb genuinely isn't listed.
