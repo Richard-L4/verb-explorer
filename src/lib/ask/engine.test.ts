@@ -189,3 +189,34 @@ describe("verb recognition against the real deck", () => {
     expect(cardId("caminamos mucho")).not.toBe("perder-vs-faltar");
   });
 });
+
+describe("learner-friendly wording for made-up words", () => {
+  const all = (r: ReturnType<typeof run>) => JSON.stringify(r);
+  it("explains a made-up word plainly and never says coinage", () => {
+    const r = run("is it desperdida or desperjucio");
+    if (r.kind !== "nearest") throw new Error("expected nearest");
+    const c = r.corrections?.[0]?.explanation ?? "";
+    expect(c).toContain("looks like a word formed by mistake");
+    expect(c).toContain("Did you mean “pérdida” (loss), from perder?");
+    expect(all(r)).not.toMatch(/coinage/i);
+  });
+  it("gives the suggestion's own meaning without equating it to desperdicio", () => {
+    const r = run("por qué decimos desperdicio de agua y no desperdida");
+    if (r.kind !== "nearest") throw new Error("expected nearest");
+    const reason = r.options.map((o) => o.reason).join(" ");
+    expect(reason).toContain("looks closest to “pérdida” (loss), from perder");
+    expect(reason).toContain("not a word with the same meaning");
+    expect(reason).not.toMatch(/desperdicio[^.]*same meaning|same meaning[^.]*desperdicio/);
+  });
+  it("keeps the learner's own capitalisation in quotes", () => {
+    const r = run("is it Desperdida or desperjucio");
+    if (r.kind !== "nearest") throw new Error("expected nearest");
+    expect(r.corrections?.[0]?.explanation).toContain("The word “Desperdida” looks like");
+  });
+  it("fills the common-mistake message with the real form and verb", () => {
+    const r = run("hacido");
+    const text = (r.kind === "nearest" || r.kind === "answer") ? (r.corrections ?? []).map((c) => c.explanation).join(" ") : "";
+    expect(text).toMatch(/is a common mistake: Spanish uses “hecho” from hacer; the nearest lesson is only a suggestion\./);
+    expect(text).not.toMatch(/“X”|from Y\b/);
+  });
+});
