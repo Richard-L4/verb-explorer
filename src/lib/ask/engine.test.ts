@@ -213,4 +213,10 @@ describe("learner-friendly wording for made-up words", () => {
     if (r.kind !== "nearest") throw new Error("expected nearest");
     expect(r.corrections?.[0]?.explanation).toContain("The word “Desperdida” looks like");
   });
+  it("fills the common-mistake message with the real form and verb", () => {
+    const r = run("hacido");
+    const text = (r.kind === "nearest" || r.kind === "answer") ? (r.corrections ?? []).map((c) => c.explanation).join(" ") : "";
+    expect(text).toMatch(/is a common mistake: Spanish uses “hecho” from hacer; the nearest lesson is only a suggestion\./);
+    expect(text).not.toMatch(/“X”|from Y\b/);
+  });
 });
