@@ -362,51 +362,144 @@ export function ask(question: string, data: AskData): AskResult {
       return { kind: "clarify", question: "“I was” depends on meaning. Which are you trying to say?", options: opts };
   }
 
-  // 3. Verb-pair cards: Spanish words named in the question.
-  // Words map to headwords directly, through an explicit form, or through an ending
-  // guess that is accepted only when it is a real headword on a card.
+  // 3. Gather every recognised focus before choosing a result. An off-pack word,
+  // correction or fuzzy match therefore cannot terminate the rest of the question.
+  const frame = parseQuestionFrame(q);
   const mentioned = new Set<string>();
   let missingVerb: string | undefined;
   const headwords = new Set([...idx.deckWords].filter((w) => /(?:ar|er|ir)(?:se)?$/.test(w)));
   const forms = buildFormIndex(headwords, [data.present, data.imperfect], data);
   const nearest: { verb: string; reason: string }[] = [];
+  const corrections: AskCorrection[] = [];
+  const unlisted: AskUnlisted[] = [];
+  const roles: WordRole[] = [];
   const words = q.split(" ");
+  const asksAboutWord = /\b(?:verb|verbo|vs|versus|conjugate|conjugar|use|usar|mean|means|significa|difference|diferencia|decimos|dices|or|o)\b/.test(q);
+
+  // Fuzzy candidates are built once, not once per token. They remain supporting
+  // evidence only and never outrank an exact deck or verified lesson-form match.
+  const pool: [string, string][] = [];
+  for (const [f, v] of forms.forms) for (const verb of v.verbs) pool.push([f, verb]);
+  for (const h of headwords) pool.push([h, h]);
+  for (const [f, v] of Object.entries(EXPLICIT_FORMS)) if (headwords.has(v) && f.length >= 4) pool.push([f, v]);
+
+  const addReference = (original: string, reference: string, entry: OffPackWord, fuzzy: boolean) => {
+    if (idx.deckWords.has(entry.verb)) {
+      if (!fuzzy && entry.kind === "noun") {
+        mentioned.add(entry.verb);
+        roles.push({ word: original, display: displayOffPack(reference), verb: entry.verb, kind: "noun", meaning: entry.meaning });
+      } else {
+        nearest.push({ verb: entry.verb, reason: `“${original}” looks like “${displayOffPack(reference)}” (${entry.verb}).` });
+      }
+      return;
+    }
+    if (!unlisted.some((item) => item.term === original && item.verb === entry.verb)) unlisted.push(makeUnlisted(original, reference, entry));
+  };
+
   for (let i = 0; i < words.length; i++) {
     const w = words[i]!;
-    if (idx.deckWords.has(w)) { mentioned.add(w); continue; }
+    if (frame.suppressed.has(i)) continue;
+
+    // Exact deck words are always strongest, including por/para when they are topics.
+    if (idx.deckWords.has(w)) {
+      mentioned.add(w);
+      roles.push({ word: w, display: w, verb: w, kind: "verb" });
+      continue;
+    }
     const homo = HOMOGRAPHS[w];
     if (homo) {
       const prev = words[i - 1];
-      if (homo.verb && headwords.has(homo.verb) && prev && VERB_CONTEXT.has(prev)) mentioned.add(homo.verb);
-      else if (homo.verb && headwords.has(homo.verb)) nearest.push({ verb: homo.verb, reason: `“${w}” can be a form of ${homo.verb}, but it can also be ${homo.other}.` });
+      if (homo.verb && headwords.has(homo.verb) && prev && VERB_CONTEXT.has(prev)) {
+        mentioned.add(homo.verb);
+        roles.push({ word: w, display: w, verb: homo.verb, kind: "verb" });
+      } else if (homo.verb && headwords.has(homo.verb)) {
+        nearest.push({ verb: homo.verb, reason: `“${w}” can be a form of ${homo.verb}, but it can also be ${homo.other}.` });
+      }
       continue;
     }
     const form = forms.forms.get(w);
     if (form) {
-      for (const v of form.verbs) if (idx.deckWords.has(v)) mentioned.add(v);
+      for (const v of form.verbs) if (idx.deckWords.has(v)) {
+        mentioned.add(v);
+        roles.push({ word: w, display: w, verb: v, kind: "verb" });
+      }
       continue;
     }
     const bad = forms.wrong.get(w);
     if (bad) {
       const verb = bad.verb || EXPLICIT_FORMS[stripAccents(bad.correct ?? "")] || "";
-      if (headwords.has(verb)) nearest.push({ verb, reason: `“${w}” isn't standard Spanish${bad.correct ? ` — the correct form is “${bad.correct}”` : ""} (${verb}).` });
+      if (headwords.has(verb)) {
+        nearest.push({ verb, reason: `“${w}” isn't standard Spanish${bad.correct ? ` — the correct form is “${bad.correct}”` : ""} (${verb}).` });
+        if (bad.correct && !corrections.some((item) => item.original === w)) {
+          corrections.push({ original: w, corrected: bad.correct, explanation: `“${w}” is a common over-regularisation. Use “${bad.correct}” from ${verb}; the nearest lesson is only a suggestion.` });
+        }
+      }
       continue;
     }
+
+    // A known reference word is safe before morphology; a real prefixed word can
+    // therefore never be reclassified as a coinage merely because its root is known.
+    const reference = OFF_PACK_WORDS[w];
+    if (reference) {
+      addReference(w, w, reference, false);
+      roles.push({ word: w, display: displayOffPack(w), verb: reference.verb, kind: reference.kind, meaning: reference.meaning });
+      continue;
+    }
+
+    const coinage = verifiedPrefixCoinage(w, frame.contrast && frame.focuses.has(i));
+    if (coinage) {
+      if (!corrections.some((item) => item.original === w)) {
+        corrections.push({
+          original: w,
+          corrected: coinage.corrected,
+          explanation: `“${w}” is a learner coinage formed on “${coinage.corrected}”. Did you mean “${coinage.corrected}” (${coinage.meaning}) from ${coinage.verb}?`,
+        });
+      }
+      nearest.push({ verb: coinage.verb, reason: `“${w}” may be a learner coinage. The verified related word is “${coinage.corrected}” (${coinage.verb}).` });
+      roles.push({ word: w, display: coinage.corrected, verb: coinage.verb, kind: "noun", meaning: coinage.meaning });
+      continue;
+    }
+
     const { explicit, guesses } = verbCandidates(w);
     if (explicit) {
-      if (idx.deckWords.has(explicit)) mentioned.add(explicit);
-      else missingVerb ??= explicit;
+      if (idx.deckWords.has(explicit)) {
+        mentioned.add(explicit);
+        const noun = DERIVED_NOUNS[w];
+        roles.push(noun
+          ? { word: w, display: noun.display, verb: explicit, kind: "noun", meaning: noun.meaning }
+          : { word: w, display: w, verb: explicit, kind: "verb" });
+      } else {
+        missingVerb ??= explicit;
+        const entry = OFF_PACK_WORDS[explicit];
+        if (entry) addReference(w, explicit, entry, false);
+      }
       continue;
     }
     const hit = guesses.find((g) => idx.deckWords.has(g));
-    if (hit) { mentioned.add(hit); continue; }
-    const pool: [string, string][] = [];
-    for (const [f, v] of forms.forms) for (const verb of v.verbs) pool.push([f, verb]);
-    for (const h of headwords) pool.push([h, h]);
-    for (const [f, v] of Object.entries(EXPLICIT_FORMS)) if (headwords.has(v) && f.length >= 4) pool.push([f, v]);
-    const fz = fuzzyVerb(w, pool);
-    if (fz) nearest.push({ verb: fz.verb, reason: `“${w}” looks like a misspelling of “${fz.form}” (${fz.verb}).` });
+    if (hit) {
+      mentioned.add(hit);
+      roles.push({ word: w, display: w, verb: hit, kind: "verb" });
+      continue;
+    }
+
+    const deckFuzzy = fuzzyVerb(w, pool);
+    const referenceFuzzy = (frame.contrast || words.length <= 4 || asksAboutWord) ? fuzzyVerb(w, OFF_PACK_POOL) : null;
+    const referenceEntry = referenceFuzzy ? OFF_PACK_WORDS[referenceFuzzy.form] : undefined;
+    // On equal spelling evidence, prefer a curriculum-status note over a false card.
+    if (referenceFuzzy && referenceEntry && (!deckFuzzy || referenceFuzzy.distance <= deckFuzzy.distance)) {
+      addReference(w, referenceFuzzy.form, referenceEntry, true);
+    } else if (deckFuzzy) {
+      nearest.push({ verb: deckFuzzy.verb, reason: `“${w}” looks like a misspelling of “${deckFuzzy.form}” (${deckFuzzy.verb}).` });
+    }
   }
+
+  const distinction = frame.contrast ? makeDistinction(roles) : undefined;
+  const notes: ResolutionNotes = {
+    ...(corrections.length ? { corrections } : {}),
+    ...(unlisted.length ? { unlisted } : {}),
+    ...(distinction ? { distinction } : {}),
+  };
+
   if (mentioned.size) {
     const counts = new Map<string, number>();
     for (const w of mentioned) for (const id of idx.cardsByWord.get(w) ?? []) counts.set(id, (counts.get(id) ?? 0) + 1);
@@ -415,7 +508,7 @@ export function ask(question: string, data: AskData): AskResult {
     if (tied.length === 1) {
       const r = cardAnswer(cardById.get(tied[0]![0])!, qTokens);
       const note = EXTRA_NOTES.find(([re]) => re.test(q));
-      return note && r.kind === "answer" ? { ...r, extra: note[1] } : r;
+      return note && r.kind === "answer" ? { ...r, ...notes, extra: note[1] } : { ...r, ...notes };
     }
     return {
       kind: "clarify",
@@ -424,18 +517,19 @@ export function ask(question: string, data: AskData): AskResult {
     };
   }
 
-  // Probable but unconfirmed readings: offer the nearest cards, never a definite answer.
+  // Probable but unconfirmed readings: offer nearest cards and all gathered notes.
   if (nearest.length) {
     const options: { link: LessonLink; reason: string }[] = [];
     const seen = new Set<string>();
     for (const n of nearest)
       for (const id of idx.cardsByWord.get(n.verb) ?? [])
         if (!seen.has(id) && options.length < 3) { seen.add(id); options.push({ link: cardLink(cardById.get(id)!), reason: n.reason }); }
-    if (options.length) return { kind: "nearest", title: "This is probably what you mean:", options };
+    if (options.length) return { kind: "nearest", title: "This is probably what you mean:", ...notes, options };
   }
 
-  // A trusted form whose verb is on no card: that verb genuinely isn't listed.
-  if (missingVerb) return notListed();
+  // A trusted form or reference verb on no card is reported only after all other
+  // terms have had a chance to support a lesson or nearest-card result.
+  if (missingVerb || unlisted.length) return notListed(unlisted);
 
   // 4. English meanings ("how do I say to know").
   for (const [re, id] of MEANING_HINTS) {
@@ -443,9 +537,8 @@ export function ask(question: string, data: AskData): AskResult {
     if (card && re.test(q)) return cardAnswer(card, qTokens);
   }
 
-  // 5. Unknown Spanish verb.
-  const asksAboutVerb = /\b(?:verb|verbo|vs|versus|conjugate|conjugar|use|usar|mean|means|significa|difference|diferencia)\b/.test(q);
-  const unknownVerb = asksAboutVerb && q.split(" ").find((w) => w.length >= 4 && /(?:ar|er|ir)$/.test(w) && !idx.deckWords.has(w) && !NOT_VERBS.has(w));
+  // 5. An unrecognised infinitive-shaped word is "not listed", never "not Spanish".
+  const unknownVerb = asksAboutWord && q.split(" ").find((w) => w.length >= 4 && /(?:ar|er|ir)$/.test(w) && !idx.deckWords.has(w) && !NOT_VERBS.has(w));
   if (unknownVerb) return notListed();
   return outOfScope();
 }
