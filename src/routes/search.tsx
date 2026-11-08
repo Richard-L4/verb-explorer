@@ -30,6 +30,8 @@ export const Route = createFileRoute("/search")({
 function SearchPage() {
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
+  // While an Ask answer is showing, the empty "start typing" panel is hidden to avoid dead space.
+  const [askShown, setAskShown] = useState(false);
   // An effect schedules the delayed search; cleanup cancels the old timer on typing or leaving.
   useEffect(() => {
     const t = setTimeout(() => setDebounced(query), 150);
@@ -40,21 +42,16 @@ function SearchPage() {
 
   return (
     <PageTransition>
-      <PageHeader
-        eyebrow="Search"
-        title="Find a verb"
-        description="Search Spanish words, English meanings, examples and usage notes across all cards."
-      />
+      <PageHeader eyebrow="Search" title="Find a verb" />
 
       {/* Natural-language questions sit above the keyword search; see lib/ask/engine. */}
-      <AskPanel />
+      <AskPanel onAnswerChange={setAskShown} />
 
       <div className="relative mb-8">
         <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-primary" aria-hidden="true" />
         <input
           type="search"
           value={query}
-          autoFocus
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search verb cards"
           placeholder="Try 'estar', 'to be', 'deadline'…"
@@ -62,13 +59,13 @@ function SearchPage() {
         />
       </div>
 
-      {!trimmed ? (
+      {!trimmed ? (askShown ? null : (
         <EmptyState
           icon={SearchIcon}
           title="Start typing to search"
           description={`Results update as you type across all ${cardCount} cards — verbs, translations, notes and tricky bits.`}
         />
-      ) : results.length ? (
+      )) : results.length ? (
         <>
           <p className="mb-4 text-sm text-muted-foreground" aria-live="polite">
             {results.length} result{results.length === 1 ? "" : "s"} for “{trimmed}”

@@ -25,7 +25,7 @@ const AREA_LABEL = {
  * and microphone state. `useSubjunctive` supplies public or pass-unlocked entries, so the
  * engine never sees content this visitor is not entitled to.
  */
-export function AskPanel() {
+export function AskPanel({ onAnswerChange }: { onAnswerChange?: (shown: boolean) => void } = {}) {
   const { entries, imperfect } = useSubjunctive();
   const data = useMemo(() => ({ cards, present: entries, imperfect }), [entries, imperfect]);
   const [text, setText] = useState("");
@@ -35,6 +35,21 @@ export function AskPanel() {
   const [supported, setSupported] = useState(false);
   const dictation = useRef<{ stop(): void } | null>(null);
   const box = useRef<HTMLTextAreaElement>(null);
+  const answer = useRef<HTMLDivElement>(null);
+  // A submit counter, so asking the same question again still scrolls to the answer.
+  const [asked, setAsked] = useState(0);
+
+  // Focus the box on devices with a mouse; touch keyboards would cover the screen.
+  useEffect(() => {
+    if (window.matchMedia("(pointer: fine)").matches) box.current?.focus({ preventScroll: true });
+  }, []);
+  useEffect(() => onAnswerChange?.(!!result), [result, onAnswerChange]);
+  // Bring the answer into view after each submit; reduced-motion users get an instant jump.
+  useEffect(() => {
+    if (!asked || !answer.current) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    answer.current.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }, [asked]);
 
   useEffect(() => setSupported(!!getRecognitionCtor()), []);
   useEffect(() => () => dictation.current?.stop(), []);
@@ -50,6 +65,7 @@ export function AskPanel() {
   const submit = (q = text) => {
     dictation.current?.stop();
     setResult(ask(q, data));
+    setAsked((n) => n + 1);
   };
 
   /** Starts or stops dictation; new speech is appended to whatever is already typed. */
@@ -74,7 +90,6 @@ export function AskPanel() {
   return (
     <section className="surface-card mb-10 p-5 sm:p-7" aria-labelledby="ask-heading">
       <h2 id="ask-heading" className="font-display text-2xl font-semibold">Ask me a question</h2>
-      <p className="mt-1 text-sm text-muted-foreground">Ask in English or Spanish. Just describe what you're trying to say.</p>
 
       <form
         className="mt-4"
@@ -93,8 +108,8 @@ export function AskPanel() {
             if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submit();
           }}
           aria-label="Your question"
-          placeholder="Ask anything about Spanish verbs or grammar..."
-          className="w-full resize-none rounded-2xl border border-border bg-card/80 p-4 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+          placeholder="Type a Spanish word or ask a question..."
+          className="w-full resize-none rounded-2xl border-2 border-primary/40 bg-card/80 p-4 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
         />
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <Button type="submit" disabled={!text.trim()}>
@@ -106,6 +121,8 @@ export function AskPanel() {
                 {listening ? <Square className="size-4" /> : <Mic className="size-4" />}
                 {listening ? "Stop" : "Speak"}
               </Button>
+              <span className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground" aria-hidden="true">Speech language:</span>
               <div className="flex overflow-hidden rounded-full border border-border text-xs" role="group" aria-label="Speech language">
                 {(["en-GB", "es-ES"] as const).map((l) => (
                   <button
@@ -114,12 +131,13 @@ export function AskPanel() {
                     disabled={listening}
                     onClick={() => setLang(l)}
                     aria-pressed={lang === l}
-                    className={`px-3 py-1.5 ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+                    className={`px-3 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
                   >
                     {l === "en-GB" ? "English" : "Español"}
                   </button>
                 ))}
               </div>
+              </span>
             </>
           ) : null}
           {text ? (
@@ -146,7 +164,7 @@ export function AskPanel() {
         </p>
       </form>
 
-      {result ? <AskAnswer result={result} onPick={(q) => { setText(q); submit(q); }} /> : null}
+      {result ? <div ref={answer} className="scroll-mt-24"><AskAnswer result={result} onPick={(q) => { setText(q); submit(q); }} /></div> : null}
     </section>
   );
 }
