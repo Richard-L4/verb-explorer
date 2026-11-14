@@ -59,7 +59,7 @@ function fromNorthAmerica(region: "american" | "canadian"): SayingCard[] {
     id: e.id,
     region,
     category: e.category,
-    categoryHeading: headings.get(e.category),
+    categoryHeading: headings.get(e.category) ?? e.category,
     title: e.english,
     meaning: e.meaning,
     spanish: e.spanish,
