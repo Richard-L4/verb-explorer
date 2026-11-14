@@ -33,6 +33,7 @@
 - British 25 identical to `sayings.json`.
 - Every North American entry equals its source fields exactly; each category id exists in its region.
 - Search finds a US and a Canadian expression.
+- Browser check opens all 75 detail pages and confirms each shows its own expression, Spanish, example and (for new entries) status and full note.
 - Browser check: region buttons switch counts, a new detail page shows status and note, mobile has no sideways scrolling.
 - Full existing suite (282) must still pass.
 
