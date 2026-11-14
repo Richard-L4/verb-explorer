@@ -25,7 +25,7 @@ export function SayingCardTile({
   index?: number;
 }) {
   const examples = sayingExampleCount(saying);
-  const preview = saying.examples?.slice(0, 2) ?? [];
+  const preview = saying.spanish ? [{ es: saying.spanish }] : (saying.examples?.slice(0, 2) ?? []);
 
   return (
     // Framer Motion declares starting and target values; transition controls the timing.
@@ -54,9 +54,14 @@ export function SayingCardTile({
             ) : (
               <StatusPill tone={learned ? "learned" : studied ? "studied" : "new"} />
             )}
-            {saying.category ? (
+            {saying.region === "british" && saying.category ? (
               <span className="rounded-full border border-border/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 {saying.category}
+              </span>
+            ) : null}
+            {saying.status ? (
+              <span className="rounded-full border border-accent/40 px-2.5 py-1 text-[11px] font-semibold tracking-[0.06em] text-accent">
+                {saying.status}
               </span>
             ) : null}
           </div>
@@ -88,11 +93,16 @@ export function SayingCardTile({
           ) : null}
         </div>
 
+        {saying.meaning ? <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">{saying.meaning}</p> : null}
         {saying.vibe ? <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">{saying.vibe}</p> : null}
 
         <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4 text-sm text-muted-foreground">
           <span className="tabular-nums">
-            {examples} way{examples === 1 ? "" : "s"} to say it
+            {saying.region === "british"
+              ? `${examples} way${examples === 1 ? "" : "s"} to say it`
+              : saying.region === "american"
+                ? "American English"
+                : "Canadian English"}
           </span>
           <span className="inline-flex items-center gap-1.5 font-semibold text-primary">
             {locked ? "Unlock" : "Study"}

@@ -221,8 +221,7 @@ function Home() {
           <span className="gradient-text">Sayings</span>
         </h2>
         <p className="relative mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {sayingCount} British sayings with the natural Spanish that carries the same tone — plus the literal
-          translations that don't work.
+          {sayingCount} English expressions with Spanish equivalents — British, American and Canadian English.
         </p>
         <div className="relative mt-8 flex flex-wrap gap-3">
           <Link
