@@ -1,17 +1,13 @@
-# Update the promotional tagline
+# Remove American and Canadian intro boxes on Sayings
 
-## Where the wording appears
-A search of the whole project found the exact phrase "Then just £4.99 — less than a coffee" in only one place:
-- `src/components/app/PromoPopup.tsx` (line 104), inside the promotional popup.
+## What changes
+- On the Sayings page, the box shown when American or Canadian is selected (heading "American collection (25)" / "Canadian collection (25)" plus its paragraph) is removed entirely, including its background, border, padding and bottom spacing. No empty gap remains; the filters bar sits directly under the variety buttons, as it does for British.
 
-## Change
-Replace that text with: "Then £19.99. Hundreds of examples. A lifetime of better Spanish."
-The surrounding element, classes and layout stay exactly as they are. Nothing else is edited.
+## What stays the same
+- All 50 American and Canadian expressions, their data file (untouched), cards, category headings, detail pages, variety buttons, filters, search and progress.
+- The source introductions remain in the data file; they are just no longer displayed.
 
-## Important: price mismatch
-The actual price is still £4.99 everywhere else: the checkout amount, the Unlock page, the Terms page, the trial banner ("£4.99 once. Lifetime access.") and the stored price value. After this change the popup would advertise £19.99 while the purchase charges £4.99. As instructed, those are left unchanged. If the price itself is meant to rise, that needs a separate change (including the Stripe price).
-
-## Verification
-- Search again to confirm the old phrase appears nowhere and the new phrase appears once.
-- Run the full test suite and report results.
-- Open the popup in the browser (desktop and phone width) to confirm the new line displays without layout changes.
+## Technical details
+- `src/routes/sayings.tsx`: delete the conditional `<section className="surface-card mb-5 ...">` block (lines 103-108) and the now-unused `regionIntroductions` import.
+- `regionIntroductions` export in `src/data/sayings.ts` left in place (harmless; existing tests may reference it).
+- Run the full test suite and check the page in the browser for American and Canadian.
