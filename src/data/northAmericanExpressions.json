@@ -1,0 +1,1078 @@
+{
+  "version": "1.0.0",
+  "title": "Verb Wise: North American Expressions Collection",
+  "description": "Standalone data conversion of the document \"Verb Wise: North American Expressions Collection\": 25 American and 25 Canadian English expressions with Spanish (Spain) equivalents, English meanings, example sentences, verification statuses and explanatory notes.",
+  "language": "es",
+  "targetDialect": "es-ES",
+  "categories": {
+    "american": [
+      {
+        "id": "conversation_humour_sarcasm",
+        "heading": "Conversation, humour and sarcasm"
+      },
+      {
+        "id": "relationships_social_life",
+        "heading": "Relationships and social life"
+      },
+      {
+        "id": "work_money_business",
+        "heading": "Work, money and business"
+      },
+      {
+        "id": "decisions_risk",
+        "heading": "Decisions and risk"
+      }
+    ],
+    "canadian": [
+      {
+        "id": "everyday_talk_attitude",
+        "heading": "Everyday talk and attitude"
+      },
+      {
+        "id": "home_money_everyday_life",
+        "heading": "Home, money and everyday life"
+      },
+      {
+        "id": "food_drink_clothes",
+        "heading": "Food, drink and clothes"
+      }
+    ]
+  },
+  "collections": {
+    "american": [
+      {
+        "id": "us_001",
+        "category": "conversation_humour_sarcasm",
+        "english": "Tell me about it",
+        "meaning": "wry, strong agreement",
+        "spanish": "Y que lo digas",
+        "status": "Attested",
+        "verificationNote": "Attested: RAE Diccionario del estudiante (decir, coloq.), “Se usa para expresar conformidad o acuerdo”; SpanishDict. “A mí me lo vas a contar” dropped: no source found for that sense",
+        "exampleEnglish": "Tell me about it, Madrid rents are insane.",
+        "exampleSpanish": "Y que lo digas, los alquileres en Madrid son una locura."
+      },
+      {
+        "id": "us_002",
+        "category": "conversation_humour_sarcasm",
+        "english": "Yeah, right",
+        "meaning": "ironic disbelief",
+        "spanish": "Sí, hombre / Anda ya",
+        "status": "Attested",
+        "verificationNote": "Attested: WordReference (¡venga!, disbelief, informal); SpanishDict (anda ya). “Sí, hombre” can also mean “of course”, so tone matters. “Ya, ya” found in no source",
+        "exampleEnglish": "Yeah, right, he’ll pay you back.",
+        "exampleSpanish": "Sí, hombre, como si te fuera a devolver el dinero."
+      },
+      {
+        "id": "us_003",
+        "category": "conversation_humour_sarcasm",
+        "english": "Give me a break",
+        "meaning": "an exasperated \"come on!\": stop annoying me, or I don't believe that",
+        "spanish": "Venga ya / Anda ya",
+        "status": "Attested",
+        "verificationNote": "Attested for the “oh, come on” sense: The Local Spain, WordReference. No source covers the “cut me some slack” sense",
+        "exampleEnglish": "Give me a break, you were late again!",
+        "exampleSpanish": "¡Venga ya, otra vez llegas tarde!"
+      },
+      {
+        "id": "us_004",
+        "category": "conversation_humour_sarcasm",
+        "english": "Cut to the chase",
+        "meaning": "get straight to the main point, skipping the preamble",
+        "spanish": "Ir al grano",
+        "status": "Attested",
+        "verificationNote": "Attested: WordReference (loc. verb, informal), Wiktionary. The DLE page for grano would not load",
+        "exampleEnglish": "Let’s cut to the chase.",
+        "exampleSpanish": "Vayamos al grano."
+      },
+      {
+        "id": "us_005",
+        "category": "conversation_humour_sarcasm",
+        "english": "Beat around the bush",
+        "meaning": "avoid the main point by talking around it, usually out of reluctance",
+        "spanish": "Andarse por las ramas / andar con rodeos",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict, WordReference. SpanishDict also lists marear la perdiz (Spain). The DLE page for rama would not load",
+        "exampleEnglish": "Stop beating around the bush.",
+        "exampleSpanish": "Deja de andarte por las ramas."
+      },
+      {
+        "id": "us_006",
+        "category": "conversation_humour_sarcasm",
+        "english": "Hit the nail on the head",
+        "meaning": "say or do exactly the right thing; be precisely right",
+        "spanish": "Dar en el clavo",
+        "status": "DLE",
+        "verificationNote": "DLE: clavo, loc. verb. coloq., “Acertar en lo que se hace o dice”",
+        "exampleEnglish": "You hit the nail on the head about the rent.",
+        "exampleSpanish": "Diste en el clavo con lo del alquiler."
+      },
+      {
+        "id": "us_007",
+        "category": "conversation_humour_sarcasm",
+        "english": "The elephant in the room",
+        "meaning": "an obvious major problem that everyone avoids mentioning",
+        "spanish": "El elefante en la habitación (formal: el tema tabú)",
+        "status": "Attested",
+        "verificationNote": "Attested in Spain’s press: Público, elDiario.es (“esa cuestión obvia cuyo debate se evita”). A calque; no dictionary entry found",
+        "exampleEnglish": "Nobody mentioned the elephant in the room: the layoffs.",
+        "exampleSpanish": "Nadie mencionó el elefante en la habitación: los despidos."
+      },
+      {
+        "id": "us_008",
+        "category": "conversation_humour_sarcasm",
+        "english": "Once in a blue moon",
+        "meaning": "very rarely",
+        "spanish": "De higos a brevas",
+        "status": "DLE",
+        "verificationNote": "DLE: higo, loc. adv. coloq., “Muy de tarde en tarde”",
+        "exampleEnglish": "We see them once in a blue moon.",
+        "exampleSpanish": "Los vemos de higos a brevas."
+      },
+      {
+        "id": "us_009",
+        "category": "relationships_social_life",
+        "english": "Break the ice",
+        "meaning": "ease the first awkwardness between people so a conversation can start",
+        "spanish": "Romper el hielo",
+        "status": "DLE",
+        "verificationNote": "DLE: hielo, loc. verb. coloq.",
+        "exampleEnglish": "A joke helped break the ice at dinner.",
+        "exampleSpanish": "Una broma sirvió para romper el hielo en la cena."
+      },
+      {
+        "id": "us_010",
+        "category": "relationships_social_life",
+        "english": "Read the room",
+        "meaning": "sense the mood",
+        "spanish": "Captar el ambiente / saber interpretar el ambiente",
+        "status": "Usage",
+        "verificationNote": "Usage. Only a translators’ forum (ProZ) supports it, not a dictionary. “Tomar el pulso al ambiente” not found as a set phrase; “leer la sala” found in no source, so avoid it",
+        "exampleEnglish": "Read the room before you pitch.",
+        "exampleSpanish": "Capta el ambiente antes de presentar la propuesta."
+      },
+      {
+        "id": "us_011",
+        "category": "relationships_social_life",
+        "english": "It’s on me / I’ll pick up the tab",
+        "meaning": "offering to pay for the meal or drinks yourself",
+        "spanish": "Invito yo / esto corre por mi cuenta",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict, Gymglish (sources vary between “corre de / por / a mi cuenta”). Avoid “es en mí”",
+        "exampleEnglish": "Put your wallet away, it’s on me.",
+        "exampleSpanish": "Guarda la cartera, invito yo."
+      },
+      {
+        "id": "us_012",
+        "category": "relationships_social_life",
+        "english": "Take a rain check",
+        "meaning": "politely decline an invitation now, leaving open the chance of accepting another time",
+        "spanish": "Lo dejamos para otro día / para otra ocasión",
+        "status": "Gloss",
+        "verificationNote": "Gloss. Sense attested: WordReference, Larousse (“dejar para otra ocasión”). “Otra vez será” dropped: it can sound like a final refusal. Avoid “tomar un cheque de lluvia”",
+        "exampleEnglish": "Can I take a rain check on dinner?",
+        "exampleSpanish": "¿Lo dejamos para otro día, lo de la cena?"
+      },
+      {
+        "id": "us_013",
+        "category": "relationships_social_life",
+        "english": "Red flag",
+        "meaning": "a warning sign that something is wrong or risky",
+        "spanish": "Bandera roja / mala señal",
+        "status": "Attested",
+        "verificationNote": "Attested: Fundéu RAE prefers “bandera roja” to the anglicism “red flag” (read via an EFE reprint, not on Fundéu’s own site)",
+        "exampleEnglish": "He never lets her see friends: red flag.",
+        "exampleSpanish": "No la deja ver a sus amigas: mala señal."
+      },
+      {
+        "id": "us_014",
+        "category": "work_money_business",
+        "english": "Throw someone under the bus",
+        "meaning": "blame or sacrifice someone, often a colleague, to protect yourself or gain an advantage",
+        "spanish": "Cargarle el muerto a alguien / echarle el muerto",
+        "status": "DLE (partial)",
+        "verificationNote": "DLE (partial): muerto, sense 7 “responsabilidad”, example “Me cargaron el muerto” (coloq.). Echar el muerto is not in the DLE but WordReference and SpanishDict list it. It means shifting blame, not betrayal",
+        "exampleEnglish": "He threw his assistant under the bus.",
+        "exampleSpanish": "Le cargó el muerto a su ayudante."
+      },
+      {
+        "id": "us_015",
+        "category": "work_money_business",
+        "english": "Move the goalposts",
+        "meaning": "change the rules or targets partway through so that success becomes harder",
+        "spanish": "Cambiar las reglas del juego",
+        "status": "Attested",
+        "verificationNote": "Attested: PONS (colloquial), SpanishDict Answers (a contributor from Spain). It can also mean “be a game changer”, so context decides. “Mover los postes” found in no source",
+        "exampleEnglish": "They keep moving the goalposts.",
+        "exampleSpanish": "Siguen cambiando las reglas del juego."
+      },
+      {
+        "id": "us_016",
+        "category": "work_money_business",
+        "english": "Skin in the game",
+        "meaning": "a personal stake",
+        "spanish": "Tener algo en juego (business) / jugarse el pellejo (stronger)",
+        "status": "DLE (partial)",
+        "verificationNote": "DLE (partial) for jugarse el pellejo: pellejo, loc. verb. coloq., “Arriesgar la vida”, so stronger than the English; Wiktionary agrees. Tener algo en juego is usage, with no source read",
+        "exampleEnglish": "Investors need skin in the game.",
+        "exampleSpanish": "Los inversores tienen que tener algo en juego."
+      },
+      {
+        "id": "us_017",
+        "category": "work_money_business",
+        "english": "Cost an arm and a leg",
+        "meaning": "be extremely expensive",
+        "spanish": "Costar un ojo de la cara / costar un riñón",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict (colloquial); RAE Diccionario del estudiante uses “te va a costar un ojo de la cara”. Costar un riñón entered the DRAE in 2010 (Telemetro)",
+        "exampleEnglish": "That watch costs an arm and a leg.",
+        "exampleSpanish": "Ese reloj cuesta un ojo de la cara."
+      },
+      {
+        "id": "us_018",
+        "category": "work_money_business",
+        "english": "Dirt cheap",
+        "meaning": "extremely cheap; a bargain price",
+        "spanish": "Estar tirado (de precio) / estar regalado",
+        "status": "DLE",
+        "verificationNote": "DLE: tirado, “Que se da muy barata o es de fácil realización”",
+        "exampleEnglish": "Flights to Lisbon are dirt cheap.",
+        "exampleSpanish": "Los vuelos a Lisboa están tirados."
+      },
+      {
+        "id": "us_019",
+        "category": "work_money_business",
+        "english": "Ballpark figure",
+        "meaning": "a rough estimate, close enough but not exact",
+        "spanish": "Una cifra aproximada / a ojo de buen cubero",
+        "status": "Attested",
+        "verificationNote": "Attested: Larousse (“ball-park figure” → cifra aproximada, informal); WordReference (a ojo de buen cubero, “sin medida, a bulto”). The second is an adverbial phrase and folksy for business",
+        "exampleEnglish": "Give me a ballpark figure.",
+        "exampleSpanish": "Dame una cifra aproximada."
+      },
+      {
+        "id": "us_020",
+        "category": "work_money_business",
+        "english": "Back to the drawing board",
+        "meaning": "the plan has failed, so you have to start again from scratch",
+        "spanish": "Volver a la casilla de salida / volver a empezar desde cero",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict, Larousse. Casilla de salida is closer to “back to square one”. The DLE casilla page lacks the phrase. Avoid “volver a la mesa de dibujo”",
+        "exampleEnglish": "The client rejected it; back to the drawing board.",
+        "exampleSpanish": "El cliente lo rechazó: volvemos a la casilla de salida."
+      },
+      {
+        "id": "us_021",
+        "category": "work_money_business",
+        "english": "Piece of cake",
+        "meaning": "something very easy to do",
+        "spanish": "Pan comido",
+        "status": "DLE",
+        "verificationNote": "DLE: pan, “ser algo pan comido”, loc. verb. coloq., “Ser muy fácil de conseguir”",
+        "exampleEnglish": "The renewal was a piece of cake.",
+        "exampleSpanish": "Renovar el contrato fue pan comido."
+      },
+      {
+        "id": "us_022",
+        "category": "decisions_risk",
+        "english": "Sleep on it",
+        "meaning": "wait until the next day to decide, so you have time to think it over",
+        "spanish": "Consultarlo con la almohada",
+        "status": "DLE",
+        "verificationNote": "DLE: almohada, “aconsejarse, o consultar, con la almohada”, locs. verbs. coloqs.",
+        "exampleEnglish": "I’ll sleep on it.",
+        "exampleSpanish": "Lo consulto con la almohada y te digo algo mañana."
+      },
+      {
+        "id": "us_023",
+        "category": "decisions_risk",
+        "english": "Get cold feet",
+        "meaning": "become nervous or doubtful about a plan and want to back out",
+        "spanish": "Echarse atrás / rajarse",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict, Larousse (“se echó atrás”), WordReference (rajarse, coloq.). Entrarle canguelo means getting scared, not necessarily backing out. Avoid “pies fríos”",
+        "exampleEnglish": "He got cold feet before the wedding.",
+        "exampleSpanish": "Se echó atrás antes de la boda."
+      },
+      {
+        "id": "us_024",
+        "category": "decisions_risk",
+        "english": "Bite the bullet",
+        "meaning": "accept and get on with something unpleasant that cannot be avoided",
+        "spanish": "Hacer de tripas corazón",
+        "status": "DLE",
+        "verificationNote": "DLE: tripa, loc. verb. coloq., “Esforzarse para disimular el miedo, dominarse”. Close in sense, not identical",
+        "exampleEnglish": "I bit the bullet and called the notary.",
+        "exampleSpanish": "Hice de tripas corazón y llamé al notario."
+      },
+      {
+        "id": "us_025",
+        "category": "decisions_risk",
+        "english": "Hedge your bets",
+        "meaning": "reduce the risk of loss by covering more than one outcome",
+        "spanish": "Nadar y guardar la ropa / cubrirse las espaldas",
+        "status": "Attested",
+        "verificationNote": "Attested in learner sources only (Inklingo, Speaking Latino); Larousse gives “cubrirse, guardarse las espaldas”. No DLE page read",
+        "exampleEnglish": "He’s hedging his bets with two offers.",
+        "exampleSpanish": "Quiere nadar y guardar la ropa con dos ofertas."
+      }
+    ],
+    "canadian": [
+      {
+        "id": "ca_001",
+        "category": "everyday_talk_attitude",
+        "english": "Give’r",
+        "meaning": "go all out; also “party hard” (a Western Canadian sense)",
+        "spanish": "Darlo todo / echar el resto",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: DCHP labels the “party hard” sense Western Canada, informal. DLE: resto, “echar el resto”, coloq., “Hacer todo el esfuerzo posible”; SpanishDict for darlo todo. Spanish loses the rural, beer-and-work flavour",
+        "exampleEnglish": "We gave’r all weekend.",
+        "exampleSpanish": "Lo dimos todo el fin de semana."
+      },
+      {
+        "id": "ca_002",
+        "category": "everyday_talk_attitude",
+        "english": "Keener",
+        "meaning": "overeager student or employee",
+        "spanish": "Un empollón (studious) / un pelota (sucking up)",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English confirmed (DCHP, “Cdn informal”). Two Spanish ideas in one: SpanishDict, empollón (coloq., pejorative, Spain); Larousse, pelota (pejorative, a flatterer). Neither is an exact match",
+        "exampleEnglish": "The new hire is a total keener.",
+        "exampleSpanish": "El nuevo es un pelota: siempre se ofrece para todo."
+      },
+      {
+        "id": "ca_003",
+        "category": "everyday_talk_attitude",
+        "english": "Gong show",
+        "meaning": "chaotic mess",
+        "spanish": "Un circo / un desmadre",
+        "status": "DLE",
+        "verificationNote": "DLE: circo, sense 9, coloq., “Confusión, desorden, caos”. Larousse for desmadre (familiar); the DLE page for it would not load. English: DCHP and Wiktionary (Canada); it comes from a US TV show. Circo suits a farce, desmadre wild chaos",
+        "exampleEnglish": "The meeting was a gong show.",
+        "exampleSpanish": "La reunión fue un circo."
+      },
+      {
+        "id": "ca_004",
+        "category": "everyday_talk_attitude",
+        "english": "Hoser",
+        "meaning": "an uncouth, dim-witted guy (dated slang)",
+        "spanish": "Un cenutrio entrañable",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: Dictionary.com, “Canadian slang”, but derogatory and dated, so teach it for recognition only. SpanishDict: cenutrio, colloquial, Spain, “twit”. Pardillo means gullible, not goofy",
+        "exampleEnglish": "Doug’s a lovable hoser.",
+        "exampleSpanish": "Doug es un cenutrio entrañable."
+      },
+      {
+        "id": "ca_005",
+        "category": "everyday_talk_attitude",
+        "english": "Eh?",
+        "meaning": "sentence-end tag",
+        "spanish": "¿No? / ¿verdad?",
+        "status": "Attested",
+        "verificationNote": "Attested: Castellano Actual (Universidad de Piura) lists ¿no?, ¿verdad? and ¿eh? as confirmatory tags. English: Merriam-Webster, “used especially in Canadian English”. Spanish ¿eh? can sound abrupt",
+        "exampleEnglish": "Nice day, eh?",
+        "exampleSpanish": "Hace un día estupendo, ¿no?"
+      },
+      {
+        "id": "ca_006",
+        "category": "everyday_talk_attitude",
+        "english": "Sorry",
+        "meaning": "reflex apology, “can I squeeze by?”",
+        "spanish": "Perdona, ¿puedo pasar? / perdón",
+        "status": "Usage",
+        "verificationNote": "Usage. Canadian reflex apology is cultural lore, not a dictionary label. Inklingo: perdón = “Excuse me. / Sorry.” Con permiso (DLE permiso, courtesy formula) is polite, but I could not verify how usual it is in Spain",
+        "exampleEnglish": "Sorry, can I just squeeze by?",
+        "exampleSpanish": "Perdona, ¿puedo pasar?"
+      },
+      {
+        "id": "ca_007",
+        "category": "everyday_talk_attitude",
+        "english": "Not bad",
+        "meaning": "understated high praise",
+        "spanish": "No está nada mal",
+        "status": "Usage",
+        "verificationNote": "Usage. Canadian by habit, not by dictionary. No Spanish source read; the understatement works the same way in Spain",
+        "exampleEnglish": "That’s not bad!",
+        "exampleSpanish": "¡No está nada mal!"
+      },
+      {
+        "id": "ca_008",
+        "category": "everyday_talk_attitude",
+        "english": "Take a kick at the can",
+        "meaning": "have a try",
+        "spanish": "Probar suerte / intentarlo",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict (probar suerte, “to try one’s luck”). English: Wiktionary, “chiefly US and Canada”; no Canadian dictionary label found",
+        "exampleEnglish": "I’ll take a kick at the can.",
+        "exampleSpanish": "Voy a probar suerte."
+      },
+      {
+        "id": "ca_009",
+        "category": "everyday_talk_attitude",
+        "english": "Kerfuffle",
+        "meaning": "fuss",
+        "spanish": "Jaleo / follón",
+        "status": "DLE",
+        "verificationNote": "DLE: jaleo (coloq.) “Alboroto, tumulto, pendencia”; follón (coloq.) “Alboroto, discusión tumultuosa”. English: Merriam-Webster; the Canadian Oxford Dictionary (COD-2) marks it “Cdn, Brit., & Austral. informal” (as cited in DCHP, which says it “appears to be a Canadianism in the North American context”), so it is shared with British and Australian English",
+        "exampleEnglish": "What a kerfuffle!",
+        "exampleSpanish": "¡Menudo jaleo!"
+      },
+      {
+        "id": "ca_010",
+        "category": "everyday_talk_attitude",
+        "english": "Pitch in",
+        "meaning": "help with a shared task, or contribute money",
+        "spanish": "Echar una mano / arrimar el hombro",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict (colloquial). Arrimar el hombro suggests a heavier shared effort. The DLE hombro page would not load. English: Dictionary.com; not Canadian-labelled",
+        "exampleEnglish": "Everyone pitched in.",
+        "exampleSpanish": "Todos arrimaron el hombro."
+      },
+      {
+        "id": "ca_011",
+        "category": "home_money_everyday_life",
+        "english": "Going up to the cottage",
+        "meaning": "going to a vacation home, usually by a lake",
+        "spanish": "Ir a la casa de campo / a la casa del lago",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: DCHP, “cottage country”, chiefly Ontario and Manitoba (COD-2 “Cdn”). Avoid “casa rural”, which in Spain means a rental lodging",
+        "exampleEnglish": "We’re going up to the cottage.",
+        "exampleSpanish": "Nos vamos a la casa de campo."
+      },
+      {
+        "id": "ca_012",
+        "category": "home_money_everyday_life",
+        "english": "Snowbird",
+        "meaning": "a person, often retired, who spends winter somewhere warm (for Canadians, usually the southern US)",
+        "spanish": "Residente de invierno / persona que pasa el invierno en el sur (a menudo jubilada)",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English confirmed (DCHP). Residentes de invierno is attested in Spain’s press (Alicante Plaza), but no single established word exists. Invernante is a bird term. Avoid “pájaro de nieve”",
+        "exampleEnglish": "Our neighbours are snowbirds.",
+        "exampleSpanish": "Nuestros vecinos son residentes de invierno."
+      },
+      {
+        "id": "ca_013",
+        "category": "home_money_everyday_life",
+        "english": "The hydro bill",
+        "meaning": "the electricity bill (in Canada, 'hydro' means electricity)",
+        "spanish": "La factura de la luz",
+        "status": "Attested",
+        "verificationNote": "Attested: OCU uses factura de la luz as its standard term. English: DCHP, sense 2, “Electricity supplied as a utility” (COD-2 “Cdn”). Warn learners that hidro- suggests water in Spain",
+        "exampleEnglish": "The hydro bill is high.",
+        "exampleSpanish": "La factura de la luz es altísima."
+      },
+      {
+        "id": "ca_014",
+        "category": "home_money_everyday_life",
+        "english": "Loonie / toonie",
+        "meaning": "the $1 and $2 coins",
+        "spanish": "La moneda de un dólar (la del colimbo) / la de dos dólares",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: Merriam-Webster, toonie “Canada, informal”; Oxford Learner’s tags loonie Canadian. The loon is colimbo grande (CMS; Birds of the World), not somormujo, which is a grebe in Spain (MITECO). Do not use duro or peseta",
+        "exampleEnglish": "It’s a toonie.",
+        "exampleSpanish": "Es la moneda canadiense de dos dólares."
+      },
+      {
+        "id": "ca_015",
+        "category": "home_money_everyday_life",
+        "english": "Chesterfield",
+        "meaning": "an older Canadian word for a sofa; most people now say “couch”",
+        "spanish": "Sofá",
+        "status": "Usage",
+        "verificationNote": "Usage. English: Dictionary.com, “Chiefly Canadian”. Plain sofá is right for that sense; sofá Chester (Divinity, Idealista) is only the tufted leather style",
+        "exampleEnglish": "Sit on the chesterfield.",
+        "exampleSpanish": "Siéntate en el sofá."
+      },
+      {
+        "id": "ca_016",
+        "category": "home_money_everyday_life",
+        "english": "Toque",
+        "meaning": "a knit winter hat",
+        "spanish": "Gorro de lana / gorro de punto",
+        "status": "DLE",
+        "verificationNote": "DLE: gorro, “Pieza redonda, de tela o de punto, para cubrir y abrigar la cabeza”. SpanishDict: gorro de lana, “wool hat”, “beanie”. English: Dictionary.com, “in Canada, a knitted winter cap”. Avoid gorra, a peaked cap, and toca, a different object",
+        "exampleEnglish": "Wear your toque.",
+        "exampleSpanish": "Ponte el gorro de lana."
+      },
+      {
+        "id": "ca_017",
+        "category": "home_money_everyday_life",
+        "english": "Washroom",
+        "meaning": "a public toilet or restroom (Canadian usage)",
+        "spanish": "Los aseos / los servicios",
+        "status": "Attested",
+        "verificationNote": "Attested: SpanishDict, aseos tagged as used in Spain. English confirmed (DCHP, “esp. Cdn.”). Use baño at home",
+        "exampleEnglish": "Where’s the washroom?",
+        "exampleSpanish": "¿Dónde están los aseos?"
+      },
+      {
+        "id": "ca_018",
+        "category": "home_money_everyday_life",
+        "english": "Dépanneur",
+        "meaning": "a convenience store, Quebec",
+        "spanish": "Una tienda de alimentación / una tienda de barrio abierta hasta tarde",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: Dictionary.com, “(in Quebec)”; effectively Quebec only. Larousse: convenience store = “tienda de ultramarinos (que abre hasta tarde)”. DLE: colmado, “Tienda de comestibles”, but regional. No exact equivalent",
+        "exampleEnglish": "I’m popping to the dépanneur.",
+        "exampleSpanish": "Voy un momento a la tienda de la esquina."
+      },
+      {
+        "id": "ca_019",
+        "category": "home_money_everyday_life",
+        "english": "Garburator",
+        "meaning": "a kitchen waste disposal",
+        "spanish": "Triturador de basura / triturador de residuos",
+        "status": "Attested",
+        "verificationNote": "Attested: WordReference (“garbage disposal”). English confirmed: DCHP (OED-3 “Chiefly Canad.”, COD-2 “Cdn.”). Rare in Spanish kitchens, so learners may need to explain it",
+        "exampleEnglish": "The garburator is jammed.",
+        "exampleSpanish": "El triturador de basura está atascado."
+      },
+      {
+        "id": "ca_020",
+        "category": "home_money_everyday_life",
+        "english": "Eavestrough",
+        "meaning": "a roof gutter",
+        "spanish": "Canalón",
+        "status": "Attested",
+        "verificationNote": "Attested: WordReference (canalón, canaleta, both tagged Spain). English: DCHP, COD-2 “N. Amer. (esp. Cdn)”. DCHP’s usage note says: “Eavestrough is virtually unknown outside Canada, and it is 25 times more common in Canadian English than in American English” (see its Chart 1). So it is much more prevalent in Canada, with only limited US use: DARE, as cited by DCHP, places that use “chiefly in the dialects of the northern and north midland US, and less often in the west”",
+        "exampleEnglish": "The eavestrough is blocked.",
+        "exampleSpanish": "El canalón está atascado."
+      },
+      {
+        "id": "ca_021",
+        "category": "food_drink_clothes",
+        "english": "Double-double",
+        "meaning": "coffee with two creams, two sugars",
+        "spanish": "Un café con dos de leche y dos de azúcar",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: DCHP, “a cup of coffee with two servings of cream and sugar” (COD-2 “Cdn”); tied to Tim Hortons. DLE defines café cortado as “café con muy poca leche”, so do not render it as cortado",
+        "exampleEnglish": "A double-double, please.",
+        "exampleSpanish": "Un café con dos de leche y dos de azúcar, por favor."
+      },
+      {
+        "id": "ca_022",
+        "category": "food_drink_clothes",
+        "english": "Two-four",
+        "meaning": "a case of 24 beers",
+        "spanish": "Una caja de 24 cervezas",
+        "status": "Gloss",
+        "verificationNote": "Gloss. English: DCHP, COD-2 “Cdn informal”. Spain has no nickname for it",
+        "exampleEnglish": "Bring a two-four to the cottage.",
+        "exampleSpanish": "Trae una caja de 24 cervezas a la casa de campo."
+      },
+      {
+        "id": "ca_023",
+        "category": "food_drink_clothes",
+        "english": "Mickey",
+        "meaning": "a 375 ml flat bottle of liquor",
+        "spanish": "Media botella / una petaca",
+        "status": "DLE",
+        "verificationNote": "DLE: petaca, sense 3, “Botella de bolsillo, ancha y plana”; WordReference, “hip flask”. A Spanish petaca is usually smaller than 375 ml, so media botella is more accurate. English: DCHP gives it as slang only, with no modern dictionary label",
+        "exampleEnglish": "He had a mickey in his jacket.",
+        "exampleSpanish": "Llevaba una petaca en la chaqueta."
+      },
+      {
+        "id": "ca_024",
+        "category": "food_drink_clothes",
+        "english": "Pop",
+        "meaning": "a soft drink",
+        "spanish": "Un refresco",
+        "status": "Attested",
+        "verificationNote": "Attested: HyperDic (refresco, “pop, soda”). English: DCHP, “most common generic term” in Canada outside Quebec, but also used in the US Midwest. DLE gaseosa names one specific fizzy lemonade in Spain, so avoid it as the generic",
+        "exampleEnglish": "Do you want a pop?",
+        "exampleSpanish": "¿Quieres un refresco?"
+      },
+      {
+        "id": "ca_025",
+        "category": "food_drink_clothes",
+        "english": "Canadian tuxedo",
+        "meaning": "denim on denim",
+        "spanish": "Total look vaquero / doble denim",
+        "status": "Gloss",
+        "verificationNote": "Gloss. DLE: vaquero, “Hecho con tela vaquera”. Spanish press: The Objective (“total looks vaqueros”), El Corte Inglés (“doble denim”). English: DCHP records it (“a combination of blue jeans and denim jacket”, informal, at times jocular; earliest quotation 2002; “seems to originate in Canada around the year 2000”). Dictionary.com labels it “American” and facetious and says “First recorded in 1995–2000”, so it is a recent term with no Canadian label in Dictionary.com. The joke needs explaining: “el esmoquin canadiense, o sea, vaquero con vaquero”",
+        "exampleEnglish": "He showed up in a Canadian tuxedo.",
+        "exampleSpanish": "Apareció con un total look vaquero."
+      }
+    ]
+  },
+  "verificationNotes": {
+    "statusDefinitions": [
+      {
+        "status": "DLE",
+        "definition": "the exact Spanish phrase was read on dle.rae.es in this check, with its marking (coloq., loc. verb.). “DLE (partial)” means only a related sense or example was read."
+      },
+      {
+        "status": "Attested",
+        "definition": "not confirmed in the DLE here, but listed in a bilingual dictionary (SpanishDict, WordReference, Larousse), Wiktionary or Spain-based press. Named in the status cell."
+      },
+      {
+        "status": "Usage",
+        "definition": "natural Peninsular Spanish from my own knowledge; no source I could read confirmed it. Check before you publish it as verified."
+      },
+      {
+        "status": "Gloss",
+        "definition": "Spanish has no fixed idiom, so the rendering explains the meaning rather than translating the phrase."
+      },
+      {
+        "status": "Avoid",
+        "definition": "a literal calque that people in Spain would not say; shown so learners recognise the trap."
+      }
+    ],
+    "overview": "No entry is checked against the RAE alone: where a DLE page would not load, the rendering was tested against bilingual dictionaries, Fundéu, Spain-based press and, for the English side, the Dictionary of Canadianisms (DCHP) and other dictionaries.",
+    "manualChecks": {
+      "heading": "Check by hand on dle.rae.es before you print “verified”.",
+      "text": "These DLE pages would not load, so the entries rest on other sources: grano, rama, ojo, rajar, hombro, nadar, pulso and the noun desmadre. Four entries are still tagged Usage, with no source read: read the room, sorry, not bad and chesterfield. The “tener algo en juego” half of skin in the game is also unsourced.",
+      "dlePagesNotAccessed": [
+        {
+          "headword": "grano",
+          "note": null
+        },
+        {
+          "headword": "rama",
+          "note": null
+        },
+        {
+          "headword": "ojo",
+          "note": null
+        },
+        {
+          "headword": "rajar",
+          "note": null
+        },
+        {
+          "headword": "hombro",
+          "note": null
+        },
+        {
+          "headword": "nadar",
+          "note": null
+        },
+        {
+          "headword": "pulso",
+          "note": null
+        },
+        {
+          "headword": "desmadre",
+          "note": "noun"
+        }
+      ],
+      "entriesTaggedUsageWithNoSourceRead": [
+        "read the room",
+        "sorry",
+        "not bad",
+        "chesterfield"
+      ]
+    },
+    "dlePagesNotAccessedPerTableNotes": [
+      {
+        "id": "us_004",
+        "english": "Cut to the chase",
+        "sentence": "The DLE page for grano would not load"
+      },
+      {
+        "id": "us_005",
+        "english": "Beat around the bush",
+        "sentence": "The DLE page for rama would not load"
+      },
+      {
+        "id": "ca_003",
+        "english": "Gong show",
+        "sentence": "Larousse for desmadre (familiar); the DLE page for it would not load."
+      },
+      {
+        "id": "ca_010",
+        "english": "Pitch in",
+        "sentence": "The DLE hombro page would not load."
+      }
+    ],
+    "corrections": [
+      "Dropped for lack of any source: “a mí me lo vas a contar”, “ya, ya” and “otra vez será”.",
+      "“Tomar el pulso al ambiente” replaced by “captar el ambiente”, which a translators’ forum supports.",
+      "“Echar el muerto” is not in the DLE; only “cargar el muerto” is, as an example under muerto.",
+      "The loon on the dollar coin is colimbo grande, not somormujo (a grebe in Spain).",
+      "“Beauty!” and “hang a Larry” were dropped from the Canadian list; “bang on” was rejected because Dictionary.com labels it British."
+    ],
+    "droppedOrRejectedExpressions": [
+      {
+        "expression": "a mí me lo vas a contar",
+        "collection": "american",
+        "action": "dropped",
+        "sourceStatements": [
+          "Dropped for lack of any source: “a mí me lo vas a contar”, “ya, ya” and “otra vez será”."
+        ]
+      },
+      {
+        "expression": "ya, ya",
+        "collection": "american",
+        "action": "dropped",
+        "sourceStatements": [
+          "Dropped for lack of any source: “a mí me lo vas a contar”, “ya, ya” and “otra vez será”."
+        ]
+      },
+      {
+        "expression": "otra vez será",
+        "collection": "american",
+        "action": "dropped",
+        "sourceStatements": [
+          "Dropped for lack of any source: “a mí me lo vas a contar”, “ya, ya” and “otra vez será”."
+        ]
+      },
+      {
+        "expression": "Tomar el pulso al ambiente",
+        "collection": "american",
+        "action": "replaced",
+        "sourceStatements": [
+          "“Tomar el pulso al ambiente” replaced by “captar el ambiente”, which a translators’ forum supports."
+        ]
+      },
+      {
+        "expression": "Beauty!",
+        "collection": "canadian",
+        "action": "dropped",
+        "sourceStatements": [
+          "“Beauty!” and “hang a Larry” were dropped from the Canadian list; “bang on” was rejected because Dictionary.com labels it British.",
+          "“Hang a Larry” was dropped because the Dictionary of Canadianisms defines it as a left turn, not a U-turn, and “beauty!” because no dictionary labels it Canadian."
+        ]
+      },
+      {
+        "expression": "hang a Larry",
+        "collection": "canadian",
+        "action": "dropped",
+        "sourceStatements": [
+          "“Beauty!” and “hang a Larry” were dropped from the Canadian list; “bang on” was rejected because Dictionary.com labels it British.",
+          "“Hang a Larry” was dropped because the Dictionary of Canadianisms defines it as a left turn, not a U-turn, and “beauty!” because no dictionary labels it Canadian."
+        ]
+      },
+      {
+        "expression": "bang on",
+        "collection": "canadian",
+        "action": "rejected",
+        "sourceStatements": [
+          "“Beauty!” and “hang a Larry” were dropped from the Canadian list; “bang on” was rejected because Dictionary.com labels it British."
+        ]
+      }
+    ],
+    "sourceLimitations": {
+      "heading": "How far to trust the sources.",
+      "text": "SpanishDict, WordReference and Larousse show that a phrase is in use, not that the RAE endorses it, and SpanishDict’s regional tags are sometimes wrong. Fundéu’s preference for “bandera roja” was read through an EFE reprint, not on Fundéu’s own site. Pages were read through a summarising fetch tool, so quotes are as it reported them."
+    }
+  },
+  "sourceNotes": {
+    "sourceDocument": {
+      "title": "Verb Wise: North American Expressions Collection",
+      "byline": "Nov 6, 2026 · @Richard",
+      "exportFormat": "markdown",
+      "exportBytes": 23387,
+      "exportSha256": "915b83d55c8936b1780e075d153d7c206ed97a464df89e782ddc115081392946",
+      "exportedFrom": "Claude Docs, revision 19"
+    },
+    "audienceAndMethod": {
+      "heading": "Audience and method",
+      "paragraphs": [
+        "Each of the 50 expressions below carries a status tag showing how far its Spanish rendering was checked against the RAE's Diccionario de la lengua española (DLE) and, where the DLE page would not load, against bilingual dictionaries and Spain-based press, because the RAE site was only partly reachable.",
+        "The collection is aimed at English-speaking adults aged 35–55 with the means and flexibility to move abroad: remote workers, business owners, established professionals and early retirees. They already speak capable English, so the focus is on the finer points of Spanish: humour and sarcasm, social situations, money and work, and decisions and risk. The 25 British sayings stay as their own collection."
+      ]
+    },
+    "collectionIntroductions": {
+      "american": {
+        "heading": "American collection (25)",
+        "text": "These 25 expressions are grouped by the situations an American adult in Spain actually meets them in. 7 have a full DLE reading, 2 a partial one, 14 are attested in other sources, 1 is a gloss and 1 is natural usage still to confirm. Many are shared with Canadian English; the Canadian section covers the distinctly Canadian ones."
+      },
+      "canadian": {
+        "heading": "Canadian collection (25)",
+        "text": "These 25 are distinctly Canadian, or used in Canada in ways a Spanish speaker will not expect, so many have no Spanish idiom and need a short gloss. A dictionary labels 18 of them Canadian: keener, snowbird, washroom, give’r (only its “party hard” sense carries a regional label, Western Canada), gong show, double-double, loonie and toonie, toque, cottage country, hydro, chesterfield, two-four, eh, hoser, dépanneur, garburator, eavestrough and kerfuffle (Canadian Oxford Dictionary “Cdn, Brit., & Austral. informal”, as cited by the Dictionary of Canadianisms). The other 7 are Canadian by usage or stereotype, with no Canadian dictionary label found: pitch in, not bad, sorry, Canadian tuxedo (the Dictionary of Canadianisms records it as emerging in Canada around 2000, but Dictionary.com labels it American), mickey, pop and take a kick at the can. “Hang a Larry” was dropped because the Dictionary of Canadianisms defines it as a left turn, not a U-turn, and “beauty!” because no dictionary labels it Canadian."
+      }
+    },
+    "sourcesRead": [
+      {
+        "group": "RAE",
+        "rawText": "RAE, Diccionario del estudiante: decir and muerto; DLE pages for circo, resto, clavo, tripa, muerto, almohada, pellejo and others named in the tables",
+        "links": [
+          {
+            "text": "Diccionario del estudiante: decir",
+            "url": "https://www.rae.es/diccionario-estudiante/decir"
+          },
+          {
+            "text": "muerto",
+            "url": "https://www.rae.es/diccionario-estudiante/muerto"
+          },
+          {
+            "text": "circo",
+            "url": "https://dle.rae.es/circo"
+          },
+          {
+            "text": "resto",
+            "url": "https://dle.rae.es/resto"
+          },
+          {
+            "text": "clavo",
+            "url": "https://dle.rae.es/clavo"
+          },
+          {
+            "text": "tripa",
+            "url": "https://dle.rae.es/tripa"
+          },
+          {
+            "text": "muerto",
+            "url": "https://dle.rae.es/muerto"
+          },
+          {
+            "text": "almohada",
+            "url": "https://dle.rae.es/almohada"
+          },
+          {
+            "text": "pellejo",
+            "url": "https://dle.rae.es/pellejo"
+          }
+        ]
+      },
+      {
+        "group": "Bilingual dictionaries",
+        "rawText": "Bilingual dictionaries: WordReference, venga, WordReference, muerto, SpanishDict, andarse por las ramas, SpanishDict, back to the drawing board, Larousse, ball-park figure, PONS, goalpost",
+        "links": [
+          {
+            "text": "WordReference, venga",
+            "url": "https://jann.wordreference.com/es/en/translation.asp?spen=venga"
+          },
+          {
+            "text": "WordReference, muerto",
+            "url": "https://jann.wordreference.com/esen/muerto"
+          },
+          {
+            "text": "SpanishDict, andarse por las ramas",
+            "url": "https://www.spanishdict.com/translate/andarse%20por%20las%20ramas"
+          },
+          {
+            "text": "SpanishDict, back to the drawing board",
+            "url": "https://www.spanishdict.com/translate/go%20back%20to%20the%20drawing%20board"
+          },
+          {
+            "text": "Larousse, ball-park figure",
+            "url": "https://www.larousse.com/es/diccionarios/ingles-espanol/ball-park%20figure/2694"
+          },
+          {
+            "text": "PONS, goalpost",
+            "url": "https://de.pons.com/übersetzung/englisch-spanisch/goalpost"
+          }
+        ]
+      },
+      {
+        "group": "Spain-based press",
+        "rawText": "Spain-based press: Público, elDiario.es, The Objective, El Corte Inglés, OCU",
+        "links": [
+          {
+            "text": "Público",
+            "url": "https://www.publico.es/opinion/columnas/elefante-habitacion.html"
+          },
+          {
+            "text": "elDiario.es",
+            "url": "https://www.eldiario.es/opinion/tribuna-abierta/elefante-habitacion_129_1086062.amp.html"
+          },
+          {
+            "text": "The Objective",
+            "url": "https://theobjective.com/lifestyle/moda/2024-11-17/denim-total-looks-vestirse-vaquero/"
+          },
+          {
+            "text": "El Corte Inglés",
+            "url": "https://www.elcorteingles.es/contenidos/moda-y-accesorios/denim-on-denim-como-llevar-ropa-vaquera/"
+          },
+          {
+            "text": "OCU",
+            "url": "https://www.ocu.org/vivienda-y-energia/gas-luz/consejos/como-descifrar-la-factura-de-la-luz"
+          }
+        ]
+      },
+      {
+        "group": "English side",
+        "rawText": "English side: DCHP, Dictionary of Canadianisms, Merriam-Webster, eh, Dictionary.com, chesterfield, Dictionary.com, toque",
+        "links": [
+          {
+            "text": "DCHP, Dictionary of Canadianisms",
+            "url": "https://dchp.arts.ubc.ca/"
+          },
+          {
+            "text": "Merriam-Webster, eh",
+            "url": "https://www.merriam-webster.com/dictionary/eh"
+          },
+          {
+            "text": "Dictionary.com, chesterfield",
+            "url": "https://www.dictionary.com/browse/chesterfield"
+          },
+          {
+            "text": "Dictionary.com, toque",
+            "url": "https://www.dictionary.com/browse/toque"
+          }
+        ]
+      },
+      {
+        "group": "Birds",
+        "rawText": "Birds: CMS, Gavia immer",
+        "links": [
+          {
+            "text": "CMS, Gavia immer",
+            "url": "https://cms.int/cami/es/species/gavia-immer"
+          }
+        ]
+      }
+    ],
+    "conversionNotes": [
+      "The fields version, description, language, targetDialect and the top-level categories structure were supplied by the converter; all other text comes from the source document.",
+      "The English cell of each source table row was split at its final parenthetical: the text before it is english and the text inside it is meaning. Where the source row has no parenthetical, meaning is null because the source gives no separate meaning.",
+      "status holds the label that opens the source status cell; verificationNote holds the whole source status cell. No label was upgraded or changed.",
+      "Markdown emphasis markers (asterisks) and link syntax were removed; all other characters, including quotation marks, accents and punctuation, are unchanged. Example sentences keep their inner punctuation; only the outer quotation marks and the arrow separator were removed.",
+      "category ids are lowercase snake_case derived from the source section headings with the word \"and\" removed; the original headings are in categories.",
+      "The sources listed in sourcesRead are as stated in the source document. None was re-checked or independently verified during conversion."
+    ],
+    "meaningAdditions": {
+      "note": "The source document gave no separate meaning for these 19 American rows (meaning was null in the first conversion). The meanings were written afterwards in plain English from dictionary definitions, aligned to the sense of the paired Spanish equivalent. No other field of any record was changed.",
+      "sourceStatus": "Definitions were read through a web-fetch summariser, not as raw page text, and were not re-checked against the raw pages. Meanings are paraphrased, not quoted.",
+      "entries": [
+        {
+          "id": "us_004",
+          "english": "Cut to the chase",
+          "meaning": "get straight to the main point, skipping the preamble",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/cut%20to%20the%20chase"
+        },
+        {
+          "id": "us_005",
+          "english": "Beat around the bush",
+          "meaning": "avoid the main point by talking around it, usually out of reluctance",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/beat%20around%20the%20bush",
+          "caveat": "Fits andar con rodeos (evasive) best; andarse por las ramas can also mean simply rambling."
+        },
+        {
+          "id": "us_006",
+          "english": "Hit the nail on the head",
+          "meaning": "say or do exactly the right thing; be precisely right",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/hit%20the%20nail%20on%20the%20head"
+        },
+        {
+          "id": "us_007",
+          "english": "The elephant in the room",
+          "meaning": "an obvious major problem that everyone avoids mentioning",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/elephant+in+the+room"
+        },
+        {
+          "id": "us_008",
+          "english": "Once in a blue moon",
+          "meaning": "very rarely",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/once%20in%20a%20blue%20moon"
+        },
+        {
+          "id": "us_009",
+          "english": "Break the ice",
+          "meaning": "ease the first awkwardness between people so a conversation can start",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/break%20the%20ice",
+          "caveat": "Merriam-Webster also lists the broader sense 'make a beginning'; the social sense is the one used here."
+        },
+        {
+          "id": "us_011",
+          "english": "It’s on me / I’ll pick up the tab",
+          "meaning": "offering to pay for the meal or drinks yourself",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://merriam-webster.com/dictionary/pick%20up%20the%20tab",
+          "caveat": "Only 'pick up the tab' has a dictionary entry (labelled US, informal). 'It's on me' has no entry of its own; Oxford Learner's Dictionaries (US) shows it only as an example under 'on' (sense 14, 'paid for by'): 'Drinks are on me (= I am paying)', https://www.oxfordlearnersdictionaries.com/us/definition/english/on (read through a web-fetch summary). So that half of the meaning is supported by one dictionary example and common usage, not by a headword."
+        },
+        {
+          "id": "us_012",
+          "english": "Take a rain check",
+          "meaning": "politely decline an invitation now, leaving open the chance of accepting another time",
+          "source": "Oxford Learner's Dictionaries (US)",
+          "sourceUrl": "https://www.oxfordlearnersdictionaries.com/us/definition/english/rain-check",
+          "caveat": "Noun 'rain check' also means a ticket or voucher for a later date; that sense is not the one used here. Said by the person declining, whereas the Spanish equivalent is more neutral."
+        },
+        {
+          "id": "us_014",
+          "english": "Throw someone under the bus",
+          "meaning": "blame or sacrifice someone, often a colleague, to protect yourself or gain an advantage",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/throw%20(someone)%20under%20the%20bus",
+          "caveat": "English also covers criticising someone publicly; cargarle el muerto is narrower (shifting blame or burden)."
+        },
+        {
+          "id": "us_015",
+          "english": "Move the goalposts",
+          "meaning": "change the rules or targets partway through so that success becomes harder",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/move%20the%20goalposts",
+          "caveat": "English implies unfairness; cambiar las reglas del juego is more neutral."
+        },
+        {
+          "id": "us_017",
+          "english": "Cost an arm and a leg",
+          "meaning": "be extremely expensive",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://merriam-webster.com/dictionary/cost%20an%20arm%20and%20a%20leg",
+          "caveat": "Spanish uses a different body part (un ojo de la cara)."
+        },
+        {
+          "id": "us_018",
+          "english": "Dirt cheap",
+          "meaning": "extremely cheap; a bargain price",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/dirtcheap",
+          "caveat": "Describes price, not low quality; also used as an adverb ('bought it dirt cheap')."
+        },
+        {
+          "id": "us_019",
+          "english": "Ballpark figure",
+          "meaning": "a rough estimate, close enough but not exact",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://merriam-webster.com/dictionary/ballpark",
+          "caveat": "'Ballpark figure' appears in Merriam-Webster only as an example under 'ballpark'."
+        },
+        {
+          "id": "us_020",
+          "english": "Back to the drawing board",
+          "meaning": "the plan has failed, so you have to start again from scratch",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://merriam-webster.com/dictionary/go%20back%20to%20the%20drawing%20board",
+          "caveat": "Merriam-Webster's entry is 'go back to the drawing board'; the short form 'back to the drawing board' was not separately verified."
+        },
+        {
+          "id": "us_021",
+          "english": "Piece of cake",
+          "meaning": "something very easy to do",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/piece%20of%20cake"
+        },
+        {
+          "id": "us_022",
+          "english": "Sleep on it",
+          "meaning": "wait until the next day to decide, so you have time to think it over",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/sleep%20on%20it"
+        },
+        {
+          "id": "us_023",
+          "english": "Get cold feet",
+          "meaning": "become nervous or doubtful about a plan and want to back out",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/cold-feet",
+          "caveat": "Merriam-Webster's entry is the noun 'cold feet'; the English stresses the doubt, echarse atrás only the backing out."
+        },
+        {
+          "id": "us_024",
+          "english": "Bite the bullet",
+          "meaning": "accept and get on with something unpleasant that cannot be avoided",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://www.merriam-webster.com/dictionary/bite%20the%20bullet",
+          "caveat": "Core sense is resigned acceptance; hacer de tripas corazón leans more towards summoning courage."
+        },
+        {
+          "id": "us_025",
+          "english": "Hedge your bets",
+          "meaning": "reduce the risk of loss by covering more than one outcome",
+          "source": "Merriam-Webster",
+          "sourceUrl": "https://merriam-webster.com/dictionary/hedge%20one's%20bets",
+          "caveat": "Nadar y guardar la ropa carries more of a 'have it both ways' tone."
+        }
+      ]
+    }
+  }
+}
