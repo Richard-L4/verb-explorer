@@ -13,7 +13,6 @@ import {
   sayingRegions,
   searchSayings,
   regionCategories,
-  regionIntroductions,
   type SayingRegion,
 } from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
@@ -99,13 +98,6 @@ function Sayings() {
           ),
         )}
       </div>
-
-      {region === "american" || region === "canadian" ? (
-        <section className="surface-card mb-5 p-5 sm:p-6">
-          <h2 className="text-lg font-bold">{regionIntroductions[region].heading}</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{regionIntroductions[region].text}</p>
-        </section>
-      ) : null}
 
       <div className="surface-panel mb-7 flex flex-col gap-3 p-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
