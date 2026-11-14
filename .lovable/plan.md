@@ -52,3 +52,11 @@ Estimated cost: about 3–4 credits.
 - Full existing suite run and reported; no existing test weakened or removed.
 - No changes to pricing, access rules, payment logic or unrelated features.
 - Final report: changed files, both checksums, test results, issues found.
+
+## 8. Additional regression checks
+- Region choice combines with All/Learned/Unlearned/Favourites and search; every result belongs to the selected region.
+- Learning or favouriting an American or Canadian expression survives a page refresh.
+- Existing British learned and favourite progress unchanged.
+- Empty combinations show a clear "no expressions match" message.
+- Region and filter controls work together on mobile with no sideways scrolling.
+- Checks only; no extra features.
