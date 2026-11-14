@@ -7,7 +7,16 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, AlertTriangle, Quote } from "lucide-react";
-import { getSaying, getSayingNeighbours, getSayingIndex, sayingCount } from "@/data/sayings";
+import {
+  getSaying,
+  getSayingNeighbours,
+  getSayingIndex,
+  sayingCountByRegion,
+  sayingRegions,
+  statusDefinitions,
+  verificationOverview,
+  sourceLimitations,
+} from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
 import { useAccess } from "@/hooks/use-access";
 import { Paywall } from "@/components/app/Paywall";
@@ -30,7 +39,7 @@ export const Route = createFileRoute("/saying/$sayingId")({
       return { meta: [{ title: "Saying not found | Verbs" }, { name: "robots", content: "noindex" }] };
     }
     const { saying } = loaderData;
-    const description = saying.vibe ?? `How to say "${saying.title}" naturally in Spanish.`;
+    const description = saying.vibe ?? saying.meaning ?? `How to say "${saying.title}" naturally in Spanish.`;
     return {
       meta: [
         { title: `${saying.title} — in natural Spanish | Verbs` },
@@ -90,12 +99,22 @@ function SayingDetail() {
           className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-primary/12 blur-3xl"
         />
         <div className="relative flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-          {saying.category ? <span className="text-primary">{saying.category}</span> : null}
+          {saying.region === "british" ? (
+            saying.category ? <span className="text-primary">{saying.category}</span> : null
+          ) : (
+            <span className="text-primary">{sayingRegions.find((r) => r.key === saying.region)?.label}</span>
+          )}
+          {saying.categoryHeading ? <span>{saying.categoryHeading}</span> : null}
           <span className="tabular-nums">
-            Saying {position} of {sayingCount}
+            {saying.region === "british" ? "Saying" : "Expression"} {position} of {sayingCountByRegion[saying.region]}
           </span>
         </div>
         <h1 className="relative mt-4 text-balance text-4xl font-bold leading-[1.02] sm:text-5xl">{saying.title}</h1>
+        {saying.meaning ? (
+          <p className="relative mt-4 max-w-3xl text-base leading-relaxed text-foreground sm:text-lg">
+            <span className="font-semibold">Meaning:</span> {saying.meaning}
+          </p>
+        ) : null}
         {saying.vibe ? (
           <p className="relative mt-4 max-w-3xl text-base leading-relaxed text-foreground sm:text-lg">{saying.vibe}</p>
         ) : null}
@@ -120,6 +139,58 @@ function SayingDetail() {
             Literal translation trap
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-foreground/85">{saying.literal_fail}</p>
+        </section>
+      ) : null}
+
+      {saying.spanish ? (
+        <section className="mt-6 grid gap-5 lg:grid-cols-2">
+          <article className="surface-card hairline-top p-6 sm:p-7">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+              Spanish (Spain) equivalent
+            </p>
+            <p lang="es" className="mt-2 font-display text-2xl font-bold leading-snug text-primary">
+              {saying.spanish}
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+              Not always a word-for-word or dictionary translation — see how it was checked below.
+            </p>
+          </article>
+          {saying.exampleEnglish ? (
+            <article className="surface-card hairline-top p-6 sm:p-7">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Example</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/80">{saying.exampleEnglish}</p>
+              <p className="mt-4 flex items-start gap-2 font-display text-xl font-bold leading-snug text-primary">
+                <Quote className="mt-1.5 size-3.5 shrink-0 text-accent" aria-hidden="true" />
+                <span lang="es">{saying.exampleSpanish}</span>
+              </p>
+            </article>
+          ) : null}
+        </section>
+      ) : null}
+
+      {saying.status ? (
+        <section className="surface-card mt-6 p-6 sm:p-7" aria-label="How this was checked">
+          <h2 className="flex flex-wrap items-center gap-3 text-lg font-bold">
+            How this was checked
+            <span className="rounded-full border border-accent/40 px-2.5 py-1 text-xs font-semibold text-accent">
+              {saying.status}
+            </span>
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-foreground/85">{saying.verificationNote}</p>
+          <details className="mt-4 rounded-xl border border-border/70 p-4">
+            <summary className="cursor-pointer text-sm font-semibold">What the labels mean</summary>
+            <dl className="mt-3 space-y-2 text-sm leading-relaxed">
+              {statusDefinitions.map((d) => (
+                <div key={d.status}>
+                  <dt className="inline font-semibold">{d.status}: </dt>
+                  <dd className="inline text-muted-foreground">{d.definition}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{verificationOverview}</p>
+            <h3 className="mt-3 text-sm font-semibold">{sourceLimitations.heading}</h3>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{sourceLimitations.text}</p>
+          </details>
         </section>
       ) : null}
 

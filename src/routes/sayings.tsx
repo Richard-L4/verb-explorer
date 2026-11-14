@@ -6,7 +6,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { sayings, sayingCount, searchSayings } from "@/data/sayings";
+import {
+  sayings,
+  sayingCount,
+  sayingCountByRegion,
+  sayingRegions,
+  searchSayings,
+  regionCategories,
+  regionIntroductions,
+  type SayingRegion,
+} from "@/data/sayings";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -19,16 +28,16 @@ export const Route = createFileRoute("/sayings")({
   // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
-      { title: "Sayings — British phrases in natural Spanish | Verbs" },
+      { title: "Sayings — English expressions in natural Spanish | Verbs" },
       {
         name: "description",
         content:
-          "British sayings and idioms rendered in natural Spanish, with the tone, context and literal traps behind each phrase.",
+          `${sayingCount} English expressions with Spanish equivalents — British, American and Canadian English.`,
       },
-      { property: "og:title", content: "Sayings — British phrases in natural Spanish | Verbs" },
+      { property: "og:title", content: "Sayings — English expressions in natural Spanish | Verbs" },
       {
         property: "og:description",
-        content: "Idiomatic Spanish for British sayings, with context, tone and the literal translations to avoid.",
+        content: `${sayingCount} English expressions with Spanish equivalents — British, American and Canadian English.`,
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -51,9 +60,11 @@ function Sayings() {
   const { isLearned, isFavourite } = useLearner();
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
+  const [region, setRegion] = useState<SayingRegion | "all">("all");
 
   const base = query.trim() ? searchSayings(query) : sayings;
   const visible = base.filter((s) => {
+    if (region !== "all" && s.region !== region) return false;
     if (filter === "learned") return isLearned(s.id);
     if (filter === "unlearned") return !isLearned(s.id);
     if (filter === "favourites") return isFavourite(s.id);
@@ -65,8 +76,36 @@ function Sayings() {
       <PageHeader
         eyebrow="Sayings"
         title="How you'd actually say it"
-        description={`${sayingCount} British sayings with the natural Spanish that carries the same tone — plus the literal translations that don't work.`}
+        description={`${sayingCount} English expressions with Spanish equivalents — British, American and Canadian English.`}
       />
+
+      <div role="group" aria-label="English variety" className="mb-3 flex flex-wrap items-center gap-2">
+        {[{ key: "all" as const, label: "All", count: sayingCount }, ...sayingRegions.map((r) => ({ ...r, count: sayingCountByRegion[r.key] }))].map(
+          (r) => (
+            <button
+              key={r.key}
+              type="button"
+              aria-pressed={region === r.key}
+              onClick={() => setRegion(r.key)}
+              className={cn(
+                "min-h-10 rounded-full border px-4 text-sm font-semibold transition-all duration-200",
+                region === r.key
+                  ? "border-accent/50 bg-accent text-accent-foreground"
+                  : "border-border/70 bg-card/60 text-muted-foreground hover:border-accent/40 hover:text-foreground",
+              )}
+            >
+              {r.label} <span className="tabular-nums opacity-80">({r.count})</span>
+            </button>
+          ),
+        )}
+      </div>
+
+      {region === "american" || region === "canadian" ? (
+        <section className="surface-card mb-5 p-5 sm:p-6">
+          <h2 className="text-lg font-bold">{regionIntroductions[region].heading}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{regionIntroductions[region].text}</p>
+        </section>
+      ) : null}
 
       <div className="surface-panel mb-7 flex flex-col gap-3 p-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
@@ -104,10 +143,23 @@ function Sayings() {
         </div>
       </div>
 
-      {visible.length ? (
-        <SayingGrid sayings={visible} />
+      {!visible.length ? (
+        <p className="surface-card p-12 text-center text-sm text-muted-foreground">No expressions match this selection.</p>
+      ) : region === "american" || region === "canadian" ? (
+        <div className="space-y-8">
+          {regionCategories(region).map((c) => {
+            const group = visible.filter((s) => s.category === c.id);
+            if (!group.length) return null;
+            return (
+              <section key={c.id} aria-label={c.heading}>
+                <h2 className="mb-4 text-xl font-bold">{c.heading}</h2>
+                <SayingGrid sayings={group} />
+              </section>
+            );
+          })}
+        </div>
       ) : (
-        <p className="surface-card p-12 text-center text-sm text-muted-foreground">No sayings match this filter yet.</p>
+        <SayingGrid sayings={visible} />
       )}
     </PageTransition>
   );
