@@ -41,3 +41,14 @@
 - Edit: `src/data/sayings.ts`, `src/routes/sayings.tsx`, `src/routes/saying.$sayingId.tsx`, `src/components/app/SayingCardTile.tsx`, `src/routes/index.tsx`, `AGENTS.md` (one data rule)
 
 Estimated cost: about 3–4 credits.
+
+## 7. Additional requirements (approved 14 Nov)
+- SHA-256 of the copied JSON compared with the uploaded file; both reported.
+- British sayings keep favourites, learned progress, search, filters and navigation exactly as now.
+- North American ordering, category headings and collection introductions kept exactly as in the JSON; no entries added or invented.
+- Status labels shown verbatim (DLE and DLE (partial) stay distinct).
+- Prev/next stays inside the saying's own region; tested at region edges (e.g. last British does not link to first American).
+- Tests confirm all 75 entries render, including full verification notes and source explanations.
+- Full existing suite run and reported; no existing test weakened or removed.
+- No changes to pricing, access rules, payment logic or unrelated features.
+- Final report: changed files, both checksums, test results, issues found.
