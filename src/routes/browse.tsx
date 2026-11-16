@@ -3,6 +3,7 @@
  * Local filter and paging choices produce the cards passed to CardGrid; this page
  * does not fetch protected subjunctive examples or invent its own access policy.
  */
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
@@ -38,6 +39,8 @@ const filters: { key: Filter; label: string }[] = [
 ];
 
 function Browse() {
+  // Re-render when the server swaps in full card content (trial or purchase).
+  useSubjunctive();
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { isLearned, isFavourite } = useLearner();

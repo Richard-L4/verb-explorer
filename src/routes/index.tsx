@@ -3,6 +3,7 @@
  * Combines public deck summaries with useLearner browser progress and links to study
  * routes; CardGrid and StatCard receive props (values passed from parent to child).
  */
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Brain, Heart, LayoutGrid, Quote, Search, Wand2, Shuffle, Sparkles, GraduationCap, BookOpen } from "lucide-react";
@@ -46,6 +47,8 @@ const quickLinks = [
 ] as const;
 
 function Home() {
+  // Re-render when the server swaps in full card content (trial or purchase).
+  useSubjunctive();
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { studiedCount, learnedCount, progressPercent, recentCards, state } = useLearner();

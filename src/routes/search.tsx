@@ -3,6 +3,7 @@
  * A short delay avoids searching on every keystroke; CardGrid and EmptyState
  * present results inside the shared root layout, without a server request per search.
  */
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search as SearchIcon, SearchX } from "lucide-react";
@@ -28,6 +29,8 @@ export const Route = createFileRoute("/search")({
 });
 
 function SearchPage() {
+  // Re-render when the server swaps in full card content (trial or purchase).
+  useSubjunctive();
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
   // While an Ask answer is showing, the empty "start typing" panel is hidden to avoid dead space.
