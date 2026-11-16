@@ -14,3 +14,5 @@
 - [ ] Pre-publish security: secure creator access + verified restore (waiting on db/restore_codes.sql being run in Supabase, then final creator/restore browser checks)
 - [x] Generalised Ask search — frame parsing, verified morphology, off-pack vocabulary, composite answers, regression tests and UI verification
 - [x] Sayings expanded to 75 English expressions (British, American, Canadian) with regression checks
+
+- [x] Host-guarded Stripe live/test key and price selection (trusted host, separate webhook tests)
