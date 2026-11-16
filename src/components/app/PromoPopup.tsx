@@ -29,7 +29,7 @@ function markHasEnteredApp(): void {
 
 export function PromoPopup() {
   const { pathname } = useLocation();
-  const { unlocked, creator } = useAccess();
+  const { unlocked, creator, inTrial, checkingContent } = useAccess();
   const [visible, setVisible] = useState(false);
 
   const isLanding = pathname === "/";
@@ -44,7 +44,7 @@ export function PromoPopup() {
   }, [isLanding]);
 
   useEffect(() => {
-    if (!isLanding || hasLifetimeAccess || getHasEnteredApp()) return;
+    if (!isLanding || hasLifetimeAccess || checkingContent || !inTrial || getHasEnteredApp()) return;
 
     const showTimer = window.setTimeout(() => {
       if (!getHasEnteredApp()) {
@@ -54,13 +54,13 @@ export function PromoPopup() {
 
     // Effect cleanup cancels the pending popup when the route changes or this unmounts.
     return () => window.clearTimeout(showTimer);
-  }, [isLanding, pathname, hasLifetimeAccess]);
+  }, [isLanding, pathname, hasLifetimeAccess, checkingContent, inTrial]);
 
   const close = () => setVisible(false);
 
   return (
     <AnimatePresence>
-      {visible && !hasLifetimeAccess && (
+      {visible && !hasLifetimeAccess && inTrial && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
