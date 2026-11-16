@@ -101,64 +101,32 @@ function Home() {
 
         </div>
 
-        <div className="relative mt-8 max-w-2xl rounded-2xl border border-border bg-card/60 p-5 sm:p-6">
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">Built for A2–B2 learners</p>
-          <p className="mt-2 text-sm leading-relaxed text-foreground sm:text-base">
-            Verb Wise turns the Spanish you half-know into Spanish you can use with confidence: {cardCount} confusing verb
-            pairs explained, thousands of examples in real context, present and imperfect subjunctive lessons, quizzes,
-            {" "}{sayingCount} English sayings with Spanish equivalents, and practical notes on when to use each one.
+        <div className="relative mt-8 rounded-3xl border-2 border-primary/70 bg-card/80 p-6 shadow-[var(--shadow-glow)] backdrop-blur sm:p-10">
+          <p className="gradient-text text-5xl font-bold leading-none tracking-tight sm:text-6xl">£14.99</p>
+          <h2 className="mt-4 max-w-2xl text-xl font-bold leading-snug text-foreground sm:text-2xl">
+            One payment. Hundreds of examples. A lifetime of better Spanish.
+          </h2>
+          <ul className="mt-6 grid gap-3 text-sm leading-relaxed text-foreground sm:grid-cols-2 sm:text-base">
+            {[
+              "Designed for Spanish learners at A2–B2 level.",
+              "100 confusing verb pairs explained.",
+              "Thousands of contextual examples.",
+              "Present and imperfect subjunctive lessons.",
+              "Quizzes, sayings and practical explanations.",
+              "Smart voice and text search – ask any question (in English or Spanish), spoken or written, and get an answer.",
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
+                <span aria-hidden="true" className="mt-2 size-2 shrink-0 rounded-full bg-primary" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 rounded-2xl bg-primary/10 px-4 py-3 text-sm font-bold leading-snug text-primary sm:text-base">
+            £14.99 one-off payment – lifetime access to the Verb Wise app. No subscription.
           </p>
-        </div>
-
-        <div className="relative mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Link
-            to="/subjunctive"
-            className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Imperfect Subjunctive</p>
-            <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
-              Master the Spanish subjunctive
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Present and imperfect: tricky triggers and real examples across three difficulty levels.
-            </p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
-              Explore the subjunctive
-              <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-            </p>
-          </Link>
-          <Link
-            to="/quiz"
-            className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Quiz</p>
-            <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
-              Test what you've learned
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Multiple-choice questions on verbs and the present and imperfect subjunctive, at three levels, with feedback on every answer.
-            </p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
-              Take the quiz
-              <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-            </p>
-          </Link>
-          <Link
-            to="/search"
-            className="group min-w-0 rounded-2xl border-2 border-primary/70 bg-primary/10 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-glow)] sm:p-6"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">New · Smart search</p>
-            <h2 className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
-              Ask by typing or speaking
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Ask a question in English or Spanish, typed or spoken, and get an answer straight from the lessons.
-            </p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
-              Ask a question
-              <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-            </p>
-          </Link>
+          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            NB: Future membership and community features are separate and are not included in this purchase.
+          </p>
         </div>
       </section>
 
