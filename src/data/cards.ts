@@ -1,8 +1,10 @@
 /**
  * Shared verb-deck types and lookups, usable in the browser and on the server.
- * Depends on the public verbs JSON; development checks help catch editing mistakes.
+ * The browser starts from the generated public deck (full content for the free
+ * SER vs ESTAR card only). Full content for a trial or purchase arrives from the
+ * server and is held in memory only (see use-subjunctive.ts / setCardContent).
  */
-import rawCards from "./verbs.json";
+import rawCards from "./verbs.public.json";
 
 export interface CardExample {
   es: string;
@@ -25,8 +27,10 @@ export interface VerbCard {
   tricky?: string;
 }
 
-/** Single source of truth: the JSON dataset. Add cards to verbs.json only. */
-export const cards: VerbCard[] = rawCards as VerbCard[];
+const publicCards = rawCards as VerbCard[];
+
+/** Current deck as this browser is entitled to see it. Mutated in place by setCardContent. */
+export const cards: VerbCard[] = [...publicCards];
 
 export const cardCount = cards.length;
 
@@ -64,6 +68,18 @@ if (import.meta.env.DEV) {
 }
 
 const byId = new Map(cards.map((c) => [c.id, c]));
+
+/**
+ * Swaps in the server-supplied full deck (same ids and order), or back to the
+ * public deck when `full` is null (trial ended, pass revoked). Memory only.
+ */
+export function setCardContent(full: VerbCard[] | null): void {
+  const src = full && full.length === publicCards.length ? full : publicCards;
+  cards.splice(0, cards.length, ...src);
+  byId.clear();
+  for (const c of cards) byId.set(c.id, c);
+  rebuildSearchIndex();
+}
 
 export function getCard(id: string): VerbCard | undefined {
   return byId.get(id);
@@ -104,7 +120,10 @@ function normalise(value: string): string {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-const searchIndex = cards.map((card) => ({ card, haystack: normalise(searchableText(card)) }));
+let searchIndex = cards.map((card) => ({ card, haystack: normalise(searchableText(card)) }));
+function rebuildSearchIndex() {
+  searchIndex = cards.map((card) => ({ card, haystack: normalise(searchableText(card)) }));
+}
 
 export function searchCards(query: string): VerbCard[] {
   const q = normalise(query.trim());
