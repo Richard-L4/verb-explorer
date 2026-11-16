@@ -64,7 +64,7 @@ export function Paywall({ title }: { title?: string }) {
         <p className="mt-3 text-base text-foreground">One-off payment. Yours permanently. No subscription.</p>
         {title ? (
           <p className="mt-2 text-sm text-muted-foreground">
-            “{title}” needs full access. All 100 verb cards stay free for everyone.
+            “{title}” needs full access. SER vs ESTAR stays free for everyone.
           </p>
         ) : null}
 

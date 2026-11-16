@@ -48,7 +48,7 @@ export function SubjunctiveListPage({ tense }: { tense: Tense }) {
         description={
           paid
             ? `${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and nine graded examples.`
-            : `${SUBJUNCTIVE_TOTAL} verb pairs. The first 20 are free with Easy examples; Medium, Hard and the full set come with full access.`
+            : `${SUBJUNCTIVE_TOTAL} verb pairs. SER vs ESTAR is free at every level; the full set comes with full access.`
         }
       />
 
@@ -72,7 +72,7 @@ export function SubjunctiveListPage({ tense }: { tense: Tense }) {
           {visible.map((entry, i) => {
             const triggers = entry.triggers;
             const locked = !triggers;
-            const easyOnly = !paid && isFreeSubjunctive(entry.id);
+            const freeEntry = !paid && isFreeSubjunctive(entry.id);
             return (
               <motion.div
                 key={entry.id}
@@ -96,9 +96,9 @@ export function SubjunctiveListPage({ tense }: { tense: Tense }) {
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
                         <Lock className="size-3" aria-hidden="true" /> Locked
                       </span>
-                    ) : easyOnly ? (
+                    ) : freeEntry ? (
                       <span className="rounded-full border border-border/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                        Free · Easy
+                        Free
                       </span>
                     ) : null}
                   </div>

@@ -62,7 +62,7 @@ function SubjunctiveHub() {
       <PageHeader
         eyebrow="Subjunctive"
         title="Choose a tense"
-        description={`Both tenses cover the same ${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and Easy, Medium and Hard examples. The first 20 are free with Easy examples.`}
+        description={`Both tenses cover the same ${SUBJUNCTIVE_TOTAL} verb pairs, each with three triggers and Easy, Medium and Hard examples. SER vs ESTAR is free at every level; the rest comes with full access.`}
       />
       <div className="grid gap-5 md:grid-cols-2">
         {TENSES.map((t) => {

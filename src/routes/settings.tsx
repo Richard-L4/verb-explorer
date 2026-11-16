@@ -88,8 +88,8 @@ function Settings() {
             : unlocked
             ? `Unlocked. You paid the one-off ${price} and have permanent access to every card.`
             : inTrial
-              ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. All verb cards stay free; Sayings, the full Subjunctive and its Medium and Hard examples need the one-off ${price} unlock.`
-              : `Trial finished. All verb cards and 20 Subjunctive entries stay free; the rest needs the one-off ${price} unlock.`}
+              ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After the trial, SER vs ESTAR stays free; everything else needs the one-off ${price} unlock.`
+              : `Trial finished. You can keep learning SER vs ESTAR free; everything else needs the one-off ${price} unlock.`}
         </p>
         {!creator && !unlocked ? (
           <div className="mt-5">

@@ -44,7 +44,7 @@ function Terms() {
         </LegalSection>
 
         <LegalSection title="Free and paid tiers">
-          <p>Ten cards are always available free of charge.</p>
+          <p>The SER vs ESTAR collection (its verb card, subjunctive lessons and quiz questions) is always available free of charge. Everything else is available during the 7-day trial and afterwards with the one-off unlock.</p>
           <p>
             A single one-off payment of £14.99 unlocks all content permanently. There is no subscription and no
             recurring charge.
