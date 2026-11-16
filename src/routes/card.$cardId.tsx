@@ -1,7 +1,8 @@
 /*
  * Detail page at /card/<cardId>: $cardId captures a changing URL segment.
  * The loader reads cards.ts; VerbCardBody renders it and useLearner records viewing.
- * Access comes from content-access.ts: standard verb cards are currently always free.
+ * Access comes from content-access.ts: SER vs ESTAR is always open; other cards need a
+ * server-confirmed trial or purchase, whose full content arrives via useSubjunctive.
  */
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -9,6 +10,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getCard, getNeighbours, getCardIndex, cardCount } from "@/data/cards";
 import { useLearner } from "@/hooks/use-learner";
 import { verbCardLocked } from "@/lib/content-access";
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 import { Paywall } from "@/components/app/Paywall";
 import { PageTransition } from "@/components/app/PageTransition";
 import { VerbCardBody } from "@/components/app/VerbCardBody";
@@ -43,20 +45,23 @@ export const Route = createFileRoute("/card/$cardId")({
 });
 
 function CardDetail() {
-  const { card } = Route.useLoaderData();
+  const { card: loaded } = Route.useLoaderData();
+  // Re-read after the server swaps in full content (the loader's copy may be the public one).
+  const { paid, status } = useSubjunctive();
+  const card = getCard(loaded.id) ?? loaded;
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { markViewed } = useLearner();
-  const isLocked = verbCardLocked;
-  const locked = isLocked(card.id);
+  const locked = verbCardLocked(card.id, paid);
+  const checking = locked && status === "checking";
   const { prev, next } = getNeighbours(card.id);
   const position = getCardIndex(card.id) + 1;
 
   // Effects run after rendering; do not count a paywall view as studying the content.
   useEffect(() => {
-    if (locked) return;
+    if (locked || checking) return;
     markViewed(card.id);
-  }, [card.id, locked, markViewed]);
+  }, [card.id, locked, checking, markViewed]);
 
   return (
     <PageTransition>
@@ -67,7 +72,9 @@ function CardDetail() {
         <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" /> Back to browse
       </Link>
 
-      {locked ? (
+      {checking ? (
+        <p className="mt-6 text-sm text-muted-foreground" role="status">Checking your access…</p>
+      ) : locked ? (
         <div className="mt-4">
           <Paywall title={card.title} />
         </div>
