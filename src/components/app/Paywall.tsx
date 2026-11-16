@@ -61,7 +61,7 @@ export function Paywall({ title }: { title?: string }) {
         <h2 className="mt-5 text-balance font-display text-3xl font-bold leading-tight sm:text-4xl">
           Unlock Verb Wise — {price}
         </h2>
-        <p className="mt-3 text-base text-foreground">One-off payment. Yours permanently. No subscription.</p>
+        <p className="mt-3 text-base text-foreground">One payment. Lifetime access. No subscription.</p>
         {title ? (
           <p className="mt-2 text-sm text-muted-foreground">
             “{title}” needs full access. SER vs ESTAR stays free for everyone.

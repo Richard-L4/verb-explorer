@@ -125,7 +125,7 @@ function Home() {
             ))}
           </ul>
           <p className="mt-6 rounded-2xl bg-primary/10 px-4 py-3 text-sm font-bold leading-snug text-primary sm:text-base">
-            £14.99 one-off payment – lifetime access to the Verb Wise app. No subscription.
+            £14.99. One payment. Lifetime access. No subscription.
           </p>
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
             NB: Future membership and community features are separate and are not included in this purchase.
