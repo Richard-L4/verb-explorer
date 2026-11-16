@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           config = await stripeConfigForRequest(request);
         } catch (error) {
           if (error instanceof StripeConfigError) {
-            console.warn("[stripe-webhook] payments not configured for this address:", error.message);
+            console.warn("[stripe-webhook] payments not configured for this address");
             return new Response("Payments not configured", { status: 503 });
           }
           throw error;
