@@ -83,6 +83,15 @@ describe("trial_expired", () => {
     expect(sent.map((s) => s.event)).toEqual(["trial_expired"]);
   });
 
+  it("shows the price wording without any price comparison", async () => {
+    access.inTrial = false;
+    access.trialDaysLeft = 0;
+    const { container } = render(<TrialBanner />);
+    await flush();
+    expect(screen.getByText("£14.99 once. Lifetime access. No subscription.")).toBeTruthy();
+    expect(container.textContent).not.toMatch(/coffee/i);
+  });
+
   it("is not recorded when the user has purchased", async () => {
     access.unlocked = true;
     access.inTrial = false;
