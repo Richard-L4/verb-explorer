@@ -76,7 +76,7 @@ export function TrialBanner() {
           {message === reminderFor(0, false) ? (
             <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="text-xs text-muted-foreground sm:text-sm">
-                £14.99 once. Lifetime access. No subscription.
+                £14.99. One payment. Lifetime access. No subscription.
               </span>
             </div>
           ) : null}

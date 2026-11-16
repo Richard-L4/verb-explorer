@@ -24,12 +24,12 @@ export const Route = createFileRoute("/unlock")({
       {
         name: "description",
         content:
-          "Unlock every Verb Wise card with a one-off £14.99 payment. Permanent access, no subscription.",
+          "Unlock every Verb Wise card for £14.99. One payment. Lifetime access. No subscription.",
       },
       { property: "og:title", content: "Unlock Verb Wise — £14.99" },
       {
         property: "og:description",
-        content: "One-off £14.99 payment for permanent access to every card.",
+        content: "£14.99. One payment. Lifetime access to every card. No subscription.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -51,7 +51,7 @@ function UnlockRoute() {
       <PageHeader
         eyebrow="Unlock"
         title="Unlock Verb Wise"
-        description="One-off payment. Yours permanently. No subscription."
+        description="One payment. Lifetime access. No subscription."
       />
 
       {unlocked || creator ? (
