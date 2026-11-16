@@ -18,21 +18,27 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           return new Response("Missing signature", { status: 400 });
         }
 
-        // A Stripe account has separate signing secrets for test-mode and
-        // live-mode endpoints; accept either so both dashboards work.
-        const { readEnv } = await import("@/lib/env.server");
-        const secrets = [
-          readEnv("STRIPE_WEBHOOK_SECRET"),
-          readEnv("STRIPE_TEST_WEBHOOK_SECRET"),
-        ].filter((value): value is string => Boolean(value));
-
-        if (secrets.length === 0) {
-          console.warn("[stripe-webhook] STRIPE_WEBHOOK_SECRET is not configured");
+        // Mode comes from this Worker's own request URL: production addresses use only the
+        // live signing secret, preview/localhost only the test one. No cross-mode fallback.
+        const { stripeConfigForRequest, StripeConfigError } = await import("@/lib/stripe-mode.server");
+        let config: Awaited<ReturnType<typeof stripeConfigForRequest>>;
+        try {
+          config = await stripeConfigForRequest(request);
+        } catch (error) {
+          if (error instanceof StripeConfigError) {
+            console.warn("[stripe-webhook] payments not configured for this address");
+            return new Response("Payments not configured", { status: 503 });
+          }
+          throw error;
+        }
+        if (!config.webhookSecret) {
+          console.warn(`[stripe-webhook] ${config.webhookSecretName} is not configured`);
           return new Response("Webhook secret not configured", { status: 503 });
         }
+        const secrets = [config.webhookSecret];
 
-        const { getStripe } = await import("@/lib/payments.server");
-        const stripe = getStripe();
+        const { stripeClient } = await import("@/lib/payments.server");
+        const stripe = stripeClient(config);
 
         let event: import("stripe").Stripe.Event | undefined;
         let lastError = "";
@@ -51,6 +57,12 @@ export const Route = createFileRoute("/api/public/stripe-webhook")({
           const { redact } = await import("@/lib/log-safety.server");
           console.error("[stripe-webhook] signature verification failed:", redact(lastError));
           return new Response("Invalid signature", { status: 400 });
+        }
+
+        // A test event never acts on a live address, nor a live event on a test address.
+        if (event.livemode !== (config.mode === "live")) {
+          console.warn("[stripe-webhook] event mode does not match this address; ignored");
+          return new Response("Wrong mode", { status: 400 });
         }
 
         // Processing below is awaited before the 200 response; caught errors are logged safely.

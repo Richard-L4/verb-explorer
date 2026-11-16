@@ -25,12 +25,13 @@ export const Route = createFileRoute("/api/public/env-check")({
       GET: async ({ request }) => {
         const { readEnv, envPresence } = await import("@/lib/env.server");
 
-        const rawKey = readEnv("STRIPE_SECRET_KEY_TEST") ?? readEnv("STRIPE_SECRET_KEY");
-        const stripeKeyMode = rawKey
-          ? rawKey.startsWith("sk_test_") || rawKey.startsWith("rk_test_")
-            ? "test"
-            : "live"
-          : "absent";
+        const { stripeConfigForRequest } = await import("@/lib/stripe-mode.server");
+        let stripeKeyMode: string;
+        try {
+          stripeKeyMode = (await stripeConfigForRequest(request)).mode;
+        } catch (error) {
+          stripeKeyMode = `unavailable: ${error instanceof Error ? error.message : "error"}`;
+        }
 
         return new Response(
           JSON.stringify(

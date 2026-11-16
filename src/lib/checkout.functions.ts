@@ -44,9 +44,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       });
       const claimHash = await markerHash(marker);
 
-      const stripe = getStripe();
+      const stripe = await getStripe();
 
-      const priceId = getVerbWisePriceId();
+      const priceId = await getVerbWisePriceId();
 
       const session = await stripe.checkout.sessions.create({
         mode: "payment",
