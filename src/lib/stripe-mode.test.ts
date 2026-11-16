@@ -134,7 +134,7 @@ describe("£14.99 price change", () => {
   const live = stripeConfigForMode("live", (n) => (n === "STRIPE_SECRET_KEY" ? "sk_live_x" : undefined));
   const test = stripeConfigForMode("test", (n) => (n === "STRIPE_SECRET_KEY_TEST" ? "sk_test_x" : undefined));
   const s = (id: string) => ({
-    status: "complete", payment_status: "paid", currency: "gbp",
+    mode: "payment", status: "complete", payment_status: "paid", currency: "gbp",
     line_items: { data: [{ price: { id }, quantity: 1 }] },
   }) as never;
   it("new checkouts use the £14.99 prices", () => {
