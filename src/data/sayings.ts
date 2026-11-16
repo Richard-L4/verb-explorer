@@ -10,9 +10,9 @@ const pub = pubJson as unknown as {
   sayings: unknown[];
   categories: Record<"american" | "canadian", { id: string; heading: string }[]>;
   collectionIntroductions: Record<string, string>;
-  statusDefinitions: Record<string, string>;
+  statusDefinitions: { status: string; definition: string }[];
   overview: string;
-  sourceLimitations: string[];
+  sourceLimitations: { heading: string; text: string };
 };
 
 export interface SayingExample {
