@@ -31,6 +31,25 @@ const listeners = new Set<() => void>();
 let cache: AccessState = emptyAccess;
 let hydrated = false;
 
+/**
+ * Server trial verification for this page load. "checking" until the server
+ * answers; "failed" when it could not be reached (never treated as a trial).
+ * The locally seeded trialStart is only a placeholder until "verified".
+ */
+export type TrialCheck = "checking" | "verified" | "failed";
+let trialCheck: TrialCheck = "checking";
+export function getTrialCheck(): TrialCheck {
+  return trialCheck;
+}
+export function getTrialCheckServer(): TrialCheck {
+  return "checking";
+}
+export function setTrialCheck(next: TrialCheck) {
+  if (trialCheck === next) return;
+  trialCheck = next;
+  listeners.forEach((l) => l());
+}
+
 function isBrowser() {
   return typeof window !== "undefined";
 }

@@ -22,7 +22,8 @@ function reminderFor(daysLeft: number, trialActive: boolean): string | null {
 }
 
 export function TrialBanner() {
-  const { creator, unlocked, inTrial, trialDaysLeft, price, bannerPreview } = useAccess();
+  const { creator, unlocked, inTrial, trialDaysLeft, price, bannerPreview, accessSettled, trialExpired } =
+    useAccess();
 
   // null means no banner. Purchases hide it; creator previews can select a
   // reminder, while ordinary visitors see expiry or the selected countdown days.
@@ -38,8 +39,10 @@ export function TrialBanner() {
         bannerPreview === "expired"
           ? reminderFor(0, false)
           : reminderFor(bannerPreview as number, true);
-    } else if (!creator) {
-      if (!inTrial || [5, 3, 2, 1].includes(trialDaysLeft)) {
+    } else if (!creator && accessSettled) {
+      // Only server-confirmed states: an active trial or a confirmed expiry.
+      // While verifying (or if verification failed) nothing is shown.
+      if (trialExpired || (inTrial && [5, 3, 2, 1].includes(trialDaysLeft))) {
         message = reminderFor(trialDaysLeft, inTrial);
       }
     }
