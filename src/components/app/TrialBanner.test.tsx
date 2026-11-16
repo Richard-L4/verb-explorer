@@ -9,6 +9,8 @@ const access = {
   trialDaysLeft: 5,
   price: "£14.99",
   bannerPreview: null as null | number | "expired",
+  accessSettled: true,
+  trialExpired: false,
 };
 
 vi.mock("@tanstack/react-router", () => ({
@@ -34,6 +36,8 @@ beforeEach(() => {
     inTrial: true,
     trialDaysLeft: 5,
     bannerPreview: null,
+    accessSettled: true,
+    trialExpired: false,
   });
 });
 
@@ -74,6 +78,7 @@ describe("reminder events fire on actual render", () => {
 describe("trial_expired", () => {
   it("is recorded once when the trial first reaches zero", async () => {
     access.inTrial = false;
+    access.trialExpired = true;
     access.trialDaysLeft = 0;
     render(<TrialBanner />);
     await flush();
@@ -85,6 +90,7 @@ describe("trial_expired", () => {
 
   it("shows the price wording without any price comparison", async () => {
     access.inTrial = false;
+    access.trialExpired = true;
     access.trialDaysLeft = 0;
     const { container } = render(<TrialBanner />);
     await flush();
@@ -95,6 +101,7 @@ describe("trial_expired", () => {
   it("is not recorded when the user has purchased", async () => {
     access.unlocked = true;
     access.inTrial = false;
+    access.trialExpired = true;
     render(<TrialBanner />);
     await flush();
     expect(sent).toHaveLength(0);
@@ -119,5 +126,18 @@ describe("creator mode", () => {
     await flush();
     expect(screen.getByText("Preview")).toBeTruthy();
     expect(sent).toHaveLength(0);
+  });
+});
+
+describe("TrialBanner while the server is still verifying", () => {
+  it("shows no expired message before verification finishes", () => {
+    Object.assign(access, { inTrial: false, trialExpired: true, accessSettled: false });
+    render(<TrialBanner />);
+    expect(screen.queryByText(/trial has ended/)).toBeNull();
+  });
+  it("shows the expired message once the server confirms expiry", () => {
+    Object.assign(access, { inTrial: false, trialExpired: true, accessSettled: true });
+    render(<TrialBanner />);
+    expect(screen.getByText(/trial has ended/)).toBeTruthy();
   });
 });
