@@ -19,6 +19,7 @@ import { PromoPopup } from "./PromoPopup";
 import { RandomMenu } from "./RandomMenu";
 import { Fragment } from "react";
 import { logAppVisit } from "@/lib/analytics";
+import { useAccess } from "@/hooks/use-access";
 import { cn } from "@/lib/utils";
 
 
@@ -95,9 +96,11 @@ function MoreMenu() {
   );
 }
 
-/** Highlighted Buy It Now button linking to the existing Unlock page. */
+/** Highlighted Buy It Now button linking to the existing Unlock page. Hidden once lifetime access is confirmed. */
 function BuyLink({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
+  const { unlocked, creator } = useAccess();
   const Icon = buyItem.icon;
+  if (unlocked || creator) return null;
   return (
     <Link
       to={buyItem.to}
