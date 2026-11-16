@@ -213,6 +213,11 @@ export function markServerSessionReady() {
   releaseSession?.();
 }
 
+/** Resolves once the trial check has run (or after `ms`, whichever comes first). */
+export function whenServerSessionReady(ms = 5000): Promise<unknown> {
+  return Promise.race([sessionReady, new Promise((r) => setTimeout(r, ms))]);
+}
+
 async function send(payload: EventPayload) {
   if (!transport) {
     await Promise.race([sessionReady, new Promise((r) => setTimeout(r, 8000))]);
