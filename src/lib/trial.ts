@@ -8,7 +8,6 @@
  */
 import { logEvent, markServerSessionReady } from "./analytics";
 import { applyServerTrialStart, setTrialCheck, TRIAL_DAYS } from "./access";
-import { isLovablePreviewHost } from "./preview";
 import { collectDeviceSignal } from "./device-signal";
 
 export async function syncServerTrial(_firstVisit: boolean): Promise<void> {
@@ -16,6 +15,7 @@ export async function syncServerTrial(_firstVisit: boolean): Promise<void> {
   // Only Lovable Preview hosts skip the claim (they share the production
   // database). A local creator/test flag never skips verification; analytics
   // stay suppressed for test devices inside logEvent.
+  const { isLovablePreviewHost } = await import("./preview");
   if (isLovablePreviewHost()) {
     setTrialCheck("failed");
     return;

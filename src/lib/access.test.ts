@@ -55,17 +55,13 @@ describe("trial clock behaviour is unchanged", () => {
 });
 
 describe("trial_started analytics", () => {
-  it("is recorded only when the trial clock is first created", async () => {
+  it("is not recorded, and no trial is assumed, when the server cannot verify it", async () => {
     const first = await freshAccess();
+    expect(first.getTrialCheck()).toBe("checking");
     first.hydrate();
     await flush();
-    expect(sent.map((s) => s.event)).toEqual(["trial_started"]);
-
-    // Second visit: clock already exists, so no further event.
-    const second = await freshAccess();
-    second.hydrate();
-    await flush();
-    expect(sent.map((s) => s.event)).toEqual(["trial_started"]);
+    expect(sent).toHaveLength(0);
+    expect(first.getTrialCheck()).toBe("failed");
   });
 
   it("is not recorded for creator devices", async () => {
