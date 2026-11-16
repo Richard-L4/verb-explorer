@@ -39,8 +39,19 @@ function Settings() {
   // State remembers whether the reset confirmation is open, avoiding accidental data loss.
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const { unlocked, creator, inTrial, trialDaysLeft, resetAccess, endTrial, price, bannerPreview, setBannerPreview } =
-    useAccess();
+  const {
+    unlocked,
+    creator,
+    inTrial,
+    trialDaysLeft,
+    resetAccess,
+    endTrial,
+    price,
+    bannerPreview,
+    setBannerPreview,
+    accessSettled,
+    verifiedPurchase,
+  } = useAccess();
   // Informational only — read after hydration, no in-app control removes it.
   const [testDevice, setTestDevice] = useState(false);
   useEffect(() => {
@@ -75,7 +86,7 @@ function Settings() {
 
       <section className="surface-card mt-6 p-6 sm:p-7">
         <h2 className="flex items-center gap-2.5 text-xl font-bold">
-          {unlocked || creator ? (
+          {creator || verifiedPurchase ? (
             <Unlock className="size-5 text-primary" aria-hidden="true" />
           ) : (
             <Lock className="size-5 text-primary" aria-hidden="true" />
@@ -83,10 +94,14 @@ function Settings() {
           Access
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-foreground">
-          {creator
+          {!accessSettled
+            ? "Checking your access…"
+            : creator
             ? "Creator mode active. This browser has permanent full access to every card."
-            : unlocked
+            : verifiedPurchase
             ? `Unlocked. You paid the one-off ${price} and have permanent access to every card.`
+            : unlocked
+            ? "Your purchase is not confirmed on this browser yet. Use Restore purchase on the Unlock page."
             : inTrial
               ? `Free trial: ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left with every card open. After the trial, SER vs ESTAR stays free; everything else needs the one-off ${price} unlock.`
               : `Trial finished. You can keep learning SER vs ESTAR free; everything else needs the one-off ${price} unlock.`}
