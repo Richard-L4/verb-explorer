@@ -30,10 +30,28 @@ Trial user sees all content. Expired user: ser-vs-estar card, subjunctive (all l
 ## Unchanged
 Trial length and identity checks, Stripe, price IDs, secrets, £14.99, checkout, restore, and the database (no migration needed).
 
-## Points to confirm
-- Only 2 quiz questions are tagged ser-vs-estar. Questions that only mention ser/estar under other cards (e.g. ser-vs-parecer) stay paid unless you say otherwise.
-- The trial will now unlock Medium/Hard subjunctive, which reverses the current "trial never unlocks subjunctive" rule.
-- Stage 2 (moving verb cards to the server) is the largest piece and will cost noticeably more credits than earlier tasks.
+## Clarifications (approved)
+- **Quiz classification**: the free set is an explicit list, `SER_ESTAR_QUIZ_IDS`, and I'll check each question by reading it. Confirmed so far: q001 and q101, both of which test the distinction. q033 (estar de acuerdo) only mentions ser in passing, so it stays paid. Any question that genuinely tests the distinction but is filed under a different card gets its `sourceId` corrected. Each correction will be listed for you, and no question text changes.
+- **Trial**: an active trial, verified on the server, gets everything, including Easy, Medium and Hard present and imperfect subjunctive.
+- **No leaks**: a build check confirms that the browser files, source maps, public JSON files and server replies contain no locked verb, saying or subjunctive text. A test greps the built output for sample locked sentences.
+- **Expiry**: content you were given during the trial or under a pass stays only in memory, never in browser storage. Each reply carries the date its access ends; when that date passes, the content is dropped and fetched again. A pass the server revokes returns only free content on the next load.
+- **Purchasers**: £4.99 and £14.99 purchases, including restored ones, get full access. Tests cover both.
+- **Process**: the work is done stage by stage. I run the tests after each stage and report the results before continuing.
+- **Roadmap**: I'll add this task to roadmap.md when building starts, because I can't edit files in plan mode.
+
+## Credit estimate per stage (approximate)
+| Stage | Work | Credits |
+|---|---|---|
+| 1 | Policy and tier rewrite, plus tests | 1.5–2 |
+| 2 | Verb cards behind the server, plus the hook and page switch-over | 4–5 |
+| 3 | Subjunctive fully unlocked during the trial | 1–1.5 |
+| 4 | Quiz free set and reclassification | 1.5–2 |
+| 5 | Sayings behind the server | 2.5–3 |
+| 6 | Expiry handling and wording | 1.5–2 |
+| 7 | Leak check, full test run, browser check of 4 user states | 2–3 |
+| | **Total** | **about 14–18** |
+
+This is more than the 6-credit ceiling you used for earlier tasks. I will stop at the end of any stage if your balance would fall below the floor you set.
 
 ## Likely files
 `content-access.ts`, `subjunctive-content.functions.ts`, `quiz.server.ts`, `use-access.ts`, `access.ts`, new `verbs-full.server.ts` / `verb-content.functions.ts` / `use-verbs.ts` / `verbs.public.json` + build script, `sayings.ts` + server gate, routes `card.$cardId`, `browse`, `random`, `favourites`, `statistics`, `sayings`, `saying.$sayingId`, `search`, `src/lib/ask/*` (data source only), `Paywall.tsx`, `TrialBanner.tsx`, `CardGrid.tsx`, `SayingGrid.tsx`, `index.tsx`, related tests, `AGENTS.md`.
