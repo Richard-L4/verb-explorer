@@ -53,7 +53,8 @@ function Home() {
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { studiedCount, learnedCount, progressPercent, recentCards, state } = useLearner();
-  // Confirmed lifetime access (purchase or restore) hides the £14.99 offer box.
+  // Confirmed lifetime access (purchase or restore) hides the £14.99 price and its
+  // purchase prompt only; the feature list below stays visible to everyone.
   const { unlocked, creator } = useAccess();
   const hasLifetimeAccess = unlocked || creator;
 
@@ -108,9 +109,10 @@ function Home() {
 
         </div>
 
-        {hasLifetimeAccess ? null : (
         <div className="relative mt-8 rounded-3xl border-2 border-primary/70 bg-card/80 p-6 shadow-[var(--shadow-glow)] backdrop-blur sm:p-10">
-          <p className="gradient-text text-5xl font-bold leading-none tracking-tight sm:text-6xl">£14.99</p>
+          {hasLifetimeAccess ? null : (
+            <p className="gradient-text text-5xl font-bold leading-none tracking-tight sm:text-6xl">£14.99</p>
+          )}
           <h2 className="mt-4 max-w-2xl text-xl font-bold leading-snug text-foreground sm:text-2xl">
             One payment. Hundreds of examples. A lifetime of better Spanish.
           </h2>
@@ -129,14 +131,15 @@ function Home() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 rounded-2xl bg-primary/10 px-4 py-3 text-sm font-bold leading-snug text-primary sm:text-base">
-            £14.99. One payment. Lifetime access. No subscription.
-          </p>
+          {hasLifetimeAccess ? null : (
+            <p className="mt-6 rounded-2xl bg-primary/10 px-4 py-3 text-sm font-bold leading-snug text-primary sm:text-base">
+              £14.99. One payment. Lifetime access. No subscription.
+            </p>
+          )}
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
             NB: Future membership and community features are separate and are not included in this purchase.
           </p>
         </div>
-        )}
       </section>
 
       <section className="surface-card gradient-soft hairline-top relative mt-6 overflow-hidden p-7 sm:mt-8 sm:p-12">
