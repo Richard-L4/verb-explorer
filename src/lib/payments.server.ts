@@ -17,49 +17,18 @@ import {
 } from "@supabase/supabase-js";
 import { readEnv } from "./env.server";
 
-/**
- * Stripe Price IDs
- *
- * LIVE:
- * price_1U66oMJ7wpJmIRgYHaLwO2VH
- *
- * TEST / SANDBOX:
- * price_1U6FgVQsnncBlv2AE3WrorZp
- */
-export const VERB_WISE_LIVE_PRICE_ID =
-  "price_1U66oMJ7wpJmIRgYHaLwO2VH";
+import { currentStripeConfig, type StripeConfig } from "./stripe-mode.server";
 
-export const VERB_WISE_TEST_PRICE_ID =
-  "price_1U6FgVQsnncBlv2AE3WrorZp";
+export { VERB_WISE_LIVE_PRICE_ID, VERB_WISE_TEST_PRICE_ID } from "./stripe-mode.server";
 
-function getStripeSecretKey(): string {
-  const key = readEnv("STRIPE_SECRET_KEY_TEST") ?? readEnv("STRIPE_SECRET_KEY");
-
-  if (!key) {
-    throw new Error(
-      "STRIPE_SECRET_KEY is not configured",
-    );
-  }
-
-  return key;
+/** True when the current request's address uses Stripe test mode. */
+export async function isTestMode(): Promise<boolean> {
+  return (await currentStripeConfig()).mode === "test";
 }
 
-/**
- * Return the correct Stripe Price ID for the configured key.
- *
- * A test key can only use the test price, and a live key the live price,
- * so the mode is derived from the key itself. This covers standard secret
- * keys (`sk_test_…`) as well as restricted keys (`rk_test_…`).
- */
-export function isTestMode(): boolean {
-  const key = getStripeSecretKey();
-  return key.startsWith("sk_test_") || key.startsWith("rk_test_");
-}
-
-export function getVerbWisePriceId(): string {
-  return isTestMode()
-    ? VERB_WISE_TEST_PRICE_ID
-    : VERB_WISE_LIVE_PRICE_ID;
+/** Price for new checkouts on the current request's address. */
+export async function getVerbWisePriceId(): Promise<string> {
+  return (await currentStripeConfig()).priceId;
 }
 
 /** Shape of a Stripe Checkout Session ID; anything else is rejected before any lookup. */
@@ -70,14 +39,18 @@ export const CHECKOUT_SESSION_ID_RE = /^cs_(test|live)_[A-Za-z0-9]{10,200}$/;
  * Verb Wise unlock at the configured price. Any other paid session in the same
  * Stripe account (other products, other prices, wrong mode) never grants access.
  */
-export function isVerbWiseSession(session: Stripe.Checkout.Session, priceId: string): boolean {
+export function isVerbWiseSession(
+  session: Stripe.Checkout.Session,
+  priceId: string | readonly string[],
+): boolean {
+  const allowed = typeof priceId === "string" ? [priceId] : priceId;
   if (session.mode !== "payment") return false;
   if (session.status !== "complete" || session.payment_status !== "paid") return false;
   if ((session.currency ?? "").toLowerCase() !== "gbp") return false;
   const items = session.line_items?.data ?? [];
   if (items.length !== 1) return false;
   const item = items[0]!;
-  return item.price?.id === priceId && item.quantity === 1;
+  return Boolean(item.price?.id && allowed.includes(item.price.id)) && item.quantity === 1;
 }
 
 /**
@@ -88,18 +61,26 @@ export async function fetchVerifiedVerbWiseSession(
   sessionId: string,
 ): Promise<Stripe.Checkout.Session | null> {
   if (!CHECKOUT_SESSION_ID_RE.test(sessionId)) return null;
+  const config = await currentStripeConfig();
+  // A live address never verifies test sessions, and a test address never verifies live ones.
+  if (!sessionId.startsWith(config.mode === "live" ? "cs_live_" : "cs_test_")) return null;
   // await waits for Stripe itself: a success URL or browser-supplied session is not payment proof.
-  const session = await getStripe().checkout.sessions.retrieve(sessionId, {
+  const session = await stripeClient(config).checkout.sessions.retrieve(sessionId, {
     expand: ["line_items"],
   });
-  return isVerbWiseSession(session, getVerbWisePriceId()) ? session : null;
+  return isVerbWiseSession(session, config.acceptedPriceIds) ? session : null;
 }
 
-/** Create the server-side Stripe client. */
-export function getStripe(): Stripe {
-  return new Stripe(getStripeSecretKey(), {
+/** Stripe client for an already-selected mode's configuration. */
+export function stripeClient(config: StripeConfig): Stripe {
+  return new Stripe(config.secretKey, {
     httpClient: Stripe.createFetchHttpClient(),
   });
+}
+
+/** Stripe client for the current request's address (live or test, never mixed). */
+export async function getStripe(): Promise<Stripe> {
+  return stripeClient(await currentStripeConfig());
 }
 
 /**
@@ -212,9 +193,8 @@ export function getSupabaseAdmin(): SupabaseClient {
  */
 async function findPriceRowId(
   db: SupabaseClient,
+  stripePriceId: string,
 ): Promise<string | null> {
-  const stripePriceId =
-    getVerbWisePriceId();
 
   const { data, error } = await db
     .from("prices")
@@ -385,8 +365,11 @@ export async function recordPurchase(
       stripeCustomerId,
     );
 
+  // The session's own price, so a legacy-price purchase links to its own price row.
+  const sessionPriceId =
+    session.line_items?.data[0]?.price?.id ?? "";
   const priceId =
-    await findPriceRowId(db);
+    await findPriceRowId(db, sessionPriceId);
 
   const paymentIntent =
     typeof session.payment_intent ===
