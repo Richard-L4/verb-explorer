@@ -96,7 +96,7 @@ describe("access tiers (real server decision path)", () => {
 describe("mix and session", () => {
   it("mix never exceeds the authorised pool and includes both categories", () => {
     const easyMix = quizPool(pub as QuizQuestion[], "mix", "easy");
-    expect(easyMix).toHaveLength(20);
+    expect(ids(easyMix).sort()).toEqual(["q001", "q101"]);
     expect(new Set(easyMix.map((q) => q.category)).size).toBe(2);
     expect(quizPool(pub as QuizQuestion[], "mix", "hard")).toHaveLength(0);
   });
