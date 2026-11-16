@@ -1,7 +1,7 @@
 /*
  * Saying detail at /saying/<sayingId>: the loader looks up data in sayings.ts.
- * useAccess supplies the existing sayings trial/free-card gate, displayed as Paywall;
- * useLearner records progress only for open sayings. This is not the signed-pass subjunctive flow.
+ * Sayings need a server-confirmed trial or purchase (useAccess → content-access.ts); the
+ * full text arrives from the server, so the page re-reads the saying after it loads.
  */
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -55,20 +55,22 @@ export const Route = createFileRoute("/saying/$sayingId")({
 });
 
 function SayingDetail() {
-  const { saying } = Route.useLoaderData();
+  const { saying: loaded } = Route.useLoaderData();
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { isFavourite, isLearned, toggleFavourite, toggleLearned, markViewed } = useLearner();
-  const { isLocked } = useAccess();
+  const { isLocked, checkingContent } = useAccess();
+  const saying = getSaying(loaded.id) ?? loaded;
   const locked = isLocked(saying.id);
+  const checking = locked && checkingContent;
   const { prev, next } = getSayingNeighbours(saying.id);
   const position = getSayingIndex(saying.id) + 1;
 
   // Effects run after rendering; do not count a paywall view as studying the content.
   useEffect(() => {
-    if (locked) return;
+    if (locked || checking) return;
     markViewed(saying.id);
-  }, [saying.id, locked, markViewed]);
+  }, [saying.id, locked, checking, markViewed]);
 
   return (
     <PageTransition>
@@ -80,7 +82,9 @@ function SayingDetail() {
         to sayings
       </Link>
 
-      {locked ? (
+      {checking ? (
+        <p className="mt-6 text-sm text-muted-foreground" role="status">Checking your access…</p>
+      ) : locked ? (
         <div className="mt-4">
           <Paywall title={saying.title} />
         </div>
