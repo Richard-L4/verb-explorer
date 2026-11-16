@@ -88,7 +88,7 @@ describe("trial_expired", () => {
     access.trialDaysLeft = 0;
     const { container } = render(<TrialBanner />);
     await flush();
-    expect(screen.getByText("£14.99 once. Lifetime access. No subscription.")).toBeTruthy();
+    expect(screen.getByText("£14.99. One payment. Lifetime access. No subscription.")).toBeTruthy();
     expect(container.textContent).not.toMatch(/coffee/i);
   });
 
