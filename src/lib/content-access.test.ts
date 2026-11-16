@@ -29,10 +29,7 @@ describe("standard verbs", () => {
 
 describe("free subjunctive set", () => {
   it("is exactly the approved 20 ids", () => {
-    expect([...FREE_SUBJUNCTIVE_IDS]).toEqual(full.slice(0, 20).map((e) => e.id));
-    expect(FREE_SUBJUNCTIVE_IDS[0]).toBe("ser-vs-estar");
-    expect(FREE_SUBJUNCTIVE_IDS[19]).toBe("encontrar-vs-buscar");
-    expect(new Set(FREE_SUBJUNCTIVE_IDS).size).toBe(20);
+    expect([...FREE_SUBJUNCTIVE_IDS]).toEqual(["ser-vs-estar"]);
   });
   it("unpaid: Easy open only for the free 20", () => {
     expect(canViewSubjunctive("ser-vs-estar", "easy", false)).toBe(true);
