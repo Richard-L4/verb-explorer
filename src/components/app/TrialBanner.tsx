@@ -13,7 +13,7 @@ import { logEvent } from "@/lib/analytics";
  * Returns null otherwise.
  */
 function reminderFor(daysLeft: number, trialActive: boolean): string | null {
-  if (!trialActive) return "Your full-access trial has ended.";
+  if (!trialActive) return "Your full-access trial has ended. SER vs ESTAR stays free.";
   if (daysLeft === 5) return "5 days left in your full-access trial.";
   if (daysLeft === 3) return "3 days left in your full-access trial.";
   if (daysLeft === 2) return "2 days left in your full-access trial.";

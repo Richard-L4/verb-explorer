@@ -1,4 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
+import publicSayings from "./sayings.public.json";
+import { fullSayings } from "@/lib/sayings-full.server";
+import { buildPublicSayings, type NorthAmericanSource } from "@/lib/sayings-build";
 import rawBritish from "./sayings.json";
 import source from "./northAmericanExpressions.json";
 import {
@@ -11,7 +14,25 @@ import {
   getSayingIndex,
   searchSayings,
   regionCategories,
+  setSayingContent,
 } from "./sayings";
+
+// These checks describe the full collection as a trial or paying user receives it.
+beforeAll(() => setSayingContent(fullSayings));
+
+describe("sayings public file (after the trial)", () => {
+  it("is exactly the derivation from the untouched sources", () => {
+    expect(publicSayings).toEqual(buildPublicSayings(rawBritish, source as unknown as NorthAmericanSource));
+  });
+  it("has names only: no meanings, Spanish equivalents or examples", () => {
+    const text = JSON.stringify(publicSayings.sayings);
+    for (const s of fullSayings) {
+      for (const v of [s.meaning, s.spanish, s.exampleSpanish, s.exampleEnglish, s.vibe, s.literal_fail])
+        if (v) expect(text.includes(JSON.stringify(v))).toBe(false);
+      for (const ex of s.examples ?? []) expect(text.includes(JSON.stringify(ex.es))).toBe(false);
+    }
+  });
+});
 
 describe("sayings collection", () => {
   it("has 75 expressions, 25 per region, unique ids", () => {

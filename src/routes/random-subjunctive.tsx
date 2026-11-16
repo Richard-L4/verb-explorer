@@ -47,10 +47,10 @@ export const Route = createFileRoute("/random-subjunctive")({
 
 function RandomSubjunctive() {
   const tense = Route.useSearch().tense ?? "present";
-  // Only verified paid access expands this pool: a trial does not unlock study examples.
+  // Only server-confirmed access (purchase or active trial) expands this pool.
   const { entries, paid, status } = useSubjunctiveTense(tense);
 
-  // Pool = only entries this browser may open. Unpaid: the 20 free entries.
+  // Pool = only entries this browser may open. After the trial: SER vs ESTAR only.
   const pool = useMemo(() => {
     const ids = new Set(
       randomSubjunctivePool(
@@ -136,9 +136,9 @@ function RandomSubjunctive() {
 
       {!paid && status !== "checking" ? (
         <p className="mt-4 text-sm text-muted-foreground">
-          Shuffling the 20 free entries.{" "}
+          After the trial only SER vs ESTAR is free.{" "}
           <Link to="/unlock" className="font-semibold text-primary hover:underline">
-            Unlock all 100 with Medium and Hard examples
+            Unlock all 100
           </Link>
         </p>
       ) : null}

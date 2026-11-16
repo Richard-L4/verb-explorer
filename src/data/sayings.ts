@@ -1,9 +1,19 @@
 /**
  * Shared saying-card types and lookups for browser and server callers.
- * Depends on sayings.json, keeping content edits separate from application logic.
+ * The browser imports only the generated sayings.public.json; sayings.json and
+ * northAmericanExpressions.json are read only by sayings-full.server.ts.
  */
-import rawSayings from "./sayings.json";
-import northAmerican from "./northAmericanExpressions.json";
+import pubJson from "./sayings.public.json";
+
+// The browser gets names only; full sayings arrive from the server for a trial or purchase.
+const pub = pubJson as unknown as {
+  sayings: unknown[];
+  categories: Record<"american" | "canadian", { id: string; heading: string }[]>;
+  collectionIntroductions: Record<string, string>;
+  statusDefinitions: { status: string; definition: string }[];
+  overview: string;
+  sourceLimitations: { heading: string; text: string };
+};
 
 export interface SayingExample {
   context: string;
@@ -38,39 +48,10 @@ export interface SayingCard {
   examples?: SayingExample[];
 }
 
-interface NorthAmericanEntry {
-  id: string;
-  category: string;
-  english: string;
-  meaning: string;
-  spanish: string;
-  status: string;
-  verificationNote: string;
-  exampleEnglish: string;
-  exampleSpanish: string;
-}
+const publicList = pub.sayings as SayingCard[];
 
-/** Source files are the single source of truth: British in sayings.json, North American in northAmericanExpressions.json. Text is passed through unchanged. */
-const british: SayingCard[] = (rawSayings as Omit<SayingCard, "region">[]).map((s) => ({ ...s, region: "british" }));
-
-function fromNorthAmerica(region: "american" | "canadian"): SayingCard[] {
-  const headings = new Map(northAmerican.categories[region].map((c) => [c.id, c.heading]));
-  return (northAmerican.collections[region] as NorthAmericanEntry[]).map((e) => ({
-    id: e.id,
-    region,
-    category: e.category,
-    categoryHeading: headings.get(e.category) ?? e.category,
-    title: e.english,
-    meaning: e.meaning,
-    spanish: e.spanish,
-    status: e.status,
-    verificationNote: e.verificationNote,
-    exampleEnglish: e.exampleEnglish,
-    exampleSpanish: e.exampleSpanish,
-  }));
-}
-
-export const sayings: SayingCard[] = [...british, ...fromNorthAmerica("american"), ...fromNorthAmerica("canadian")];
+/** Current collection as this browser is entitled to see it. Mutated in place by setSayingContent. */
+export const sayings: SayingCard[] = [...publicList];
 
 export const sayingCount = sayings.length;
 
@@ -86,15 +67,24 @@ export const sayingCountByRegion: Record<SayingRegion, number> = {
 
 /** Category headings in source order for a North American region. */
 export function regionCategories(region: "american" | "canadian"): { id: string; heading: string }[] {
-  return northAmerican.categories[region];
+  return pub.categories[region];
 }
 
-export const regionIntroductions = northAmerican.sourceNotes.collectionIntroductions;
-export const statusDefinitions = northAmerican.verificationNotes.statusDefinitions;
-export const verificationOverview = northAmerican.verificationNotes.overview;
-export const sourceLimitations = northAmerican.verificationNotes.sourceLimitations;
+export const regionIntroductions = pub.collectionIntroductions;
+export const statusDefinitions = pub.statusDefinitions;
+export const verificationOverview = pub.overview;
+export const sourceLimitations = pub.sourceLimitations;
 
 const byId = new Map(sayings.map((s) => [s.id, s]));
+
+/** Swaps in the server-supplied full collection, or back to names only when null. Memory only. */
+export function setSayingContent(full: SayingCard[] | null): void {
+  const src = full && full.length === publicList.length ? full : publicList;
+  sayings.splice(0, sayings.length, ...src);
+  byId.clear();
+  for (const s of sayings) byId.set(s.id, s);
+  searchIndex = sayings.map((saying) => ({ saying, haystack: normalise(searchableText(saying)) }));
+}
 
 export function getSaying(id: string): SayingCard | undefined {
   return byId.get(id);
@@ -144,7 +134,7 @@ function searchableText(saying: SayingCard): string {
   return parts.join(" \u0000 ");
 }
 
-const searchIndex = sayings.map((saying) => ({ saying, haystack: normalise(searchableText(saying)) }));
+let searchIndex = sayings.map((saying) => ({ saying, haystack: normalise(searchableText(saying)) }));
 
 export function searchSayings(query: string): SayingCard[] {
   const q = normalise(query.trim());

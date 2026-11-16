@@ -39,18 +39,15 @@ describe("question bank integrity", () => {
       expect(q.options.filter((o) => o.correct)).toHaveLength(1);
     }
   });
-  it("public file = first 20 Easy questions in file order (15 verbs + 5 subjunctive)", () => {
-    const expected = bank.filter((q) => q.difficulty === "easy").slice(0, 20);
-    expect(pub).toEqual(expected);
+  it("public file = the SER vs ESTAR questions q001 and q101 only", () => {
     expect(pub).toEqual(buildPublicQuiz(bank));
-    expect(ids(pub)).toEqual([...FREE_QUIZ_IDS_AFTER_TRIAL]);
-    expect(pub.filter((q) => q.category === "verbs" && q.difficulty === "easy")).toHaveLength(15);
-    expect(pub.filter((q) => q.category === "subjunctive" && q.difficulty === "easy")).toHaveLength(5);
+    expect(ids(pub)).toEqual(["q001", "q101"]);
+    expect(pub.every((q) => q.sourceId === "ser-vs-estar")).toBe(true);
   });
   it("no restricted question text appears in the public file", () => {
     const text = JSON.stringify(pub);
     const restricted = bank.filter((q) => !(FREE_QUIZ_IDS_AFTER_TRIAL as readonly string[]).includes(q.id));
-    expect(restricted).toHaveLength(130);
+    expect(restricted).toHaveLength(148);
     for (const q of restricted) expect(text.includes(q.question)).toBe(false);
   });
 });
@@ -65,22 +62,18 @@ describe("access tiers (real server decision path)", () => {
     const r = await resolveQuiz({ pass: "p" }, deps({ passRole: async () => "creator" }));
     expect(r.questions).toHaveLength(150);
   });
-  it("active trial: 50 verbs + 15 Easy present + 15 Easy imperfect = 80", async () => {
+  it("active trial: all 150, every level of both tenses", async () => {
     const r = await resolveQuiz({}, deps({ trialStart: async () => new Date(NOW - 3 * DAY).toISOString() }));
     expect(r.tier).toBe("trial");
-    expect(r.questions).toHaveLength(80);
-    expect(r.questions.filter((q) => q.category === "verbs")).toHaveLength(50);
-    const subj = r.questions.filter((q) => q.category === "subjunctive");
-    expect(subj.filter((q) => quizTense(q) === "present")).toHaveLength(15);
-    expect(subj.filter((q) => quizTense(q) === "imperfect")).toHaveLength(15);
-    expect(subj.every((q) => q.difficulty === "easy")).toBe(true);
+    expect(r.questions).toHaveLength(150);
+    expect(r.questions.some((q) => q.category === "subjunctive" && q.difficulty === "hard")).toBe(true);
   });
   it.each([
     ["expired trial", deps({ trialStart: async () => new Date(NOW - 7 * DAY).toISOString() })],
     ["no trial cookie", deps()],
     ["database failure", deps({ trialStart: async () => { throw new Error("db down"); } })],
     ["future/malformed trial start", deps({ trialStart: async () => "not-a-date" })],
-  ])("%s: only the public 20", async (_n, d) => {
+  ])("%s: only the SER vs ESTAR questions", async (_n, d) => {
     const r = await resolveQuiz({}, d);
     expect(r.tier).toBe("public");
     expect(ids(r.questions)).toEqual([...FREE_QUIZ_IDS_AFTER_TRIAL]);
@@ -96,14 +89,14 @@ describe("access tiers (real server decision path)", () => {
   });
   it("pass check throwing fails closed", async () => {
     const r = await resolveQuiz({ pass: "p" }, deps({ passRole: async () => { throw new Error("x"); } }));
-    expect(r.questions).toHaveLength(20);
+    expect(ids(r.questions)).toEqual(["q001", "q101"]);
   });
 });
 
 describe("mix and session", () => {
   it("mix never exceeds the authorised pool and includes both categories", () => {
     const easyMix = quizPool(pub as QuizQuestion[], "mix", "easy");
-    expect(easyMix).toHaveLength(20);
+    expect(ids(easyMix).sort()).toEqual(["q001", "q101"]);
     expect(new Set(easyMix.map((q) => q.category)).size).toBe(2);
     expect(quizPool(pub as QuizQuestion[], "mix", "hard")).toHaveLength(0);
   });
@@ -129,7 +122,7 @@ describe("mix and session", () => {
   it("locked levels match the tiers", () => {
     expect(quizLevelLocked("verbs", "medium", "public")).toBe(true);
     expect(quizLevelLocked("verbs", "hard", "trial")).toBe(false);
-    expect(quizLevelLocked("subjunctive", "medium", "trial")).toBe(true);
+    expect(quizLevelLocked("subjunctive", "medium", "trial")).toBe(false);
     expect(quizLevelLocked("mix", "hard", "full")).toBe(false);
   });
   it("quiz storage is separate from flashcard/trial keys", () => {
@@ -157,8 +150,8 @@ describe("imperfect subjunctive classification", () => {
     const h = createHash("sha256").update(JSON.stringify(bank.slice(0, 100))).digest("hex");
     expect(h).toBe("700f1286f4421ff9d472849c319d13fac36507e7038122a1541b0ecfe5a85c41");
   });
-  it("public 20 contain no imperfect questions", () => {
-    expect((pub as QuizQuestion[]).some((q) => quizTense(q) === "imperfect")).toBe(false);
+  it("free set covers the SER vs ESTAR verb and imperfect subjunctive questions", () => {
+    expect((pub as QuizQuestion[]).map((q) => quizTense(q) ?? "verbs")).toEqual(["verbs", "imperfect"]);
   });
   it("subjunctive tab splits by tense; mix includes all three", () => {
     expect(quizPool(bank, "subjunctive", "easy", "imperfect")).toHaveLength(15);
@@ -167,8 +160,8 @@ describe("imperfect subjunctive classification", () => {
     expect(new Set(mix.map((q) => quizTense(q) ?? "verbs"))).toEqual(new Set(["verbs", "present", "imperfect"]));
     expect(new Set(ids(mix)).size).toBe(mix.length);
   });
-  it("trial unlocks Easy imperfect only", () => {
+  it("trial unlocks every subjunctive level", () => {
     expect(quizLevelLocked("subjunctive", "easy", "trial")).toBe(false);
-    expect(quizLevelLocked("subjunctive", "hard", "trial")).toBe(true);
+    expect(quizLevelLocked("subjunctive", "hard", "trial")).toBe(false);
   });
 });

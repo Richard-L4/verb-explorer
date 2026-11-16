@@ -5,9 +5,8 @@
  */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import * as store from "@/lib/access";
-import { cards } from "@/data/cards";
-
-const freeCardIds = new Set(cards.slice(0, store.FREE_CARD_COUNT).map((c) => c.id));
+import { sayingLocked } from "@/lib/content-access";
+import { useSubjunctive } from "@/hooks/use-subjunctive";
 
 export function useAccess() {
   useEffect(() => {
@@ -33,16 +32,16 @@ export function useAccess() {
   const inTrial = simulatedExpiry ? false : !creator && !state.unlocked && daysLeft > 0;
   const fullAccess = simulatedExpiry ? false : creator || state.unlocked || daysLeft > 0;
 
-  /** True when this card id requires the unlock right now. */
+  // Full content is decided by the server (pass or trial record), never by local flags.
+  const content = useSubjunctive();
+
+  /** True when this saying requires the unlock right now. */
   const isLocked = useCallback(
     (id: string) => {
-      if (state.unlocked) return false;
-      if (simulatedExpiry) return !freeCardIds.has(id);
-      if (state.creator) return false;
-      if (store.trialDaysLeft(state) > 0) return false;
-      return !freeCardIds.has(id);
+      if (simulatedExpiry) return true;
+      return sayingLocked(id, content.paid);
     },
-    [state, simulatedExpiry],
+    [content.paid, simulatedExpiry],
   );
 
   return {
@@ -55,6 +54,8 @@ export function useAccess() {
     fullAccess,
     trialDaysLeft: simulatedExpiry ? 0 : daysLeft,
     isLocked,
+    /** True while the server check is still running (avoid flashing a paywall). */
+    checkingContent: content.status === "checking",
     unlock: store.unlock,
     resetAccess: store.resetAccess,
     endTrial: store.endTrial,

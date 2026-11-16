@@ -7,27 +7,40 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 /**
- * Returns the full present and imperfect subjunctive datasets only for a valid, unexpired signed pass
- * whose entitlement (purchase or creator) the server re-confirms.
+ * Returns the complete content (verb deck, present and imperfect subjunctive, sayings)
+ * only for a valid signed pass whose entitlement (purchase or creator) the server
+ * re-confirms, or for an active trial proven by the server's own HttpOnly trial cookie.
+ * Everyone else gets `paid: false` and keeps the public SER vs ESTAR collection.
+ * `accessUntil` tells the browser when to drop trial content from memory.
  */
 export const getProtectedSubjunctive = createServerFn({ method: "POST" })
-  .inputValidator((input) => z.object({ pass: z.string().max(2048) }).parse(input))
+  .inputValidator((input) => z.object({ pass: z.string().max(2048).nullable().optional() }).parse(input ?? {}))
   // The validator above parses untrusted input first; only its result reaches data.
-  // async returns a Promise; await waits for server work without blocking other requests.
   .handler(async ({ data }) => {
     const { passRole } = await import("./content-pass.server");
     const { buildChecks } = await import("./content-checks.server");
-    let role: Awaited<ReturnType<typeof passRole>> = null;
-    // If checking fails, leave role empty: try/catch must not turn an outage into paid access.
-    try {
-      role = await passRole(data.pass, await buildChecks());
-    } catch {
-      console.error("[subjunctive] pass check failed");
-    }
-    if (!role) return { paid: false as const, role: null, entries: null, imperfect: null };
+    const { resolveEntitlement } = await import("./entitlement.server");
+    const { liveQuizDeps } = await import("./quiz.server");
+    const deps = await liveQuizDeps();
+    const ent = await resolveEntitlement(data.pass ?? null, {
+      passRole: async (p) => passRole(p, await buildChecks()),
+      trialStart: deps.trialStart,
+      trialDays: deps.trialDays,
+    });
+    if (!ent.full) return { paid: false as const, role: null, accessUntil: null, entries: null, imperfect: null, verbs: null, sayings: null };
     const { fullSubjunctive } = await import("./subjunctive-full.server");
     const { fullImperfectSubjunctive } = await import("./imperfect-subjunctive-full.server");
-    return { paid: true as const, role, entries: fullSubjunctive, imperfect: fullImperfectSubjunctive };
+    const { fullVerbs } = await import("./verbs-full.server");
+    const { fullSayings } = await import("./sayings-full.server");
+    return {
+      paid: true as const,
+      role: ent.role,
+      accessUntil: ent.accessUntil,
+      entries: fullSubjunctive,
+      imperfect: fullImperfectSubjunctive,
+      verbs: fullVerbs,
+      sayings: fullSayings,
+    };
   });
 
 /**

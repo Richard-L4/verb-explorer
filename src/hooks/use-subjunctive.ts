@@ -11,15 +11,22 @@ import { getProtectedSubjunctive, requestAutomaticPass } from "@/lib/subjunctive
 import { readContentPass, setPassSaver, writeContentPass } from "@/lib/content-pass-store";
 import { isLovablePreviewHost } from "@/lib/preview";
 import * as access from "@/lib/access";
+import { setCardContent, type VerbCard } from "@/data/cards";
+import { setSayingContent, type SayingCard } from "@/data/sayings";
+import { whenServerSessionReady } from "@/lib/analytics";
 
 /**
- * Subjunctive content as this browser is entitled to see it. `paid` is true
- * only after the server accepted the signed pass and returned the content.
+ * Content as this browser is entitled to see it. `paid` is true only after the
+ * server confirmed a purchase/creator pass or an active trial and returned the
+ * full content (verbs, both subjunctive tenses, sayings). Held in memory only —
+ * never written to browser storage — and dropped when `accessUntil` passes.
  */
 type Status = "checking" | "paid" | "unpaid";
 interface Snapshot {
   status: Status;
-  role: "purchase" | "creator" | null;
+  role: "purchase" | "creator" | "preview" | "trial" | null;
+  /** When trial access ends (ISO); null for lifetime access. */
+  accessUntil: string | null;
   entries: PublicSubjunctiveEntry[];
   /** Imperfect subjunctive, same access rules as `entries`. */
   imperfect: PublicSubjunctiveEntry[];
@@ -27,7 +34,7 @@ interface Snapshot {
   needsConfirm: boolean;
 }
 
-const initial: Snapshot = { status: "checking", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: false };
+const initial: Snapshot = { status: "checking", role: null, accessUntil: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: false };
 // Module-level state is shared by hook users, avoiding a separate content request for every component.
 let snap: Snapshot = initial;
 let started = false;
@@ -37,11 +44,29 @@ const set = (next: Partial<Snapshot>) => {
   listeners.forEach((l) => l());
 };
 
-async function loadWithPass(pass: string): Promise<boolean> {
+let expiryTimer: ReturnType<typeof setTimeout> | null = null;
+
+function scheduleExpiry(until: string | null) {
+  if (expiryTimer) clearTimeout(expiryTimer);
+  expiryTimer = null;
+  if (!until) return;
+  const ms = Date.parse(until) - Date.now();
+  // setTimeout caps at ~24.8 days; trial windows are at most 7 days.
+  expiryTimer = setTimeout(() => {
+    settleUnpaid();
+    void resolve();
+  }, Math.max(0, Math.min(ms, 2_000_000_000)));
+}
+
+/** Asks the server for full content. `pass` may be null: the server then checks its own trial cookie. */
+async function load(pass: string | null): Promise<boolean> {
   try {
     const res = await getProtectedSubjunctive({ data: { pass } });
-    if (res.paid && res.entries && res.imperfect) {
-      set({ status: "paid", role: res.role, entries: res.entries, imperfect: res.imperfect, needsConfirm: false });
+    if (res.paid && res.entries && res.imperfect && res.verbs && res.sayings) {
+      setCardContent(res.verbs as VerbCard[]);
+      setSayingContent(res.sayings as SayingCard[]);
+      set({ status: "paid", role: res.role, accessUntil: res.accessUntil, entries: res.entries, imperfect: res.imperfect, needsConfirm: false });
+      scheduleExpiry(res.accessUntil);
       return true;
     }
   } catch {
@@ -49,9 +74,13 @@ async function loadWithPass(pass: string): Promise<boolean> {
   }
   return false;
 }
+const loadWithPass = (pass: string) => load(pass);
 
 function settleUnpaid() {
-  set({ status: "unpaid", role: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: access.getSnapshot().unlocked });
+  scheduleExpiry(null);
+  setCardContent(null);
+  setSayingContent(null);
+  set({ status: "unpaid", role: null, accessUntil: null, entries: publicSubjunctive, imperfect: publicImperfectSubjunctive, needsConfirm: access.getSnapshot().unlocked });
 }
 
 async function resolve() {
@@ -71,7 +100,25 @@ async function resolve() {
       /* fall through */
     }
   }
-  if (snap.status !== "paid") settleUnpaid();
+  // No valid pass: the server decides from its own trial record (cookie set by the trial check).
+  await whenServerSessionReady();
+  if (await load(null)) return;
+  settleUnpaid();
+  // A slow trial check may finish after the short wait above: check once more when it does.
+  void whenServerSessionReady(60_000).then(() => {
+    if (snap.status === "unpaid") void load(null);
+  });
+}
+
+/** Re-checks entitlement on return to the tab, so a revoked pass or ended trial drops content. */
+if (typeof window !== "undefined") {
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible" || !started || snap.status !== "paid") return;
+    if (snap.accessUntil && Date.parse(snap.accessUntil) <= Date.now()) {
+      settleUnpaid();
+      void resolve();
+    }
+  });
 }
 
 /** Called when checkout, restore or creator validation issues a new pass. */

@@ -8,11 +8,15 @@ import { normalise } from "./normalise";
 import { cards } from "@/data/cards";
 import { publicSubjunctive, publicImperfectSubjunctive } from "@/data/subjunctive-public";
 import { readFileSync } from "node:fs";
+import fullPresent from "@/data/subjunctive.json";
+import fullImperfect from "@/data/imperfect-subjunctive.json";
 
 const data: AskData = { cards, present: publicSubjunctive, imperfect: publicImperfectSubjunctive };
 const run = (q: string) => ask(q, data);
-const area = (q: string) => {
-  const r = run(q);
+/** What a trial or paying user's browser holds (everything). */
+const fullData = { cards, present: fullPresent, imperfect: fullImperfect } as unknown as AskData;
+const area = (q: string, d: AskData = fullData) => {
+  const r = ask(q, d);
   return r.kind === "answer" ? r.area : r.kind;
 };
 
@@ -42,6 +46,8 @@ describe("grammar intent", () => {
     ["Quería que vinieras", "imperfect"],
     ["Er, how would I say, um, I don't think he was there yesterday, because, well, I wasn't really sure?", "imperfect"],
   ])("%s → %s", (q, expected) => expect(area(q)).toBe(expected));
+  it("after the trial, a grammar question with no free example falls back", () =>
+    expect(area("Espero que venga mañana", data)).toBe("fallback"));
 
   it("a negative word flips the answer", () => {
     expect(area("I think it is true")).toBe("indicative");

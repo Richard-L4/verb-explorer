@@ -1,7 +1,7 @@
 /**
  * Access / entitlement state (localStorage). No React or UI concerns here.
  *
- * Free tier: the first 10 verb cards are always available.
+ * Free tier after the trial: the SER vs ESTAR collection (see content-access.ts).
  * Trial: everything is open for 7 days from first visit.
  * Unlock: one-off £14.99 purchase gives permanent access in this browser.
  */

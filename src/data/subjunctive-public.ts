@@ -1,6 +1,6 @@
 /**
  * Browser-side subjunctive data. Only the generated public file is imported
- * here: titles for all entries, and Easy content for the 20 free entries.
+ * here: titles for all entries, and full content for the free SER vs ESTAR entry.
  * Paid content arrives from the server (see use-subjunctive.ts).
  */
 import publicEntries from "./subjunctive.public.json";

@@ -7,6 +7,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
 import { cards, type VerbCard } from "@/data/cards";
+import { useSubjunctive } from "@/hooks/use-subjunctive";
+import { verbCardLocked } from "@/lib/content-access";
 import { advance, shuffle } from "@/lib/random-sequence";
 import { useLearner } from "@/hooks/use-learner";
 import { PageTransition } from "@/components/app/PageTransition";
@@ -38,8 +40,12 @@ function RandomCards() {
   // This custom hook (a reusable React function) subscribes to browser-saved learner
   // state, so progress changes update this page without a manual refresh.
   const { markViewed } = useLearner();
-  // Every verb card is free, so the pool is always the full deck.
-  const available = cards;
+  // After the trial only open cards (SER vs ESTAR) are in the pool; wait for the server check.
+  const { paid, status } = useSubjunctive();
+  const available = useMemo(
+    () => (status === "checking" ? [] : cards.filter((c) => !verbCardLocked(c.id, paid))),
+    [paid, status],
+  );
 
   const [queue, setQueue] = useState<VerbCard[]>([]);
   const [index, setIndex] = useState(0);
@@ -47,7 +53,7 @@ function RandomCards() {
   // Shuffled once when the session starts (after hydration); never reshuffled on Next.
   const seeded = useRef(false);
   useEffect(() => {
-    if (seeded.current) return;
+    if (seeded.current || !available.length) return;
     seeded.current = true;
     setQueue(shuffle(available));
   }, [available]);
