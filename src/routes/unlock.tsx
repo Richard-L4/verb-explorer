@@ -51,7 +51,11 @@ function UnlockRoute() {
       <PageHeader
         eyebrow="Unlock"
         title="Unlock Verb Wise"
-        description="One payment. Lifetime access. No subscription."
+        description={
+          unlocked || creator
+            ? "Lifetime access confirmed. Every card is yours permanently."
+            : "One payment. Lifetime access. No subscription."
+        }
       />
 
       {unlocked || creator ? (

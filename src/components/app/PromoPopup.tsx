@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useAccess } from "@/hooks/use-access";
 import { cn } from "@/lib/utils";
 
 const ENTERED_KEY = "vw_has_entered_app_v1";
@@ -28,9 +29,12 @@ function markHasEnteredApp(): void {
 
 export function PromoPopup() {
   const { pathname } = useLocation();
+  const { unlocked, creator } = useAccess();
   const [visible, setVisible] = useState(false);
 
   const isLanding = pathname === "/";
+  // Confirmed lifetime access (purchase or restore) never sees the offer.
+  const hasLifetimeAccess = unlocked || creator;
 
   // Any existing navigation away from the landing page counts as entering the app.
   useEffect(() => {
@@ -40,7 +44,7 @@ export function PromoPopup() {
   }, [isLanding]);
 
   useEffect(() => {
-    if (!isLanding || getHasEnteredApp()) return;
+    if (!isLanding || hasLifetimeAccess || getHasEnteredApp()) return;
 
     const showTimer = window.setTimeout(() => {
       if (!getHasEnteredApp()) {
@@ -50,13 +54,13 @@ export function PromoPopup() {
 
     // Effect cleanup cancels the pending popup when the route changes or this unmounts.
     return () => window.clearTimeout(showTimer);
-  }, [isLanding, pathname]);
+  }, [isLanding, pathname, hasLifetimeAccess]);
 
   const close = () => setVisible(false);
 
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && !hasLifetimeAccess && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
