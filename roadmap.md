@@ -21,4 +21,4 @@
 
 - [x] Navigation: Settings reachable, Buy It Now (/unlock), More dropdown on desktop
 - [x] Revised access model: 7-day trial = everything; after trial free SER vs ESTAR collection only; rest £14.99 (7 stages, reserve 25.1 credits)
-- [ ] Investigate automatic preview Unlock and verify manual genuine £14.99 Stripe test checkout without changing access or production.
+- [x] Investigate automatic preview Unlock and verify manual genuine £14.99 Stripe test checkout without changing access or production.
