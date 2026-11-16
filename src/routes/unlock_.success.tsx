@@ -99,11 +99,11 @@ function SuccessRoute() {
 
     (async () => {
       for (const delay of delays) {
-        if (cancelled) return;
+        if (cancelled()) return;
         if (delay) await new Promise((r) => setTimeout(r, delay));
         try {
           const result = await confirm({ data: { sessionId } });
-          if (cancelled) return;
+          if (cancelled()) return;
           if (result.paid) {
             // Update the local display only after server confirmation; protected requests use the pass.
             unlock();
@@ -121,13 +121,8 @@ function SuccessRoute() {
           /* keep retrying */
         }
       }
-      if (!cancelled) setStatus("pending");
+      if (!cancelled()) setStatus("pending");
     })();
-
-    // Cleanup prevents an in-flight response updating a page the user has left.
-    return () => {
-      cancelled = true;
-    };
   }, [urlSessionId, confirm, unlock]);
 
   return (
