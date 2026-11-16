@@ -45,3 +45,7 @@ Database, customer/purchase records, restore by email, access rules, prices show
 
 ## After approval (your actions, not mine)
 Add `STRIPE_SECRET_KEY_TEST` (and optionally `STRIPE_TEST_WEBHOOK_SECRET`) in project secrets; production ignores them by design.
+
+## 6. Clarifications (approved 16 Nov)
+- **Trusted host only:** the mode comes from the server's own request URL (`new URL(getRequest().url).hostname`), never from `Host`, `X-Forwarded-Host` or any browser-supplied header. A test proves forged `X-Forwarded-Host`/`Host`-style values (e.g. a preview name sent to production) cannot change the mode; unknown hosts fail closed.
+- **Separate test groups:** checkout/success-page verification tests and webhook tests are kept in separate test blocks. The final report will state plainly whether Stripe test webhooks can reach the preview address; webhook delivery will only be reported as passed if a real delivery was exercised, not if only the success-page path was tested.
