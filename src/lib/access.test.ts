@@ -46,9 +46,9 @@ describe("trial clock behaviour is unchanged", () => {
     expect(access.trialDaysLeft({ trialStart: started, unlocked: false, creator: false })).toBe(0);
   });
 
-  it("keeps the £4.99 price and 10 free cards", async () => {
+  it("keeps the £14.99 price and 10 free cards", async () => {
     const access = await freshAccess();
-    expect(access.UNLOCK_PRICE).toBe("£4.99");
+    expect(access.UNLOCK_PRICE).toBe("£14.99");
     expect(access.FREE_CARD_COUNT).toBe(10);
     expect(access.TRIAL_DAYS).toBe(7);
   });

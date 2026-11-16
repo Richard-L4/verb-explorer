@@ -3,7 +3,7 @@
  *
  * Free tier: the first 10 verb cards are always available.
  * Trial: everything is open for 7 days from first visit.
- * Unlock: one-off £4.99 purchase gives permanent access in this browser.
+ * Unlock: one-off £14.99 purchase gives permanent access in this browser.
  */
 import { isLovablePreviewHost } from "./preview";
 
@@ -22,7 +22,7 @@ export const CREATOR_STORAGE_KEY = "creator_access";
 export const CREATOR_QUERY_KEY = "creator";
 export const TRIAL_DAYS = 7;
 export const FREE_CARD_COUNT = 10;
-export const UNLOCK_PRICE = "£4.99";
+export const UNLOCK_PRICE = "£14.99";
 
 export const emptyAccess: AccessState = { trialStart: null, unlocked: false, creator: false };
 

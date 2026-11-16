@@ -14,16 +14,20 @@ export const STRIPE_LIVE_HOSTS: readonly string[] = [
 ];
 
 /** Current Verb Wise prices used for new checkouts. */
-export const VERB_WISE_LIVE_PRICE_ID = "price_1U66oMJ7wpJmIRgYHaLwO2VH";
-export const VERB_WISE_TEST_PRICE_ID = "price_1U6FgVQsnncBlv2AE3WrorZp";
+export const VERB_WISE_LIVE_PRICE_ID = "price_1UcPeDJ7wpJmIRgY4WZc81xe"; // £14.99
+export const VERB_WISE_TEST_PRICE_ID = "price_1UcPaSQsnncBlv2AlKJutV3t"; // £14.99
+
+/** Earlier £4.99 prices, still honoured for past purchases and open sessions. */
+export const LEGACY_LIVE_PRICE_IDS = ["price_1U66oMJ7wpJmIRgYHaLwO2VH"] as const;
+export const LEGACY_TEST_PRICE_IDS = ["price_1U6FgVQsnncBlv2AE3WrorZp"] as const;
 
 /**
  * Prices still honoured when verifying a paid session, so earlier purchases and
  * open checkout sessions keep working after the current price changes.
  */
 const ACCEPTED_PRICE_IDS: Record<StripeMode, readonly string[]> = {
-  live: [VERB_WISE_LIVE_PRICE_ID],
-  test: [VERB_WISE_TEST_PRICE_ID],
+  live: [VERB_WISE_LIVE_PRICE_ID, ...LEGACY_LIVE_PRICE_IDS],
+  test: [VERB_WISE_TEST_PRICE_ID, ...LEGACY_TEST_PRICE_IDS],
 };
 
 export class StripeConfigError extends Error {}

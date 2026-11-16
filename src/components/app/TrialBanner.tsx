@@ -79,7 +79,7 @@ export function TrialBanner() {
                 Less than a coffee
               </span>
               <span className="text-xs text-muted-foreground sm:text-sm">
-                £4.99 once. Lifetime access. No subscription.
+                £14.99 once. Lifetime access. No subscription.
               </span>
             </div>
           ) : null}

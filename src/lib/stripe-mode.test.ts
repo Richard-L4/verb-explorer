@@ -129,3 +129,30 @@ describe("webhook: signing secret selection (unit level; no real Stripe delivery
     expect(c.webhookSecret).toBeUndefined();
   });
 });
+
+describe("£14.99 price change", () => {
+  const live = stripeConfigForMode("live", (n) => (n === "STRIPE_SECRET_KEY" ? "sk_live_x" : undefined));
+  const test = stripeConfigForMode("test", (n) => (n === "STRIPE_SECRET_KEY_TEST" ? "sk_test_x" : undefined));
+  const s = (id: string) => ({
+    status: "complete", payment_status: "paid", currency: "gbp",
+    line_items: { data: [{ price: { id }, quantity: 1 }] },
+  }) as never;
+  it("new checkouts use the £14.99 prices", () => {
+    expect(live.priceId).toBe("price_1UcPeDJ7wpJmIRgY4WZc81xe");
+    expect(test.priceId).toBe("price_1UcPaSQsnncBlv2AlKJutV3t");
+  });
+  it("accepts new £14.99 purchases in their own mode", () => {
+    expect(isVerbWiseSession(s("price_1UcPeDJ7wpJmIRgY4WZc81xe"), live.acceptedPriceIds)).toBe(true);
+    expect(isVerbWiseSession(s("price_1UcPaSQsnncBlv2AlKJutV3t"), test.acceptedPriceIds)).toBe(true);
+  });
+  it("still accepts legacy £4.99 purchases", () => {
+    expect(isVerbWiseSession(s("price_1U66oMJ7wpJmIRgYHaLwO2VH"), live.acceptedPriceIds)).toBe(true);
+    expect(isVerbWiseSession(s("price_1U6FgVQsnncBlv2AE3WrorZp"), test.acceptedPriceIds)).toBe(true);
+  });
+  it("rejects unrelated and cross-mode prices", () => {
+    expect(isVerbWiseSession(s("price_unrelated"), live.acceptedPriceIds)).toBe(false);
+    expect(isVerbWiseSession(s("price_1UcPaSQsnncBlv2AlKJutV3t"), live.acceptedPriceIds)).toBe(false);
+    expect(isVerbWiseSession(s("price_1U6FgVQsnncBlv2AE3WrorZp"), live.acceptedPriceIds)).toBe(false);
+    expect(isVerbWiseSession(s("price_1UcPeDJ7wpJmIRgY4WZc81xe"), test.acceptedPriceIds)).toBe(false);
+  });
+});
