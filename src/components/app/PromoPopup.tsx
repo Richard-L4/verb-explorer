@@ -101,7 +101,7 @@ export function PromoPopup() {
 
               <div className="mt-4 rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3">
                 <p className="text-sm font-bold leading-snug text-black">
-                  Then just £4.99 — less than a coffee
+                  Then £14.99. Hundreds of examples. A lifetime of better Spanish.
                 </p>
                 <p className="mt-1 text-xs leading-relaxed text-black/70">
                   Unlimited lifetime access. No subscription.

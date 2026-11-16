@@ -17,16 +17,16 @@ export const Route = createFileRoute("/unlock")({
   // head supplies document titles and metadata, not visible page content.
   head: () => ({
     meta: [
-      { title: "Unlock Verb Wise — £4.99" },
+      { title: "Unlock Verb Wise — £14.99" },
       {
         name: "description",
         content:
-          "Unlock every Verb Wise card with a one-off £4.99 payment. Permanent access, no subscription.",
+          "Unlock every Verb Wise card with a one-off £14.99 payment. Permanent access, no subscription.",
       },
-      { property: "og:title", content: "Unlock Verb Wise — £4.99" },
+      { property: "og:title", content: "Unlock Verb Wise — £14.99" },
       {
         property: "og:description",
-        content: "One-off £4.99 payment for permanent access to every card.",
+        content: "One-off £14.99 payment for permanent access to every card.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },

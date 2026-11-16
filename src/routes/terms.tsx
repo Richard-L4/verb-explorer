@@ -11,7 +11,7 @@ export const Route = createFileRoute("/terms")({
       {
         name: "description",
         content:
-          "The terms for using Verb Wise: free tier, the one-off £4.99 unlock, your licence, and governing law.",
+          "The terms for using Verb Wise: free tier, the one-off £14.99 unlock, your licence, and governing law.",
       },
       { property: "og:title", content: "Terms of Use | Verb Wise" },
       { property: "og:description", content: "Free tier, the one-off unlock, your licence and governing law." },
@@ -46,7 +46,7 @@ function Terms() {
         <LegalSection title="Free and paid tiers">
           <p>Ten cards are always available free of charge.</p>
           <p>
-            A single one-off payment of £4.99 unlocks all content permanently. There is no subscription and no
+            A single one-off payment of £14.99 unlocks all content permanently. There is no subscription and no
             recurring charge.
           </p>
         </LegalSection>

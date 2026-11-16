@@ -7,7 +7,7 @@ const access = {
   unlocked: false,
   inTrial: true,
   trialDaysLeft: 5,
-  price: "£4.99",
+  price: "£14.99",
   bannerPreview: null as null | number | "expired",
 };
 
