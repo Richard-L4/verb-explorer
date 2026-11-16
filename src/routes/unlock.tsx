@@ -6,6 +6,9 @@
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { canOfferTestCheckout } from "@/lib/preview";
 import { Paywall } from "@/components/app/Paywall";
 import { RestorePurchase } from "@/components/app/RestorePurchase";
 import { PageTransition } from "@/components/app/PageTransition";
@@ -37,6 +40,11 @@ export const Route = createFileRoute("/unlock")({
 
 function UnlockRoute() {
   const { unlocked, creator, inTrial, trialDaysLeft } = useAccess();
+  const [testCheckoutAvailable, setTestCheckoutAvailable] = useState(false);
+  const [testCheckoutOpen, setTestCheckoutOpen] = useState(false);
+  useEffect(() => {
+    setTestCheckoutAvailable(canOfferTestCheckout(window.location.hostname));
+  }, []);
 
   return (
     <PageTransition>
@@ -78,6 +86,22 @@ function UnlockRoute() {
           <Paywall />
         </>
       )}
+      {testCheckoutAvailable ? (
+        <div className="mt-6">
+          <Button
+            variant="outline"
+            onClick={() => setTestCheckoutOpen((open) => !open)}
+            aria-expanded={testCheckoutOpen}
+          >
+            {testCheckoutOpen ? "Close test checkout" : "Open Stripe test checkout — £14.99"}
+          </Button>
+          {testCheckoutOpen && (unlocked || creator) ? (
+            <div className="mt-4">
+              <Paywall />
+            </div>
+          ) : null}
+        </div>
+      ) : null}
       <RestorePurchase />
     </PageTransition>
   );

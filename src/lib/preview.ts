@@ -17,3 +17,8 @@ export function isLovablePreviewHost(host?: string): boolean {
   if (hostname.endsWith("-dev.lovable.app")) return true;
   return false;
 }
+
+/** UI only: offer manual test checkout without changing content entitlement. */
+export function canOfferTestCheckout(host: string): boolean {
+  return host === "localhost" || host === "127.0.0.1" || isLovablePreviewHost(host);
+}
