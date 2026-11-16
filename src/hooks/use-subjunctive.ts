@@ -104,6 +104,10 @@ async function resolve() {
   await whenServerSessionReady();
   if (await load(null)) return;
   settleUnpaid();
+  // A slow trial check may finish after the short wait above: check once more when it does.
+  void whenServerSessionReady(60_000).then(() => {
+    if (snap.status === "unpaid") void load(null);
+  });
 }
 
 /** Re-checks entitlement on return to the tab, so a revoked pass or ended trial drops content. */
