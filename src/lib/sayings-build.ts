@@ -42,7 +42,6 @@ function fromNorthAmerica(northAmerican: NorthAmericanSource, region: "american"
   }));
 }
 
-export const sayings: SayingCard[] = [...british, ...fromNorthAmerica("american"), ...fromNorthAmerica("canadian")];
 
 
 /** Full collection in display order: British, then American, then Canadian. */
