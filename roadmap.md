@@ -16,3 +16,5 @@
 - [x] Sayings expanded to 75 English expressions (British, American, Canadian) with regression checks
 
 - [x] Host-guarded Stripe live/test key and price selection (trusted host, separate webhook tests)
+
+- [ ] £19.99 lifetime price + new product description (approved; waiting for the live and test £19.99 Stripe price IDs; keep £4.99/£14.99 accepted; no Supabase change)
