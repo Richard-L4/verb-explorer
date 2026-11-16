@@ -55,3 +55,9 @@ This is more than the 6-credit ceiling you used for earlier tasks. I will stop a
 
 ## Likely files
 `content-access.ts`, `subjunctive-content.functions.ts`, `quiz.server.ts`, `use-access.ts`, `access.ts`, new `verbs-full.server.ts` / `verb-content.functions.ts` / `use-verbs.ts` / `verbs.public.json` + build script, `sayings.ts` + server gate, routes `card.$cardId`, `browse`, `random`, `favourites`, `statistics`, `sayings`, `saying.$sayingId`, `search`, `src/lib/ask/*` (data source only), `Paywall.tsx`, `TrialBanner.tsx`, `CardGrid.tsx`, `SayingGrid.tsx`, `index.tsx`, related tests, `AGENTS.md`.
+
+## Approved process (from your note)
+- I'll go through all seven stages without stopping for approval in between. Before each stage I report the credit balance and its estimate. After each stage I report the files changed, test results, fixes made and the credits left. I don't move on until that stage's tests pass.
+- **First visit after the trial**: a visitor whose trial has already ended, and who never came back during it, gets the free SER vs ESTAR collection straight away. That content is public, so it never depends on having a trial record.
+- Tests make direct server requests as well as checking the screens. They cover expiry, a revoked pass and restored purchases, and confirm that no trial or paid content is written to browser storage.
+- At the end: the full test suite, a security check of the built output for locked content, and one combined report. Nothing will be published.
