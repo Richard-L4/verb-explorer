@@ -18,3 +18,5 @@
 - [x] Host-guarded Stripe live/test key and price selection (trusted host, separate webhook tests)
 
 - [~] £19.99 lifetime price + new product description — ABANDONED 2026-11-16: Richard decided to keep Verb Wise at £14.99 lifetime. No £19.99 code, prices or UI were ever implemented; the £14.99 implementation stands unchanged. Do not create £19.99 Stripe prices.
+
+- [x] Navigation: Settings reachable, Buy It Now (/unlock), More dropdown on desktop

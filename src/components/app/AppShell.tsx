@@ -2,8 +2,15 @@
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
-import { ArrowRight, Menu, X } from "lucide-react";
-import { navItems } from "./nav-items";
+import { ArrowRight, ChevronDown, Menu, MoreHorizontal, X } from "lucide-react";
+import { Link as RouterLink, useLocation } from "@tanstack/react-router";
+import { buyItem, navItems } from "./nav-items";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SiteFooter } from "./SiteFooter";
 import { InstallBanner } from "./InstallBanner";
 import { TrialBanner } from "./TrialBanner";
@@ -24,7 +31,7 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
   return (
     <>
       {/* map turns navigation data into elements; stable keys help React match them across renders. */}
-      {navItems.map(({ to, label, icon: Icon }) => (
+      {navItems.filter((i) => vertical || !("more" in i)).map(({ to, label, icon: Icon }) => (
         <Fragment key={to}>
         <Link
           to={to}
@@ -48,7 +55,61 @@ function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?
         ) : null}
         </Fragment>
       ))}
+      {vertical ? null : <MoreMenu />}
     </>
+  );
+}
+
+const activeCls =
+  "bg-primary text-primary-foreground shadow-[var(--shadow-glow)] hover:bg-primary hover:text-primary-foreground";
+
+/** Desktop "More" dropdown for less-used pages (Favourites, Statistics, Settings) so the bar never overflows. */
+function MoreMenu() {
+  const { pathname } = useLocation();
+  const items = navItems.filter((i) => "more" in i);
+  const active = items.some((i) => pathname === i.to);
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={cn(
+          linkBase,
+          active ? activeCls : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+          "outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        )}
+      >
+        <MoreHorizontal className="size-4 shrink-0" aria-hidden="true" />
+        <span>More</span>
+        <ChevronDown className="size-3.5 shrink-0 opacity-70" aria-hidden="true" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-52 rounded-2xl p-1.5">
+        {items.map(({ to, label, icon: Icon }) => (
+          <DropdownMenuItem key={to} asChild className="min-h-11 cursor-pointer rounded-xl px-3 text-sm font-medium">
+            <RouterLink to={to}>
+              <Icon className="size-4 text-primary" aria-hidden="true" />
+              {label}
+            </RouterLink>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+/** Highlighted Buy It Now button linking to the existing Unlock page. */
+function BuyLink({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
+  const Icon = buyItem.icon;
+  return (
+    <Link
+      to={buyItem.to}
+      onClick={onNavigate}
+      className={cn(
+        "gradient-hero inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-200 hover:-translate-y-0.5 lg:min-h-0",
+        vertical && "w-full",
+      )}
+    >
+      <Icon className="size-4 shrink-0" aria-hidden="true" />
+      <span>{buyItem.label}</span>
+    </Link>
   );
 }
 
@@ -79,6 +140,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             <NavLinks />
           </nav>
 
+          <div className="flex shrink-0 items-center gap-2">
+          <span className="hidden lg:inline-flex"><BuyLink /></span>
+
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -88,6 +152,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
+          </div>
         </div>
 
         {/* State controls whether the menu exists; AnimatePresence lets its exit animation finish. */}
@@ -101,7 +166,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               transition={{ duration: 0.22, ease: "easeOut" }}
               className="overflow-hidden border-t border-border/70 lg:hidden"
             >
-              <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
+              <div className="mx-auto flex max-h-[calc(100dvh-4.5rem)] max-w-6xl flex-col gap-1 overflow-y-auto overscroll-contain px-4 py-3 sm:px-6">
+                <BuyLink vertical onNavigate={() => setOpen(false)} />
                 <NavLinks vertical onNavigate={() => setOpen(false)} />
               </div>
             </motion.nav>
