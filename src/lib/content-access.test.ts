@@ -11,6 +11,7 @@ import {
   isFreeSubjunctive,
   randomSubjunctivePool,
   verbCardLocked,
+  sayingLocked,
   type PublicSubjunctiveEntry,
 } from "./content-access";
 import { buildPublicSubjunctive } from "./subjunctive-public-build";
@@ -21,25 +22,29 @@ const full = raw as SubjunctiveEntry[];
 const pub = publicJson as PublicSubjunctiveEntry[];
 
 describe("standard verbs", () => {
-  it("all 100 verb cards are open to everyone", () => {
+  it("after the trial only the SER vs ESTAR card is open", () => {
     expect(cards).toHaveLength(100);
-    expect(cards.every((c) => !verbCardLocked(c.id))).toBe(true);
+    expect(cards.filter((c) => !verbCardLocked(c.id, false)).map((c) => c.id)).toEqual(["ser-vs-estar"]);
+  });
+  it("trial or purchase opens all 100 cards", () => {
+    expect(cards.every((c) => !verbCardLocked(c.id, true))).toBe(true);
+  });
+  it("sayings are locked after the trial and open with full access", () => {
+    expect(sayingLocked("any", false)).toBe(true);
+    expect(sayingLocked("any", true)).toBe(false);
   });
 });
 
 describe("free subjunctive set", () => {
-  it("is exactly the approved 20 ids", () => {
+  it("is only SER vs ESTAR", () => {
     expect([...FREE_SUBJUNCTIVE_IDS]).toEqual(["ser-vs-estar"]);
   });
-  it("unpaid: Easy open only for the free 20", () => {
-    expect(canViewSubjunctive("ser-vs-estar", "easy", false)).toBe(true);
-    expect(canViewSubjunctive(full[20]!.id, "easy", false)).toBe(false);
+  it("unpaid: SER vs ESTAR open at every level", () => {
+    for (const d of ["easy", "medium", "hard"] as const) expect(canViewSubjunctive("ser-vs-estar", d, false)).toBe(true);
   });
-  it("unpaid: Medium and Hard locked everywhere, including free entries", () => {
-    for (const e of full) {
-      expect(canViewSubjunctive(e.id, "medium", false)).toBe(false);
-      expect(canViewSubjunctive(e.id, "hard", false)).toBe(false);
-    }
+  it("unpaid: every other entry locked at every level", () => {
+    for (const e of full.filter((x) => x.id !== "ser-vs-estar"))
+      for (const d of ["easy", "medium", "hard"] as const) expect(canViewSubjunctive(e.id, d, false)).toBe(false);
   });
   it("paid: everything open", () => {
     expect(full.every((e) => canViewSubjunctive(e.id, "hard", true))).toBe(true);
@@ -50,7 +55,7 @@ describe("public subjunctive file", () => {
   it("matches the derivation from the untouched original", () => {
     expect(pub).toEqual(buildPublicSubjunctive(full));
   });
-  it("has titles for all 100 and content for only the free 20", () => {
+  it("has titles for all 100 and content for SER vs ESTAR only", () => {
     expect(pub).toHaveLength(100);
     const withContent = pub.filter((e) => e.triggers);
     expect(withContent.map((e) => e.id)).toEqual([...FREE_SUBJUNCTIVE_IDS]);
@@ -58,15 +63,11 @@ describe("public subjunctive file", () => {
       .filter((e) => !e.triggers)
       .forEach((e) => expect(Object.keys(e).sort()).toEqual(["id", "title"]));
   });
-  it("each free entry has 3 triggers with exactly the one Easy example", () => {
-    for (const e of pub.filter((x) => x.triggers)) {
-      expect(e.triggers).toHaveLength(3);
-      for (const t of e.triggers!) {
-        expect(t.examples.map((x) => x.difficulty)).toEqual(["easy"]);
-      }
-    }
+  it("the free entry carries every level, unchanged from the original", () => {
+    const free = pub.find((x) => x.triggers)!;
+    expect(free.triggers).toEqual(full.find((e) => e.id === "ser-vs-estar")!.triggers);
   });
-  it("contains no Medium or Hard sentence, and nothing from the locked 80", () => {
+  it("contains nothing from the locked 99", () => {
     const text = JSON.stringify(pub);
     const freeExplanations = new Set(
       full
@@ -76,7 +77,7 @@ describe("public subjunctive file", () => {
     for (const e of full) {
       for (const t of e.triggers) {
         for (const x of t.examples) {
-          const allowed = x.difficulty === "easy" && isFreeSubjunctive(e.id);
+          const allowed = isFreeSubjunctive(e.id);
           if (!allowed) expect(text.includes(JSON.stringify(x.es))).toBe(false);
         }
         // Generic explanations shared with a free entry are legitimately public.
@@ -120,7 +121,7 @@ describe("automatic pass", () => {
 
 describe("random subjunctive pool", () => {
   const ids = full.map((e) => e.id);
-  it("unpaid pool is exactly the free 20", () => {
+  it("unpaid pool is SER vs ESTAR only", () => {
     expect(randomSubjunctivePool(ids, false)).toEqual([...FREE_SUBJUNCTIVE_IDS]);
   });
   it("paid pool is all 100", () => expect(randomSubjunctivePool(ids, true)).toHaveLength(100));

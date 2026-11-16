@@ -32,11 +32,11 @@ describe("imperfect public file", () => {
   it("is exactly what unpaid visitors may see", () => {
     expect(imperfectPublic).toEqual(buildPublicSubjunctive(imperfect));
   });
-  it("uses the same 20 free ids, Easy only; others are title-only", () => {
+  it("SER vs ESTAR carries every level; others are title-only", () => {
     const free = new Set<string>(FREE_SUBJUNCTIVE_IDS);
     for (const e of imperfectPublic as ReturnType<typeof filterEntryForAccess>[]) {
       if (free.has(e.id)) {
-        expect(e.triggers?.flatMap((t) => t.examples).every((x) => x.difficulty === "easy")).toBe(true);
+        expect(e.triggers).toEqual(imperfect.find((x) => x.id === e.id)!.triggers);
       } else {
         expect(Object.keys(e).sort()).toEqual(["id", "title"]);
       }
@@ -48,7 +48,7 @@ describe("imperfect public file", () => {
     for (const e of imperfect)
       for (const t of e.triggers)
         for (const x of t.examples)
-          if (!free.has(e.id) || x.difficulty !== "easy") expect(text.includes(x.es)).toBe(false);
+          if (!free.has(e.id)) expect(text.includes(x.es)).toBe(false);
   });
 });
 
