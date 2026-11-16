@@ -71,6 +71,17 @@ function SuccessRoute() {
   // State controls the visible message; a ref remembers a value without triggering a render.
   const [status, setStatus] = useState<Status>("checking");
   const started = useRef(false);
+  // takeSessionId strips the session id with history.replaceState, which makes the
+  // router re-run the effect below; cancellation must therefore track real unmounts
+  // only, or that re-render would discard the in-flight confirmation.
+  const alive = useRef(true);
+
+  useEffect(() => {
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (started.current) return;
@@ -82,7 +93,7 @@ function SuccessRoute() {
       return;
     }
 
-    let cancelled = false;
+    const cancelled = () => !alive.current;
     // The webhook usually lands first; retry briefly, then fall back to Stripe.
     const delays = [0, 1500, 3000, 5000];
 
