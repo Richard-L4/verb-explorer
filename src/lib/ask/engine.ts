@@ -253,7 +253,8 @@ function cardAnswer(card: VerbCard, qTokens: Set<string>): AskResult {
     headline: card.tagline ? `${card.title} — ${card.tagline}` : card.title,
     es,
     en,
-    why: cores.slice(0, 2).join(" ") || card.tricky || "See the card for the full contrast.",
+    // A card with no explanations here is one this browser is not entitled to (after the trial).
+    why: cores.slice(0, 2).join(" ") || card.tricky || "This lesson is part of full access. SER vs ESTAR stays free.",
     link: cardLink(card),
   };
 }
